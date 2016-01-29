@@ -73,6 +73,10 @@
 
     <li><label>Categories</label></li>
 
+        
+            <li><a href="Pattern%20Recognition.html">Pattern Recognition</a></li>
+        
+            <li><a href="TCP/IP.html">TCP/IP</a></li>
          
 
       </ul>
@@ -94,6 +98,144 @@
 	<div class="large-8 medium-8 columns">
 		<div class="markdown-body home-categories">
 		
+			<div class="article">
+                <a class="clearlink" href="14540640657446.html">
+                
+                  <h1>封装，与协议的分层</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>TODO： 为何要分层</p>
+
+<p>要理解协议的分层，若是了解编程理念中的『封装』，可能更有助于理解分层的意义。</p>
+
+<p>『封装』，狭义上指的是编写程序时，通过把一些重复操作的代码写成一个单独的函数，这就可以叫做一个简单的封装。</p>
+
+<p>而我对于封装的理解，举个例子，当你忙了一天回到家，站在你的家门口，想要打开你家的房门时，你需要做以下事情：</p>
+
+<pre><code class="language-flow">st=&gt;start: 站在家门口
+op1=&gt;operation: 拿出钥匙
+op2=&gt;operation: 找到对应的钥匙
+op3=&gt;operation: 把钥匙插到锁孔中
+op4=&gt;operation: 旋转钥匙
+op5=&gt;operation: 拉开门
+op6=&gt;operation: 拔出钥匙
+end=&gt;end: 开门结束
+
+st-&gt;op1-&gt;op2-&gt;op3-&gt;op4-&gt;op5-&gt;op6-&gt;end
+</code></pre>
+
+<p>步骤很多，对不对。不过这个描述也没错，我们的确需要做出这些步骤才能开门。</p>
+
+<p>但是，我们和别人聊天的时候，你想要告诉别人你昨天很累，回到家马上就睡觉了，你会说『昨天我回到家门口，<strong>掏出钥匙，找到对应的钥匙……</strong>』吗？</p>
+
+<p>我想大部分人都不会的。</p>
+
+<p>我会说『昨天我回到家门口，<strong>打开门</strong>，马上就进到卧室睡觉了』，这实际上就是一个封装，我们把这些步骤封装成了一个『开门』的步骤。</p>
+
+<p>看到这里你可能已经大概感觉到了，封装，实际上是把一些步骤，打包整合，使它变成了更高层次的行为。看到这里，我觉得我们应该停下来，多思考一会儿关于封装的概念，毕竟这个概念对于理解后面的协议分层非常关键，所以，让我们暂时停一下脚步，来观察并思考一下，我们日常生活中，还有哪些东西实际上也是一种封装吧。</p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2016/1/29 18:41 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='TCP/IP.html'>TCP/IP</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="14540640466243.html">
+                
+                  <h1>网络协议</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>连接不同的计算机是非常有必要的，能够大幅度提升工作效率。</p>
+
+<p>比如：一个工作需要经过三个步骤，分别是步骤A/步骤B/步骤C。三个步骤分别由三台不同的计算机A/B/C执行。</p>
+
+<pre><code class="language-flow">com_A=&gt;operation: 计算机A
+com_B=&gt;operation: 计算机B
+com_C=&gt;operation: 计算机C
+
+
+com_A-&gt;com_B-&gt;com_C
+</code></pre>
+
+<p>起初，人们使用容量极小的3.5寸盘，带着要处理的数据来到计算机A面前，执行完之后带着数据分别去B和C前进行操作处理，十分的低效。</p>
+
+<pre><code class="language-flow">com_A=&gt;operation: 计算机A
+com_B=&gt;operation: 计算机B
+com_C=&gt;operation: 计算机C
+ip=&gt;inputoutput: 用户数据
+op=&gt;inputoutput: 数据输出
+ip-&gt;com_A-&gt;com_B-&gt;com_C-&gt;op
+</code></pre>
+
+<p>使用网络连接三台计算机之后，用户可以在A处理完数据，直接传递给B和C进行处理，再将处理结果传回A即可。</p>
+
+<pre><code class="language-flow">com_A=&gt;operation: 计算机A
+ip=&gt;inputoutput: 用户数据
+op=&gt;inputoutput: 数据输出
+ip-&gt;com_A-&gt;op
+</code></pre>
+
+<p>甚至，进一步的发展之后，用户都拥有了自己的计算机，则用户可以在任意一台连接了A的计算机上，比如自己的电脑，直接将数据传递到A、B、C计算机上处理，而无需离开自己的计算机进行操作。这一步的发展，即是当前的互联网。</p>
+
+<pre><code class="language-flow">com_A=&gt;operation: 任一联网计算机
+ip=&gt;inputoutput: 用户数据
+op=&gt;inputoutput: 数据输出
+ip-&gt;com_A-&gt;op
+</code></pre>
+
+<p>但是现实中，计算机不仅只由一家公司开发，不同公司的计算机起初只能与自家的计算机进行连接。不同种的计算机无法进行连接交流。就像语言不通的外国人，无法交流。</p>
+
+<p>于是，为了连接不同种类计算机，我们统一了计算机交流的语言。由此，无论你的结构与其他计算机有多不同，只要能够使用这种统一语言，就能加入到互联网这个大聊天室之中，与任何计算机进行通信交流。</p>
+
+<p>这种统一的语言，就是『协议』。</p>
+
+<p>由于各种机缘巧合，TCP/IP协议成为了世界上主流的网络通信协议。</p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2016/1/29 18:40 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='TCP/IP.html'>TCP/IP</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
 			<div class="article">
                 <a class="clearlink" href="14540480758140.html">
                 
@@ -170,7 +312,9 @@
                   <div class="more-left left">
                   
                     <span class="date">2016/1/29 14:14 下午</span>
-                    
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Pattern%20Recognition.html'>Pattern Recognition</a></span>
           				   
                   </div>
                   <div class="more-right right">
@@ -231,6 +375,10 @@
                 <div class="side-content">
 
       	<p class="cat-list">
+        
+            <a href="Pattern%20Recognition.html"><strong>Pattern Recognition</strong></a>
+        
+            <a href="TCP/IP.html"><strong>TCP/IP</strong></a>
          
         </p>
 
@@ -245,6 +393,18 @@
                 <div class="side-content">
                 <ul class="posts-list">
 	      
+		      
+			      <li class="post">
+			        <a href="14540640657446.html">封装，与协议的分层</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="14540640466243.html">网络协议</a>
+			      </li>
+		     
+		  
 		      
 			      <li class="post">
 			        <a href="14540480758140.html">Notes for "ICMLC2009-FabioRoli.pdf"</a>
