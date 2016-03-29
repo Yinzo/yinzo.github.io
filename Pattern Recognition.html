@@ -74,9 +74,11 @@
     <li><label>Categories</label></li>
 
         
-            <li><a href="Pattern%20Recognition.html">Pattern Recognition</a></li>
+            <li><a href="Adversary%20Learning.html">Adversary Learning</a></li>
         
             <li><a href="TCPIP.html">TCP/IP</a></li>
+        
+            <li><a href="Pattern%20Recognition.html">Pattern Recognition</a></li>
          
 
       </ul>
@@ -99,147 +101,30 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
-                <a class="clearlink" href="14545761055440.html">
+                <a class="clearlink" href="14570954925763.html">
                 
-                  <h1>Note for "Thesis - Behavior of Machine Learning Algorithms in Adversarial Environments.pdf"(1)</h1>
+                  <h1>Ideas for Neural Network</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2 id="toc_0">1.1 Motivation and Methodology</h2>
-
-<h4 id="toc_1">Learning approach is well-suited to the scenario when:</h4>
-
-<ol>
-<li>The process is too complex to designed for human operator</li>
-<li>Requirement of dynamical development</li>
-</ol>
-
-<h4 id="toc_2">An intelligent adversary can:</h4>
+                        	<ul>
+<li><p>Use genetic algorithm to evolve the parameters in Neural Network, to make a self-develop algorithm.</p>
 
 <ul>
-<li>Alter his approach based on knowledge of the learner&rsquo;s shortcomings</li>
-<li>Mislead it by cleverly crafting data to corrupt </li>
-<li>Deceive the learning process</li>
-</ul>
-
-<h4 id="toc_3">Potential dangers posed to a learning system:</h4>
+<li>automatically find and make training set from search engine</li>
+<li>the paremeters include:
 
 <ul>
-<li>An attacker can exploit the nature of a machine learning system to mis-train it and cause it to fail</li>
+<li>learning rate</li>
+<li>iteration times</li>
+<li>regularization term \(\lambda\)</li>
+<li>activation function</li>
+<li>number of hidden layers(units)</li>
+</ul></li>
+</ul></li>
+<li><p>About MCS, maybe we can train a model for fusion method to do the judge.</p></li>
 </ul>
-
-<h4 id="toc_4">The questions raised by author:</h4>
-
-<ul>
-<li>What techniques can a patient adversary use to mis-train or evade a learning system?</li>
-<li>How can system designers assess the vulnerability of their system to vigilantly incorporate trustworthy learning methods?</li>
-</ul>
-
-<h4 id="toc_5">An algorithm&rsquo;s performance depends on:</h4>
-
-<ul>
-<li>The constraints placed on the adversary</li>
-<li>The job the algorithm is tasked with performing</li>
-</ul>
-
-<p>This raises two fundamental questions:</p>
-
-<ul>
-<li>How can we evaluate a learner&rsquo;s performance in adversarial environment?</li>
-<li>How to design or select a learner which can be satisfied for its performance in particular environment?</li>
-</ul>
-
-<h3 id="toc_6">Example 1.1</h3>
-
-<h4 id="toc_7">How spammer corrupt the learning mechanism:</h4>
-
-<ol>
-<li>use information about the email distribution to construct clever attack spam messages</li>
-<li>will cause the spam filter to misclassify the user’s desired messages as spam.</li>
-<li>to cause the filter to become so unreliable</li>
-</ol>
-
-<h3 id="toc_8">Example 1.2</h3>
-
-<h4 id="toc_9">The ANTIDOTE&rsquo;s feature:</h4>
-
-<ul>
-<li>Better resistance within the poisoned environment</li>
-<li>But Less effective on non-poisoned environment</li>
-</ul>
-
-<h3 id="toc_10">Example 1.3</h3>
-
-<h4 id="toc_11">The means to evade the filter:</h4>
-
-<ul>
-<li>obfuscating words indicative of spam to human-recognizable misspellings; e.g., “Viagra” to“V1@gra” or “Cialis” to “Gia|is”</li>
-<li>using clever HTML to make the content difficult to parse </li>
-<li>adding words or text from other sources unrelated to the spam</li>
-<li>embedding images that contains the spam message.</li>
-</ul>
-
-<h2 id="toc_12">1.2 Guidelines from Computer Security</h2>
-
-<h4 id="toc_13">Author&rsquo;s principles:</h4>
-
-<ul>
-<li>Proactively Analysis</li>
-<li>Kerckhoffs’ Principle</li>
-<li>Conservative Design</li>
-<li>Threat Modeling</li>
-</ul>
-
-<h3 id="toc_14">Proactive Analysis:</h3>
-
-<p>Proactively find the vulnerabilities of learning system before the it is deployed or widely used.</p>
-
-<h3 id="toc_15">Kerckhoffs&#39; Principle:</h3>
-
-<p>Do not let a system&rsquo;s security rely on secrets. If the secrets are exposed, the system is immediately compromised.</p>
-
-<p>So apply this principle into machine learning, we should assume the adversary is aware of the learning algorithm and can obtain some data used to train the model.</p>
-
-<h3 id="toc_16">Conservative Design:</h3>
-
-<p>When access the security of a system, we should avoid to put limit on adversary&rsquo;s behavior. We should assume that the adversary has the broadest possible powers.</p>
-
-<p>Conversely, though the adversary too powerfully may lead to an inappropriate assessment on the system.</p>
-
-<h3 id="toc_17">Threat Modeling:</h3>
-
-<p>A completely secure system is infeasible. So author qualified the systems with <em>degree of security</em> -—the level of security expected against an adversary based on a <em>threat model</em> with a certain set of:</p>
-
-<ul>
-<li>objectives </li>
-<li>capabilities</li>
-<li>incentives</li>
-</ul>
-
-<h4 id="toc_18">To construct a threat model for a particular learning system:</h4>
-
-<ol>
-<li>Quantifies the security setting and objectives of that system, to develop criteria to measure success and quantify the level of security offered.</li>
-<li>Formalizing the risks and objectives, to identify potential limitations of the system and potential attacks.</li>
-<li>Identifies potential adversarial goals, resources and limitations.</li>
-</ol>
-
-<h4 id="toc_19">To evaluating a system:</h4>
-
-<ol>
-<li>Determining classed of attacks on the system.</li>
-<li>Evaluating the resilience of the system against those attacks</li>
-<li>Strengthening the system against those classes of attacks.</li>
-</ol>
-
-<h2 id="toc_20">1.3 Historical Roadmap</h2>
-
-<p>Some experience of author when developing this thesis, seems irrelevant to the mainstream.</p>
-
-<h2 id="toc_21">1.4 Dissertation Organization</h2>
-
-<p>As the title, no useful informations.</p>
 
                         
                       </div>
@@ -248,7 +133,7 @@
                 <div class="read-more clearfix">
                   <div class="more-left left">
                   
-                    <span class="date">2016/2/4 16:55 下午</span>
+                    <span class="date">2016/3/4 20:44 下午</span>
                     <span>posted in&nbsp;</span> 
           				  
           					    <span class="posted-in"><a href='Pattern%20Recognition.html'>Pattern Recognition</a></span>
@@ -265,72 +150,70 @@
               </div><!-- article -->
         
 			<div class="article">
-                <a class="clearlink" href="14540480758140.html">
+                <a class="clearlink" href="14569378376035.html">
                 
-                  <h1>Notes for "ICMLC2009-FabioRoli.pdf"</h1>
+                  <h1>Notes for Neural Network</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2 id="toc_0">Understanding:</h2>
-
-<h3 id="toc_1">1. What is adversarial classification? Basic concepts and motivations</h3>
-
-<p>The Classifier which take the adversary actions into account. It can develop according to the adversary actions.</p>
-
-<p>Its motivations is that the classical model cannot perform well in adversarial environments. Because the classical model is build and set up base on the random noise, it&rsquo;s also use for normal random noise environment. But in adversarial environment, the noise it face is adversarial noise, which is generated by adversary on purpose.</p>
-
-<h4 id="toc_2">Points:</h4>
+                        	<h2 id="toc_0">Notes:</h2>
 
 <ul>
-<li>The classical model does not fit well with adversarial tasks</li>
-<li>We need adversary-aware classification models</li>
+<li><p>If we set the initial \(\Theta\) be the same, the units in next layer with the same \(x_i\) will get the same result, then all units in the same layer will get the same output. At last, the cost function will also get same cost, so we will update the \(\Theta\) with same step.</p></li>
+<li><p>seems \(\delta^{(l)}_{i}\) means the cost of \(i_{th}\) unit in the \(l_{th}\) layer</p></li>
 </ul>
 
-<h3 id="toc_3">2. Adversary-aware classification</h3>
-
-<p>The classical model is build for the normal random noise. When facing the adversarial noise, its performance would be <em>significantly degrade</em>, while the adversary-aware model works better.</p>
-
-<h4 id="toc_4">Points:</h4>
+<h2 id="toc_1">Question about MLP:</h2>
 
 <ul>
-<li>Classification algorithms should take into account the adversary</li>
-<li>Classifier should be adaptive by exploiting any feedback that they can get about adversary&rsquo;s moves</li>
-</ul>
-
-<h3 id="toc_5">3. Vulnerability assessment in pattern classification systems</h3>
-
-<p>The hardness of evading the spam classifier is regard as the judging standard of vulnerability assessment in pattern classification systems, which use the <em>minimum numbers of features that needs to be modified to evade classifier</em> to calculate the score.</p>
-
-<h4 id="toc_6">Points:</h4>
+<li>How to decide the iteration times</li>
+<li>How to initialize the weight \(w_i\)
 
 <ul>
-<li>Classification accuracy is not everything in adversarial tasks</li>
-<li>Designer should maximize both accuracy and hardness of evasion of the classifier</li>
-</ul>
-
-<h3 id="toc_7">4. Defense strategies</h3>
-
-<p>Basically, the main strategies is to make the evasion too costly for the adversary. We normally implement this by using multiple classifiers with different detect strategies, to add up the cost of evasion.</p>
-
-<p>Also, for the close-source classifiers, we can make the classifiers activate randomly, which make the adversary needs to do much more detection ( \( \Theta(n) = 2^n \) ) , to figure out how the classifier work.</p>
-
-<h4 id="toc_8">Points:</h4>
+<li>solved. random initialized. But still didn&rsquo;t fully understand the formula。</li>
+</ul></li>
+<li>How to choose the learning rate \(\alpha\)</li>
+<li>How to choose the activation function
 
 <ul>
-<li>So for we have some state-of-the-art works on defense strategies against specific attacks for specific applications</li>
-<li>Defense strategies against different types of attacks for different applications are a matter of on-going research</li>
-</ul>
-
-<h3 id="toc_9">5. Conclusions and open research issues</h3>
-
-<p>There is few adversary-aware model, so does the general-purpose methods for vulnerability assessment and defenses against a variety of attacks.</p>
+<li>what&rsquo;s the different between sigmoid and other functions.</li>
+</ul></li>
+<li>How to decision the number of hidden layers and the number of the units in hidden layers
 
 <ul>
-<li>models base on various scenes</li>
-<li>integrated strategies for defense and vulnerability assessment</li>
-<li>put the test into reality but not simply static data sets</li>
+<li>simply explained. Mostly take 3 layers, and the hidden layers usually take a fixed number of units.</li>
+</ul></li>
+<li>What the \(\Delta^{(i)}\) does in the \(\Theta^{(i)}\) updating.</li>
+<li>What Back Propagation algorithm does in the training process? It is only used to calculate the partial derivatives of Cost Function that used to update the \(\Theta\)?</li>
+<li>Why every article about NN mentions that Perceptron can finish logical operations? Is there some theory about with logical operation we can simulate the human brain or sth?</li>
 </ul>
+
+<h2 id="toc_2">My understanding about the process of building a MLP(Multiple Layer Perceptron)</h2>
+
+<p>We can simply divide this into 2 part:<br/>
+1. Train the \(\Theta\) for the MLP.<br/>
+2. Use the trained \(\Theta\) to predict the input&rsquo;s classification.</p>
+
+<ol>
+<li><p>The second part is much more easier, let&rsquo;s first assume that we already have a set of trained \(\Theta\) , and we are now trying to use these \(\Theta\) to predict a testing samples.</p>
+
+<p><strong>The thing you need to do is just:</strong></p>
+
+<ol>
+<li>Multiply the input \(X\) with each layer&rsquo;s \(\Theta\)</li>
+<li>Do some small fixed in it (adding bias, choose the most possible option e.t.c.)</li>
+</ol>
+
+<p><strong>And you can get the prediction! What an easy job!</strong></p></li>
+<li><p>Then, we are now facing the training part</p>
+
+<ol>
+<li>First randomly initialized the \(\Theta\). (Why we don&rsquo;t simply use 1 or 0? Read this!)</li>
+<li>Build a function that we can calculate the difference between our prediction and the fact. We call it Cost Function, and use it to evaluate our prediction.</li>
+<li>Then, take that Cost Function as a measurement, we use a searching algorithm (i.e. Gradient Descents), to find out the best \(\Theta\) which could minimized the Cost.</li>
+</ol></li>
+</ol>
 
                         
                       </div>
@@ -339,7 +222,7 @@
                 <div class="read-more clearfix">
                   <div class="more-left left">
                   
-                    <span class="date">2016/1/29 14:14 下午</span>
+                    <span class="date">2016/3/3 0:57 上午</span>
                     <span>posted in&nbsp;</span> 
           				  
           					    <span class="posted-in"><a href='Pattern%20Recognition.html'>Pattern Recognition</a></span>
@@ -404,9 +287,11 @@
 
       	<p class="cat-list">
         
-            <a href="Pattern%20Recognition.html"><strong>Pattern Recognition</strong></a>
+            <a href="Adversary%20Learning.html"><strong>Adversary Learning</strong></a>
         
             <a href="TCPIP.html"><strong>TCP/IP</strong></a>
+        
+            <a href="Pattern%20Recognition.html"><strong>Pattern Recognition</strong></a>
          
         </p>
 
@@ -423,6 +308,24 @@
 	      
 		      
 			      <li class="post">
+			        <a href="14590503922928.html">USING EMET TO DISABLE EMET</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="14570954925763.html">Ideas for Neural Network</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="14569378376035.html">Notes for Neural Network</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="14545761055440.html">Note for "Thesis - Behavior of Machine Learning Algorithms in Adversarial Environments.pdf"(1)</a>
 			      </li>
 		     
@@ -434,16 +337,8 @@
 		     
 		  
 		      
-			      <li class="post">
-			        <a href="14540640466243.html">网络协议</a>
-			      </li>
-		     
 		  
 		      
-			      <li class="post">
-			        <a href="14540480758140.html">Notes for "ICMLC2009-FabioRoli.pdf"</a>
-			      </li>
-		     
 		   
 		  		</ul>
                 </div>
