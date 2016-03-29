@@ -1,0 +1,369 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+    
+  Notes for Neural Network - 雪地
+  
+  </title>
+  
+  
+  <link href="atom.xml" rel="alternate" title="雪地" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+  function before_search(){
+    var searchVal = 'site:yinzo.github.io ' + document.getElementById('search_input').value;
+    document.getElementById('search_q').value = searchVal;
+    return true;
+  }
+</script>
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+
+  <section class="top-bar-section">
+  <div class="row">
+      <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
+        <ul id="main-menu" class="left">
+        <li id="menu_item_index"><a href="index.html">HOME</a></li>
+        <li id="menu_item_archives"><a href="archives.html">Archives</a></li>
+        <li id="menu_item_about"><a href="about.html">ABOUT</a></li>
+        </ul>
+
+        <ul class="right" id="search-wrap">
+          <li>
+<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+    <input type="hidden" id="search_q" name="q" value="" />
+    <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
+</form>
+</li>
+          </ul>
+      </div></div>
+  </div>
+  </section>
+
+</nav>
+
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; 雪地</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+       
+       <li><a href="index.html">HOME</a></li>
+    <li><a href="archives.html">Archives</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+
+    <li><label>Categories</label></li>
+
+        
+            <li><a href="Adversary%20Learning.html">Adversary Learning</a></li>
+        
+            <li><a href="TCPIP.html">TCP/IP</a></li>
+        
+            <li><a href="Pattern%20Recognition.html">Pattern Recognition</a></li>
+         
+
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+
+        <section id="main-content" role="main" class="scroll-container">
+        
+       
+
+ <script type="text/javascript">
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
+</script>
+<div class="row">
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>Notes for Neural Network</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2016/3/3 0:57 上午</span>
+
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='Pattern%20Recognition.html'>Pattern Recognition</a></span>
+           
+         
+          <span class="comments">
+            
+
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <h2 id="toc_0">Notes:</h2>
+
+<ul>
+<li><p>If we set the initial \(\Theta\) be the same, the units in next layer with the same \(x_i\) will get the same result, then all units in the same layer will get the same output. At last, the cost function will also get same cost, so we will update the \(\Theta\) with same step.</p></li>
+<li><p>seems \(\delta^{(l)}_{i}\) means the cost of \(i_{th}\) unit in the \(l_{th}\) layer</p></li>
+</ul>
+
+<h2 id="toc_1">Question about MLP:</h2>
+
+<ul>
+<li>How to decide the iteration times</li>
+<li>How to initialize the weight \(w_i\)
+
+<ul>
+<li>solved. random initialized. But still didn&rsquo;t fully understand the formula。</li>
+</ul></li>
+<li>How to choose the learning rate \(\alpha\)</li>
+<li>How to choose the activation function
+
+<ul>
+<li>what&rsquo;s the different between sigmoid and other functions.</li>
+</ul></li>
+<li>How to decision the number of hidden layers and the number of the units in hidden layers
+
+<ul>
+<li>simply explained. Mostly take 3 layers, and the hidden layers usually take a fixed number of units.</li>
+</ul></li>
+<li>What the \(\Delta^{(i)}\) does in the \(\Theta^{(i)}\) updating.</li>
+<li>What Back Propagation algorithm does in the training process? It is only used to calculate the partial derivatives of Cost Function that used to update the \(\Theta\)?</li>
+<li>Why every article about NN mentions that Perceptron can finish logical operations? Is there some theory about with logical operation we can simulate the human brain or sth?</li>
+</ul>
+
+<h2 id="toc_2">My understanding about the process of building a MLP(Multiple Layer Perceptron)</h2>
+
+<p>We can simply divide this into 2 part:<br/>
+1. Train the \(\Theta\) for the MLP.<br/>
+2. Use the trained \(\Theta\) to predict the input&rsquo;s classification.</p>
+
+<ol>
+<li><p>The second part is much more easier, let&rsquo;s first assume that we already have a set of trained \(\Theta\) , and we are now trying to use these \(\Theta\) to predict a testing samples.</p>
+
+<p><strong>The thing you need to do is just:</strong></p>
+
+<ol>
+<li>Multiply the input \(X\) with each layer&rsquo;s \(\Theta\)</li>
+<li>Do some small fixed in it (adding bias, choose the most possible option e.t.c.)</li>
+</ol>
+
+<p><strong>And you can get the prediction! What an easy job!</strong></p></li>
+<li><p>Then, we are now facing the training part</p>
+
+<ol>
+<li>First randomly initialized the \(\Theta\). (Why we don&rsquo;t simply use 1 or 0? Read this!)</li>
+<li>Build a function that we can calculate the difference between our prediction and the fact. We call it Cost Function, and use it to evaluate our prediction.</li>
+<li>Then, take that Cost Function as a measurement, we use a searching algorithm (i.e. Gradient Descents), to find out the best \(\Theta\) which could minimized the Cost.</li>
+</ol></li>
+</ol>
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+          <a href="14570954925763.html" 
+          title="Previous Post: Ideas for Neural Network">&laquo; Ideas for Neural Network</a>
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="14545761055440.html" 
+          title="Next Post: Note for "Thesis - Behavior of Machine Learning Algorithms in Adversarial Environments.pdf"(1)">Note for "Thesis - Behavior of Machine Learning Algorithms in Adversarial Environments.pdf"(1) &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          <div id="disqus_thread"></div>
+<script>
+/**
+* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+
+s.src = '//yinzo.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
+
+ <div class="large-4 medium-4 columns">
+  <div class="hide-for-small">
+    <div id="sidebar" class="sidebar">
+          <div id="site-info" class="site-info">
+            
+                <h1>雪地</h1>
+                <div class="site-des"></div>
+                <div class="social">
+
+
+
+
+
+
+
+
+
+
+
+  <a class="rss" href="atom.xml" title="RSS">RSS</a>
+                
+              	 </div>
+          	</div>
+              <div id="site-categories" class="side-item ">
+                <div class="side-header">
+                  <h2>Categories</h2>
+                </div>
+                <div class="side-content">
+
+      	<p class="cat-list">
+        
+            <a href="Adversary%20Learning.html"><strong>Adversary Learning</strong></a>
+        
+            <a href="TCPIP.html"><strong>TCP/IP</strong></a>
+        
+            <a href="Pattern%20Recognition.html"><strong>Pattern Recognition</strong></a>
+         
+        </p>
+
+
+                </div>
+              </div>
+
+              <div id="site-categories" class="side-item">
+                <div class="side-header">
+                  <h2>Recent Posts</h2>
+                </div>
+                <div class="side-content">
+                <ul class="posts-list">
+	      
+		      
+			      <li class="post">
+			        <a href="14590503922928.html">USING EMET TO DISABLE EMET</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="14570954925763.html">Ideas for Neural Network</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="14569378376035.html">Notes for Neural Network</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="14545761055440.html">Note for "Thesis - Behavior of Machine Learning Algorithms in Adversarial Environments.pdf"(1)</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="14540640657446.html">封装，与协议的分层</a>
+			      </li>
+		     
+		  
+		      
+		  
+		      
+		   
+		  		</ul>
+                </div>
+              </div>
+        </div><!-- sidebar -->
+      </div><!-- hide for small -->
+</div><!-- large 4 -->
+
+</div><!-- row -->
+
+ <div class="page-bottom clearfix">
+  <div class="row">
+   <p class="copyright">Copyright &copy; 2016
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.
+Modified by <a target="_blank" href="http://yinz.xyz">Yinzo</a>.</p>
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+
+  
+    
+
+    <script src="asset/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+      function fixSidebarHeight(){
+        var w1 = $('.markdown-body').height();
+          var w2 = $('#sidebar').height();
+          if (w1 > w2) { $('#sidebar').height(w1); };
+      }
+      $(function(){
+        fixSidebarHeight();
+      })
+      $(window).load(function(){
+          fixSidebarHeight();
+      });
+     
+    </script>
+
+    <script src="asset/chart/all-min.js"></script><script type="text/javascript">$(function(){    var mwebii=0;    var mwebChartEleId = 'mweb-chart-ele-';    $('pre>code').each(function(){        mwebii++;        var eleiid = mwebChartEleId+mwebii;        if($(this).hasClass('language-sequence')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"><div>').insertAfter(ele);            ele.hide();            var diagram = Diagram.parse($(this).text());            diagram.drawSVG(eleiid,{theme: 'simple'});        }else if($(this).hasClass('language-flow')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"><div>').insertAfter(ele);            ele.hide();            var diagram = flowchart.parse($(this).text());            diagram.drawSVG(eleiid);        }    });});</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
+
+
+  </body>
+</html>
