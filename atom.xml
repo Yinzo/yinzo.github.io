@@ -4,7 +4,7 @@
   <title><![CDATA[雪地]]></title>
   <link href="http://yinzo.github.io/atom.xml" rel="self"/>
   <link href="http://yinzo.github.io/"/>
-  <updated>2016-03-29T19:37:54+08:00</updated>
+  <updated>2016-04-17T00:47:22+08:00</updated>
   <id>http://yinzo.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -13,26 +13,46 @@
   <generator uri="http://www.mweb.im/">MWeb</generator>
   
   <entry>
-    <title type="html"><![CDATA[USING EMET TO DISABLE EMET]]></title>
+    <title type="html"><![CDATA[Python Decorator的一些细节]]></title>
+    <link href="http://yinzo.github.io/14594228486348.html"/>
+    <updated>2016-03-31T19:14:08+08:00</updated>
+    <id>http://yinzo.github.io/14594228486348.html</id>
+    <content type="html"><![CDATA[
+<p>装饰器函数并不是在被修饰函数调用的时候才执行，而是被修饰函数这个『对象』被实例化的时候调用。</p>
+
+<p>而且当一个文件（模块）被import的时候，文件内的<strong>所有</strong>装饰器就会被激活执行。因为装饰器语句相当于文件中的普通语句，而非函数声明或者类声明的一部分。</p>
+
+<p>当我们对一个类里面的普通函数使用修饰符进行修饰的时候，如果我们正常调用这一函数，会报错提示这一函数变成了unbound method，缺少了类中函数默认的首参数self。这一问题是由于经过装饰器修饰的函数，实际上是被传递到了装饰器函数中，在这个装饰器函数中被独立调用的，而非被其原先所在的类对象调用。因此在这个装饰器函数中，没有其原来所在的类来对它进行调用，导致提示unbound method.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[通过EMET来禁用EMET——EMET的禁用与绕过思路讲解]]></title>
     <link href="http://yinzo.github.io/14590503922928.html"/>
     <updated>2016-03-27T11:46:32+08:00</updated>
     <id>http://yinzo.github.io/14590503922928.html</id>
     <content type="html"><![CDATA[
+<p>原文链接：<a href="https://www.fireeye.com/blog/threat-research/2016/02/using_emet_to_disabl.html">https://www.fireeye.com/blog/threat-research/2016/02/using_emet_to_disabl.html</a><br/>
+注：本文并未由任何媒体进行翻译发布。搜索引擎中搜到的国内媒体仅为标题翻译进行推送。</p>
+
 <p>微软的Enhanced Mitigation Experience Toolkit (EMET)是一项提高程序安全性的项目。它通过动态链接库(DLL)来运行在『受保护』的程序中，并且做一些修改来使得破解更加困难。</p>
 
-<p>我们已经见过很多次EMET在过去的研究或者攻击中被绕过了[2, 3, 4, 5, 6, 7, 8]。通常来说，微软都是通过修改或者增加一些安全设计来搞定现有的绕过问题。 EMET设计目的是使得破解行为的成本升高，而不是一个『傻瓜式的防破解方案』[1]。所以，只要拥有在进程空间中读写的能力，我们就能搞定所有的安全设计[2]。</p>
+<p>我们已经见过很多次EMET在过去的研究或者攻击中被绕过了[2, 3, 4, 5, 6, 7, 8]。通常来说，微软都是通过修改或者增加一些安全设计来搞定现有的绕过问题。 EMET的设计目的是使得破解行为的成本升高，而不是一个『傻瓜式的防破解方案』[1]。所以，只要拥有在进程空间中读写的能力，理论上我们就能搞定所有的安全设计[2]。</p>
 
-<p>如果一个攻击者能够毫不费力地绕过EMET，那这就完全打破了EMET提高破解成本的最初目的了。我们在新技术那一段展示了一种搞掉EMET的技术。微软在EMET5.5中打了个补丁来解决这个问题。</p>
+<p>如果一个攻击者能够毫不费力地绕过EMET，那这就完全打破了EMET提高破解成本的最初目的。我们在新技术那段展示了一种禁用EMET的技术。微软在EMET5.5中打了个补丁来解决这个问题。</p>
 
 <p>讨论完这个新技术之后，我们来说说之前提到的用来绕过或搞掉EMET的那个技术。如果你想了解关于EMET是怎么实现保护程序的，请参考附录。</p>
 
+<span id="more"></span><!-- more -->
+
 <h2 id="toc_0">禁用EMET的新技术</h2>
 
-<p>EMET根据系统结构选择注入emet.dll或者emet64.dll到每一个被保护的进程中，安装Windows API Hooks来导入kernel32.dll, ntdll.dll或者kernelbase.dll之类的DLL里面的函数。这些hook使得EMET能够分析所有通过关键API调用的代码，并判断他们是否合法。如果代码被认为是合法的，EMET的hook会跳回请求的API处，否则会触发一个exception。</p>
+<p>EMET会根据系统的架构，来选择注入emet.dll还是emet64.dll到每一个被保护的进程中，以此在Windows API（比如kernel32.dll, ntdll.dll或者kernelbase.dll里面的函数）hook上。这些hook使得EMET能够分析所有通过关键API调用的代码，并判断他们是否合法。如果代码被认为是合法的，EMET的hook会跳回请求的API处，否则会触发一个exception。</p>
 
-<p>但是，EMET里面存在着一段代码是用来卸载EMET的。这些代码系统地禁用EMET的保护，并且把受保护的程序变回没有保护的初始状态。任何人都能简单地定位这段代码并调用它就能完全禁用EMET。在EMET.dll v5.2.0.1中，这个函数位于0x65813中，跳到这段代码上并调用它，就能弄掉EMET的hooks。</p>
+<p>但是，EMET里面存在着这样一段代码用来卸载EMET。这段代码整个禁用EMET的保护，并且把受保护的程序还原为无保护的初始状态。任何人都能简单地定位这段代码，并调用它，就能够完全禁用EMET的保护。在EMET.dll v5.2.0.1中这个函数位于0x65813中，跳到这段代码上并调用它就能弄掉EMET的hooks。</p>
 
-<p>这一特性的存在本来是因为emet.dll里面有用于完全退出进程的代码，为了方便而在DllMain里面留了个入口。</p>
+<p>这一特性之所以存在，是因为emet.dll里面的用于完全退出进程的代码，为了方便，而在DllMain里面留了个入口。</p>
 
 <p>DllMain的函数原型：</p>
 
@@ -43,19 +63,18 @@
 );
 </code></pre>
 
-<p>需要注意的是，第一个参数传递是DLL的地址，第二个是PE loader用来说明DLL是否被加载的布尔值。如果fdwReason是1，说明DLL已经被加载或者初始化。如果是0（DLL_PROCESS_DETACH），emet.dll会初始化<br/>
-unload的代码，并去除它的hook和exception处理句柄，由此简单地去除EMET的检查。不过这并不会把EMET从内存中移除，它只是保障了所有的保护都被禁用了。</p>
+<p>需要注意的是，第一个参数传递是DLL的地址，第二个是PE loader用来指明DLL是否被加载。如果fdwReason是1，说明DLL已经被加载或者初始化。如果是0（DLL_PROCESS_DETACH），emet.dll会初始化卸载的代码，并去除它的hook和exception处理句柄，轻而易举地停止了EMET的检查。不过这并不会把EMET从内存中移除，它只是确保了所有的保护都被禁用了。</p>
 
-<p>这种特性可能存在与所有基于检测的产品之中，也就是那些依赖hook的并以此保证产品不被破坏，就一定存在一个unload所有保护的方法。EMET的DllMain能够通过一个Return Oriented Programming (ROP)程序来找到，并带着正确的参数跳到DllMain的对应位置并禁用保护，这个我们下一节来详细说。</p>
+<p>这种特性可能存在与所有基于探测的产品之中，也就是那些依赖hook的并以此保证产品不被破坏，一定存在一个卸载所有保护的方法。EMET的DllMain能够通过一个Return Oriented Programming (ROP)程序来找到，并带着正确的参数跳到DllMain的对应位置，禁用保护。这个我们下一节来详细说。</p>
 
 <pre><code>BOOL WINAPI DllMain (GetModuleHandleW(&quot;EMET.dll&quot;) ,DLL_PROCESS_DETACH , NULL);
 </code></pre>
 
-<p>GetModuleHandleW函数没有被EMET hook上，因为它不被认为是关键Windows API。我们使用这个函数来取得emet.dll的地址。因为PE header位于基础地址上，我们必须通过它找到DllMain的地址并传递所需的参数。</p>
+<p>GetModuleHandleW函数没有被EMET hook上，因为EMET认为它不是关键Windows API。我们使用这个函数来搞到emet.dll的地址。因为PE header位于基地址上，我们必须通过它找到DllMain的地址来传递所需的参数。</p>
 
 <h2 id="toc_1">禁用EMET - 细节</h2>
 
-<p>在EMET.dll v5.2.0.1中，在emet.dll的0xF2958上有一个全局变量。EMET通过这个变量作为一个structure数组指针，指向被绕行的API（detoured APIs），每一个structure大小为0x18 bytes，如下所示：</p>
+<p>在EMET.dll v5.2.0.1中，在emet.dll的0xF2958上有一个全局变量。EMET通过这个变量作为一个structure数组指针，指向被绕过的API（detoured APIs），每一个结构体的大小为0x18 bytes，如下所示：</p>
 
 <pre><code>struct Detoured_API {
     BOOL isActive;              // isActive field shows the hooking status, Active: 0x1
@@ -67,7 +86,7 @@ unload的代码，并去除它的hook和exception处理句柄，由此简单地�
 };
 </code></pre>
 
-<p>最后三个变量和这篇文章没有关系。DetouredAPIConfig保存着一个指针指向另一个structure我们叫做Detoured_API_Config，大小是0x18 bytes.</p>
+<p>最后三个变量和这篇文章没有关系。DetouredAPIConfig保存着一个指针指向另一个结构体Detoured_API_Config，大小是0x18 bytes.</p>
 
 <pre><code>struct Detoured_API_Config {
     PVOID DetouredWindowsAPI;     // pointer to the detoured Windows API
@@ -83,24 +102,24 @@ unload的代码，并去除它的hook和exception处理句柄，由此简单地�
 
 <p>用于去除所有EMET的hook的函数位于0x2798，如图1所示。</p>
 
-<p><img src="media/14590503922928/Figure1.png" alt="Figure1"/><br/>
+<p><img src="http://ww4.sinaimg.cn/large/7d52f1ffjw1f2erytp63hj20r20g8tdp.jpg" alt="Figure1"/><br/>
 图1： 位于0x27298上用于去除EMET hook的函数</p>
 
-<p>为了unload，位于0x27298的函数把所有Detoured_API结构都循环一次，并把对应的Detoured_API_Config结构里面的DetouredFunctionPrologue置零。然后，调用Patch_Functions（位于0x27B99的函数），用于给所有detoured Windows API打patch。函数使用了memcpy函数(如图2)来把API函数头部代码片段复制回绕过函数中，用于把它退回成绕过之前的状态。</p>
+<p>为了卸载hook，位于0x27298的函数把所有Detoured_API结构都循环一次，并把对应的Detoured_API_Config结构里面的DetouredFunctionPrologue置零。然后，调用Patch_Functions（位于0x27B99的函数），给所有detoured Windows API做一些小修改。函数使用了memcpy函数(如图2)来把API函数头部代码片段复制到被绕过函数中，用于把它恢复成被绕过之前的状态。</p>
 
-<p><img src="media/14590503922928/Figure2.png" alt="Figure2"/><br/>
+<p><img src="http://ww2.sinaimg.cn/large/7d52f1ffjw1f2erza8hyqj20i208cn0p.jpg" alt="Figure2"/><br/>
 图2：删除绕过的代码<br/>
-循环完所有被绕过的API并通过memcpy打patch之后，你可以看到所有Windows API的绕过都消失了，如图3、图4，分别是执行前后。</p>
+循环完所有被绕过的API并被memcpy修改之后，你可以看到所有Windows API的绕过都消失了，如图3、图4，分别是执行前后。</p>
 
-<p><img src="media/14590503922928/Figure3.png" alt="Figure3"/><br/>
+<p><img src="http://ww3.sinaimg.cn/large/7d52f1ffjw1f2erzqpz4vj20js056jsa.jpg" alt="Figure3"/><br/>
 图3：调用DllMain之前</p>
 
-<p><img src="media/14590503922928/Figure4.png" alt="Figure4"/><br/>
+<p><img src="http://ww2.sinaimg.cn/large/7d52f1ffjw1f2es0idbffj20je04r0tf.jpg" alt="Figure4"/><br/>
 图4：调用DllMain之后</p>
 
-<p>之后，EMET继续禁用EAF和EAF+的保护。在位于0x609D0的函数中，EMET将置零并重新初始化CONTEXT结构，并且操作debug注册器（如图5）但是， 在函数的尾部， EMET调用NtSetContextThread，使得debug注册器被置零，并由此禁用了EAF和EAF+的保护。</p>
+<p>然后EMET继续禁用EAF和EAF+的保护。在位于0x609D0的函数中，EMET置零并重新初始化CONTEXT结构，并且操作debug注册器（如图5）但是，在函数的尾部， EMET调用NtSetContextThread，使得debug注册器被置零，并由此禁用了EAF和EAF+的保护。</p>
 
-<p><img src="media/14590503922928/Figure5.png" alt="Figure5"/><br/>
+<p><img src="http://ww2.sinaimg.cn/large/7d52f1ffjw1f2es0u7g5xj20f206n3zw.jpg" alt="Figure5"/><br/>
 图5：EAF和EAF+的禁用代码</p>
 
 <p>最后，在位于0x60FBF的函数的末尾，EMET调用了位于0x60810的RemoveVectoredExceptionHandler函数，移除了AddVectoredExceptionHandler函数里的定义的exception句柄。</p>
@@ -166,17 +185,17 @@ PUSH ESI # CALL ECX # RETN // call OEP of EMET.dll with EMET_DLL_BASE on top of 
 // and All hooks are gone Since EMET.dll just received a DETACH signal
 </code></pre>
 
-<h2 id="toc_3">之前的EMET绕过技术</h2>
+<h2 id="toc_3">以前的EMET绕过技术</h2>
 
 <p>之前用于绕过EMET的技术都基于设计和实现上的失误，可能是因为一些模块和API不太安全。我们会描述一些绕过的技巧。</p>
 
-<p>因为LoadLibrary是一个关键API，如果被返回(return)命令或者跳出(jump)命令调用，EMET4.1会抛出一个exception，但是Jared DeMott向我们展示了，通过调用命令来调用LoadLibrary API，而不是跳出或返回命令，绕过了EMET LoadLibrary的保护[2]。</p>
+<p>因为LoadLibrary是一个关键API，如果被『返回(return)』命令或者『跳出(jump)』命令调用，EMET4.1会抛出一个exception，但是Jared DeMott向我们展示了，通过『调用(call)』命令来调用LoadLibrary API，而不是『跳出(jump)』或『返回(return)』命令，绕过了EMET LoadLibrary的保护[2]。</p>
 
 <p>LoadLibrary API一直被监视着，防止被用于调用UNC路径（比如说一些恶意dll）。Aaron Portnoy展示了我们能够通过MoveFile API（EMET4.0没有监视这个API）来绕过它，并下载一个能够被LoadLibrary API加载的DLL文件[3]。</p>
 
-<p>EMET4.1的调用检查保护(Caller check protection)，是通过检查一个关键Windows API是否被通过调用、返回、跳出命令来调用，来防止ROP程序的执行。其中，后两种命令被广泛运用与ROP程序。DeMott展示了一个通过执行一个合法的关键API调用，来绕过调用检查保护的方法[2]。DeMott没有直接通过返回或者跳出命令来调用VirtualAlloc API（这会导致EMET抛出exception），而是在一个已被加载的模块中，使用调用命令来调用。并且，通过返回调用命令所在的地址，我们成功绕过EMET的介入来调用关键Windows API。</p>
+<p>EMET4.1的调用检查保护(Caller check protection)，是通过检查关键Windows API是否被通过调用、返回、跳出命令来调用，以防止ROP程序的执行。其中，后两种命令被广泛运用与ROP程序。DeMott展示了一个通过执行一个合法的关键API调用，来绕过调用检查保护的方法[2]。DeMott没有直接通过返回或者跳出命令来调用VirtualAlloc API（这会导致EMET抛出exception），而是在一个已被加载的模块中，使用调用命令来调用。并且，通过返回调用命令所在的地址，我们成功调用了关键Windows API而没被EMET干扰。</p>
 
-<p>关键Windows API位于kernel32.dll, ntdll.dll 和 kernelbase.dll中。EMET3.5吧前两个模块中的函数勾上hook，但是没有处理kernelbase.dll。Shahriyar Jalayeri利用这一事实来执行位于kernelbase模块中的VirtualProtect API，来使得内存可写可执行[4]。但是，在EMET4.0发布以后，函数保护应用到了几乎最低等级的关键Windows API上面。</p>
+<p>关键Windows API都位于kernel32.dll, ntdll.dll和 kernelbase.dll中。EMET3.5把前两个模块中的函数挂上hook，但是没有处理kernelbase.dll。Shahriyar Jalayeri利用这一事实来执行位于kernelbase模块中的VirtualProtect API，来使得内存可写可执行[4]。但是，在EMET4.0发布以后，函数保护应用到了几乎最低等级的关键Windows API上面。</p>
 
 <p>Jalayeri还通过使用 <u>KUSER</u>SHARED_DATA结构(它的地址固定在0x7ffe0000上)来绕过EMET。位于0x300地址上的是一个SystemCallStub指针，指向一个执行系统级命令的函数KiFastSystemCall。由此，他能够通过指明EAX注册器里的地址（比如0x0D7指向ZwProtectVirtualMemory），来调用任何系统级调用。而且Jalayeri能够通过返回指令来修改函数头部，使其失效，导致EMET完全无效。</p>
 
@@ -190,11 +209,73 @@ PUSH ESI # CALL ECX # RETN // call OEP of EMET.dll with EMET_DLL_BASE on top of 
 
 <p>经过分析，我们发现EMET v2.1也在0xC410上含有相同的全局开关，由此，我们怀疑EMET从最早的版本开始就含有这一固定地址的全局开关了。这个问题直到EMET5.0的发布才修复。</p>
 
-<p>Offensive Security还发现，EMET5.0吧这个全局变量放到了大型结构（比如CONFIG_STRUCT）里的堆里面，大小是0x560 bytes [7]。但是，思路还是一样的，因为还是存在一个位于固定地址0x0AA84C的指针指向CONFIG_STRUCT。作为保护，EMET使用EncodePointer来把指针的值编码了一下，并且每次EMET执行保护的时要检查这个值，就会调用DecodePointer函数来解码它以获得CONFIG_STRUCT的地址。把地址CONFIG_STRUCT+0x558 置零，能够关掉EMET的大部分保护。同时，通过位于CONFIG_STRUCT+0x518的指针，调用没被hook的函数NtSetContextThread，就能关掉EAF和EAF+。</p>
+<p>Offensive Security还发现，EMET5.0把这个全局变量放到了大型结构（比如CONFIG_STRUCT）里的堆里面，大小是0x560 bytes [7]。但是，思路还是一样的，因为还是存在一个位于固定地址0x0AA84C的指针指向CONFIG_STRUCT。作为保护，EMET使用EncodePointer来把指针的值编码了一下，并且每次EMET执行保护的时要检查这个值，就会调用DecodePointer函数来解码它以获得CONFIG_STRUCT的地址。把地址CONFIG_STRUCT+0x558 置零，能够关掉EMET的大部分保护。同时，通过位于CONFIG_STRUCT+0x518的指针，调用没被hook的函数NtSetContextThread，就能关掉EAF和EAF+。</p>
 
-<p>在EMET5.1里面，Offensive Security发现位于0xF2A30的全局变量里面，保存了编码过的指针值，指向一些结构(比如EMETd)[8]。这个EMETd里面有一个指针域，指向CONFIG_STRUCT结构，也就是那个在CONFIG_STRUCT+0x558里保存了全局开关那个，以此作为一层额外的保护层，保护编码过的指针。EMET5.1使用cpuid命令来把返回的结果和编码过的指针值进行异或。想要解码CONFIG_STRUCT，他们使用了emet.dll里位于0x67372的代码，把EMETd解码出来，然后返回解码了的CONFIG_STRUCT的指针。因为那些全局开关（比如CONFIG_STRUCT+0x558）都储存在只读内存页中，Offensive Security找到了一个方法，通过EMET里面没被hook的指针来修改里面的值。他们用了一个没hook的指针指向ntdll！位于CONFIG_STRUCT+0x1b8的NtProtectVirtualMemory函数把它标记为可写内存页，所以他们能够把位于CONFIG_STRUCT+0x558的全局开关置零。想要禁用EAF和EAF+，他们用了一个指向NtSetContextThread的没hook指针，然后剩下的就和禁用EMET5.0一样了。</p>
+<p>在EMET5.1里面，Offensive Security发现位于0xF2A30的全局变量里面，保存了编码过的指针值，指向一些结构(比如EMETd)[8]。这个EMETd里面有一个指针域，指向CONFIG_STRUCT结构，也就是那个在CONFIG_STRUCT+0x558里保存了全局开关那个，以此作为一层额外的保护层，保护编码过的指针。EMET5.1使用cpuid命令来把返回的结果和编码过的指针值进行异或。想要解码CONFIG_STRUCT，他们使用了emet.dll里位于0x67372的代码，把EMETd解码出来，然后返回解码了的CONFIG_STRUCT的指针。因为那些全局开关（比如CONFIG_STRUCT+0x558）都储存在只读内存页中，Offensive Security找到了一个方法，通过EMET里面没被hook的指针来修改里面的值。他们用了一个没hook的指针指向位于CONFIG_STRUCT+0x1b8的ntdll!NtProtectVirtualMemory函数，来把它标记为可写内存页，所以他们能够把位于CONFIG_STRUCT+0x558的全局开关置零。想要禁用EAF和EAF+，他们用了一个指向NtSetContextThread的没hook指针，然后剩下的就和禁用EMET5.0一样了。</p>
 
 <h2 id="toc_5">结论</h2>
+
+<p>这个新技术使用EMET来禁用EMET保护，非常的可靠并且相比之前的绕过或禁用技巧更加容易利用。这整个技术都能包含到一个简单粗暴的ROP链中。你只需要弄出一个加载GetModuleHandleW的DLL（比如mshtml.dll）的地址，而不需要进程空间里面的完整可读能力。因为emet.dll里面的DllMain函数被导出了，所以绕过已经不需要对应版本来设置地址，它适用于所有版本的EMET（4.1, 5.1, 5.2, 5.2.0.1）。</p>
+
+<p>在EMET的<em>里面</em>，通过可用的内部代码来禁用EMET，给了我们一直全新的攻击思路。定位DllMain并且调用它来关掉EMET的保护，相比一个一个地绕过保护，然后偷偷改掉其中的参数来说，简直轻松加愉快。</p>
+
+<p>鸣谢：Michael Sikorski, Dan Caselden, Corbin Souffrant, Genwei Jiang, and Matthew Graeber</p>
+
+<h2 id="toc_6">附录</h2>
+
+<h3 id="toc_7">EMET的保护</h3>
+
+<p>EMET经过了许多年的迭代，以下对它的功能作一些简短的描述：</p>
+
+<h4 id="toc_8">EMET 1.x， 发布于 2009年10月27日</h4>
+
+<p>Structured Exception Handling Overwrite Protection (SEHOP)：提供对抗重写异常处理句柄的保护。<br/>
+Dynamic Data Execution Prevention (DEP)：加强了DEP，使得一些数据类如堆和栈都不能执行。<br/>
+NULL page allocation：修复间接引用空指针导致的漏洞<br/>
+Heap spray allocation: 防止Heap spray攻击。</p>
+
+<h4 id="toc_9">EMET 2.x， 发布于 2010年9月2日</h4>
+
+<p>Mandatory Address Space Layout Randomization (ASLR)：加强了模块地址的随机化，即使是以前没有使用ASLR进行编译的模块。</p>
+
+<p>Export Address Table Access Filtering (EAF)：普通的shellcode在已加载的模块导出的函数中迭代，来解析关键Windows API。这些通常由kernel32.dll, ntdll.dll和kernelbase.dll导出。EMET使用保存在debug注册器（比如DR0）的硬件断点来停止那些尝试读取这些模块的导出表的动作，并且让EMET验证它是否合法。</p>
+
+<h4 id="toc_10">EMET 3.x， 发布于 2012年5月25日</h4>
+
+<p>从ROPGuard中导入了用于对抗ROP的策略。<br/>
+导入库时的检查：防止从UNC路径中导入DLL。<br/>
+ROP 策略 - 内存保护检查：保护关键Windows API，类似VirtualProtect，会使得栈被标记为可执行。<br/>
+ROP 策略 - 调用检查：防止关键Windows API被通过返回或跳出命令执行；<br/>
+ROP 策略 - Stack Pivot：检测是否被进行Stack Pivot攻击。<br/>
+ROP 策略 - 模拟执行流：通过手动操作栈注册器来模拟执行，以此检查它是否在没有使用调用命令的情况下调用了Windows API。这被认为是EMET在探测ROP程序。<br/>
+仔细设计ASLR：在已加载的模块地址上增加了随机的8位熵。</p>
+
+<h4 id="toc_11">EMET 4.x， 发布于 2013年4月18日</h4>
+
+<p>Deep Hooks:当这个特性开启，EMET会把所有等级的Windows API都hook上。</p>
+
+<p>抗绕过：因为EMET在已经hook的Windows API函数头部放了一个跳出命令，攻击者能够构造一个ROP，能够返回跳出命令之后的代码上。这项保护尝试阻止这一绕过。</p>
+
+<p>禁用函数：默认禁止调用ntdll!LdrHotpatchRoutine函数来防止DEP/ASLR被绕过。也可以添加其他函数。</p>
+
+<p>认证信任：在认证链信任检测步骤，提供更多的检查和验证。一般这只支持IE。</p>
+
+<h4 id="toc_12">EMET 5.x， 发布于 2014年7月31日</h4>
+
+<p>加入Attack Surface Reduction (ASR)：允许添加配置列表来进制特定的应用不允许加载某些模块。</p>
+
+<p>EAF+：类似EAF，它能保护关键模块导出表如kernel32.dll, ntdll.dll和kernelbase.dll。它同时也能探测栈指针是否指向栈外部的某处，或者frame和栈的指针是否一致。</p>
+
+<h2 id="toc_13">参考</h2>
+
+<p>[1] “Inside EMET 4.0” by Elias Bachaalany, <a href="http://recon.cx/2013/slides/Recon2013-Elias%20Bachaalany-Inside%20EMET%204.pdf">http://recon.cx/2013/slides/Recon2013-Elias%20Bachaalany-Inside%20EMET%204.pdf</a><br/>
+[2] “Bypassing EMET 4.1” by Jared DeMott, <a href="http://labs.bromium.com/2014/02/24/bypassing-emet-4-1/">http://labs.bromium.com/2014/02/24/bypassing-emet-4-1/</a><br/>
+[3] “Bypassing All of The Things” by Aaron Portnoy, <a href="https://www.exodusintel.com/files/Aaron_Portnoy-Bypassing_All_Of_The_Things.pdf">https://www.exodusintel.com/files/Aaron_Portnoy-Bypassing_All_Of_The_Things.pdf</a><br/>
+[4] &ldquo;Bypassing EMET 3.5&rsquo;s ROP Mitigations&rdquo; by Shahriyar Jalayeri, <a href="https://github.com/shjalayeri/emet_bypass">https://github.com/shjalayeri/emet_bypass</a><br/>
+[5] &ldquo;Bypassing EMET Export Address Table Access Filtering feature&rdquo; by Piotr Bania, <a href="http://piotrbania.com/all/articles/anti_emet_eaf.txt">http://piotrbania.com/all/articles/anti_emet_eaf.txt</a><br/>
+[6] &ldquo;Disarming Enhanced Mitigation Experience Toolkit (EMET)&rdquo; by Offensive-Security, <a href="https://www.offensive-security.com/vulndev/disarming-enhanced-mitigation-experience-toolkit-emet/">https://www.offensive-security.com/vulndev/disarming-enhanced-mitigation-experience-toolkit-emet/</a><br/>
+[7] &ldquo;Disarming EMET v5.0&rdquo; by Offensive-Security, <a href="https://www.offensive-security.com/vulndev/disarming-emet-v5-0/">https://www.offensive-security.com/vulndev/disarming-emet-v5-0/</a><br/>
+[8] &ldquo;Disarming and Bypassing EMET 5.1&rdquo; by Offensive-Security, <a href="https://www.offensive-security.com/vulndev/disarming-and-bypassing-emet-5-1/">https://www.offensive-security.com/vulndev/disarming-and-bypassing-emet-5-1/</a></p>
 
 ]]></content>
   </entry>
@@ -206,7 +287,7 @@ PUSH ESI # CALL ECX # RETN // call OEP of EMET.dll with EMET_DLL_BASE on top of 
     <id>http://yinzo.github.io/14570954925763.html</id>
     <content type="html"><![CDATA[
 <ul>
-<li><p>Use genetic algorithm to evolve the parameters in Neural Network, to make a self-develop algorithm.</p>
+<li>Use genetic algorithm to evolve the parameters in Neural Network, to make a self-develop algorithm.
 
 <ul>
 <li>automatically find and make training set from search engine</li>
@@ -220,7 +301,12 @@ PUSH ESI # CALL ECX # RETN // call OEP of EMET.dll with EMET_DLL_BASE on top of 
 <li>number of hidden layers(units)</li>
 </ul></li>
 </ul></li>
-<li><p>About MCS, maybe we can train a model for fusion method to do the judge.</p></li>
+</ul>
+
+<span id="more"></span><!-- more -->
+
+<ul>
+<li>About MCS, maybe we can train a model for fusion method to do the judge.</li>
 </ul>
 
 ]]></content>
@@ -238,6 +324,8 @@ PUSH ESI # CALL ECX # RETN // call OEP of EMET.dll with EMET_DLL_BASE on top of 
 <li><p>If we set the initial \(\Theta\) be the same, the units in next layer with the same \(x_i\) will get the same result, then all units in the same layer will get the same output. At last, the cost function will also get same cost, so we will update the \(\Theta\) with same step.</p></li>
 <li><p>seems \(\delta^{(l)}_{i}\) means the cost of \(i_{th}\) unit in the \(l_{th}\) layer</p></li>
 </ul>
+
+<span id="more"></span><!-- more -->
 
 <h2 id="toc_1">Question about MLP:</h2>
 
@@ -266,11 +354,11 @@ PUSH ESI # CALL ECX # RETN // call OEP of EMET.dll with EMET_DLL_BASE on top of 
 
 <h2 id="toc_2">My understanding about the process of building a MLP(Multiple Layer Perceptron)</h2>
 
-<p>We can simply divide this into 2 part:<br/>
-1. Train the \(\Theta\) for the MLP.<br/>
-2. Use the trained \(\Theta\) to predict the input&rsquo;s classification.</p>
+<p>We can simply divide this into 2 part:</p>
 
 <ol>
+<li>Train the \(\Theta\) for the MLP.</li>
+<li><p>Use the trained \(\Theta\) to predict the input&rsquo;s classification.</p></li>
 <li><p>The second part is much more easier, let&rsquo;s first assume that we already have a set of trained \(\Theta\) , and we are now trying to use these \(\Theta\) to predict a testing samples.</p>
 
 <p><strong>The thing you need to do is just:</strong></p>
@@ -307,6 +395,8 @@ PUSH ESI # CALL ECX # RETN // call OEP of EMET.dll with EMET_DLL_BASE on top of 
 <li>The process is too complex to designed for human operator</li>
 <li>Requirement of dynamical development</li>
 </ol>
+
+<span id="more"></span><!-- more -->
 
 <h4 id="toc_2">An intelligent adversary can:</h4>
 
@@ -463,6 +553,8 @@ end=&gt;end: 开门结束
 st-&gt;op1-&gt;op2-&gt;op3-&gt;op4-&gt;op5-&gt;op6-&gt;end
 </code></pre>
 
+<span id="more"></span><!-- more -->
+
 <p>步骤很多，对不对。不过这个描述也没错，我们的确需要做出这些步骤才能开门。</p>
 
 <p>但是，我们和别人聊天的时候，你想要告诉别人你昨天很累，回到家马上就睡觉了，你会说『昨天我回到家门口，<strong>掏出钥匙，找到对应的钥匙……</strong>』吗？</p>
@@ -493,6 +585,8 @@ com_C=&gt;operation: 计算机C
 
 com_A-&gt;com_B-&gt;com_C
 </code></pre>
+
+<span id="more"></span><!-- more -->
 
 <p>起初，人们使用容量极小的3.5寸盘，带着要处理的数据来到计算机A面前，执行完之后带着数据分别去B和C前进行操作处理，十分的低效。</p>
 
@@ -545,6 +639,8 @@ ip-&gt;com_A-&gt;op
 
 <p>Its motivations is that the classical model cannot perform well in adversarial environments. Because the classical model is build and set up base on the random noise, it&rsquo;s also use for normal random noise environment. But in adversarial environment, the noise it face is adversarial noise, which is generated by adversary on purpose.</p>
 
+<span id="more"></span><!-- more -->
+
 <h4 id="toc_2">Points:</h4>
 
 <ul>
@@ -596,6 +692,68 @@ ip-&gt;com_A-&gt;op
 <li>integrated strategies for defense and vulnerability assessment</li>
 <li>put the test into reality but not simply static data sets</li>
 </ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[新建VPS应该做的事情]]></title>
+    <link href="http://yinzo.github.io/14602073387108.html"/>
+    <updated>2016-04-09T21:08:58+08:00</updated>
+    <id>http://yinzo.github.io/14602073387108.html</id>
+    <content type="html"><![CDATA[
+<ol>
+<li><p>创建root密码</p>
+
+<pre><code>passwd
+</code></pre></li>
+<li><p>安装oh-my-zsh</p>
+
+<p>这里是debian， 所以使用apt-get</p>
+
+<ol>
+<li><p>当然，首先，update &amp; upgrade apt-get</p>
+
+<pre><code>apt-get update; apt-get upgrade
+</code></pre></li>
+<li><p>安装zsh、git、pip</p>
+
+<pre><code>sudo apt-get install zsh git python-pip
+</code></pre></li>
+<li><p>安装oh my zsh</p>
+
+<pre><code>wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
+</code></pre></li>
+</ol></li>
+</ol>
+
+<span id="more"></span><!-- more -->
+
+<pre><code>4. 更换默认shell为zsh
+
+        chsh -s /usr/bin/zsh
+    这个路径不一定，如果不知道，可以使用```which zsh```来查看zsh位置
+
+5. 上传.zshrc
+
+        scp ~/.zshrc root@*.*.*.*:~/
+    此处```*```为ip地址  
+    然后就要修改.zshrc了
+
+    1. 改zsh对应路径
+    2. 还原插件列表
+    3. 检查个性化设置如alias
+
+6. 安装shadowsocks
+
+    pip install shadowsocks
+
+7. 建立 /etc/shadowsocks.json
+
+8. 在 /etc/rc.local 中加入shadowsocks的开启自启动
+
+        /usr/bin/python /usr/local/bin/ssserver -c /etc/shadowsocks.json -d start
+</code></pre>
 
 ]]></content>
   </entry>

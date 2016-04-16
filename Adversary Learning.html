@@ -74,11 +74,15 @@
     <li><label>Categories</label></li>
 
         
+            <li><a href="Security%20Info.html">Security Info</a></li>
+        
             <li><a href="Adversary%20Learning.html">Adversary Learning</a></li>
         
             <li><a href="TCPIP.html">TCP/IP</a></li>
         
             <li><a href="Pattern%20Recognition.html">Pattern Recognition</a></li>
+        
+            <li><a href="Python.html">Python</a></li>
          
 
       </ul>
@@ -117,131 +121,6 @@
 <li>Requirement of dynamical development</li>
 </ol>
 
-<h4 id="toc_2">An intelligent adversary can:</h4>
-
-<ul>
-<li>Alter his approach based on knowledge of the learner&rsquo;s shortcomings</li>
-<li>Mislead it by cleverly crafting data to corrupt </li>
-<li>Deceive the learning process</li>
-</ul>
-
-<h4 id="toc_3">Potential dangers posed to a learning system:</h4>
-
-<ul>
-<li>An attacker can exploit the nature of a machine learning system to mis-train it and cause it to fail</li>
-</ul>
-
-<h4 id="toc_4">The questions raised by author:</h4>
-
-<ul>
-<li>What techniques can a patient adversary use to mis-train or evade a learning system?</li>
-<li>How can system designers assess the vulnerability of their system to vigilantly incorporate trustworthy learning methods?</li>
-</ul>
-
-<h4 id="toc_5">An algorithm&rsquo;s performance depends on:</h4>
-
-<ul>
-<li>The constraints placed on the adversary</li>
-<li>The job the algorithm is tasked with performing</li>
-</ul>
-
-<p>This raises two fundamental questions:</p>
-
-<ul>
-<li>How can we evaluate a learner&rsquo;s performance in adversarial environment?</li>
-<li>How to design or select a learner which can be satisfied for its performance in particular environment?</li>
-</ul>
-
-<h3 id="toc_6">Example 1.1</h3>
-
-<h4 id="toc_7">How spammer corrupt the learning mechanism:</h4>
-
-<ol>
-<li>use information about the email distribution to construct clever attack spam messages</li>
-<li>will cause the spam filter to misclassify the user’s desired messages as spam.</li>
-<li>to cause the filter to become so unreliable</li>
-</ol>
-
-<h3 id="toc_8">Example 1.2</h3>
-
-<h4 id="toc_9">The ANTIDOTE&rsquo;s feature:</h4>
-
-<ul>
-<li>Better resistance within the poisoned environment</li>
-<li>But Less effective on non-poisoned environment</li>
-</ul>
-
-<h3 id="toc_10">Example 1.3</h3>
-
-<h4 id="toc_11">The means to evade the filter:</h4>
-
-<ul>
-<li>obfuscating words indicative of spam to human-recognizable misspellings; e.g., “Viagra” to“V1@gra” or “Cialis” to “Gia|is”</li>
-<li>using clever HTML to make the content difficult to parse </li>
-<li>adding words or text from other sources unrelated to the spam</li>
-<li>embedding images that contains the spam message.</li>
-</ul>
-
-<h2 id="toc_12">1.2 Guidelines from Computer Security</h2>
-
-<h4 id="toc_13">Author&rsquo;s principles:</h4>
-
-<ul>
-<li>Proactively Analysis</li>
-<li>Kerckhoffs’ Principle</li>
-<li>Conservative Design</li>
-<li>Threat Modeling</li>
-</ul>
-
-<h3 id="toc_14">Proactive Analysis:</h3>
-
-<p>Proactively find the vulnerabilities of learning system before the it is deployed or widely used.</p>
-
-<h3 id="toc_15">Kerckhoffs&#39; Principle:</h3>
-
-<p>Do not let a system&rsquo;s security rely on secrets. If the secrets are exposed, the system is immediately compromised.</p>
-
-<p>So apply this principle into machine learning, we should assume the adversary is aware of the learning algorithm and can obtain some data used to train the model.</p>
-
-<h3 id="toc_16">Conservative Design:</h3>
-
-<p>When access the security of a system, we should avoid to put limit on adversary&rsquo;s behavior. We should assume that the adversary has the broadest possible powers.</p>
-
-<p>Conversely, though the adversary too powerfully may lead to an inappropriate assessment on the system.</p>
-
-<h3 id="toc_17">Threat Modeling:</h3>
-
-<p>A completely secure system is infeasible. So author qualified the systems with <em>degree of security</em> -—the level of security expected against an adversary based on a <em>threat model</em> with a certain set of:</p>
-
-<ul>
-<li>objectives </li>
-<li>capabilities</li>
-<li>incentives</li>
-</ul>
-
-<h4 id="toc_18">To construct a threat model for a particular learning system:</h4>
-
-<ol>
-<li>Quantifies the security setting and objectives of that system, to develop criteria to measure success and quantify the level of security offered.</li>
-<li>Formalizing the risks and objectives, to identify potential limitations of the system and potential attacks.</li>
-<li>Identifies potential adversarial goals, resources and limitations.</li>
-</ol>
-
-<h4 id="toc_19">To evaluating a system:</h4>
-
-<ol>
-<li>Determining classed of attacks on the system.</li>
-<li>Evaluating the resilience of the system against those attacks</li>
-<li>Strengthening the system against those classes of attacks.</li>
-</ol>
-
-<h2 id="toc_20">1.3 Historical Roadmap</h2>
-
-<p>Some experience of author when developing this thesis, seems irrelevant to the mainstream.</p>
-
-<h2 id="toc_21">1.4 Dissertation Organization</h2>
-
-<p>As the title, no useful informations.</p>
 
                         
                       </div>
@@ -249,7 +128,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="14545761055440.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2016/2/4 16:55 下午</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -282,57 +161,6 @@
 
 <p>Its motivations is that the classical model cannot perform well in adversarial environments. Because the classical model is build and set up base on the random noise, it&rsquo;s also use for normal random noise environment. But in adversarial environment, the noise it face is adversarial noise, which is generated by adversary on purpose.</p>
 
-<h4 id="toc_2">Points:</h4>
-
-<ul>
-<li>The classical model does not fit well with adversarial tasks</li>
-<li>We need adversary-aware classification models</li>
-</ul>
-
-<h3 id="toc_3">2. Adversary-aware classification</h3>
-
-<p>The classical model is build for the normal random noise. When facing the adversarial noise, its performance would be <em>significantly degrade</em>, while the adversary-aware model works better.</p>
-
-<h4 id="toc_4">Points:</h4>
-
-<ul>
-<li>Classification algorithms should take into account the adversary</li>
-<li>Classifier should be adaptive by exploiting any feedback that they can get about adversary&rsquo;s moves</li>
-</ul>
-
-<h3 id="toc_5">3. Vulnerability assessment in pattern classification systems</h3>
-
-<p>The hardness of evading the spam classifier is regard as the judging standard of vulnerability assessment in pattern classification systems, which use the <em>minimum numbers of features that needs to be modified to evade classifier</em> to calculate the score.</p>
-
-<h4 id="toc_6">Points:</h4>
-
-<ul>
-<li>Classification accuracy is not everything in adversarial tasks</li>
-<li>Designer should maximize both accuracy and hardness of evasion of the classifier</li>
-</ul>
-
-<h3 id="toc_7">4. Defense strategies</h3>
-
-<p>Basically, the main strategies is to make the evasion too costly for the adversary. We normally implement this by using multiple classifiers with different detect strategies, to add up the cost of evasion.</p>
-
-<p>Also, for the close-source classifiers, we can make the classifiers activate randomly, which make the adversary needs to do much more detection ( \( \Theta(n) = 2^n \) ) , to figure out how the classifier work.</p>
-
-<h4 id="toc_8">Points:</h4>
-
-<ul>
-<li>So for we have some state-of-the-art works on defense strategies against specific attacks for specific applications</li>
-<li>Defense strategies against different types of attacks for different applications are a matter of on-going research</li>
-</ul>
-
-<h3 id="toc_9">5. Conclusions and open research issues</h3>
-
-<p>There is few adversary-aware model, so does the general-purpose methods for vulnerability assessment and defenses against a variety of attacks.</p>
-
-<ul>
-<li>models base on various scenes</li>
-<li>integrated strategies for defense and vulnerability assessment</li>
-<li>put the test into reality but not simply static data sets</li>
-</ul>
 
                         
                       </div>
@@ -340,7 +168,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="14540480758140.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2016/1/29 14:14 下午</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -380,6 +208,8 @@
     <div id="sidebar" class="sidebar">
           <div id="site-info" class="site-info">
             
+                <div class="site-a-logo"><img src="asset/img/3.png" /></div>
+            
                 <h1>雪地</h1>
                 <div class="site-des"></div>
                 <div class="social">
@@ -392,8 +222,8 @@
 
 
 
-
-
+<a class="github" target="_blank" href="https://github.com/Yinzo" title="GitHub">GitHub</a>
+<a class="email" href="mailto:yinz995-1@yahoo.com" title="Email">Email</a>
   <a class="rss" href="atom.xml" title="RSS">RSS</a>
                 
               	 </div>
@@ -406,11 +236,15 @@
 
       	<p class="cat-list">
         
+            <a href="Security%20Info.html"><strong>Security Info</strong></a>
+        
             <a href="Adversary%20Learning.html"><strong>Adversary Learning</strong></a>
         
             <a href="TCPIP.html"><strong>TCP/IP</strong></a>
         
             <a href="Pattern%20Recognition.html"><strong>Pattern Recognition</strong></a>
+        
+            <a href="Python.html"><strong>Python</strong></a>
          
         </p>
 
@@ -427,7 +261,13 @@
 	      
 		      
 			      <li class="post">
-			        <a href="14590503922928.html">USING EMET TO DISABLE EMET</a>
+			        <a href="14594228486348.html">Python Decorator的一些细节</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="14590503922928.html">通过EMET来禁用EMET——EMET的禁用与绕过思路讲解</a>
 			      </li>
 		     
 		  
@@ -450,10 +290,8 @@
 		     
 		  
 		      
-			      <li class="post">
-			        <a href="14540640657446.html">封装，与协议的分层</a>
-			      </li>
-		     
+		  
+		      
 		  
 		      
 		  

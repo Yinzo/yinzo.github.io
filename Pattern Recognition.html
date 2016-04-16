@@ -74,11 +74,15 @@
     <li><label>Categories</label></li>
 
         
+            <li><a href="Security%20Info.html">Security Info</a></li>
+        
             <li><a href="Adversary%20Learning.html">Adversary Learning</a></li>
         
             <li><a href="TCPIP.html">TCP/IP</a></li>
         
             <li><a href="Pattern%20Recognition.html">Pattern Recognition</a></li>
+        
+            <li><a href="Python.html">Python</a></li>
          
 
       </ul>
@@ -109,7 +113,7 @@
                       <div class="a-content-text">
                         
                         	<ul>
-<li><p>Use genetic algorithm to evolve the parameters in Neural Network, to make a self-develop algorithm.</p>
+<li>Use genetic algorithm to evolve the parameters in Neural Network, to make a self-develop algorithm.
 
 <ul>
 <li>automatically find and make training set from search engine</li>
@@ -123,8 +127,8 @@
 <li>number of hidden layers(units)</li>
 </ul></li>
 </ul></li>
-<li><p>About MCS, maybe we can train a model for fusion method to do the judge.</p></li>
 </ul>
+
 
                         
                       </div>
@@ -132,7 +136,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="14570954925763.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2016/3/4 20:44 下午</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -164,56 +168,6 @@
 <li><p>seems \(\delta^{(l)}_{i}\) means the cost of \(i_{th}\) unit in the \(l_{th}\) layer</p></li>
 </ul>
 
-<h2 id="toc_1">Question about MLP:</h2>
-
-<ul>
-<li>How to decide the iteration times</li>
-<li>How to initialize the weight \(w_i\)
-
-<ul>
-<li>solved. random initialized. But still didn&rsquo;t fully understand the formula。</li>
-</ul></li>
-<li>How to choose the learning rate \(\alpha\)</li>
-<li>How to choose the activation function
-
-<ul>
-<li>what&rsquo;s the different between sigmoid and other functions.</li>
-</ul></li>
-<li>How to decision the number of hidden layers and the number of the units in hidden layers
-
-<ul>
-<li>simply explained. Mostly take 3 layers, and the hidden layers usually take a fixed number of units.</li>
-</ul></li>
-<li>What the \(\Delta^{(i)}\) does in the \(\Theta^{(i)}\) updating.</li>
-<li>What Back Propagation algorithm does in the training process? It is only used to calculate the partial derivatives of Cost Function that used to update the \(\Theta\)?</li>
-<li>Why every article about NN mentions that Perceptron can finish logical operations? Is there some theory about with logical operation we can simulate the human brain or sth?</li>
-</ul>
-
-<h2 id="toc_2">My understanding about the process of building a MLP(Multiple Layer Perceptron)</h2>
-
-<p>We can simply divide this into 2 part:<br/>
-1. Train the \(\Theta\) for the MLP.<br/>
-2. Use the trained \(\Theta\) to predict the input&rsquo;s classification.</p>
-
-<ol>
-<li><p>The second part is much more easier, let&rsquo;s first assume that we already have a set of trained \(\Theta\) , and we are now trying to use these \(\Theta\) to predict a testing samples.</p>
-
-<p><strong>The thing you need to do is just:</strong></p>
-
-<ol>
-<li>Multiply the input \(X\) with each layer&rsquo;s \(\Theta\)</li>
-<li>Do some small fixed in it (adding bias, choose the most possible option e.t.c.)</li>
-</ol>
-
-<p><strong>And you can get the prediction! What an easy job!</strong></p></li>
-<li><p>Then, we are now facing the training part</p>
-
-<ol>
-<li>First randomly initialized the \(\Theta\). (Why we don&rsquo;t simply use 1 or 0? Read this!)</li>
-<li>Build a function that we can calculate the difference between our prediction and the fact. We call it Cost Function, and use it to evaluate our prediction.</li>
-<li>Then, take that Cost Function as a measurement, we use a searching algorithm (i.e. Gradient Descents), to find out the best \(\Theta\) which could minimized the Cost.</li>
-</ol></li>
-</ol>
 
                         
                       </div>
@@ -221,7 +175,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="14569378376035.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2016/3/3 0:57 上午</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -261,6 +215,8 @@
     <div id="sidebar" class="sidebar">
           <div id="site-info" class="site-info">
             
+                <div class="site-a-logo"><img src="asset/img/3.png" /></div>
+            
                 <h1>雪地</h1>
                 <div class="site-des"></div>
                 <div class="social">
@@ -273,8 +229,8 @@
 
 
 
-
-
+<a class="github" target="_blank" href="https://github.com/Yinzo" title="GitHub">GitHub</a>
+<a class="email" href="mailto:yinz995-1@yahoo.com" title="Email">Email</a>
   <a class="rss" href="atom.xml" title="RSS">RSS</a>
                 
               	 </div>
@@ -287,11 +243,15 @@
 
       	<p class="cat-list">
         
+            <a href="Security%20Info.html"><strong>Security Info</strong></a>
+        
             <a href="Adversary%20Learning.html"><strong>Adversary Learning</strong></a>
         
             <a href="TCPIP.html"><strong>TCP/IP</strong></a>
         
             <a href="Pattern%20Recognition.html"><strong>Pattern Recognition</strong></a>
+        
+            <a href="Python.html"><strong>Python</strong></a>
          
         </p>
 
@@ -308,7 +268,13 @@
 	      
 		      
 			      <li class="post">
-			        <a href="14590503922928.html">USING EMET TO DISABLE EMET</a>
+			        <a href="14594228486348.html">Python Decorator的一些细节</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="14590503922928.html">通过EMET来禁用EMET——EMET的禁用与绕过思路讲解</a>
 			      </li>
 		     
 		  
@@ -331,10 +297,8 @@
 		     
 		  
 		      
-			      <li class="post">
-			        <a href="14540640657446.html">封装，与协议的分层</a>
-			      </li>
-		     
+		  
+		      
 		  
 		      
 		  
