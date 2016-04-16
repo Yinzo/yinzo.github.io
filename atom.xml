@@ -4,7 +4,7 @@
   <title><![CDATA[雪地]]></title>
   <link href="http://yinzo.github.io/atom.xml" rel="self"/>
   <link href="http://yinzo.github.io/"/>
-  <updated>2016-04-17T02:04:09+08:00</updated>
+  <updated>2016-04-17T02:06:23+08:00</updated>
   <id>http://yinzo.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -2218,19 +2218,6 @@ query.php?user=1+union+select+benchmark(500000,sha1 (0x414141)),1,1,1,1,1,1,1,1,
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[图片样式测试]]></title>
-    <link href="http://yinzo.github.io/14608290381640.html"/>
-    <updated>2016-04-17T01:50:38+08:00</updated>
-    <id>http://yinzo.github.io/14608290381640.html</id>
-    <content type="html"><![CDATA[
-<p><img src="http://uinz.biz/wp-content/uploads/2014/06/PANO_20140615_1450061.jpg" alt="乌镇"/></p>
-
-<p>这张照片是高三毕业游，在乌镇拍的;D</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
     <title type="html"><![CDATA[给你的 Django1.7 添加 favicon]]></title>
     <link href="http://yinzo.github.io/14608290105708.html"/>
     <updated>2016-04-17T01:50:10+08:00</updated>
@@ -2268,199 +2255,169 @@ def favicon_redirect(request):
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Django的过滤器们]]></title>
-    <link href="http://yinzo.github.io/14608290834539.html"/>
-    <updated>2016-04-17T01:51:23+08:00</updated>
-    <id>http://yinzo.github.io/14608290834539.html</id>
+    <title type="html"><![CDATA[通过 CSS 修改 webkit 浏览器滚动条样式]]></title>
+    <link href="http://yinzo.github.io/14608289727774.html"/>
+    <updated>2016-04-17T01:49:32+08:00</updated>
+    <id>http://yinzo.github.io/14608289727774.html</id>
     <content type="html"><![CDATA[
-<p>{{ name | lower }} 小写</p>
+<p>webkit 内核的浏览器关于滚动条，主要有下面7个属性</p>
 
-<p>{{ my_text|escape|linebreaks }} 串联：先转义文本到HTML，再转换每行到 <p> 标签</p>
-
-<p>{{ bio | truncatewords:&ldquo;30&rdquo; }} 显示前30个字</p>
-
-<p>{{ 123|add:&ldquo;5&rdquo; }} 给value加上一个数值</p>
-
-<p>{{ &ldquo;AB&#39;CD&rdquo;|addslashes }} 单引号加上转义号，一般用于输出到javascript中</p>
+<ol>
+<li><code>::-webkit-scrollbar </code>滚动条整体部分，可以设置宽度啥的</li>
+<li><code>::-webkit-scrollbar-button </code>滚动条两端的按钮</li>
+<li><code>::-webkit-scrollbar-track  </code>外层轨道</li>
+<li><code>::-webkit-scrollbar-track-piece  </code>内层滚动槽</li>
+<li><code>::-webkit-scrollbar-thumb </code>滚动的滑块</li>
+<li><code>::-webkit-scrollbar-corner </code>边角</li>
+<li><code>::-webkit-resizer </code>定义右下角拖动块的样式</li>
+</ol>
 
 <span id="more"></span><!-- more -->
 
-<p>{{ &ldquo;abcd&rdquo;|capfirst }} 第一个字母大写</p>
+<p><img src="http://ww3.sinaimg.cn/large/7d52f1ffjw1enanw086xcj20fu0cgjtk.jpg" alt="滚动条图解"/></p>
 
-<p>{{ &ldquo;abcd&rdquo;|center:&ldquo;50&rdquo; }} 输出指定长度的字符串，并把值对中</p>
+<p>上面是滚动条的主要几个设置属性，还有更详尽的CSS属性</p>
 
-<p>{{ &ldquo;123spam456spam789&rdquo;|cut:&ldquo;spam&rdquo; }} 查找删除指定字符串</p>
+<p><code>:horizontal</code> 水平方向的滚动条</p>
 
-<p>{{ value|date:&ldquo;F j, Y&rdquo; }} 格式化日期</p>
+<p><code>:vertical </code>垂直 方向的滚动条</p>
 
-<p>{{ value|default:&ldquo;(N/A)&rdquo; }} 值不存在，使用指定值</p>
+<p><code>:decrement </code>应用于按钮和内层轨道(track piece)。它用来指示按钮或者内层轨道是否会减小视窗的位置(比如，垂直滚动条的上面，水平滚动条的左边。)</p>
 
-<p>{{ value|default_if_none:&ldquo;(N/A)&rdquo; }} 值是None，使用指定值</p>
+<p><code>:increment </code>与decrement类似，用来指示按钮或内层轨道是否会增大视窗的位置(比如，垂直滚动条的下面和水平滚动条的右边。)</p>
 
-<p>{{ 列表变量|dictsort:&ldquo;数字&rdquo; }} 排序从小到大</p>
+<p><code>:start </code>伪类也应用于按钮和滑块。它用来定义对象是否放到滑块的前面。</p>
 
-<p>{{ 列表变量|dictsortreversed:&ldquo;数字&rdquo; }} 排序从大到小</p>
+<p><code>:end </code>类似于start伪类，标识对象是否放到滑块的后面。</p>
 
-<p>{% if 92|divisibleby:&ldquo;2&rdquo; %} 判断是否整除指定数字</p>
+<p><code>:double-button  </code>该伪类以用于按钮和内层轨道。用于判断一个按钮是不是放在滚动条同一端的一对按钮中的一个。对于内层轨道来说，它表示内层轨道是否紧靠一对按钮。</p>
 
-<p>{{ string|escape }} 转换为html实体</p>
+<p><code>:single-button </code>类似于double-button伪类。对按钮来说，它用于判断一个按钮是否自己独立的在滚动条的一段。对内层轨道来说，它表示内层轨道是否紧靠一个single-button。</p>
 
-<p>{{ 21984124|filesizeformat }} 以1024为基数，计算最大值，保留1位小数，增加可读性</p>
+<p><code>:no-button </code>用于内层轨道，表示内层轨道是否要滚动到滚动条的终端，比如，滚动条两端没有按钮的时候。</p>
 
-<p>{{ list|first }} 返回列表第一个元素</p>
+<p><code>:corner-present  </code>用于所有滚动条轨道，指示滚动条圆角是否显示。</p>
 
-<p>{{ &ldquo;ik23hr&amp;jqwh&rdquo;|fix_ampersands }} &amp;转为&amp;</p>
+<p><code>:window-inactive </code>用于所有的滚动条轨道，指示应用滚动条的某个页面容器(元素)是否当前被激活。(在webkit最近的版本中，该伪类也可以用于::selection伪元素。webkit团队有计划扩展它并推动成为一个标准的伪类)</p>
 
-<p>{{ 13.414121241|floatformat }} 保留1位小数，可为负数，几种形式</p>
+<p>以下是我的滚动条样式代码</p>
 
-<p>{{ 13.414121241|floatformat:&ldquo;2&rdquo; }} 保留2位小数</p>
+<pre><code>::-webkit-scrollbar {
+    height:5px;
+    width: 5px;
+    background-color: white;
+}
 
-<p>{{ 23456 |get_digit:&ldquo;1&rdquo; }} 从个位数开始截取指定位置的1个数字</p>
 
-<p>{{ list|join:&ldquo;, &rdquo; }} 用指定分隔符连接列表</p>
+::-webkit-scrollbar-thumb {
+    width:5px;
+    background-color: rgb(0, 167, 255);
+    box-shadow: 0 0 5px rgb(0, 167, 255);
+    border-radius: 20px;
+    transition: box-shadow 0.5s;
 
-<p>{{ list|length }} 返回列表个数</p>
+}
+::-webkit-scrollbar-thumb:hover {
+    box-shadow: 0 0 10px rgb(0, 167, 255);
+}
+</code></pre>
 
-<p>{% if 列表|length_is:&ldquo;3&rdquo; %} 列表个数是否指定数值</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[为你的 Django 博客添加 Disqus 评论系统]]></title>
+    <link href="http://yinzo.github.io/14608290498124.html"/>
+    <updated>2016-04-17T01:50:49+08:00</updated>
+    <id>http://yinzo.github.io/14608290498124.html</id>
+    <content type="html"><![CDATA[
+<p>首先，先去 <a href="https://disqus.com/"> Disqus 官网</a>注册个账号啦.注册完账号之后去首页末尾<br/>
+→API→Application，找到 DISQUS_API_KEY 一项，复制一下KEY，等下会用到。</p>
 
-<p>{{ &ldquo;ABCD&rdquo;|linebreaks }} 用新行用<p\> 、 <br /\> 标记包裹</p>
+<span id="more"></span><!-- more -->
 
-<p>{{ &ldquo;ABCD&rdquo;|linebreaksbr }} 用新行用<br /\> 标记包裹</p>
+<hr />
 
-<p>{{ 变量|linenumbers }} 为变量中每一行加上行号</p>
+<p>安装 Disqus ,依官方推荐，使用pip自动安装~</p>
 
-<p>{{ &ldquo;abcd&rdquo;|ljust:&ldquo;50&rdquo; }} 把字符串在指定宽度中对左，其它用空格填充</p>
+<pre class=black>sudo pip install django-disqus</pre>
+若是没有 pip 也不用着急，去<a href="http://pypi.python.org/pypi/django-disqus/">官方下载一份二进制包</a>，然后解压，进入目录安装
+<pre class=black>python install setup.py</pre>
 
-<p>{{ &ldquo;ABCD&rdquo;|lower }} 小写</p>
+<hr />
 
-<p>{% for i in &ldquo;1abc1&rdquo;|make_list %}ABCDE,{% endfor %} 把字符串或数字的字符个数作为一个列表</p>
+<p>修改 setting.py ,在 INSTALLED_APPS 中添加 disqus 项并在文件末尾添加两项参数。其中一项就是刚才复制的KEY啦。</p>
 
-<p>{{ &ldquo;abcdefghijkl&rdquo;|phone2numeric }} 把字符转为可以对应的数字</p>
+<pre>
+INSTALLED_APPS = (
+     ...
+     'disqus',
+ )
 
-<p>{{ 列表或数字|pluralize }} 单词的复数形式，如列表字符串个数大于1，返回s，否则返回空串</p>
+ DISQUS_API_KEY = 'FOOBARFOOBARFOOBARFOOBARFOOBARF'
+ DISQUS_WEBSITE_SHORTNAME = 'foobar'
+</pre>
 
-<p>{{ 列表或数字|pluralize:&ldquo;es&rdquo; }} 指定es</p>
+<hr />
 
-<p>{{ 列表或数字|pluralize:&ldquo;y,ies&rdquo; }} 指定ies替换为y</p>
+<p>通过Django Shell 执行以下命令。恩里面的domain和name改成你自己的就好啦。</p>
 
-<p>{{ object|pprint }} 显示一个对象的值</p>
-
-<p>{{ 列表|random }} 返回列表的随机一项</p>
-
-<p>{{ string|removetags:&ldquo;br p div&rdquo; }} 删除字符串中指定html标记</p>
-
-<p>{{ string|rjust:&ldquo;50&rdquo; }} 把字符串在指定宽度中对右，其它用空格填充</p>
-
-<p>{{ 列表|slice:&ldquo;:2&rdquo; }} 切片</p>
-
-<p>{{ string|slugify }} 字符串中留下减号和下划线，其它符号删除，空格用减号替换</p>
-
-<p>{{ 3|stringformat:&ldquo;02i&rdquo; }} 字符串格式，使用Python的字符串格式语法</p>
-
-<p>{{ &ldquo;E<A\>A</A\>B<C\>C</C\>D&rdquo;|striptags }} 剥去[X]HTML语法标记</p>
-
-<p>{{ 时间变量|time:&ldquo;P&rdquo; }} 日期的时间部分格式</p>
-
-<p>{{ datetime|timesince }} 给定日期到现在过去了多少时间</p>
-
-<p>{{ datetime|timesince:&ldquo;other_datetime&rdquo; }} 两日期间过去了多少时间</p>
-
-<p>{{ datetime|timeuntil }} 给定日期到现在过去了多少时间，与上面的区别在于2日期的前后位置。</p>
-
-<p>{{ datetime|timeuntil:&ldquo;other_datetime&rdquo; }} 两日期间过去了多少时间</p>
-
-<p>{{ &ldquo;abdsadf&rdquo;|title }} 首字母大写</p>
-
-<p>{{ &ldquo;A B C D E F&rdquo;|truncatewords:&ldquo;3&rdquo; }} 截取指定个数的单词</p>
-
-<p>{{ &ldquo;<a\>1<a\>1<a\>1</a\></a\></a\>22<a\>1</a\>&rdquo;|truncatewords_html:&ldquo;2&rdquo; }} 截取指定个数的html标<br/>
-记，并补完整</p>
-
-<p><ul\>{{ list|unordered_list }}</ul\> 多重嵌套列表展现为html的无序列表</p>
-
-<p>{{ string|upper }} 全部大写</p>
-
-<p><a href="{{ link|urlencode }}"\>linkage</a\> url编码</p>
-
-<p>{{ string|urlize }} 将URLs由纯文本变为可点击的链接。（没有实验成功）</p>
-
-<p>{{ string|urlizetrunc:&ldquo;30&rdquo; }} 同上，多个截取字符数。（同样没有实验成功）</p>
-
-<p>{{ &ldquo;B C D E F&rdquo;|wordcount }} 单词数</p>
-
-<p>{{ &ldquo;a b c d e f g h i j k&rdquo;|wordwrap:&ldquo;5&rdquo; }} 每指定数量的字符就插入回车符</p>
-
-<p>{{ boolean|yesno:&ldquo;Yes,No,Perhaps&rdquo; }} 对三种值的返回字符串，对应是 非空,空,None</p>
-
-<p>日期格式化参数：</p>
-
-<p>a &lsquo;a.m.&rsquo; 或 &lsquo;p.m.&rsquo; (注意,它与PHP 的输出略有不同.它包括了句点(django扩展). &lsquo;a.m.&rsquo; </p>
-
-<p>A &lsquo;AM&rsquo; 或 &lsquo;PM&rsquo;. &lsquo;AM&rsquo; </p>
-
-<p>B 未实现.   </p>
-
-<p>d 每月第几天, 带前导零 &lsquo;01&rsquo; to &lsquo;31&rsquo; </p>
-
-<p>D 每周第几天,3字母的字符串. &lsquo;Fri&rsquo; </p>
-
-<p>f 时间, 12-小时制的小时和分钟数, 如果分钟数为零,则不显示.(django 扩展). &lsquo;1&rsquo;, &lsquo;1:30&rsquo; </p>
-
-<p>F 月份, 长文本格式. &lsquo;January&rsquo; </p>
-
-<p>g 小时, 12-小时制,没有前导零 &lsquo;1&rsquo; to &lsquo;12&rsquo; </p>
-
-<p>G 小时, 24-小时制,没有前导零 &lsquo;0&rsquo; to &lsquo;23&rsquo; </p>
-
-<p>h 小时, 12-小时制,有前导零 &lsquo;01&rsquo; to &lsquo;12&rsquo; </p>
-
-<p>H 小时, 24-小时制,有前导零 &lsquo;00&rsquo; to &lsquo;23&rsquo; </p>
-
-<p>i 分钟. &lsquo;00&rsquo; to &lsquo;59&rsquo; </p>
-
-<p>I 未实现   </p>
-
-<p>j 每月第几天, 无前导零 &lsquo;1&rsquo; to &lsquo;31&rsquo; </p>
-
-<p>l 每周第几天,长文本格式. &lsquo;Friday&rsquo; </p>
-
-<p>L 是否闰年. True or False </p>
-
-<p>m 数字表示的月份,有前导零. &lsquo;01&rsquo; to &lsquo;12&rsquo; </p>
-
-<p>M 月份,3字母短文本格式. &lsquo;Jan&rsquo; </p>
-
-<p>n 数字表示的月份,无前导零 &lsquo;1&rsquo; to &lsquo;12&rsquo; </p>
-
-<p>N 出版风格的月份缩写(django 扩展) &lsquo;Jan.&rsquo;, &lsquo;Feb.&rsquo;, &lsquo;March&rsquo;, &lsquo;May&rsquo; </p>
-
-<p>O 与格林威治的时间差(以小时计) &lsquo;+0200&rsquo; </p>
-
-<p>P 12小时制的小时分钟及&#39;a.m.&lsquo;/&#39;p.m.&rsquo; 分钟数若为零则不显示. 用字符串表示特殊 的时间点, 如 &lsquo;midnight&rsquo; 和 &lsquo;noon&rsquo; (django扩展) &lsquo;1 a.m.&rsquo;, &lsquo;1:30 p.m.&rsquo;, &lsquo;midnight&rsquo;,&lsquo;noon&rsquo;, &lsquo;12:30 p.m.&rsquo; </p>
-
-<p>r RFC 822 格式的日期 . &lsquo;Thu, 21 Dec 2000 16:01:07+0200&rsquo; </p>
-
-<p>s 秒数, 带有前导零的数字表示 &lsquo;00&rsquo; to &lsquo;59&rsquo; </p>
-
-<p>S 英语序数后缀,用于一个月的第几天,2个字符 &lsquo;st&rsquo;, &lsquo;nd&rsquo;, &lsquo;rd&rsquo; or &lsquo;th&rsquo; </p>
-
-<p>t 给定月共有多少天. 28 to 31 </p>
-
-<p>T 本机时区. &lsquo;EST&rsquo;, &lsquo;MDT&rsquo; </p>
-
-<p>U 未实现   </p>
-
-<p>w 一周中的第几天,没有前导零的数字 &lsquo;0&rsquo; (Sunday) to &lsquo;6&rsquo; (Saturday) </p>
-
-<p>W ISO-8601 一年的第多少星期数, 一周从 星期一开始 1, 23 </p>
-
-<p>y Year, 2 位数字表示 &lsquo;99&rsquo; </p>
-
-<p>Y Year, 4 位数字表示 &lsquo;1999&rsquo; </p>
-
-<p>z 一年中的第几天 . 0 to 365 </p>
-
-<p>Z 以秒计的时区偏移量. 这个偏移量对UTC西部 时区总是负数,而对UTC东部时区则总是正数 -43200 to 43200</p>
+<pre class="black">
+$ python manage.py shell
+Python 2.7.3 (default, Mar 18 2014, 05:13:23) 
+[GCC 4.6.3] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from django.contrib.sites.models import Site
+>>> Site.objects.all()
+[&lt;Site: example.org&gt;]
+>>> s = Site.objects.all()[0]
+>>> s.domain = 'foobar.com'
+>>> s.name = 'foobar.com'
+>>> s.save()
+>>> Site.objects.all()
+[&lt;Site: foobar.com&gt;]
+</pre>
+
+<p>我自己在这一步遇到了一个错误，执行<code>Site.objects.all()</code>的时候报错，提示<br/>
+<pre class=black><br/>
+ProgrammingError: (1146, &quot;Table &#39;Blog.django_site&#39; doesn&#39;t exist&quot;)<br/>
+</pre><br/>
+这是由于没有安装django.sites模块造成的。<br/>
+只需要在 INSTALLED_APPS 中添加这一模块然后 syncdb就好了。<br/>
+<pre><br/>
+INSTALLED_APPS = (<br/>
+     ...<br/>
+     &#39;django.contrib.sites&#39;<br/>
+     &#39;disqus&#39;,<br/>
+ )<br/>
+</pre><br/>
+<pre class=black>python manage.py syncdb</pre></p>
+
+<hr />
+
+<p>修改模板文件，在指定位置添加 Disqus </p>
+
+<pre>
+{% load disqus_tags %}
+{% disqus_show_comments %}
+{% disqus_num_replies %}
+{% disqus_recent_comments shortname num_items excerpt_length hide_avatars avatar_size %}
+</pre>
+
+<p>其中第一项必选，加载 disqus ，第二至第四项可选。</p>
+
+<p>后三项分别是</p>
+
+<ol>
+<li>显示评论</li>
+<li>显示评论数</li>
+<li>显示最近评论。</li>
+</ol>
+
+<p>其中显示评论数是通过JS修改含data-disqus-identifier=&ldquo;{{ object.id }}&quot;属性的<a\>标签来显示的。所以记得加上哦。</p>
+
+<p>以上，就是 Disqus 的安装啦</p>
 
 ]]></content>
   </entry>
