@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  新建VPS应该做的事情 - 雪地
+  基于SmartQQ的Python QQ机器人框架 - 雪地
   
   </title>
   
@@ -105,10 +105,10 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>新建VPS应该做的事情</h1>
+          <h1>基于SmartQQ的Python QQ机器人框架</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2016/4/9 21:8 下午</span>
+          <span class="date">2015/7/21 15:44 下午</span>
 
           
            
@@ -123,58 +123,49 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <ol>
-<li><p>创建root密码</p>
+      <p>项目地址：<a href="https://github.com/Yinzo/SmartQQBot">https://github.com/Yinzo/SmartQQBot</a></p>
 
-<pre><code>passwd
-</code></pre></li>
-<li><p>安装oh-my-zsh</p>
+<p>这是一个原本是自己在看到某一个QQ群中的机器人后，以娱乐的心态写的一个QQ机器人。登陆部分逻辑与代码参考了<a href="https://github.com/xqin/SmartQQ-for-Raspberry-Pi">原名：SmartQQ-for-Raspberry-Pi(PiWebQQV2)</a>这一项目，结合自己的需求写出来的一个以娱乐为主的小玩具。</p>
 
-<p>这里是debian， 所以使用apt-get</p>
+<p>习惯性地把自己写的小东西发布到Github，意外地发现受到了一定的支持。加上在进一步开发失物招领功能的时候发现代码逻辑有点混乱，于是决定进行一次完全的重构，希望能够开发出一个便于二次开发的QQ机器人框架。</p>
 
-<ol>
-<li><p>当然，首先，update &amp; upgrade apt-get</p>
-
-<pre><code>apt-get update; apt-get upgrade
-</code></pre></li>
-<li><p>安装zsh、git、pip</p>
-
-<pre><code>sudo apt-get install zsh git python-pip
-</code></pre></li>
-<li><p>安装oh my zsh</p>
-
-<pre><code>wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
-</code></pre></li>
-</ol></li>
-</ol>
+<p>以下为没有重构之前的机器人的README，但是近期（两到三个星期）机器人就将重构，所以以下内容可能会马上过时。</p>
 
 <span id="more"></span><!-- more -->
 
-<pre><code>4. 更换默认shell为zsh
+<hr/>
 
-        chsh -s /usr/bin/zsh
-    这个路径不一定，如果不知道，可以使用```which zsh```来查看zsh位置
+<h2 id="toc_0">如何使用</h2>
 
-5. 上传.zshrc
+<ul>
+<li><code>python QQBot.py</code></li>
+<li>等待提示“登陆二维码下载成功，请扫描”，打开脚本所在目录的v.jpg图片扫描二维码。</li>
+<li>等待登陆成功的提示
+&lt;!&ndash;+ 登陆成功后出现&quot;&gt;&gt;&ldquo;表示可输入命令，此时私聊问答功能自动激活，群聊各功能需要手动关注该群才会激活，关注群的命令为<code>group 群号</code>，此命令为控制台命令，不是在qq中发送。&ndash;&gt;</li>
+<li>修改config文件夹中的QQBot_default.conf配置文件</li>
+<li>群聊各功能需要在groupCheckList中添加群号，每行一个，来关注群以激活群功能。</li>
+</ul>
 
-        scp ~/.zshrc root@*.*.*.*:~/
-    此处```*```为ip地址  
-    然后就要修改.zshrc了
+<h2 id="toc_1">功能</h2>
 
-    1. 改zsh对应路径
-    2. 还原插件列表
-    3. 检查个性化设置如alias
+<p><small>注：以下命令皆是在qq中发送，群聊命令发送到所在群中</small></p>
 
-6. 安装shadowsocks
+<ul>
+<li><p>群聊学习功能，类似于小黄鸡，在群中通过发送<code>!learn {ha}{哈哈}</code>语句，则机器人检测到发言中包含“ha”时将自动回复“哈哈”。<code>!delete {ha}{哈哈}</code>可以删除该内容。学习内容会自动储存在<code>groupReplys</code>目录中群号.save文件</p></li>
+<li><p>群聊复读功能，检测到群聊中<strong><em>连续两个</em></strong>回复内容相同，将自动复读该内容1次。</p></li>
+<li><p>群聊关注功能，使用命令<code>!follow qq号</code>可以使机器人复读此人所有发言（除命令外）使用命令<code>!unfollow qq号</code>解除关注。qq号处可使用&quot;me&quot;来快速关注与解除关注自己，例：<code>!follow me</code></p></li>
+<li><p>私聊问答功能，可以自定义机器人私聊时提出问题，并可储存对方的回复，一般用于自动问卷调查。</p></li>
+</ul>
 
-    pip install shadowsocks
+<h2 id="toc_2">TODO</h2>
 
-7. 建立 /etc/shadowsocks.json
-
-8. 在 /etc/rc.local 中加入shadowsocks的开启自启动
-
-        /usr/bin/python /usr/local/bin/ssserver -c /etc/shadowsocks.json -d start
-</code></pre>
+<ul>
+<li>logging模块优化分离，保证主程序无任何print输出。私聊与群消息提醒使用单独的文件输出。</li>
+<li>细化配置项（tucao_auth = (all/self/custom/none)）</li>
+<li>tucao内容储存优化，使用cPickle库<br/></li>
+<li>工程模块化重构</li>
+<li>群成员外号表</li>
+</ul>
 
       </div>
 
@@ -182,16 +173,16 @@
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14540480758140.html" 
-          title="Previous Post: Notes for "ICMLC2009-FabioRoli.pdf"">&laquo; Notes for "ICMLC2009-FabioRoli.pdf"</a>
+          <a href="14608289034158.html" 
+          title="Previous Post: 个人总结">&laquo; 个人总结</a>
       
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="14608288193470.html" 
-          title="Next Post: 2015暑假">2015暑假 &raquo;</a>
+          <a  href="14608289464963.html" 
+          title="Next Post: 博客恢复">博客恢复 &raquo;</a>
       
       </p>
         </div>

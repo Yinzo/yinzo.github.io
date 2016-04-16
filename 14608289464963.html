@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  新建VPS应该做的事情 - 雪地
+  博客恢复 - 雪地
   
   </title>
   
@@ -105,10 +105,10 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>新建VPS应该做的事情</h1>
+          <h1>博客恢复</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2016/4/9 21:8 下午</span>
+          <span class="date">2015/7/20 1:41 上午</span>
 
           
            
@@ -123,58 +123,12 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <ol>
-<li><p>创建root密码</p>
+      <p>决定还是恢复博客的使用了。大一的这段时间做的事情特别的散，精力十分的分散，博客也由于各种原因停止了更新。但是我本人还是没有停止前进的。</p>
 
-<pre><code>passwd
-</code></pre></li>
-<li><p>安装oh-my-zsh</p>
+<p>这几天刚刚开始放假，早上刚把妹子送走，明天回家休息一小段时间，也趁着则段时间总结一下上个学期以来做了的一些事情，趁着记忆犹新记录一下，也算是做个总结了。<br/>
+然后再规划一下假期的安排，毕竟对于一个有妹子的程序员来说，还能拥有一个完整并自由的暑假也是相当的难得了。</p>
 
-<p>这里是debian， 所以使用apt-get</p>
-
-<ol>
-<li><p>当然，首先，update &amp; upgrade apt-get</p>
-
-<pre><code>apt-get update; apt-get upgrade
-</code></pre></li>
-<li><p>安装zsh、git、pip</p>
-
-<pre><code>sudo apt-get install zsh git python-pip
-</code></pre></li>
-<li><p>安装oh my zsh</p>
-
-<pre><code>wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
-</code></pre></li>
-</ol></li>
-</ol>
-
-<span id="more"></span><!-- more -->
-
-<pre><code>4. 更换默认shell为zsh
-
-        chsh -s /usr/bin/zsh
-    这个路径不一定，如果不知道，可以使用```which zsh```来查看zsh位置
-
-5. 上传.zshrc
-
-        scp ~/.zshrc root@*.*.*.*:~/
-    此处```*```为ip地址  
-    然后就要修改.zshrc了
-
-    1. 改zsh对应路径
-    2. 还原插件列表
-    3. 检查个性化设置如alias
-
-6. 安装shadowsocks
-
-    pip install shadowsocks
-
-7. 建立 /etc/shadowsocks.json
-
-8. 在 /etc/rc.local 中加入shadowsocks的开启自启动
-
-        /usr/bin/python /usr/local/bin/ssserver -c /etc/shadowsocks.json -d start
-</code></pre>
+<p>好好休息，提升自己，准备未来。</p>
 
       </div>
 
@@ -182,16 +136,16 @@
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14540480758140.html" 
-          title="Previous Post: Notes for "ICMLC2009-FabioRoli.pdf"">&laquo; Notes for "ICMLC2009-FabioRoli.pdf"</a>
+          <a href="14608289253115.html" 
+          title="Previous Post: 基于SmartQQ的Python QQ机器人框架">&laquo; 基于SmartQQ的Python QQ机器人框架</a>
       
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="14608288193470.html" 
-          title="Next Post: 2015暑假">2015暑假 &raquo;</a>
+          <a  href="14608289652972.html" 
+          title="Next Post: 煎蛋无聊图排行生成器">煎蛋无聊图排行生成器 &raquo;</a>
       
       </p>
         </div>

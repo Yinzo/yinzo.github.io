@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  新建VPS应该做的事情 - 雪地
+  个人总结 - 雪地
   
   </title>
   
@@ -105,10 +105,10 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>新建VPS应该做的事情</h1>
+          <h1>个人总结</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2016/4/9 21:8 下午</span>
+          <span class="date">2015/7/26 23:55 下午</span>
 
           
            
@@ -123,58 +123,73 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <ol>
-<li><p>创建root密码</p>
+      <p><img src="http://ww2.sinaimg.cn/large/7d52f1ffgw1euglbmesppj217w0kkqbc.jpg" alt="技能树——2015.07.26"/>只有把自己的技能都列出来的时候才能发现自己是有多么的弱。希望以后能有一份拿得出手的技能树，就放在这张旧的旁边。</p>
 
-<pre><code>passwd
-</code></pre></li>
-<li><p>安装oh-my-zsh</p>
+<p>记录一下技能树里面的具体内容：</p>
 
-<p>这里是debian， 所以使用apt-get</p>
+<h2 id="toc_0">小学</h2>
 
-<ol>
-<li><p>当然，首先，update &amp; upgrade apt-get</p>
+<ul>
+<li>瞎玩Flash</li>
+</ul>
 
-<pre><code>apt-get update; apt-get upgrade
-</code></pre></li>
-<li><p>安装zsh、git、pip</p>
+<h2 id="toc_1">初中</h2>
 
-<pre><code>sudo apt-get install zsh git python-pip
-</code></pre></li>
-<li><p>安装oh my zsh</p>
+<ul>
+<li>VB自学，初二——高一
 
-<pre><code>wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
-</code></pre></li>
-</ol></li>
-</ol>
+<ul>
+<li>当时在玩无损，写了个cue文件批量修改与格式化的小软件</li>
+</ul></li>
+</ul>
+
+<h2 id="toc_2">高中</h2>
+
+<ul>
+<li>C#自学，高二——高三
+
+<ul>
+<li>高三用C#做出一个舒尔特表格的3×3与5×5版本</li>
+</ul></li>
+<li>入门Ubuntu</li>
+</ul>
 
 <span id="more"></span><!-- more -->
 
-<pre><code>4. 更换默认shell为zsh
+<h2 id="toc_3">高中毕业至大学入学的暑假</h2>
 
-        chsh -s /usr/bin/zsh
-    这个路径不一定，如果不知道，可以使用```which zsh```来查看zsh位置
+<ul>
+<li>自学HTML/CSS/PHP/JavaScript/MySQL</li>
+<li>转到Mac平台</li>
+<li>建立第一个WordPress博客，自行修改主题。</li>
+<li>写出第一个基于JavaScript的小东西：Spin!</li>
+<li>一个星期自学JQuery并完成舒尔特表格JS版</li>
+<li>入门Python，写出第一个POC，遍历14级新生信息</li>
+<li>自学计算机网络</li>
+</ul>
 
-5. 上传.zshrc
+<h2 id="toc_4">大一</h2>
 
-        scp ~/.zshrc root@*.*.*.*:~/
-    此处```*```为ip地址  
-    然后就要修改.zshrc了
+<ul>
+<li>课程学习C++，高分过</li>
+<li>水了几次CTF，入门了XSS、了解了CSRF、用工具日了几个SQL注入，成功shell</li>
+<li>入手Linode1024</li>
+<li>使用Django+MySQL完整搭出个人博客</li>
+<li>完成学生信息查询系统</li>
+<li>为了更便捷的科学上网以及充分利用VPS，搭建Shadowsocks</li>
+<li>完成编写SmartQQ-Bot初版</li>
+<li>参加（水）华为杯大学生智能大赛，入门机器学习</li>
+<li>完成SmartQQ-Bot失物招领版本</li>
+<li>C++课程设计，独立使用MySQL+Qt完成数据库+界面，高分过</li>
+<li>基本完成SmartQQ-Bot框架的开发</li>
+<li>学习《啊哈！算法》</li>
+</ul>
 
-    1. 改zsh对应路径
-    2. 还原插件列表
-    3. 检查个性化设置如alias
+<p>现在我在用的好多技能，都还是高三毕业那个两个月的暑假学出来的，当时我的效率简直吓哭，比高三那时候疯的多了，一个星期自学完计算机网络什么的现在简直不敢想，3个小时就坐不住了。</p>
 
-6. 安装shadowsocks
+<p>之前放假之前说好的完成TODO_list，现在也就搞了搞SmartQQBot框架跟深入Python，效率不堪直视。嗯现在归纳个人技能表也算做好了:D。</p>
 
-    pip install shadowsocks
-
-7. 建立 /etc/shadowsocks.json
-
-8. 在 /etc/rc.local 中加入shadowsocks的开启自启动
-
-        /usr/bin/python /usr/local/bin/ssserver -c /etc/shadowsocks.json -d start
-</code></pre>
+<p>之后几天内差不多该回学校了，一堆一堆的书都等着我呢;P</p>
 
       </div>
 
@@ -182,16 +197,16 @@
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14540480758140.html" 
-          title="Previous Post: Notes for "ICMLC2009-FabioRoli.pdf"">&laquo; Notes for "ICMLC2009-FabioRoli.pdf"</a>
+          <a href="14608288854459.html" 
+          title="Previous Post: SQL注入速查表">&laquo; SQL注入速查表</a>
       
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="14608288193470.html" 
-          title="Next Post: 2015暑假">2015暑假 &raquo;</a>
+          <a  href="14608289253115.html" 
+          title="Next Post: 基于SmartQQ的Python QQ机器人框架">基于SmartQQ的Python QQ机器人框架 &raquo;</a>
       
       </p>
         </div>

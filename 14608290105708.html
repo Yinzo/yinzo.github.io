@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  新建VPS应该做的事情 - 雪地
+  给你的 Django1.7 添加 favicon - 雪地
   
   </title>
   
@@ -105,10 +105,10 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>新建VPS应该做的事情</h1>
+          <h1>给你的 Django1.7 添加 favicon</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2016/4/9 21:8 下午</span>
+          <span class="date">2016/4/17 1:50 上午</span>
 
           
            
@@ -123,58 +123,33 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <ol>
-<li><p>创建root密码</p>
+      <p>为了给 Blog 加上图标，我翻了好多地方，都是用的旧版Django的方法，在urls.py中加入以下语句，现在已被取代：</p>
 
-<pre><code>passwd
-</code></pre></li>
-<li><p>安装oh-my-zsh</p>
-
-<p>这里是debian， 所以使用apt-get</p>
-
-<ol>
-<li><p>当然，首先，update &amp; upgrade apt-get</p>
-
-<pre><code>apt-get update; apt-get upgrade
-</code></pre></li>
-<li><p>安装zsh、git、pip</p>
-
-<pre><code>sudo apt-get install zsh git python-pip
-</code></pre></li>
-<li><p>安装oh my zsh</p>
-
-<pre><code>wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
-</code></pre></li>
-</ol></li>
-</ol>
+<pre><code>url(r&#39;^favicon\.ico$&#39;, &#39;django.views.generic.simple.redirect_to&#39;, {&#39;url&#39;: &#39;/static/images/favicon.ico&#39;}),
+</code></pre>
 
 <span id="more"></span><!-- more -->
 
-<pre><code>4. 更换默认shell为zsh
+<p>对于Django1.6以后的版本，<code>django.views.generic.simple</code>这个类已经不存在了，取而代之的是<code>django.views.generic.base</code>这个类中的<code>RedirectView</code>这个方法。</p>
 
-        chsh -s /usr/bin/zsh
-    这个路径不一定，如果不知道，可以使用```which zsh```来查看zsh位置
+<p>所以，对于新的方法，我们可以这么写</p>
 
-5. 上传.zshrc
-
-        scp ~/.zshrc root@*.*.*.*:~/
-    此处```*```为ip地址  
-    然后就要修改.zshrc了
-
-    1. 改zsh对应路径
-    2. 还原插件列表
-    3. 检查个性化设置如alias
-
-6. 安装shadowsocks
-
-    pip install shadowsocks
-
-7. 建立 /etc/shadowsocks.json
-
-8. 在 /etc/rc.local 中加入shadowsocks的开启自启动
-
-        /usr/bin/python /usr/local/bin/ssserver -c /etc/shadowsocks.json -d start
+<pre><code>(r&#39;^favicon\.ico/$&#39;, RedirectView.as_view(url=&#39;/static/images/favicon.ico&#39;)),
 </code></pre>
+
+<p>如果你不喜欢这样，还可以使用第二种方法。<br/>
+在views.py中这样写一个新方法</p>
+
+<pre><code>from django.shortcuts import redirect
+
+……
+def favicon_redirect(request):
+        return redirect(&#39;/static/images/favicon.ico&#39;)
+</code></pre>
+
+<p>之后，在urls.py中对于favicon.ico的请求调用这一函数就好了。</p>
+
+<p>如果出现favicon的500错误，你需要在浏览器中直接访问 /favicon.ico 才能看到具体错误内容;D。</p>
 
       </div>
 
@@ -182,16 +157,16 @@
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14540480758140.html" 
-          title="Previous Post: Notes for "ICMLC2009-FabioRoli.pdf"">&laquo; Notes for "ICMLC2009-FabioRoli.pdf"</a>
+          <a href="14608290381640.html" 
+          title="Previous Post: 图片样式测试">&laquo; 图片样式测试</a>
       
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="14608288193470.html" 
-          title="Next Post: 2015暑假">2015暑假 &raquo;</a>
+          <a  href="14608290834539.html" 
+          title="Next Post: Django的过滤器们">Django的过滤器们 &raquo;</a>
       
       </p>
         </div>

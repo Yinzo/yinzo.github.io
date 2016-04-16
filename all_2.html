@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  新建VPS应该做的事情 - 雪地
+  雪地
   
   </title>
   
@@ -96,141 +96,220 @@
        
 
  <script type="text/javascript">
-  $(function(){
-    $('#menu_item_index').addClass('is_active');
-  });
+	$(function(){
+		$('#menu_item_index').addClass('is_active');
+	});
 </script>
 <div class="row">
-  <div class="large-8 medium-8 columns">
-      <div class="markdown-body article-wrap">
-       <div class="article">
-          
-          <h1>新建VPS应该做的事情</h1>
-     
-        <div class="read-more clearfix">
-          <span class="date">2016/4/9 21:8 下午</span>
+	<div class="large-8 medium-8 columns">
+		<div class="markdown-body home-categories">
+		
+			<div class="article">
+                <a class="clearlink" href="14608290711493.html">
+                
+                  <h1>Django前端输入中文后MySQL出现中文乱码</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>Django 在网页插入数据后，在数据库中查看若出现中文乱码，请检查数据库的字符集设置和 Django 字符集设置是否一致。</p>
 
-          
-           
-         
-          <span class="comments">
-            
+<p><em>注：需完全一致，当初我数据库用的是 gbk , django 用的 utf8 结果依然是乱码，统一成 utf8 后就好了。</em></p>
 
-            
-          </span>
 
-        </div>
-      </div><!-- article -->
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14608290711493.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2016/4/17 1:51 上午</span>
+                    
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
 
-      <div class="article-content">
-      <ol>
-<li><p>创建root密码</p>
-
-<pre><code>passwd
-</code></pre></li>
-<li><p>安装oh-my-zsh</p>
-
-<p>这里是debian， 所以使用apt-get</p>
-
-<ol>
-<li><p>当然，首先，update &amp; upgrade apt-get</p>
-
-<pre><code>apt-get update; apt-get upgrade
-</code></pre></li>
-<li><p>安装zsh、git、pip</p>
-
-<pre><code>sudo apt-get install zsh git python-pip
-</code></pre></li>
-<li><p>安装oh my zsh</p>
-
-<pre><code>wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
-</code></pre></li>
-</ol></li>
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="14608290582047.html">
+                
+                  <h1>Django自定义 Markdown 过滤器</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<ol>
+<li>在你 APP 目录下建立tamplatetags文件夹，手动建。文件夹和 APP 的 view.py 处于同一级</li>
+<li>手动新建文件 __init__.py ，置空就好了，用于 Django 识别。</li>
+<li>新建单独的 py 文件，文件名为过滤器调用时的名字，在其中输入你过滤器的代码。这里我使用的文件名是 my_markdown.py ，具体代码下附。</li>
+<li>在模板文件中载入过滤器使用。<code>{% load my_markdown %}</code></li>
 </ol>
 
-<span id="more"></span><!-- more -->
 
-<pre><code>4. 更换默认shell为zsh
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14608290582047.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2016/4/17 1:50 上午</span>
+                    
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
 
-        chsh -s /usr/bin/zsh
-    这个路径不一定，如果不知道，可以使用```which zsh```来查看zsh位置
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="14608289727774.html">
+                
+                  <h1>通过 CSS 修改 webkit 浏览器滚动条样式</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>webkit 内核的浏览器关于滚动条，主要有下面7个属性</p>
 
-5. 上传.zshrc
-
-        scp ~/.zshrc root@*.*.*.*:~/
-    此处```*```为ip地址  
-    然后就要修改.zshrc了
-
-    1. 改zsh对应路径
-    2. 还原插件列表
-    3. 检查个性化设置如alias
-
-6. 安装shadowsocks
-
-    pip install shadowsocks
-
-7. 建立 /etc/shadowsocks.json
-
-8. 在 /etc/rc.local 中加入shadowsocks的开启自启动
-
-        /usr/bin/python /usr/local/bin/ssserver -c /etc/shadowsocks.json -d start
-</code></pre>
-
-      </div>
-
-      <div class="row">
-        <div class="large-6 columns">
-        <p class="text-left" style="padding:15px 0px;">
-      
-          <a href="14540480758140.html" 
-          title="Previous Post: Notes for "ICMLC2009-FabioRoli.pdf"">&laquo; Notes for "ICMLC2009-FabioRoli.pdf"</a>
-      
-        </p>
-        </div>
-        <div class="large-6 columns">
-      <p class="text-right" style="padding:15px 0px;">
-      
-          <a  href="14608288193470.html" 
-          title="Next Post: 2015暑假">2015暑假 &raquo;</a>
-      
-      </p>
-        </div>
-      </div>
-      <div class="comments-wrap">
-        <div class="share-comments">
-          <div id="disqus_thread"></div>
-<script>
-/**
-* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-
-s.src = '//yinzo.disqus.com/embed.js';
-
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
-          
-
-          
-        </div>
-      </div>
-    </div><!-- article-wrap -->
-  </div><!-- large 8 -->
+<ol>
+<li><code>::-webkit-scrollbar </code>滚动条整体部分，可以设置宽度啥的</li>
+<li><code>::-webkit-scrollbar-button </code>滚动条两端的按钮</li>
+<li><code>::-webkit-scrollbar-track  </code>外层轨道</li>
+<li><code>::-webkit-scrollbar-track-piece  </code>内层滚动槽</li>
+<li><code>::-webkit-scrollbar-thumb </code>滚动的滑块</li>
+<li><code>::-webkit-scrollbar-corner </code>边角</li>
+<li><code>::-webkit-resizer </code>定义右下角拖动块的样式</li>
+</ol>
 
 
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14608289727774.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2016/4/17 1:49 上午</span>
+                    
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
 
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="14608290498124.html">
+                
+                  <h1>为你的 Django 博客添加 Disqus 评论系统</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>首先，先去 <a href="https://disqus.com/"> Disqus 官网</a>注册个账号啦.注册完账号之后去首页末尾<br/>
+→API→Application，找到 DISQUS_API_KEY 一项，复制一下KEY，等下会用到。</p>
+
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14608290498124.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2016/4/17 1:50 上午</span>
+                    
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="14608290917664.html">
+                
+                  <h1>解决OSX升级10.10后无法开启MAMP Apache服务</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<ul>
+<li>退出MAMP</li>
+<li>在终端执行以下命令(重命名envvars为_envvars)</li>
+</ul>
+
+<pre class=black>
+cd /Applications/MAMP/Library/bin
+mv envvars _envvars
+</pre>
+
+<p>再次打开MAMP即可开启Apache.</p>
+
+<p><a href = http://www.jianshu.com/p/ebcbdc5388c5>原文</a></p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2016/4/17 1:51 上午</span>
+                    
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+              
+
+
+			<div class="row">
+			  <div class="large-6 columns">
+			  <p class="text-left" style="padding-top:25px;">
+			   <a href="all_1.html">&laquo; Prev Page</a>  
+			  </p>
+			  </div>
+			  <div class="large-6 columns">
+			<p class="text-right" style="padding-top:25px;">
+			
+			</p>
+			  </div>
+			</div>
+		</div>
+	</div><!-- large 8 -->
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">

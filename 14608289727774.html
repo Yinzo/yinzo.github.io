@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  新建VPS应该做的事情 - 雪地
+  通过 CSS 修改 webkit 浏览器滚动条样式 - 雪地
   
   </title>
   
@@ -105,10 +105,10 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>新建VPS应该做的事情</h1>
+          <h1>通过 CSS 修改 webkit 浏览器滚动条样式</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2016/4/9 21:8 下午</span>
+          <span class="date">2016/4/17 1:49 上午</span>
 
           
            
@@ -123,57 +123,66 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <ol>
-<li><p>创建root密码</p>
-
-<pre><code>passwd
-</code></pre></li>
-<li><p>安装oh-my-zsh</p>
-
-<p>这里是debian， 所以使用apt-get</p>
+      <p>webkit 内核的浏览器关于滚动条，主要有下面7个属性</p>
 
 <ol>
-<li><p>当然，首先，update &amp; upgrade apt-get</p>
-
-<pre><code>apt-get update; apt-get upgrade
-</code></pre></li>
-<li><p>安装zsh、git、pip</p>
-
-<pre><code>sudo apt-get install zsh git python-pip
-</code></pre></li>
-<li><p>安装oh my zsh</p>
-
-<pre><code>wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
-</code></pre></li>
-</ol></li>
+<li><code>::-webkit-scrollbar </code>滚动条整体部分，可以设置宽度啥的</li>
+<li><code>::-webkit-scrollbar-button </code>滚动条两端的按钮</li>
+<li><code>::-webkit-scrollbar-track  </code>外层轨道</li>
+<li><code>::-webkit-scrollbar-track-piece  </code>内层滚动槽</li>
+<li><code>::-webkit-scrollbar-thumb </code>滚动的滑块</li>
+<li><code>::-webkit-scrollbar-corner </code>边角</li>
+<li><code>::-webkit-resizer </code>定义右下角拖动块的样式</li>
 </ol>
 
 <span id="more"></span><!-- more -->
 
-<pre><code>4. 更换默认shell为zsh
+<p><img src="http://ww3.sinaimg.cn/large/7d52f1ffjw1enanw086xcj20fu0cgjtk.jpg" alt="滚动条图解"/></p>
 
-        chsh -s /usr/bin/zsh
-    这个路径不一定，如果不知道，可以使用```which zsh```来查看zsh位置
+<p>上面是滚动条的主要几个设置属性，还有更详尽的CSS属性</p>
 
-5. 上传.zshrc
+<p><code>:horizontal</code> 水平方向的滚动条</p>
 
-        scp ~/.zshrc root@*.*.*.*:~/
-    此处```*```为ip地址  
-    然后就要修改.zshrc了
+<p><code>:vertical </code>垂直 方向的滚动条</p>
 
-    1. 改zsh对应路径
-    2. 还原插件列表
-    3. 检查个性化设置如alias
+<p><code>:decrement </code>应用于按钮和内层轨道(track piece)。它用来指示按钮或者内层轨道是否会减小视窗的位置(比如，垂直滚动条的上面，水平滚动条的左边。)</p>
 
-6. 安装shadowsocks
+<p><code>:increment </code>与decrement类似，用来指示按钮或内层轨道是否会增大视窗的位置(比如，垂直滚动条的下面和水平滚动条的右边。)</p>
 
-    pip install shadowsocks
+<p><code>:start </code>伪类也应用于按钮和滑块。它用来定义对象是否放到滑块的前面。</p>
 
-7. 建立 /etc/shadowsocks.json
+<p><code>:end </code>类似于start伪类，标识对象是否放到滑块的后面。</p>
 
-8. 在 /etc/rc.local 中加入shadowsocks的开启自启动
+<p><code>:double-button  </code>该伪类以用于按钮和内层轨道。用于判断一个按钮是不是放在滚动条同一端的一对按钮中的一个。对于内层轨道来说，它表示内层轨道是否紧靠一对按钮。</p>
 
-        /usr/bin/python /usr/local/bin/ssserver -c /etc/shadowsocks.json -d start
+<p><code>:single-button </code>类似于double-button伪类。对按钮来说，它用于判断一个按钮是否自己独立的在滚动条的一段。对内层轨道来说，它表示内层轨道是否紧靠一个single-button。</p>
+
+<p><code>:no-button </code>用于内层轨道，表示内层轨道是否要滚动到滚动条的终端，比如，滚动条两端没有按钮的时候。</p>
+
+<p><code>:corner-present  </code>用于所有滚动条轨道，指示滚动条圆角是否显示。</p>
+
+<p><code>:window-inactive </code>用于所有的滚动条轨道，指示应用滚动条的某个页面容器(元素)是否当前被激活。(在webkit最近的版本中，该伪类也可以用于::selection伪元素。webkit团队有计划扩展它并推动成为一个标准的伪类)</p>
+
+<p>以下是我的滚动条样式代码</p>
+
+<pre><code>::-webkit-scrollbar {
+    height:5px;
+    width: 5px;
+    background-color: white;
+}
+
+
+::-webkit-scrollbar-thumb {
+    width:5px;
+    background-color: rgb(0, 167, 255);
+    box-shadow: 0 0 5px rgb(0, 167, 255);
+    border-radius: 20px;
+    transition: box-shadow 0.5s;
+
+}
+::-webkit-scrollbar-thumb:hover {
+    box-shadow: 0 0 10px rgb(0, 167, 255);
+}
 </code></pre>
 
       </div>
@@ -182,16 +191,16 @@
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14540480758140.html" 
-          title="Previous Post: Notes for "ICMLC2009-FabioRoli.pdf"">&laquo; Notes for "ICMLC2009-FabioRoli.pdf"</a>
+          <a href="14608290582047.html" 
+          title="Previous Post: Django自定义 Markdown 过滤器">&laquo; Django自定义 Markdown 过滤器</a>
       
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="14608288193470.html" 
-          title="Next Post: 2015暑假">2015暑假 &raquo;</a>
+          <a  href="14608290498124.html" 
+          title="Next Post: 为你的 Django 博客添加 Disqus 评论系统">为你的 Django 博客添加 Disqus 评论系统 &raquo;</a>
       
       </p>
         </div>

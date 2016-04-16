@@ -105,60 +105,16 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
-                <a class="clearlink" href="14594228486348.html">
+                <a class="clearlink" href="14608288508524.html">
                 
-                  <h1>Python Decorator的一些细节</h1>
+                  <h1>Oracle注入速查表</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<p>装饰器函数并不是在被修饰函数调用的时候才执行，而是被修饰函数这个『对象』被实例化的时候调用。</p>
+                        	<p><small>本文由Yinzo翻译，转载请保留署名。原文地址：<a href="http://pentestmonkey.net/cheat-sheet/sql-injection/oracle-sql-injection-cheat-sheet">http://pentestmonkey.net/cheat-sheet/sql-injection/oracle-sql-injection-cheat-sheet</a></small></p>
 
-<p>而且当一个文件（模块）被import的时候，文件内的<strong>所有</strong>装饰器就会被激活执行。因为装饰器语句相当于文件中的普通语句，而非函数声明或者类声明的一部分。</p>
-
-<p>当我们对一个类里面的普通函数使用修饰符进行修饰的时候，如果我们正常调用这一函数，会报错提示这一函数变成了unbound method，缺少了类中函数默认的首参数self。这一问题是由于经过装饰器修饰的函数，实际上是被传递到了装饰器函数中，在这个装饰器函数中被独立调用的，而非被其原先所在的类对象调用。因此在这个装饰器函数中，没有其原来所在的类来对它进行调用，导致提示unbound method.</p>
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                  
-                    <span class="date">2016/3/31 19:14 下午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Python.html'>Python</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="14590503922928.html">
-                
-                  <h1>通过EMET来禁用EMET——EMET的禁用与绕过思路讲解</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>原文链接：<a href="https://www.fireeye.com/blog/threat-research/2016/02/using_emet_to_disabl.html">https://www.fireeye.com/blog/threat-research/2016/02/using_emet_to_disabl.html</a><br/>
-注：本文并未由任何媒体进行翻译发布。搜索引擎中搜到的国内媒体仅为标题翻译进行推送。</p>
-
-<p>微软的Enhanced Mitigation Experience Toolkit (EMET)是一项提高程序安全性的项目。它通过动态链接库(DLL)来运行在『受保护』的程序中，并且做一些修改来使得破解更加困难。</p>
-
-<p>我们已经见过很多次EMET在过去的研究或者攻击中被绕过了[2, 3, 4, 5, 6, 7, 8]。通常来说，微软都是通过修改或者增加一些安全设计来搞定现有的绕过问题。 EMET的设计目的是使得破解行为的成本升高，而不是一个『傻瓜式的防破解方案』[1]。所以，只要拥有在进程空间中读写的能力，理论上我们就能搞定所有的安全设计[2]。</p>
-
-<p>如果一个攻击者能够毫不费力地绕过EMET，那这就完全打破了EMET提高破解成本的最初目的。我们在新技术那段展示了一种禁用EMET的技术。微软在EMET5.5中打了个补丁来解决这个问题。</p>
-
-<p>讨论完这个新技术之后，我们来说说之前提到的用来绕过或搞掉EMET的那个技术。如果你想了解关于EMET是怎么实现保护程序的，请参考附录。</p>
+<p>注：下面的一部分查询只能由admin执行，我会在查询的末尾以&quot;<strong><code>-priv</code></strong>&ldquo;标注。</p>
 
 
                         
@@ -167,330 +123,8 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                   <a href="14590503922928.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/3/27 11:46 上午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Security%20Info.html'>Security Info</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="14570954925763.html">
-                
-                  <h1>Ideas for Neural Network</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<ul>
-<li>Use genetic algorithm to evolve the parameters in Neural Network, to make a self-develop algorithm.
-
-<ul>
-<li>automatically find and make training set from search engine</li>
-<li>the paremeters include:
-
-<ul>
-<li>learning rate</li>
-<li>iteration times</li>
-<li>regularization term \(\lambda\)</li>
-<li>activation function</li>
-<li>number of hidden layers(units)</li>
-</ul></li>
-</ul></li>
-</ul>
-
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14570954925763.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/3/4 20:44 下午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Pattern%20Recognition.html'>Pattern Recognition</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="14569378376035.html">
-                
-                  <h1>Notes for Neural Network</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<h2 id="toc_0">Notes:</h2>
-
-<ul>
-<li><p>If we set the initial \(\Theta\) be the same, the units in next layer with the same \(x_i\) will get the same result, then all units in the same layer will get the same output. At last, the cost function will also get same cost, so we will update the \(\Theta\) with same step.</p></li>
-<li><p>seems \(\delta^{(l)}_{i}\) means the cost of \(i_{th}\) unit in the \(l_{th}\) layer</p></li>
-</ul>
-
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14569378376035.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/3/3 0:57 上午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Pattern%20Recognition.html'>Pattern Recognition</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="14545761055440.html">
-                
-                  <h1>Note for "Thesis - Behavior of Machine Learning Algorithms in Adversarial Environments.pdf"(1)</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<h2 id="toc_0">1.1 Motivation and Methodology</h2>
-
-<h4 id="toc_1">Learning approach is well-suited to the scenario when:</h4>
-
-<ol>
-<li>The process is too complex to designed for human operator</li>
-<li>Requirement of dynamical development</li>
-</ol>
-
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14545761055440.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/2/4 16:55 下午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Adversary%20Learning.html'>Adversary Learning</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="14540640657446.html">
-                
-                  <h1>封装，与协议的分层</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>TODO： 为何要分层</p>
-
-<p>要理解协议的分层，若是了解编程理念中的『封装』，可能更有助于理解分层的意义。</p>
-
-<p>『封装』，狭义上指的是编写程序时，通过把一些重复操作的代码写成一个单独的函数，这就可以叫做一个简单的封装。</p>
-
-<p>而我对于封装的理解，举个例子，当你忙了一天回到家，站在你的家门口，想要打开你家的房门时，你需要做以下事情：</p>
-
-<pre><code class="language-flow">st=&gt;start: 站在家门口
-op1=&gt;operation: 拿出钥匙
-op2=&gt;operation: 找到对应的钥匙
-op3=&gt;operation: 把钥匙插到锁孔中
-op4=&gt;operation: 旋转钥匙
-op5=&gt;operation: 拉开门
-op6=&gt;operation: 拔出钥匙
-end=&gt;end: 开门结束
-
-st-&gt;op1-&gt;op2-&gt;op3-&gt;op4-&gt;op5-&gt;op6-&gt;end
-</code></pre>
-
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14540640657446.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/1/29 18:41 下午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='TCPIP.html'>TCP/IP</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="14540640466243.html">
-                
-                  <h1>网络协议</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>连接不同的计算机是非常有必要的，能够大幅度提升工作效率。</p>
-
-<p>比如：一个工作需要经过三个步骤，分别是步骤A/步骤B/步骤C。三个步骤分别由三台不同的计算机A/B/C执行。</p>
-
-<pre><code class="language-flow">com_A=&gt;operation: 计算机A
-com_B=&gt;operation: 计算机B
-com_C=&gt;operation: 计算机C
-
-
-com_A-&gt;com_B-&gt;com_C
-</code></pre>
-
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14540640466243.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/1/29 18:40 下午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='TCPIP.html'>TCP/IP</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="14540480758140.html">
-                
-                  <h1>Notes for "ICMLC2009-FabioRoli.pdf"</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<h2 id="toc_0">Understanding:</h2>
-
-<h3 id="toc_1">1. What is adversarial classification? Basic concepts and motivations</h3>
-
-<p>The Classifier which take the adversary actions into account. It can develop according to the adversary actions.</p>
-
-<p>Its motivations is that the classical model cannot perform well in adversarial environments. Because the classical model is build and set up base on the random noise, it&rsquo;s also use for normal random noise environment. But in adversarial environment, the noise it face is adversarial noise, which is generated by adversary on purpose.</p>
-
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14540480758140.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/1/29 14:14 下午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Adversary%20Learning.html'>Adversary Learning</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="14602073387108.html">
-                
-                  <h1>新建VPS应该做的事情</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<ol>
-<li><p>创建root密码</p>
-
-<pre><code>passwd
-</code></pre></li>
-<li><p>安装oh-my-zsh</p>
-
-<p>这里是debian， 所以使用apt-get</p>
-
-<ol>
-<li><p>当然，首先，update &amp; upgrade apt-get</p>
-
-<pre><code>apt-get update; apt-get upgrade
-</code></pre></li>
-<li><p>安装zsh、git、pip</p>
-
-<pre><code>sudo apt-get install zsh git python-pip
-</code></pre></li>
-<li><p>安装oh my zsh</p>
-
-<pre><code>wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
-</code></pre></li>
-</ol></li>
-</ol>
-
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14602073387108.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/4/9 21:8 下午</span>
+                   <a href="14608288508524.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2015/8/28 17:30 下午</span>
                     
           				   
                   </div>
@@ -505,19 +139,74 @@ com_A-&gt;com_B-&gt;com_C
               </div><!-- article -->
         
 			<div class="article">
-                <a class="clearlink" href="14608288193470.html">
+                <a class="clearlink" href="14608288742293.html">
                 
-                  <h1>2015暑假</h1>
+                  <h1>解决Python的pytesseract库执行时报错</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<p><img src="http://ww3.sinaimg.cn/mw690/7d52f1ffgw1evo7tqd6huj21kw16ok59.jpg" alt="晒猫"/></p>
+                        	<p>使用pytesseract库识别验证码时遇到以下报错</p>
 
-<p>正式开始学习技术以来的第二个暑假了，上一个暑假的效率之高，可能没有什么机遇的话挺难超越的了。</p>
+<pre><code>AttributeError: &#39;NoneType&#39; object has no attribute &#39;bands&#39;
+</code></pre>
 
-<p>先放一张这次暑假一开始的计划图以及其完成度。<br/>
-<img src="http://ww4.sinaimg.cn/large/7d52f1ffgw1evo7tmpg20j20m507i3zp.jpg" alt="暑假计划"/></p>
+<p>修改PIL库<code>site-packages/PIL/Image.py</code>1496行</p>
+
+<pre><code>def split(self):
+    “Split image into bands”
+
+    if self.im.bands == 1:
+</code></pre>
+
+<p>为</p>
+
+<pre><code>def split(self):
+    “Split image into bands”
+    self.load()
+    if self.im.bands == 1:
+</code></pre>
+
+<p>即可。</p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2015/8/23 1:42 上午</span>
+                    
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="14608288854459.html">
+                
+                  <h1>SQL注入速查表</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p><small><em>本文由Yinzo翻译，转载请保留署名。原文地址：<a href="http://ferruh.mavituna.com/sql-injection-cheatsheet-oku/#Enablecmdshell">http://ferruh.mavituna.com/sql-injection-cheatsheet-oku/#Enablecmdshell</a></em></small></p>
+
+<p><small><em>文档版本：1.4</em></small></p>
+
+<h2 id="toc_0">关于SQL注入速查表</h2>
+
+<p>现在仅支持MySQL、Microsoft SQL Server，以及一部分ORACLE和PostgreSQL。大部分样例都不能保证每一个场景都适用。现实场景由于各种插入语、不同的代码环境以及各种不常见甚至奇特的SQL语句，而经常发生变化。</p>
+
+<p>样例仅用于读者理解对于“可能出现的攻击(a potential attack)”的基础概念，并且几乎每一个部分都有一段简洁的概要</p>
 
 
                         
@@ -526,8 +215,288 @@ com_A-&gt;com_B-&gt;com_C
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                   <a href="14608288193470.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2015/9/2 22:3 下午</span>
+                   <a href="14608288854459.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2015/8/10 17:30 下午</span>
+                    
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="14608289034158.html">
+                
+                  <h1>个人总结</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p><img src="http://ww2.sinaimg.cn/large/7d52f1ffgw1euglbmesppj217w0kkqbc.jpg" alt="技能树——2015.07.26"/>只有把自己的技能都列出来的时候才能发现自己是有多么的弱。希望以后能有一份拿得出手的技能树，就放在这张旧的旁边。</p>
+
+<p>记录一下技能树里面的具体内容：</p>
+
+<h2 id="toc_0">小学</h2>
+
+<ul>
+<li>瞎玩Flash</li>
+</ul>
+
+<h2 id="toc_1">初中</h2>
+
+<ul>
+<li>VB自学，初二——高一
+
+<ul>
+<li>当时在玩无损，写了个cue文件批量修改与格式化的小软件</li>
+</ul></li>
+</ul>
+
+<h2 id="toc_2">高中</h2>
+
+<ul>
+<li>C#自学，高二——高三
+
+<ul>
+<li>高三用C#做出一个舒尔特表格的3×3与5×5版本</li>
+</ul></li>
+<li>入门Ubuntu</li>
+</ul>
+
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14608289034158.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2015/7/26 23:55 下午</span>
+                    
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="14608289253115.html">
+                
+                  <h1>基于SmartQQ的Python QQ机器人框架</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>项目地址：<a href="https://github.com/Yinzo/SmartQQBot">https://github.com/Yinzo/SmartQQBot</a></p>
+
+<p>这是一个原本是自己在看到某一个QQ群中的机器人后，以娱乐的心态写的一个QQ机器人。登陆部分逻辑与代码参考了<a href="https://github.com/xqin/SmartQQ-for-Raspberry-Pi">原名：SmartQQ-for-Raspberry-Pi(PiWebQQV2)</a>这一项目，结合自己的需求写出来的一个以娱乐为主的小玩具。</p>
+
+<p>习惯性地把自己写的小东西发布到Github，意外地发现受到了一定的支持。加上在进一步开发失物招领功能的时候发现代码逻辑有点混乱，于是决定进行一次完全的重构，希望能够开发出一个便于二次开发的QQ机器人框架。</p>
+
+<p>以下为没有重构之前的机器人的README，但是近期（两到三个星期）机器人就将重构，所以以下内容可能会马上过时。</p>
+
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14608289253115.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2015/7/21 15:44 下午</span>
+                    
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="14608289464963.html">
+                
+                  <h1>博客恢复</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>决定还是恢复博客的使用了。大一的这段时间做的事情特别的散，精力十分的分散，博客也由于各种原因停止了更新。但是我本人还是没有停止前进的。</p>
+
+<p>这几天刚刚开始放假，早上刚把妹子送走，明天回家休息一小段时间，也趁着则段时间总结一下上个学期以来做了的一些事情，趁着记忆犹新记录一下，也算是做个总结了。<br/>
+然后再规划一下假期的安排，毕竟对于一个有妹子的程序员来说，还能拥有一个完整并自由的暑假也是相当的难得了。</p>
+
+<p>好好休息，提升自己，准备未来。</p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2015/7/20 1:41 上午</span>
+                    
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="14608289652972.html">
+                
+                  <h1>煎蛋无聊图排行生成器</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>这个生成器实际上挺久之前就做了的，但是一直都是拿来自己用的，所以代码规范和易用性也是比较差的。这次放出来是因为之前煎蛋民众纷纷表示想看历年汇总，于是乎自己用这个生成器+PS做了个排行榜，收到的响应也是蛮好的，虽说字体放得有点小了;_;<br/>
+<img src="http://ww3.sinaimg.cn/large/7d52f1ffjw1eo96odzrf3j20ho0ieta5.jpg" alt="无聊图排行"/><br/>
+最终到今天为止收到了1329个赞XD，也是蛮开心<br/>
+然后，些许提升了下易用性与生成网页的外观就放到了Github上啦</p>
+
+<p><a href="https://github.com/Yinzo/Jandan_pic_ranker" target="_blank">Github点这里</a></p>
+
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14608289652972.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2015/1/14 17:41 下午</span>
+                    
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="14608290381640.html">
+                
+                  <h1>图片样式测试</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p><img src="http://uinz.biz/wp-content/uploads/2014/06/PANO_20140615_1450061.jpg" alt="乌镇"/></p>
+
+<p>这张照片是高三毕业游，在乌镇拍的;D</p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2016/4/17 1:50 上午</span>
+                    
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="14608290105708.html">
+                
+                  <h1>给你的 Django1.7 添加 favicon</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>为了给 Blog 加上图标，我翻了好多地方，都是用的旧版Django的方法，在urls.py中加入以下语句，现在已被取代：</p>
+
+<pre><code>url(r&#39;^favicon\.ico$&#39;, &#39;django.views.generic.simple.redirect_to&#39;, {&#39;url&#39;: &#39;/static/images/favicon.ico&#39;}),
+</code></pre>
+
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14608290105708.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2016/4/17 1:50 上午</span>
+                    
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="14608290834539.html">
+                
+                  <h1>Django的过滤器们</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>{{ name | lower }} 小写</p>
+
+<p>{{ my_text|escape|linebreaks }} 串联：先转义文本到HTML，再转换每行到 <p> 标签</p>
+
+<p>{{ bio | truncatewords:&ldquo;30&rdquo; }} 显示前30个字</p>
+
+<p>{{ 123|add:&ldquo;5&rdquo; }} 给value加上一个数值</p>
+
+<p>{{ &ldquo;AB&#39;CD&rdquo;|addslashes }} 单引号加上转义号，一般用于输出到javascript中</p>
+
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14608290834539.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2016/4/17 1:51 上午</span>
                     
           				   
                   </div>
@@ -547,12 +516,12 @@ com_A-&gt;com_B-&gt;com_C
 			<div class="row">
 			  <div class="large-6 columns">
 			  <p class="text-left" style="padding-top:25px;">
-			   
+			   <a href="all.html">&laquo; Prev Page</a>  
 			  </p>
 			  </div>
 			  <div class="large-6 columns">
 			<p class="text-right" style="padding-top:25px;">
-			 <a href="all_1.html">&raquo; Next Page</a> 
+			 <a href="all_2.html">&raquo; Next Page</a> 
 			</p>
 			  </div>
 			</div>

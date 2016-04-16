@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  新建VPS应该做的事情 - 雪地
+  为你的 Django 博客添加 Disqus 评论系统 - 雪地
   
   </title>
   
@@ -105,10 +105,10 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>新建VPS应该做的事情</h1>
+          <h1>为你的 Django 博客添加 Disqus 评论系统</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2016/4/9 21:8 下午</span>
+          <span class="date">2016/4/17 1:50 上午</span>
 
           
            
@@ -123,58 +123,93 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <ol>
-<li><p>创建root密码</p>
-
-<pre><code>passwd
-</code></pre></li>
-<li><p>安装oh-my-zsh</p>
-
-<p>这里是debian， 所以使用apt-get</p>
-
-<ol>
-<li><p>当然，首先，update &amp; upgrade apt-get</p>
-
-<pre><code>apt-get update; apt-get upgrade
-</code></pre></li>
-<li><p>安装zsh、git、pip</p>
-
-<pre><code>sudo apt-get install zsh git python-pip
-</code></pre></li>
-<li><p>安装oh my zsh</p>
-
-<pre><code>wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
-</code></pre></li>
-</ol></li>
-</ol>
+      <p>首先，先去 <a href="https://disqus.com/"> Disqus 官网</a>注册个账号啦.注册完账号之后去首页末尾<br/>
+→API→Application，找到 DISQUS_API_KEY 一项，复制一下KEY，等下会用到。</p>
 
 <span id="more"></span><!-- more -->
 
-<pre><code>4. 更换默认shell为zsh
+<hr />
 
-        chsh -s /usr/bin/zsh
-    这个路径不一定，如果不知道，可以使用```which zsh```来查看zsh位置
+<p>安装 Disqus ,依官方推荐，使用pip自动安装~</p>
 
-5. 上传.zshrc
+<pre class=black>sudo pip install django-disqus</pre>
+若是没有 pip 也不用着急，去<a href="http://pypi.python.org/pypi/django-disqus/">官方下载一份二进制包</a>，然后解压，进入目录安装
+<pre class=black>python install setup.py</pre>
 
-        scp ~/.zshrc root@*.*.*.*:~/
-    此处```*```为ip地址  
-    然后就要修改.zshrc了
+<hr />
 
-    1. 改zsh对应路径
-    2. 还原插件列表
-    3. 检查个性化设置如alias
+<p>修改 setting.py ,在 INSTALLED_APPS 中添加 disqus 项并在文件末尾添加两项参数。其中一项就是刚才复制的KEY啦。</p>
 
-6. 安装shadowsocks
+<pre>
+INSTALLED_APPS = (
+     ...
+     'disqus',
+ )
 
-    pip install shadowsocks
+ DISQUS_API_KEY = 'FOOBARFOOBARFOOBARFOOBARFOOBARF'
+ DISQUS_WEBSITE_SHORTNAME = 'foobar'
+</pre>
 
-7. 建立 /etc/shadowsocks.json
+<hr />
 
-8. 在 /etc/rc.local 中加入shadowsocks的开启自启动
+<p>通过Django Shell 执行以下命令。恩里面的domain和name改成你自己的就好啦。</p>
 
-        /usr/bin/python /usr/local/bin/ssserver -c /etc/shadowsocks.json -d start
-</code></pre>
+<pre class="black">
+$ python manage.py shell
+Python 2.7.3 (default, Mar 18 2014, 05:13:23) 
+[GCC 4.6.3] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from django.contrib.sites.models import Site
+>>> Site.objects.all()
+[&lt;Site: example.org&gt;]
+>>> s = Site.objects.all()[0]
+>>> s.domain = 'foobar.com'
+>>> s.name = 'foobar.com'
+>>> s.save()
+>>> Site.objects.all()
+[&lt;Site: foobar.com&gt;]
+</pre>
+
+<p>我自己在这一步遇到了一个错误，执行<code>Site.objects.all()</code>的时候报错，提示<br/>
+<pre class=black><br/>
+ProgrammingError: (1146, &quot;Table &#39;Blog.django_site&#39; doesn&#39;t exist&quot;)<br/>
+</pre><br/>
+这是由于没有安装django.sites模块造成的。<br/>
+只需要在 INSTALLED_APPS 中添加这一模块然后 syncdb就好了。<br/>
+<pre><br/>
+INSTALLED_APPS = (<br/>
+     ...<br/>
+     &#39;django.contrib.sites&#39;<br/>
+     &#39;disqus&#39;,<br/>
+ )<br/>
+</pre><br/>
+<pre class=black>python manage.py syncdb</pre></p>
+
+<hr />
+
+<p>修改模板文件，在指定位置添加 Disqus </p>
+
+<pre>
+{% load disqus_tags %}
+{% disqus_show_comments %}
+{% disqus_num_replies %}
+{% disqus_recent_comments shortname num_items excerpt_length hide_avatars avatar_size %}
+</pre>
+
+<p>其中第一项必选，加载 disqus ，第二至第四项可选。</p>
+
+<p>后三项分别是</p>
+
+<ol>
+<li>显示评论</li>
+<li>显示评论数</li>
+<li>显示最近评论。</li>
+</ol>
+
+<p>其中显示评论数是通过JS修改含data-disqus-identifier=&ldquo;{{ object.id }}&quot;属性的<a\>标签来显示的。所以记得加上哦。</p>
+
+<p>以上，就是 Disqus 的安装啦</p>
 
       </div>
 
@@ -182,16 +217,16 @@
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14540480758140.html" 
-          title="Previous Post: Notes for "ICMLC2009-FabioRoli.pdf"">&laquo; Notes for "ICMLC2009-FabioRoli.pdf"</a>
+          <a href="14608289727774.html" 
+          title="Previous Post: 通过 CSS 修改 webkit 浏览器滚动条样式">&laquo; 通过 CSS 修改 webkit 浏览器滚动条样式</a>
       
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="14608288193470.html" 
-          title="Next Post: 2015暑假">2015暑假 &raquo;</a>
+          <a  href="14608290917664.html" 
+          title="Next Post: 解决OSX升级10.10后无法开启MAMP Apache服务">解决OSX升级10.10后无法开启MAMP Apache服务 &raquo;</a>
       
       </p>
         </div>
