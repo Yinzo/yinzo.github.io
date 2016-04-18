@@ -171,14 +171,14 @@ padding: 8px 0px; margin: 0;
 #site-info .social a:hover{opacity:1}
 #site-info .social a.remail{background:url('../img/social/remail.png?1419407210') center no-repeat #050505;border:1px solid #050505}
 #site-info .social a.remail:hover{border:1px solid #000}
-#site-info .social a.email{background: url('../img/social/email.png?1419407210') center no-repeat #f04124;border: 1px solid #f04124;}
+#site-info .social a.email{background: url('../img/social/email.png?1419407210') center no-repeat #b9b9b9;border: 1px solid #b9b9b9;}
 #site-info .social a.facebook{background:url('../img/social/facebook.png?1419407210') center no-repeat #3B5998;border:1px solid #3B5998}
 #site-info .social a.facebook:hover{border:1px solid #2d4373}
 #site-info .social a.google{background:url('../img/social/google.png?1419407210') center no-repeat #C83D20;border:1px solid #C83D20}
 #site-info .social a.google:hover{border:1px solid #9c3019}
 #site-info .social a.twitter{background:url('../img/social/twitter.png?1419407210') center no-repeat #55CFF8;border:1px solid #55CFF8}
 #site-info .social a.twitter:hover{border:1px solid #24c1f6}
-#site-info .social a.github{background:url('../img/social/github.png?1419407210') center no-repeat #afb6ca;border:1px solid #afb6ca}
+#site-info .social a.github{background: url('../img/social/github.png?1419407210') center no-repeat #333;border:1px solid #afb6ca;}
 #site-info .social a.github:hover{border:1px solid #909ab6}
 #site-info .social a.coderwall{background:url('../img/social/coderwall.png?1419407210') center no-repeat #3E8DCC;border:1px solid #3E8DCC}
 #site-info .social a.coderwall:hover{border:1px solid #2d73aa}
@@ -199,7 +199,7 @@ padding: 8px 0px; margin: 0;
 #site-info .social a.instagram:hover{border:1px solid #406582}
 #site-info .social a.behance{background:url('../img/social/behance.png?1419407210') center no-repeat #1769ff;border:1px solid #1769ff}
 #site-info .social a.behance:hover{border:1px solid #0050e3}
-#site-info .social a.rss{background:url('../img/social/rss.png?1419407210') center no-repeat #EF7522;border:1px solid #EF7522}
+#site-info .social a.rss{background: url('../img/social/rss.png?1419407210') center no-repeat rgba(240, 138, 36, 0.7);border: 1px solid rgba(240,138,36,0.7);}
 #site-info .social a.rss:hover{border:1px solid #cf5d0f}
 #site-info .social a.weibo {
     background: url('../img/social/weibo.png?1419407210') center no-repeat #4ec4fa;
