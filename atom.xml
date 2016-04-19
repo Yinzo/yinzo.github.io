@@ -4,13 +4,76 @@
   <title><![CDATA[雪地]]></title>
   <link href="http://yinzo.github.io/atom.xml" rel="self"/>
   <link href="http://yinzo.github.io/"/>
-  <updated>2016-04-18T11:03:38+08:00</updated>
+  <updated>2016-04-20T00:06:10+08:00</updated>
   <id>http://yinzo.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[关于Python的logging模块的一个小坑]]></title>
+    <link href="http://yinzo.github.io/14610807170718.html"/>
+    <updated>2016-04-19T23:45:17+08:00</updated>
+    <id>http://yinzo.github.io/14610807170718.html</id>
+    <content type="html"><![CDATA[
+<p>总所周知，logging模块是一个非常方便好用的日志输出模块。但是最近的使用发现了一个小坑，记录一下，避免再次踩坑。</p>
+
+<p>一般使用logging模块都会对其进行初始化，使用以下代码：</p>
+
+<pre><code>    log_format = &#39;[%(levelname)s] %(asctime)s  %(filename)s line %(lineno)d: %(message)s&#39;
+    date_fmt = &#39;%a, %d %b %Y %H:%M:%S&#39;
+    logging.basicConfig(
+        format=log_format,
+        datefmt=date_fmt,
+        level=log_level,
+    )
+</code></pre>
+
+<span id="more"></span><!-- more -->
+
+<p>或者，只是简单使用，可以不初始化，直接<code>logging.info(&quot;blablabla&quot;)</code></p>
+
+<p>但是，如果当你先直接不初始化logging设置，直接输出之后，你再尝试初始化，你的设置将不会不会生效。尝试以下代码</p>
+
+<pre><code># -*- coding: utf-8 -*-
+import logging
+
+def init_logging(log_level=logging.INFO):
+    log_format = &#39;[%(levelname)s] %(asctime)s  %(filename)s line %(lineno)d: %(message)s&#39;
+    date_fmt = &#39;%a, %d %b %Y %H:%M:%S&#39;
+    logging.basicConfig(
+        format=log_format,
+        datefmt=date_fmt,
+        level=log_level,
+    )
+
+
+if __name__ == &#39;__main__&#39;:
+    logging.warning(&quot;TEST&quot;)
+    init_logging(logging.DEBUG)
+    logging.info(&quot;the class seems finished.&quot;)
+</code></pre>
+
+<p>输出：</p>
+
+<pre><code>CRITICAL:root:critical
+WARNING:root:warning
+
+
+initial finished.
+
+
+CRITICAL:root:critical
+WARNING:root:warning
+</code></pre>
+
+<p>输出中，因为logging默认等级为warning，所以成功输出critical和warning<br/>
+但当初始化之后，其输出格式原本应该改变，并且输出等级应该变为DEBUG，但是从输出可以看到，和初始化前的输出没有任何区别，说明初始化没有生效。</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Python Decorator的一些细节]]></title>
@@ -729,31 +792,34 @@ ip-&gt;com_A-&gt;op
 
 <span id="more"></span><!-- more -->
 
-<pre><code>4. 更换默认shell为zsh
+<ol>
+<li><p>更换默认shell为zsh</p>
 
-        chsh -s /usr/bin/zsh
-    这个路径不一定，如果不知道，可以使用```which zsh```来查看zsh位置
+<pre><code>    chsh -s /usr/bin/zsh
+这个路径不一定，如果不知道，可以使用```which zsh```来查看zsh位置
+</code></pre></li>
+<li><p>上传.zshrc</p>
 
-5. 上传.zshrc
-
-        scp ~/.zshrc root@*.*.*.*:~/
-    此处```*```为ip地址  
-    然后就要修改.zshrc了
-
-    1. 改zsh对应路径
-    2. 还原插件列表
-    3. 检查个性化设置如alias
-
-6. 安装shadowsocks
-
-    pip install shadowsocks
-
-7. 建立 /etc/shadowsocks.json
-
-8. 在 /etc/rc.local 中加入shadowsocks的开启自启动
-
-        /usr/bin/python /usr/local/bin/ssserver -c /etc/shadowsocks.json -d start
+<pre><code>scp ~/.zshrc root@*.*.*.*:~/
 </code></pre>
+
+<p>此处<code>*</code>为ip地址<br/><br/>
+然后就要修改.zshrc了</p>
+
+<ol>
+<li>改zsh对应路径</li>
+<li>还原插件列表</li>
+<li>检查个性化设置如alias</li>
+</ol></li>
+<li><p>安装shadowsocks</p>
+
+<p>pip install shadowsocks</p></li>
+<li><p>建立 /etc/shadowsocks.json</p></li>
+<li><p>在 /etc/rc.local 中加入shadowsocks的开启自启动</p>
+
+<pre><code>/usr/bin/python /usr/local/bin/ssserver -c /etc/shadowsocks.json -d start
+</code></pre></li>
+</ol>
 
 ]]></content>
   </entry>
@@ -2321,103 +2387,6 @@ def favicon_redirect(request):
     box-shadow: 0 0 10px rgb(0, 167, 255);
 }
 </code></pre>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[为你的 Django 博客添加 Disqus 评论系统]]></title>
-    <link href="http://yinzo.github.io/14608290498124.html"/>
-    <updated>2016-04-17T01:50:49+08:00</updated>
-    <id>http://yinzo.github.io/14608290498124.html</id>
-    <content type="html"><![CDATA[
-<p>首先，先去 <a href="https://disqus.com/"> Disqus 官网</a>注册个账号啦.注册完账号之后去首页末尾<br/>
-→API→Application，找到 DISQUS_API_KEY 一项，复制一下KEY，等下会用到。</p>
-
-<span id="more"></span><!-- more -->
-
-<hr />
-
-<p>安装 Disqus ,依官方推荐，使用pip自动安装~</p>
-
-<pre class=black>sudo pip install django-disqus</pre>
-若是没有 pip 也不用着急，去<a href="http://pypi.python.org/pypi/django-disqus/">官方下载一份二进制包</a>，然后解压，进入目录安装
-<pre class=black>python install setup.py</pre>
-
-<hr />
-
-<p>修改 setting.py ,在 INSTALLED_APPS 中添加 disqus 项并在文件末尾添加两项参数。其中一项就是刚才复制的KEY啦。</p>
-
-<pre>
-INSTALLED_APPS = (
-     ...
-     'disqus',
- )
-
- DISQUS_API_KEY = 'FOOBARFOOBARFOOBARFOOBARFOOBARF'
- DISQUS_WEBSITE_SHORTNAME = 'foobar'
-</pre>
-
-<hr />
-
-<p>通过Django Shell 执行以下命令。恩里面的domain和name改成你自己的就好啦。</p>
-
-<pre class="black">
-$ python manage.py shell
-Python 2.7.3 (default, Mar 18 2014, 05:13:23) 
-[GCC 4.6.3] on linux2
-Type "help", "copyright", "credits" or "license" for more information.
-(InteractiveConsole)
->>> from django.contrib.sites.models import Site
->>> Site.objects.all()
-[&lt;Site: example.org&gt;]
->>> s = Site.objects.all()[0]
->>> s.domain = 'foobar.com'
->>> s.name = 'foobar.com'
->>> s.save()
->>> Site.objects.all()
-[&lt;Site: foobar.com&gt;]
-</pre>
-
-<p>我自己在这一步遇到了一个错误，执行<code>Site.objects.all()</code>的时候报错，提示<br/>
-<pre class=black><br/>
-ProgrammingError: (1146, &quot;Table &#39;Blog.django_site&#39; doesn&#39;t exist&quot;)<br/>
-</pre><br/>
-这是由于没有安装django.sites模块造成的。<br/>
-只需要在 INSTALLED_APPS 中添加这一模块然后 syncdb就好了。<br/>
-<pre><br/>
-INSTALLED_APPS = (<br/>
-     ...<br/>
-     &#39;django.contrib.sites&#39;<br/>
-     &#39;disqus&#39;,<br/>
- )<br/>
-</pre><br/>
-<pre class=black>python manage.py syncdb</pre></p>
-
-<hr />
-
-<p>修改模板文件，在指定位置添加 Disqus </p>
-
-<pre>
-{% load disqus_tags %}
-{% disqus_show_comments %}
-{% disqus_num_replies %}
-{% disqus_recent_comments shortname num_items excerpt_length hide_avatars avatar_size %}
-</pre>
-
-<p>其中第一项必选，加载 disqus ，第二至第四项可选。</p>
-
-<p>后三项分别是</p>
-
-<ol>
-<li>显示评论</li>
-<li>显示评论数</li>
-<li>显示最近评论。</li>
-</ol>
-
-<p>其中显示评论数是通过JS修改含data-disqus-identifier=&ldquo;{{ object.id }}&quot;属性的<a\>标签来显示的。所以记得加上哦。</p>
-
-<p>以上，就是 Disqus 的安装啦</p>
 
 ]]></content>
   </entry>

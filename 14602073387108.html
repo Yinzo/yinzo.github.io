@@ -152,31 +152,34 @@
 
 <span id="more"></span><!-- more -->
 
-<pre><code>4. 更换默认shell为zsh
+<ol>
+<li><p>更换默认shell为zsh</p>
 
-        chsh -s /usr/bin/zsh
-    这个路径不一定，如果不知道，可以使用```which zsh```来查看zsh位置
+<pre><code>    chsh -s /usr/bin/zsh
+这个路径不一定，如果不知道，可以使用```which zsh```来查看zsh位置
+</code></pre></li>
+<li><p>上传.zshrc</p>
 
-5. 上传.zshrc
-
-        scp ~/.zshrc root@*.*.*.*:~/
-    此处```*```为ip地址  
-    然后就要修改.zshrc了
-
-    1. 改zsh对应路径
-    2. 还原插件列表
-    3. 检查个性化设置如alias
-
-6. 安装shadowsocks
-
-    pip install shadowsocks
-
-7. 建立 /etc/shadowsocks.json
-
-8. 在 /etc/rc.local 中加入shadowsocks的开启自启动
-
-        /usr/bin/python /usr/local/bin/ssserver -c /etc/shadowsocks.json -d start
+<pre><code>scp ~/.zshrc root@*.*.*.*:~/
 </code></pre>
+
+<p>此处<code>*</code>为ip地址<br/><br/>
+然后就要修改.zshrc了</p>
+
+<ol>
+<li>改zsh对应路径</li>
+<li>还原插件列表</li>
+<li>检查个性化设置如alias</li>
+</ol></li>
+<li><p>安装shadowsocks</p>
+
+<p>pip install shadowsocks</p></li>
+<li><p>建立 /etc/shadowsocks.json</p></li>
+<li><p>在 /etc/rc.local 中加入shadowsocks的开启自启动</p>
+
+<pre><code>/usr/bin/python /usr/local/bin/ssserver -c /etc/shadowsocks.json -d start
+</code></pre></li>
+</ol>
 
       </div>
 
@@ -292,6 +295,12 @@ s.setAttribute('data-timestamp', +new Date());
 	      
 		      
 			      <li class="post">
+			        <a href="14610807170718.html">关于Python的logging模块的一个小坑</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="14594228486348.html">Python Decorator的一些细节</a>
 			      </li>
 		     
@@ -311,12 +320,6 @@ s.setAttribute('data-timestamp', +new Date());
 		      
 			      <li class="post">
 			        <a href="14569378376035.html">Notes for Neural Network</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="14545761055440.html">Note for "Thesis - Behavior of Machine Learning Algorithms in Adversarial Environments.pdf"(1)</a>
 			      </li>
 		     
 		  

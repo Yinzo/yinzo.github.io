@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  通过 CSS 修改 webkit 浏览器滚动条样式 - 雪地
+  关于Python的logging模块的一个小坑 - 雪地
   
   </title>
   
@@ -107,12 +107,14 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>通过 CSS 修改 webkit 浏览器滚动条样式</h1>
+          <h1>关于Python的logging模块的一个小坑</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2014/12/15 21:1 下午</span>
+          <span class="date">2016/4/19 23:45 下午</span>
 
+          <span>posted in&nbsp;</span> 
           
+              <span class="posted-in"><a href='Python.html'>Python</a></span>
            
          
           <span class="comments">
@@ -125,67 +127,59 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>webkit 内核的浏览器关于滚动条，主要有下面7个属性</p>
+      <p>总所周知，logging模块是一个非常方便好用的日志输出模块。但是最近的使用发现了一个小坑，记录一下，避免再次踩坑。</p>
 
-<ol>
-<li><code>::-webkit-scrollbar </code>滚动条整体部分，可以设置宽度啥的</li>
-<li><code>::-webkit-scrollbar-button </code>滚动条两端的按钮</li>
-<li><code>::-webkit-scrollbar-track  </code>外层轨道</li>
-<li><code>::-webkit-scrollbar-track-piece  </code>内层滚动槽</li>
-<li><code>::-webkit-scrollbar-thumb </code>滚动的滑块</li>
-<li><code>::-webkit-scrollbar-corner </code>边角</li>
-<li><code>::-webkit-resizer </code>定义右下角拖动块的样式</li>
-</ol>
+<p>一般使用logging模块都会对其进行初始化，使用以下代码：</p>
+
+<pre><code>    log_format = &#39;[%(levelname)s] %(asctime)s  %(filename)s line %(lineno)d: %(message)s&#39;
+    date_fmt = &#39;%a, %d %b %Y %H:%M:%S&#39;
+    logging.basicConfig(
+        format=log_format,
+        datefmt=date_fmt,
+        level=log_level,
+    )
+</code></pre>
 
 <span id="more"></span><!-- more -->
 
-<p><img src="http://ww3.sinaimg.cn/large/7d52f1ffjw1enanw086xcj20fu0cgjtk.jpg" alt="滚动条图解"/></p>
+<p>或者，只是简单使用，可以不初始化，直接<code>logging.info(&quot;blablabla&quot;)</code></p>
 
-<p>上面是滚动条的主要几个设置属性，还有更详尽的CSS属性</p>
+<p>但是，如果当你先直接不初始化logging设置，直接输出之后，你再尝试初始化，你的设置将不会不会生效。尝试以下代码</p>
 
-<p><code>:horizontal</code> 水平方向的滚动条</p>
+<pre><code># -*- coding: utf-8 -*-
+import logging
 
-<p><code>:vertical </code>垂直 方向的滚动条</p>
-
-<p><code>:decrement </code>应用于按钮和内层轨道(track piece)。它用来指示按钮或者内层轨道是否会减小视窗的位置(比如，垂直滚动条的上面，水平滚动条的左边。)</p>
-
-<p><code>:increment </code>与decrement类似，用来指示按钮或内层轨道是否会增大视窗的位置(比如，垂直滚动条的下面和水平滚动条的右边。)</p>
-
-<p><code>:start </code>伪类也应用于按钮和滑块。它用来定义对象是否放到滑块的前面。</p>
-
-<p><code>:end </code>类似于start伪类，标识对象是否放到滑块的后面。</p>
-
-<p><code>:double-button  </code>该伪类以用于按钮和内层轨道。用于判断一个按钮是不是放在滚动条同一端的一对按钮中的一个。对于内层轨道来说，它表示内层轨道是否紧靠一对按钮。</p>
-
-<p><code>:single-button </code>类似于double-button伪类。对按钮来说，它用于判断一个按钮是否自己独立的在滚动条的一段。对内层轨道来说，它表示内层轨道是否紧靠一个single-button。</p>
-
-<p><code>:no-button </code>用于内层轨道，表示内层轨道是否要滚动到滚动条的终端，比如，滚动条两端没有按钮的时候。</p>
-
-<p><code>:corner-present  </code>用于所有滚动条轨道，指示滚动条圆角是否显示。</p>
-
-<p><code>:window-inactive </code>用于所有的滚动条轨道，指示应用滚动条的某个页面容器(元素)是否当前被激活。(在webkit最近的版本中，该伪类也可以用于::selection伪元素。webkit团队有计划扩展它并推动成为一个标准的伪类)</p>
-
-<p>以下是我的滚动条样式代码</p>
-
-<pre><code>::-webkit-scrollbar {
-    height:5px;
-    width: 5px;
-    background-color: white;
-}
+def init_logging(log_level=logging.INFO):
+    log_format = &#39;[%(levelname)s] %(asctime)s  %(filename)s line %(lineno)d: %(message)s&#39;
+    date_fmt = &#39;%a, %d %b %Y %H:%M:%S&#39;
+    logging.basicConfig(
+        format=log_format,
+        datefmt=date_fmt,
+        level=log_level,
+    )
 
 
-::-webkit-scrollbar-thumb {
-    width:5px;
-    background-color: rgb(0, 167, 255);
-    box-shadow: 0 0 5px rgb(0, 167, 255);
-    border-radius: 20px;
-    transition: box-shadow 0.5s;
-
-}
-::-webkit-scrollbar-thumb:hover {
-    box-shadow: 0 0 10px rgb(0, 167, 255);
-}
+if __name__ == &#39;__main__&#39;:
+    logging.warning(&quot;TEST&quot;)
+    init_logging(logging.DEBUG)
+    logging.info(&quot;the class seems finished.&quot;)
 </code></pre>
+
+<p>输出：</p>
+
+<pre><code>CRITICAL:root:critical
+WARNING:root:warning
+
+
+initial finished.
+
+
+CRITICAL:root:critical
+WARNING:root:warning
+</code></pre>
+
+<p>输出中，因为logging默认等级为warning，所以成功输出critical和warning<br/>
+但当初始化之后，其输出格式原本应该改变，并且输出等级应该变为DEBUG，但是从输出可以看到，和初始化前的输出没有任何区别，说明初始化没有生效。</p>
 
       </div>
 
@@ -193,16 +187,13 @@
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14608290105708.html" 
-          title="Previous Post: 给你的 Django1.7 添加 favicon">&laquo; 给你的 Django1.7 添加 favicon</a>
-      
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="14608290498124.html" 
-          title="Next Post: 为你的 Django 博客添加 Disqus 评论系统">为你的 Django 博客添加 Disqus 评论系统 &raquo;</a>
+          <a  href="14594228486348.html" 
+          title="Next Post: Python Decorator的一些细节">Python Decorator的一些细节 &raquo;</a>
       
       </p>
         </div>
