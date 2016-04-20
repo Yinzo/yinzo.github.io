@@ -4,7 +4,7 @@
   <title><![CDATA[雪地]]></title>
   <link href="http://yinzo.github.io/atom.xml" rel="self"/>
   <link href="http://yinzo.github.io/"/>
-  <updated>2016-04-20T00:06:33+08:00</updated>
+  <updated>2016-04-20T16:27:58+08:00</updated>
   <id>http://yinzo.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -51,9 +51,20 @@ def init_logging(log_level=logging.INFO):
 
 
 if __name__ == &#39;__main__&#39;:
-    logging.warning(&quot;TEST&quot;)
+    logging.critical(&quot;critical&quot;)
+    logging.warning(&quot;warning&quot;)
+    logging.info(&quot;info&quot;)
+    logging.debug(&quot;debug&quot;)
+
     init_logging(logging.DEBUG)
-    logging.info(&quot;the class seems finished.&quot;)
+    print &quot;\n&quot;
+    print &quot;initial finished.&quot;
+    print &quot;\n&quot;
+
+    logging.critical(&quot;critical&quot;)
+    logging.warning(&quot;warning&quot;)
+    logging.info(&quot;info&quot;)
+    logging.debug(&quot;debug&quot;)
 </code></pre>
 
 <p>输出：</p>
