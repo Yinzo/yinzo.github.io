@@ -4,7 +4,7 @@
   <title><![CDATA[雪地]]></title>
   <link href="http://yinzo.github.io/atom.xml" rel="self"/>
   <link href="http://yinzo.github.io/"/>
-  <updated>2016-04-20T00:06:10+08:00</updated>
+  <updated>2016-04-20T00:06:33+08:00</updated>
   <id>http://yinzo.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -70,7 +70,11 @@ WARNING:root:warning
 </code></pre>
 
 <p>输出中，因为logging默认等级为warning，所以成功输出critical和warning<br/>
-但当初始化之后，其输出格式原本应该改变，并且输出等级应该变为DEBUG，但是从输出可以看到，和初始化前的输出没有任何区别，说明初始化没有生效。</p>
+但当初始化之后，其输出格式原本应该改变，并且输出等级应该变为DEBUG，但是从输出可以看到，和初始化前的输出没有任何区别，说明初始化没有生效。这一问题在官方文档中有简单提及</p>
+
+<blockquote>
+<p>The call to basicConfig() should come before any calls to debug(), info() etc. As it’s intended as a one-off simple configuration facility, only the first call will actually do anything: subsequent calls are effectively no-ops.</p>
+</blockquote>
 
 ]]></content>
   </entry>
