@@ -4,7 +4,7 @@
   <title><![CDATA[雪地]]></title>
   <link href="http://yinzo.github.io/atom.xml" rel="self"/>
   <link href="http://yinzo.github.io/"/>
-  <updated>2016-06-01T19:15:53+08:00</updated>
+  <updated>2016-06-01T19:17:18+08:00</updated>
   <id>http://yinzo.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -13,7 +13,7 @@
   <generator uri="http://www.mweb.im/">MWeb</generator>
   
   <entry>
-    <title type="html"><![CDATA[关于Python的logging模块的一个小坑]]></title>
+    <title type="html"><![CDATA[关于Python的logging模块初始化无效的一个小坑]]></title>
     <link href="http://yinzo.github.io/14610807170718.html"/>
     <updated>2016-04-19T23:45:17+08:00</updated>
     <id>http://yinzo.github.io/14610807170718.html</id>
@@ -96,11 +96,35 @@ WARNING:root:warning
     <updated>2016-03-31T19:14:08+08:00</updated>
     <id>http://yinzo.github.io/14594228486348.html</id>
     <content type="html"><![CDATA[
-<p>装饰器函数并不是在被修饰函数调用的时候才执行，而是被修饰函数这个『对象』被实例化的时候调用。</p>
+<p>装饰器函数并不是在被修饰函数调用的时候才执行，而是修饰语句所在的代码块被执行的时候执行。</p>
 
 <p>而且当一个文件（模块）被import的时候，文件内的<strong>所有</strong>装饰器就会被激活执行。因为装饰器语句相当于文件中的普通语句，而非函数声明或者类声明的一部分。</p>
 
-<p>当我们对一个类里面的普通函数使用修饰符进行修饰的时候，如果我们正常调用这一函数，会报错提示这一函数变成了unbound method，缺少了类中函数默认的首参数self。这一问题是由于经过装饰器修饰的函数，实际上是被传递到了装饰器函数中，在这个装饰器函数中被独立调用的，而非被其原先所在的类对象调用。因此在这个装饰器函数中，没有其原来所在的类来对它进行调用，导致提示unbound method.</p>
+<p>用以下代码方便理解：</p>
+
+<pre><code># sample.py
+
+def decorator_function(func):
+    print &quot;executing the decorator.&quot;
+
+    def wrapper(*args, **kwargs):
+        print &quot;decorated function is executing.&quot;
+        return func(*args, **kwargs)
+
+    return wrapper
+
+
+print &quot;this python file is executing.&quot;
+
+
+@decorator_function
+def test_function(sth):
+    print &quot;blablabla&quot;+sth
+
+test_function(&quot;yeah&quot;)
+</code></pre>
+
+<p>而当我们对一个类里面的普通函数使用修饰符进行修饰的时候，然后我们正常调用这一函数（通过实例化的对象调用），会报错提示这一函数变成了unbound method，缺少了类中函数默认的首参数self。这一问题是由于经过装饰器修饰的函数，实际上是被传递到了装饰器函数中，在这个装饰器函数中被独立调用的，而非被其原先所在的类对象调用。因此在这个装饰器函数中，没有其原来所在的类来对它进行调用，导致提示unbound method.</p>
 
 ]]></content>
   </entry>
