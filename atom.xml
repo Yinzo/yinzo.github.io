@@ -4,7 +4,7 @@
   <title><![CDATA[雪地]]></title>
   <link href="http://yinzo.github.io/atom.xml" rel="self"/>
   <link href="http://yinzo.github.io/"/>
-  <updated>2016-04-20T16:27:58+08:00</updated>
+  <updated>2016-06-01T19:15:53+08:00</updated>
   <id>http://yinzo.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -18,7 +18,7 @@
     <updated>2016-04-19T23:45:17+08:00</updated>
     <id>http://yinzo.github.io/14610807170718.html</id>
     <content type="html"><![CDATA[
-<p>总所周知，logging模块是一个非常方便好用的日志输出模块。但是最近的使用发现了一个小坑，记录一下，避免再次踩坑。</p>
+<p>众所周知，logging模块是一个非常方便好用的日志输出模块。但是最近的使用发现了一个小坑，记录一下，避免再次踩坑。</p>
 
 <p>一般使用logging模块都会对其进行初始化，使用以下代码：</p>
 
@@ -796,7 +796,7 @@ ip-&gt;com_A-&gt;op
 </code></pre></li>
 <li><p>安装zsh、git、pip</p>
 
-<pre><code>sudo apt-get install zsh git python-pip
+<pre><code>sudo apt-get install zsh git python-pip python-dev
 </code></pre></li>
 <li><p>安装oh my zsh</p>
 

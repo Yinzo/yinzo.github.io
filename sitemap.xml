@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
   <loc>http://yinzo.github.io/</loc>
-  <lastmod>2016-04-20T22:01:20+08:00</lastmod>
+  <lastmod>2016-06-01T19:17:18+08:00</lastmod>
 </url>
 
 <url>
@@ -133,7 +133,11 @@
 
 
 <url>
-  <loc>http://yinzo.github.io/TCPIP.html</loc>
+  <loc>http://yinzo.github.io/Security%20Info.html</loc>
+</url>
+
+<url>
+  <loc>http://yinzo.github.io/Python.html</loc>
 </url>
 
 <url>
@@ -145,11 +149,7 @@
 </url>
 
 <url>
-  <loc>http://yinzo.github.io/Security%20Info.html</loc>
-</url>
-
-<url>
-  <loc>http://yinzo.github.io/Python.html</loc>
+  <loc>http://yinzo.github.io/TCPIP.html</loc>
 </url>
 
 
