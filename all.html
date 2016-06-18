@@ -41,9 +41,9 @@
   <div class="row">
       <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
         <ul id="main-menu" class="left">
-        <li id="menu_item_index"><a href="index.html">BLOG</a></li>
+        <li id="menu_item_index"><a href="index.html">Blog</a></li>
         <li id="menu_item_archives"><a href="archives.html">Archives</a></li>
-        <li id="menu_item_about"><a href="http://yinz.xyz/">HOME</a></li>
+        <li id="menu_item_about"><a href="http://yinz.xyz/">Home</a></li>
         </ul>
 
         <ul class="right" id="search-wrap">
@@ -69,9 +69,9 @@
 <aside class="left-off-canvas-menu">
       <ul class="off-canvas-list">
        
-       <li><a href="index.html">BLOG</a></li>
+       <li><a href="index.html">Blog</a></li>
     <li><a href="archives.html">Archives</a></li>
-    <li><a href="http://yinz.xyz/">HOME</a></li>
+    <li><a href="http://yinz.xyz/">Home</a></li>
 
     <li><label>Categories</label></li>
 
@@ -106,6 +106,52 @@
 	<div class="large-8 medium-8 columns">
 		<div class="markdown-body home-categories">
 		
+			<div class="article">
+                <a class="clearlink" href="14662517738182.html">
+                
+                  <h1>Python 爬取中文页面时解码 UnicodeDecodeError 报错的解决</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>这个问题从我刚开始学 Python 就遇到了，结果到现在写爬虫爬中文网页时遇到这个问题依然还是得去百度一番。不过这一次，这个问题终于能够完美的解决了</p>
+
+<p>这个问题是这样的。</p>
+
+<p>网页的HTML中charset指定的是GB2312字符集，但是当我爬取下来之后，尝试解码后转到utf-8进行保存:</p>
+
+<pre><code class="language-python">content = rsp.text.decode(&#39;gb2312&#39;).encode(&#39;utf8&#39;)
+</code></pre>
+
+<p>却遇到了以下报错</p>
+
+<pre><code class="language-shell">UnicodeDecodeError: &#39;gb2312&#39; codec can&#39;t decode bytes in position 97-98: illegal multibyte sequence
+</code></pre>
+
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14662517738182.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2016/6/18 20:9 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Python.html'>Python</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
 			<div class="article">
                 <a class="clearlink" href="14610807170718.html">
                 
@@ -520,61 +566,6 @@ com_A-&gt;com_B-&gt;com_C
                 </div>
               </div><!-- article -->
         
-			<div class="article">
-                <a class="clearlink" href="14602073387108.html">
-                
-                  <h1>新建VPS应该做的事情</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<ol>
-<li><p>创建root密码</p>
-
-<pre><code>passwd
-</code></pre></li>
-<li><p>安装oh-my-zsh</p>
-
-<p>这里是debian， 所以使用apt-get</p>
-
-<ol>
-<li><p>当然，首先，update &amp; upgrade apt-get</p>
-
-<pre><code>apt-get update; apt-get upgrade
-</code></pre></li>
-<li><p>安装zsh、git、pip</p>
-
-<pre><code>sudo apt-get install zsh git python-pip python-dev
-</code></pre></li>
-<li><p>安装oh my zsh</p>
-
-<pre><code>wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
-</code></pre></li>
-</ol></li>
-</ol>
-
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14602073387108.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/4/9 21:8 下午</span>
-                    
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
               
 
 
@@ -651,6 +642,12 @@ com_A-&gt;com_B-&gt;com_C
 	      
 		      
 			      <li class="post">
+			        <a href="14662517738182.html">Python 爬取中文页面时解码 UnicodeDecodeError 报错的解决</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="14610807170718.html">关于Python的logging模块初始化无效的一个小坑</a>
 			      </li>
 		     
@@ -670,12 +667,6 @@ com_A-&gt;com_B-&gt;com_C
 		      
 			      <li class="post">
 			        <a href="14570954925763.html">Ideas for Neural Network</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="14569378376035.html">Notes for Neural Network</a>
 			      </li>
 		     
 		  

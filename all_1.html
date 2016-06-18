@@ -41,9 +41,9 @@
   <div class="row">
       <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
         <ul id="main-menu" class="left">
-        <li id="menu_item_index"><a href="index.html">BLOG</a></li>
+        <li id="menu_item_index"><a href="index.html">Blog</a></li>
         <li id="menu_item_archives"><a href="archives.html">Archives</a></li>
-        <li id="menu_item_about"><a href="http://yinz.xyz/">HOME</a></li>
+        <li id="menu_item_about"><a href="http://yinz.xyz/">Home</a></li>
         </ul>
 
         <ul class="right" id="search-wrap">
@@ -69,9 +69,9 @@
 <aside class="left-off-canvas-menu">
       <ul class="off-canvas-list">
        
-       <li><a href="index.html">BLOG</a></li>
+       <li><a href="index.html">Blog</a></li>
     <li><a href="archives.html">Archives</a></li>
-    <li><a href="http://yinz.xyz/">HOME</a></li>
+    <li><a href="http://yinz.xyz/">Home</a></li>
 
     <li><label>Categories</label></li>
 
@@ -106,6 +106,61 @@
 	<div class="large-8 medium-8 columns">
 		<div class="markdown-body home-categories">
 		
+			<div class="article">
+                <a class="clearlink" href="14602073387108.html">
+                
+                  <h1>新建VPS应该做的事情</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<ol>
+<li><p>创建root密码</p>
+
+<pre><code>passwd
+</code></pre></li>
+<li><p>安装oh-my-zsh</p>
+
+<p>这里是debian， 所以使用apt-get</p>
+
+<ol>
+<li><p>当然，首先，update &amp; upgrade apt-get</p>
+
+<pre><code>apt-get update; apt-get upgrade
+</code></pre></li>
+<li><p>安装zsh、git、pip</p>
+
+<pre><code>sudo apt-get install zsh git python-pip python-dev
+</code></pre></li>
+<li><p>安装oh my zsh</p>
+
+<pre><code>wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
+</code></pre></li>
+</ol></li>
+</ol>
+
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14602073387108.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2016/4/9 21:8 下午</span>
+                    
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
 			<div class="article">
                 <a class="clearlink" href="14608288193470.html">
                 
@@ -476,48 +531,6 @@
                 </div>
               </div><!-- article -->
         
-			<div class="article">
-                <a class="clearlink" href="14608289727774.html">
-                
-                  <h1>通过 CSS 修改 webkit 浏览器滚动条样式</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>webkit 内核的浏览器关于滚动条，主要有下面7个属性</p>
-
-<ol>
-<li><code>::-webkit-scrollbar </code>滚动条整体部分，可以设置宽度啥的</li>
-<li><code>::-webkit-scrollbar-button </code>滚动条两端的按钮</li>
-<li><code>::-webkit-scrollbar-track  </code>外层轨道</li>
-<li><code>::-webkit-scrollbar-track-piece  </code>内层滚动槽</li>
-<li><code>::-webkit-scrollbar-thumb </code>滚动的滑块</li>
-<li><code>::-webkit-scrollbar-corner </code>边角</li>
-<li><code>::-webkit-resizer </code>定义右下角拖动块的样式</li>
-</ol>
-
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14608289727774.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2014/12/15 21:1 下午</span>
-                    
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
               
 
 
@@ -594,6 +607,12 @@
 	      
 		      
 			      <li class="post">
+			        <a href="14662517738182.html">Python 爬取中文页面时解码 UnicodeDecodeError 报错的解决</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="14610807170718.html">关于Python的logging模块初始化无效的一个小坑</a>
 			      </li>
 		     
@@ -613,12 +632,6 @@
 		      
 			      <li class="post">
 			        <a href="14570954925763.html">Ideas for Neural Network</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="14569378376035.html">Notes for Neural Network</a>
 			      </li>
 		     
 		  
