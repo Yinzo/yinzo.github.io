@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  Pattern Recognition - 雪地
+  使用 Python 装饰器来将普通函数加入任务队列 - 雪地
   
   </title>
   
@@ -98,119 +98,214 @@
        
 
  <script type="text/javascript">
-	$(function(){
-		$('#menu_item_index').addClass('is_active');
-	});
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
 </script>
 <div class="row">
-	<div class="large-8 medium-8 columns">
-		<div class="markdown-body home-categories">
-		
-			<div class="article">
-                <a class="clearlink" href="14570954925763.html">
-                
-                  <h1>Ideas for Neural Network</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<ul>
-<li>Use genetic algorithm to evolve the parameters in Neural Network, to make a self-develop algorithm.
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>使用 Python 装饰器来将普通函数加入任务队列</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2016/7/14 23:41 下午</span>
 
-<ul>
-<li>automatically find and make training set from search engine</li>
-<li>the paremeters include:
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='Python.html'>Python</a></span>
+           
+         
+          <span class="comments">
+            
 
-<ul>
-<li>learning rate</li>
-<li>iteration times</li>
-<li>regularization term \(\lambda\)</li>
-<li>activation function</li>
-<li>number of hidden layers(units)</li>
-</ul></li>
-</ul></li>
-</ul>
+            
+          </span>
 
+        </div>
+      </div><!-- article -->
 
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14570954925763.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/3/4 20:44 下午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Pattern%20Recognition.html'>Pattern Recognition</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
+      <div class="article-content">
+      <p>对于操作『函数对象』来说，使用 Python 装饰器是一种非常优雅，非常 Pythonic 的一个方式。而在这篇文章中，对于任何一个普通的函数，只需要在函数定义前加一个装饰器调用，即可使得这一函数被调用时自动加入特定的任务队列，成为异步调用，而不会阻塞主线程。</p>
 
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">实现 Producer/Consumer 型任务队列</h2>
+
+<pre><code class="language-python"># -*- coding: utf-8 -*-
+
+from Queue import Queue
+from threading import Thread
+from collections import namedtuple
+
+Job = namedtuple(&#39;Job&#39;, (&#39;func&#39;, &#39;args&#39;, &#39;kwargs&#39;, &#39;result_obj&#39;))
+</code></pre>
+
+<p>首先，我们先声明了一个 namedtuple ，其中包含以下几个元素：</p>
+
+<ol>
+<li><code>func</code> ：需要加入任务队列的目标函数对象</li>
+<li><code>args</code> 和 <code>kwargs</code> ：目标函数对象的参数</li>
+<li><code>result_obj</code> ：用于保存目标函数返回值的一个字典， 装饰器函数将目标函数加入任务队列之后，会直接返回一个<code>{&#39;result&#39;: None, &#39;done&#39;: False}</code>的字典。等到目标函数异步执行完成之后， Worker 会用返回值替换这一字典的<code>result</code>，并设置<code>done</code>为<code>True</code></li>
+</ol>
+
+<pre><code class="language-python">class Worker(Thread):
+
+    def __init__(self, queue):
+        &quot;&quot;&quot;
+        :type queue: Queue
+        &quot;&quot;&quot;
+        super(Worker, self).__init__()
+        self.queue = queue
+        self._stopped = False
+        self._stop_done = False
+
+    def run(self):
+        while True:
+            if self._stopped is True:
+                break
+
+            task = self.queue.get()
+            result = task.func(*task.args, **task.kwargs)
+            task.result_obj[&#39;result&#39;] = result
+            task.result_obj[&#39;done&#39;] = True
+
+        self._stop_done = True
+
+    def stop(self):
+        self._stopped = True
         
-			<div class="article">
-                <a class="clearlink" href="14569378376035.html">
-                
-                  <h1>Notes for Neural Network</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<h2 id="toc_0">Notes:</h2>
+</code></pre>
 
-<ul>
-<li><p>If we set the initial \(\Theta\) be the same, the units in next layer with the same \(x_i\) will get the same result, then all units in the same layer will get the same output. At last, the cost function will also get same cost, so we will update the \(\Theta\) with same step.</p></li>
-<li><p>seems \(\delta^{(l)}_{i}\) means the cost of \(i_{th}\) unit in the \(l_{th}\) layer</p></li>
-</ul>
+<p>Worker 和普通的 Consumer 定义基本没有区别，唯一要注意的地方是，记得要用函数返回值，替换掉任务返回值字典的<code>&#39;result&#39;</code>，并修改任务状态，即</p>
+
+<pre><code class="language-python">task.result_obj[&#39;result&#39;] = result
+task.result_obj[&#39;done&#39;] = True
+</code></pre>
+
+<pre><code class="language-python">        
+class QueueHandler(object):
+
+    def __init__(self, workers=5):
+        self.job_queue = Queue()
+        self.workers = [Worker(self.job_queue) for i in xrange(workers)]
+        for worker in self.workers:
+            worker.setDaemon(True)
+            worker.start()
+
+    def queue_up(self, func):
+
+        def _queue_up(*args, **kwargs):
+            tmp_obj = {&#39;result&#39;: None, &#39;done&#39;: False}
+
+            self. job_queue.put(
+                Job(
+                    func = func,
+                    args = args,
+                    kwargs = kwargs,
+                    result_obj=tmp_obj
+                )
+            )
+            return tmp_obj
+        return _queue_up
+
+</code></pre>
+
+<p>同样是比较标准的 Producer ，其中<code>queue_up</code>函数就是这次的主角了。对于目标函数，先构建一个返回值字典，然后将目标函数和参数加入任务队列，最后返回这一返回值字典。非常简单的结构，但是使用起来非常的方便。</p>
+
+<h2 id="toc_1">实际测试</h2>
+
+<p>这里我构造了一个用来测试的代码</p>
+
+<pre><code class="language-python">import time, random
+
+testQueue = QueueHandler()
 
 
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14569378376035.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/3/3 0:57 上午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Pattern%20Recognition.html'>Pattern Recognition</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
+class TestClass(object):
 
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-              
+    def __init__(self):
+        self.some_value = 10
+        self.some_str = &quot;Empty&quot;
+
+    @testQueue.queue_up
+    def some_operation(self, jobid, some_para, another_para=&#39;blablabla&#39;):
+        time.sleep(random.randrange(1,5))
+        self.some_value = some_para
+        self.some_str = another_para
+        print &quot;ID: {} ---Now, value: {}, str: {}\n&quot;.format(jobid, self.some_value, self.some_str)
+        return jobid+100000
 
 
-			<div class="row">
-			  <div class="large-6 columns">
-			  <p class="text-left" style="padding-top:25px;">
-			   
-			  </p>
-			  </div>
-			  <div class="large-6 columns">
-			<p class="text-right" style="padding-top:25px;">
-			
-			</p>
-			  </div>
-			</div>
-		</div>
-	</div><!-- large 8 -->
+if __name__ == &#39;__main__&#39;:
+    testClass = TestClass()
+    rs = []
+    for i in range(10):
+        rs.append(
+            testClass.some_operation(i, i+1000, another_para=&#39;{0}&#39;.format(&#39;-&#39;*i))
+        )
+    for i in range(10):
+        time.sleep(1)
+        print rs
+</code></pre>
+
+<p>读者可以尝试删除掉<code>some_operation</code>函数前面的装饰器，对比有无这个装饰器对程序运行的影响。</p>
+
+<p>可以看到，对于需要测试的<code>some_operation</code>函数，我仅仅是在其定义前加上了一个装饰器的调用，就使得这个函数的执行不会阻塞主线程了。并且对于异步调用函数的返回值，也很好的进行了保留传递。</p>
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="14662517738182.html" 
+          title="Next Post: Python 爬取中文页面时解码 UnicodeDecodeError 报错的解决">Python 爬取中文页面时解码 UnicodeDecodeError 报错的解决 &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          <div id="disqus_thread"></div>
+<script>
+/**
+* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+
+s.src = '//yinzo.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">

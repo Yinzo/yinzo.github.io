@@ -4,13 +4,149 @@
   <title><![CDATA[雪地]]></title>
   <link href="http://yinzo.github.io/atom.xml" rel="self"/>
   <link href="http://yinzo.github.io/"/>
-  <updated>2016-06-18T20:26:45+08:00</updated>
+  <updated>2016-07-15T22:28:26+08:00</updated>
   <id>http://yinzo.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[使用 Python 装饰器来将普通函数加入任务队列]]></title>
+    <link href="http://yinzo.github.io/14685108901937.html"/>
+    <updated>2016-07-14T23:41:30+08:00</updated>
+    <id>http://yinzo.github.io/14685108901937.html</id>
+    <content type="html"><![CDATA[
+<p>对于操作『函数对象』来说，使用 Python 装饰器是一种非常优雅，非常 Pythonic 的一个方式。而在这篇文章中，对于任何一个普通的函数，只需要在函数定义前加一个装饰器调用，即可使得这一函数被调用时自动加入特定的任务队列，成为异步调用，而不会阻塞主线程。</p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">实现 Producer/Consumer 型任务队列</h2>
+
+<pre><code class="language-python"># -*- coding: utf-8 -*-
+
+from Queue import Queue
+from threading import Thread
+from collections import namedtuple
+
+Job = namedtuple(&#39;Job&#39;, (&#39;func&#39;, &#39;args&#39;, &#39;kwargs&#39;, &#39;result_obj&#39;))
+</code></pre>
+
+<p>首先，我们先声明了一个 namedtuple ，其中包含以下几个元素：</p>
+
+<ol>
+<li><code>func</code> ：需要加入任务队列的目标函数对象</li>
+<li><code>args</code> 和 <code>kwargs</code> ：目标函数对象的参数</li>
+<li><code>result_obj</code> ：用于保存目标函数返回值的一个字典， 装饰器函数将目标函数加入任务队列之后，会直接返回一个<code>{&#39;result&#39;: None, &#39;done&#39;: False}</code>的字典。等到目标函数异步执行完成之后， Worker 会用返回值替换这一字典的<code>result</code>，并设置<code>done</code>为<code>True</code></li>
+</ol>
+
+<pre><code class="language-python">class Worker(Thread):
+
+    def __init__(self, queue):
+        &quot;&quot;&quot;
+        :type queue: Queue
+        &quot;&quot;&quot;
+        super(Worker, self).__init__()
+        self.queue = queue
+        self._stopped = False
+        self._stop_done = False
+
+    def run(self):
+        while True:
+            if self._stopped is True:
+                break
+
+            task = self.queue.get()
+            result = task.func(*task.args, **task.kwargs)
+            task.result_obj[&#39;result&#39;] = result
+            task.result_obj[&#39;done&#39;] = True
+
+        self._stop_done = True
+
+    def stop(self):
+        self._stopped = True
+        
+</code></pre>
+
+<p>Worker 和普通的 Consumer 定义基本没有区别，唯一要注意的地方是，记得要用函数返回值，替换掉任务返回值字典的<code>&#39;result&#39;</code>，并修改任务状态，即</p>
+
+<pre><code class="language-python">task.result_obj[&#39;result&#39;] = result
+task.result_obj[&#39;done&#39;] = True
+</code></pre>
+
+<pre><code class="language-python">        
+class QueueHandler(object):
+
+    def __init__(self, workers=5):
+        self.job_queue = Queue()
+        self.workers = [Worker(self.job_queue) for i in xrange(workers)]
+        for worker in self.workers:
+            worker.setDaemon(True)
+            worker.start()
+
+    def queue_up(self, func):
+
+        def _queue_up(*args, **kwargs):
+            tmp_obj = {&#39;result&#39;: None, &#39;done&#39;: False}
+
+            self. job_queue.put(
+                Job(
+                    func = func,
+                    args = args,
+                    kwargs = kwargs,
+                    result_obj=tmp_obj
+                )
+            )
+            return tmp_obj
+        return _queue_up
+
+</code></pre>
+
+<p>同样是比较标准的 Producer ，其中<code>queue_up</code>函数就是这次的主角了。对于目标函数，先构建一个返回值字典，然后将目标函数和参数加入任务队列，最后返回这一返回值字典。非常简单的结构，但是使用起来非常的方便。</p>
+
+<h2 id="toc_1">实际测试</h2>
+
+<p>这里我构造了一个用来测试的代码</p>
+
+<pre><code class="language-python">import time, random
+
+testQueue = QueueHandler()
+
+
+class TestClass(object):
+
+    def __init__(self):
+        self.some_value = 10
+        self.some_str = &quot;Empty&quot;
+
+    @testQueue.queue_up
+    def some_operation(self, jobid, some_para, another_para=&#39;blablabla&#39;):
+        time.sleep(random.randrange(1,5))
+        self.some_value = some_para
+        self.some_str = another_para
+        print &quot;ID: {} ---Now, value: {}, str: {}\n&quot;.format(jobid, self.some_value, self.some_str)
+        return jobid+100000
+
+
+if __name__ == &#39;__main__&#39;:
+    testClass = TestClass()
+    rs = []
+    for i in range(10):
+        rs.append(
+            testClass.some_operation(i, i+1000, another_para=&#39;{0}&#39;.format(&#39;-&#39;*i))
+        )
+    for i in range(10):
+        time.sleep(1)
+        print rs
+</code></pre>
+
+<p>读者可以尝试删除掉<code>some_operation</code>函数前面的装饰器，对比有无这个装饰器对程序运行的影响。</p>
+
+<p>可以看到，对于需要测试的<code>some_operation</code>函数，我仅仅是在其定义前加上了一个装饰器的调用，就使得这个函数的执行不会阻塞主线程了。并且对于异步调用函数的返回值，也很好的进行了保留传递。</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Python 爬取中文页面时解码 UnicodeDecodeError 报错的解决]]></title>
@@ -2364,43 +2500,6 @@ query.php?user=1+union+select+benchmark(500000,sha1 (0x414141)),1,1,1,1,1,1,1,1,
 <li>自动存档功能：首次使用会将目标页面保存至本地，下一次统计该页面时将自动调用存档</li>
 <li>多模式可选：无聊图、妹子图、（即将加入nsfw）</li>
 </ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[给你的 Django1.7 添加 favicon]]></title>
-    <link href="http://yinzo.github.io/14608290105708.html"/>
-    <updated>2016-04-17T01:50:10+08:00</updated>
-    <id>http://yinzo.github.io/14608290105708.html</id>
-    <content type="html"><![CDATA[
-<p>为了给 Blog 加上图标，我翻了好多地方，都是用的旧版Django的方法，在urls.py中加入以下语句，现在已被取代：</p>
-
-<pre><code>url(r&#39;^favicon\.ico$&#39;, &#39;django.views.generic.simple.redirect_to&#39;, {&#39;url&#39;: &#39;/static/images/favicon.ico&#39;}),
-</code></pre>
-
-<span id="more"></span><!-- more -->
-
-<p>对于Django1.6以后的版本，<code>django.views.generic.simple</code>这个类已经不存在了，取而代之的是<code>django.views.generic.base</code>这个类中的<code>RedirectView</code>这个方法。</p>
-
-<p>所以，对于新的方法，我们可以这么写</p>
-
-<pre><code>(r&#39;^favicon\.ico/$&#39;, RedirectView.as_view(url=&#39;/static/images/favicon.ico&#39;)),
-</code></pre>
-
-<p>如果你不喜欢这样，还可以使用第二种方法。<br/>
-在views.py中这样写一个新方法</p>
-
-<pre><code>from django.shortcuts import redirect
-
-……
-def favicon_redirect(request):
-        return redirect(&#39;/static/images/favicon.ico&#39;)
-</code></pre>
-
-<p>之后，在urls.py中对于favicon.ico的请求调用这一函数就好了。</p>
-
-<p>如果出现favicon的500错误，你需要在浏览器中直接访问 /favicon.ico 才能看到具体错误内容;D。</p>
 
 ]]></content>
   </entry>
