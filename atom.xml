@@ -4,13 +4,41 @@
   <title><![CDATA[雪地]]></title>
   <link href="http://yinzo.github.io/atom.xml" rel="self"/>
   <link href="http://yinzo.github.io/"/>
-  <updated>2016-07-15T22:28:26+08:00</updated>
+  <updated>2016-07-27T19:14:15+08:00</updated>
   <id>http://yinzo.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[不要手动缓存长度]]></title>
+    <link href="http://yinzo.github.io/14696108056583.html"/>
+    <updated>2016-07-27T17:13:25+08:00</updated>
+    <id>http://yinzo.github.io/14696108056583.html</id>
+    <content type="html"><![CDATA[
+<p>今天在阅读《机器学习实战》的时候，看到了这样一句描述</p>
+
+<p><img src="media/14696108056583/IMG_0629.png" alt="IMG_0629"/></p>
+
+<p>其中数据集是一个List。看到这里说到为了提高代码效率，特地开了一个变量来保存其长度。</p>
+
+<span id="more"></span><!-- more -->
+
+<p>我回忆起以前调试bug的时候，总是能看到List对象里面有一个函数<code>__len__</code>，想必Python对于这种常用函数会有所优化，对于这种集合类型的对象，如果对其长度进行缓存，这样多次调用<code>len</code>函数，就不会重复进行遍历计算了。这么简单的优化，Python必然是有做的。</p>
+
+<p>于是去Google，原本准备搜len函数的具体实现代码，结果直接找到stackoverflow有<a href="http://stackoverflow.com/questions/29057153/does-the-len-built-in-function-iterates-through-the-collection-to-calculate-it">相关问题</a>，明确的验证了我的想法。</p>
+
+<p><img src="media/14696108056583/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-27%2018.44.21.png" alt="屏幕快照 2016-07-27 18.44.21"/></p>
+
+<p>对于这种类型，Python都会对其长度进行缓存。也就是说，对于len函数，只在第一次调用的时候复杂度为<code>O(N)</code>，后续调用的复杂度都是常数级的。所以，我们平时写代码的时候，可以不需要多此一举的再开一个单独的变量来缓存了。也就是说，以下代码在没有特殊需求之下，是多此一举的：</p>
+
+<pre><code class="language-python">l = len(some_list)
+</code></pre>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[使用 Python 装饰器来将普通函数加入任务队列]]></title>
@@ -2459,47 +2487,6 @@ query.php?user=1+union+select+benchmark(500000,sha1 (0x414141)),1,1,1,1,1,1,1,1,
 然后再规划一下假期的安排，毕竟对于一个有妹子的程序员来说，还能拥有一个完整并自由的暑假也是相当的难得了。</p>
 
 <p>好好休息，提升自己，准备未来。</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[煎蛋无聊图排行生成器]]></title>
-    <link href="http://yinzo.github.io/14608289652972.html"/>
-    <updated>2016-04-17T01:49:25+08:00</updated>
-    <id>http://yinzo.github.io/14608289652972.html</id>
-    <content type="html"><![CDATA[
-<p>这个生成器实际上挺久之前就做了的，但是一直都是拿来自己用的，所以代码规范和易用性也是比较差的。这次放出来是因为之前煎蛋民众纷纷表示想看历年汇总，于是乎自己用这个生成器+PS做了个排行榜，收到的响应也是蛮好的，虽说字体放得有点小了;_;<br/>
-<img src="http://ww3.sinaimg.cn/large/7d52f1ffjw1eo96odzrf3j20ho0ieta5.jpg" alt="无聊图排行"/><br/>
-最终到今天为止收到了1329个赞XD，也是蛮开心<br/>
-然后，些许提升了下易用性与生成网页的外观就放到了Github上啦</p>
-
-<p><a href="https://github.com/Yinzo/Jandan_pic_ranker" target="_blank">Github点这里</a></p>
-
-<span id="more"></span><!-- more -->
-
-<p>以下是readme</p>
-
-<hr/>
-
-<h2 id="toc_0">依赖库</h2>
-
-<ul>
-<li><code>beautifulsoup4</code></li>
-</ul>
-
-<h2 id="toc_1">食用方法</h2>
-
-<p><code>python jandan_pic_ranker.py</code></p>
-
-<p>之后按照提示输入即可将排行榜页面生成至当前目录</p>
-
-<h2 id="toc_2">特性</h2>
-
-<ul>
-<li>自动存档功能：首次使用会将目标页面保存至本地，下一次统计该页面时将自动调用存档</li>
-<li>多模式可选：无聊图、妹子图、（即将加入nsfw）</li>
-</ul>
 
 ]]></content>
   </entry>
