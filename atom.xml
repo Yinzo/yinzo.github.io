@@ -4,7 +4,7 @@
   <title><![CDATA[雪地]]></title>
   <link href="http://yinzo.github.io/atom.xml" rel="self"/>
   <link href="http://yinzo.github.io/"/>
-  <updated>2016-07-27T19:14:15+08:00</updated>
+  <updated>2016-07-27T19:17:36+08:00</updated>
   <id>http://yinzo.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -2476,17 +2476,42 @@ query.php?user=1+union+select+benchmark(500000,sha1 (0x414141)),1,1,1,1,1,1,1,1,
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[博客恢复]]></title>
-    <link href="http://yinzo.github.io/14608289464963.html"/>
-    <updated>2016-04-17T01:49:06+08:00</updated>
-    <id>http://yinzo.github.io/14608289464963.html</id>
+    <title type="html"><![CDATA[煎蛋无聊图排行生成器]]></title>
+    <link href="http://yinzo.github.io/14608289652972.html"/>
+    <updated>2016-04-17T01:49:25+08:00</updated>
+    <id>http://yinzo.github.io/14608289652972.html</id>
     <content type="html"><![CDATA[
-<p>决定还是恢复博客的使用了。大一的这段时间做的事情特别的散，精力十分的分散，博客也由于各种原因停止了更新。但是我本人还是没有停止前进的。</p>
+<p>这个生成器实际上挺久之前就做了的，但是一直都是拿来自己用的，所以代码规范和易用性也是比较差的。这次放出来是因为之前煎蛋民众纷纷表示想看历年汇总，于是乎自己用这个生成器+PS做了个排行榜，收到的响应也是蛮好的，虽说字体放得有点小了;_;<br/>
+<img src="http://ww3.sinaimg.cn/large/7d52f1ffjw1eo96odzrf3j20ho0ieta5.jpg" alt="无聊图排行"/><br/>
+最终到今天为止收到了1329个赞XD，也是蛮开心<br/>
+然后，些许提升了下易用性与生成网页的外观就放到了Github上啦</p>
 
-<p>这几天刚刚开始放假，早上刚把妹子送走，明天回家休息一小段时间，也趁着则段时间总结一下上个学期以来做了的一些事情，趁着记忆犹新记录一下，也算是做个总结了。<br/>
-然后再规划一下假期的安排，毕竟对于一个有妹子的程序员来说，还能拥有一个完整并自由的暑假也是相当的难得了。</p>
+<p><a href="https://github.com/Yinzo/Jandan_pic_ranker" target="_blank">Github点这里</a></p>
 
-<p>好好休息，提升自己，准备未来。</p>
+<span id="more"></span><!-- more -->
+
+<p>以下是readme</p>
+
+<hr/>
+
+<h2 id="toc_0">依赖库</h2>
+
+<ul>
+<li><code>beautifulsoup4</code></li>
+</ul>
+
+<h2 id="toc_1">食用方法</h2>
+
+<p><code>python jandan_pic_ranker.py</code></p>
+
+<p>之后按照提示输入即可将排行榜页面生成至当前目录</p>
+
+<h2 id="toc_2">特性</h2>
+
+<ul>
+<li>自动存档功能：首次使用会将目标页面保存至本地，下一次统计该页面时将自动调用存档</li>
+<li>多模式可选：无聊图、妹子图、（即将加入nsfw）</li>
+</ul>
 
 ]]></content>
   </entry>
