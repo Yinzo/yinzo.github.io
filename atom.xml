@@ -4,7 +4,7 @@
   <title><![CDATA[雪地]]></title>
   <link href="http://yinzo.github.io/atom.xml" rel="self"/>
   <link href="http://yinzo.github.io/"/>
-  <updated>2016-07-27T19:17:36+08:00</updated>
+  <updated>2016-09-26T19:54:03+08:00</updated>
   <id>http://yinzo.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -1045,8 +1045,9 @@ ip-&gt;com_A-&gt;op
 <li><p>更换默认shell为zsh</p>
 
 <pre><code>    chsh -s /usr/bin/zsh
-这个路径不一定，如果不知道，可以使用```which zsh```来查看zsh位置
-</code></pre></li>
+</code></pre>
+
+<p>这个路径不一定，如果不知道，可以使用<code>which zsh</code>来查看zsh位置</p></li>
 <li><p>上传.zshrc</p>
 
 <pre><code>scp ~/.zshrc root@*.*.*.*:~/
