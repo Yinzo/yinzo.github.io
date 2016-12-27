@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  Python Decorator的一些细节 - 雪地
+  OS - 雪地
   
   </title>
   
@@ -100,120 +100,76 @@
        
 
  <script type="text/javascript">
-  $(function(){
-    $('#menu_item_index').addClass('is_active');
-  });
+	$(function(){
+		$('#menu_item_index').addClass('is_active');
+	});
 </script>
 <div class="row">
-  <div class="large-8 medium-8 columns">
-      <div class="markdown-body article-wrap">
-       <div class="article">
-          
-          <h1>Python Decorator的一些细节</h1>
-     
-        <div class="read-more clearfix">
-          <span class="date">2016/3/31 19:14 下午</span>
+	<div class="large-8 medium-8 columns">
+		<div class="markdown-body home-categories">
+		
+			<div class="article">
+                <a class="clearlink" href="14828521678770.html">
+                
+                  <h1>在 Linode 上编译 hybla 模块</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>考试复习期间，不想复习，搞搞其他东西散散心，发现shadowsocks 有关于 TCP Fast Open 的更新，看说明的过程还发现了官方的速度优化指南，尝试优化自己的 ss 速度，然而报错。</p>
 
-          <span>posted in&nbsp;</span> 
-          
-              <span class="posted-in"><a href='Python.html'>Python</a></span>
-           
-         
-          <span class="comments">
-            
+<p>执行到这一步时运行出错</p>
 
-            
-          </span>
-
-        </div>
-      </div><!-- article -->
-
-      <div class="article-content">
-      <p>装饰器函数并不是在被修饰函数调用的时候才执行，而是修饰语句所在的代码块被执行的时候执行。</p>
-
-<p>而且当一个文件（模块）被import的时候，文件内的<strong>所有</strong>装饰器就会被激活执行。因为装饰器语句相当于文件中的普通语句，而非函数声明或者类声明的一部分。</p>
-
-<p>用以下代码方便理解：</p>
-
-<pre><code># sample.py
-
-def decorator_function(func):
-    print &quot;executing the decorator.&quot;
-
-    def wrapper(*args, **kwargs):
-        print &quot;decorated function is executing.&quot;
-        return func(*args, **kwargs)
-
-    return wrapper
-
-
-print &quot;this python file is executing.&quot;
-
-
-@decorator_function
-def test_function(sth):
-    print &quot;blablabla&quot;+sth
-
-test_function(&quot;yeah&quot;)
+<pre><code class="language-sh">sysctl --system
 </code></pre>
 
-<p>而当我们对一个类里面的普通函数使用修饰符进行修饰的时候，然后我们正常调用这一函数（通过实例化的对象调用），会报错提示这一函数变成了unbound method，缺少了类中函数默认的首参数self。这一问题是由于经过装饰器修饰的函数，实际上是被传递到了装饰器函数中，在这个装饰器函数中被独立调用的，而非被其原先所在的类对象调用。因此在这个装饰器函数中，没有其原来所在的类来对它进行调用，导致提示unbound method.</p>
-
-      </div>
-
-      <div class="row">
-        <div class="large-6 columns">
-        <p class="text-left" style="padding:15px 0px;">
-      
-          <a href="14610807170718.html" 
-          title="Previous Post: 关于Python的logging模块初始化无效的一个小坑">&laquo; 关于Python的logging模块初始化无效的一个小坑</a>
-      
-        </p>
-        </div>
-        <div class="large-6 columns">
-      <p class="text-right" style="padding:15px 0px;">
-      
-          <a  href="14590503922928.html" 
-          title="Next Post: 通过EMET来禁用EMET——EMET的禁用与绕过思路讲解">通过EMET来禁用EMET——EMET的禁用与绕过思路讲解 &raquo;</a>
-      
-      </p>
-        </div>
-      </div>
-      <div class="comments-wrap">
-        <div class="share-comments">
-          <div id="disqus_thread"></div>
-<script>
-/**
-* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-
-s.src = '//yinzo.disqus.com/embed.js';
-
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
-          
-
-          
-        </div>
-      </div>
-    </div><!-- article-wrap -->
-  </div><!-- large 8 -->
+<pre><code class="language-sh">...
+sysctl: setting key &quot;net.ipv4.tcp_congestion_control&quot;: No such file or directory
+net.ipv4.tcp_congestion_control = hybla
+* Applying /etc/sysctl.conf ...
+</code></pre>
 
 
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14828521678770.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2016/12/27 23:22 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='OS.html'>OS</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
 
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+              
+
+
+			<div class="row">
+			  <div class="large-6 columns">
+			  <p class="text-left" style="padding-top:25px;">
+			   
+			  </p>
+			  </div>
+			  <div class="large-6 columns">
+			<p class="text-right" style="padding-top:25px;">
+			
+			</p>
+			  </div>
+			</div>
+		</div>
+	</div><!-- large 8 -->
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">

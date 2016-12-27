@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  Python Decorator的一些细节 - 雪地
+  在 Linode 上编译 hybla 模块 - 雪地
   
   </title>
   
@@ -109,14 +109,14 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>Python Decorator的一些细节</h1>
+          <h1>在 Linode 上编译 hybla 模块</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2016/3/31 19:14 下午</span>
+          <span class="date">2016/12/27 23:22 下午</span>
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='Python.html'>Python</a></span>
+              <span class="posted-in"><a href='OS.html'>OS</a></span>
            
          
           <span class="comments">
@@ -129,35 +129,134 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>装饰器函数并不是在被修饰函数调用的时候才执行，而是修饰语句所在的代码块被执行的时候执行。</p>
+      <p>考试复习期间，不想复习，搞搞其他东西散散心，发现shadowsocks 有关于 TCP Fast Open 的更新，看说明的过程还发现了官方的速度优化指南，尝试优化自己的 ss 速度，然而报错。</p>
 
-<p>而且当一个文件（模块）被import的时候，文件内的<strong>所有</strong>装饰器就会被激活执行。因为装饰器语句相当于文件中的普通语句，而非函数声明或者类声明的一部分。</p>
+<p>执行到这一步时运行出错</p>
 
-<p>用以下代码方便理解：</p>
-
-<pre><code># sample.py
-
-def decorator_function(func):
-    print &quot;executing the decorator.&quot;
-
-    def wrapper(*args, **kwargs):
-        print &quot;decorated function is executing.&quot;
-        return func(*args, **kwargs)
-
-    return wrapper
-
-
-print &quot;this python file is executing.&quot;
-
-
-@decorator_function
-def test_function(sth):
-    print &quot;blablabla&quot;+sth
-
-test_function(&quot;yeah&quot;)
+<pre><code class="language-sh">sysctl --system
 </code></pre>
 
-<p>而当我们对一个类里面的普通函数使用修饰符进行修饰的时候，然后我们正常调用这一函数（通过实例化的对象调用），会报错提示这一函数变成了unbound method，缺少了类中函数默认的首参数self。这一问题是由于经过装饰器修饰的函数，实际上是被传递到了装饰器函数中，在这个装饰器函数中被独立调用的，而非被其原先所在的类对象调用。因此在这个装饰器函数中，没有其原来所在的类来对它进行调用，导致提示unbound method.</p>
+<pre><code class="language-sh">...
+sysctl: setting key &quot;net.ipv4.tcp_congestion_control&quot;: No such file or directory
+net.ipv4.tcp_congestion_control = hybla
+* Applying /etc/sysctl.conf ...
+</code></pre>
+
+<span id="more"></span><!-- more -->
+
+<p>Google 一番后发现是缺少 tcp_hybla 模块，需要自己手动编译。引用一下 <a href="https://plus.google.com/+BoluoKING/posts/dLyYhBf3mwp">https://plus.google.com/+BoluoKING/posts/dLyYhBf3mwp</a> 的科普</p>
+
+<blockquote>
+<p>中美之间的线路质量不是很好，rtt较长且时常丢包。TCP的设计目的是解决不可靠线路上可靠传输的问题，即为了解决丢包，但丢包却使TCP传输速度大幅下降。HTTP协议在传输层使用的是TCP协议，所以网页下载的速度就取决于TCP单线程下载的速度（因为网页就是单线程下载的）。丢包使得TCP传输速度大幅下降的主要原因是丢包重传机制，控制这一机制的就是TCP拥塞控制算法。<br/>
+Linux内核中提供了若干套TCP拥塞控制算法，这些算法各自适用于不同的环境。</p>
+
+<p>1）reno是最基本的拥塞控制算法，也是TCP协议的实验原型。<br/>
+2）bic适用于rtt较高但丢包极为罕见的情况，比如北美和欧洲之间的线路，这是2.6.8到2.6.18之间的Linux内核的默认算法。<br/>
+3）cubic是修改版的bic，适用环境比bic广泛一点，它是2.6.19之后的linux内核的默认算法。<br/>
+4）hybla适用于高延时、高丢包率的网络，比如卫星链路——同样适用于中美之间的链路。<br/>
+我们需要做的工作就是将TCP拥塞控制算法改为hybla算法，并且优化TCP参数。</p>
+</blockquote>
+
+<p>于是又开始找 hybla 模块的编译指南，参考了这两篇文章，并且修改了一下不太明确的地方，写个修改版的指南吧。</p>
+
+<ul>
+<li><a href="https://moonagic.com/linode-setup-hybla-htcp/">Linode编译hybla htcp模块</a></li>
+<li><a href="http://www.777s.me/linode-hybla-htcp.html">Linode编译hybla htcp拥塞控制算法模块</a></li>
+</ul>
+
+<h2 id="toc_0">编译过程</h2>
+
+<h3 id="toc_1">查看自己 vps 内核版本：</h3>
+
+<pre><code class="language-sh">$ uname -a
+4.8.3-x86_64-linode76
+</code></pre>
+
+<h3 id="toc_2">下载对应版本的内核源码</h3>
+
+<p>在这里下载 <a href="https://www.kernel.org/pub/linux/kernel/">https://www.kernel.org/pub/linux/kernel/</a></p>
+
+<p>我这里是 <code>4.8.3</code>，于是进入 <code>v4.x</code> 目录，向下翻即找到了，复制文件地址，在vps上 <code>wget</code> 下载下来</p>
+
+<pre><code class="language-sh">mkdir kernel  
+cd kernel  
+wget https://www.kernel.org/pub/linux/kernel/v4.x/linux-4.8.3.tar.gz 
+tar xzvf linux-4.8.3.tar.gz
+</code></pre>
+
+<p>注意修改对应的下载地址和文件名</p>
+
+<h3 id="toc_3">安装内核编译和工具</h3>
+
+<pre><code class="language-sh">apt-get install build-essential libncurses5-dev module-init-tools
+</code></pre>
+
+<h3 id="toc_4">配置内核编译文件</h3>
+
+<pre><code class="language-sh">cd linux-4.8.3  
+zcat /proc/config.gz &gt; .config
+</code></pre>
+
+<p>然后用你喜欢的编辑器编辑 <code>.config</code> 文件，查找 <code>CONFIG_TCP_CONG_CUBIC=y</code>，在这一行下面增加一行</p>
+
+<pre><code>CONFIG_TCP_CONG_HYBLA=y
+</code></pre>
+
+<p>然后编译</p>
+
+<pre><code class="language-sh">make
+</code></pre>
+
+<p>编译耗时约15~20分钟</p>
+
+<h3 id="toc_5">准备编译模块</h3>
+
+<pre><code class="language-sh">cd net/ipv4/  
+mv Makefile Makefile.old  
+vi Makefile 
+</code></pre>
+
+<p>以下是 <code>hybla</code> 所用的 Makefile</p>
+
+<pre><code># Makefile for tcp_hybla.ko
+obj-m := tcp_hybla.o  
+KDIR := /tmp/kernel/linux-4.8.3  
+PWD := $(shell pwd)  
+default:  
+    $(MAKE) -C $(KDIR) SUBDIRS=$(PWD) modules
+</code></pre>
+
+<p>注意上面<strong>第三行 <code>KDIR := /root/kernel/linux-3.11.6</code> 要修改成自己解压的目录</strong>，并且最后一行必须以 <strong><code>tab</code></strong> 开头，<strong>不可以用空格，不可以用空格</strong>。不懂Makefile的规则，我在这里踩了坑。</p>
+
+<h3 id="toc_6">开始编译模块</h3>
+
+<p>这里退回到 <code>linux-4.8.3</code> 目录，我是放在 <code>/tmp/kernel</code> 内的，后面目录相关的就不提示了</p>
+
+<pre><code class="language-sh">cd /tmp/kernel/linux-4.8.3
+make modules 
+</code></pre>
+
+<h3 id="toc_7">加载模块</h3>
+
+<pre><code class="language-sh">cd /tmp/kernel/linux-4.8.3/net/ipv4  
+insmod ./tcp_hybla.ko 
+</code></pre>
+
+<p>如果遇到command not found: insmod则需要手动安装</p>
+
+<pre><code class="language-sh">apt-get install module-init-tools  
+</code></pre>
+
+<p>如果编译的时候如果出现如下错误</p>
+
+<pre><code class="language-sh">scripts/extract-cert.c:21:25: fatal error: openssl/bio.h: No such file or directory
+</code></pre>
+
+<p>需要源安装libssl-dev就可以了</p>
+
+<h2 id="toc_8">后记</h2>
+
+<p>至此就装好了hybla 模块，后面继续按照 <a href="https://github.com/shadowsocks/shadowsocks/wiki/Optimizing-Shadowsocks">优化指南</a> 优化去了</p>
 
       </div>
 
@@ -165,16 +264,13 @@ test_function(&quot;yeah&quot;)
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14610807170718.html" 
-          title="Previous Post: 关于Python的logging模块初始化无效的一个小坑">&laquo; 关于Python的logging模块初始化无效的一个小坑</a>
-      
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="14590503922928.html" 
-          title="Next Post: 通过EMET来禁用EMET——EMET的禁用与绕过思路讲解">通过EMET来禁用EMET——EMET的禁用与绕过思路讲解 &raquo;</a>
+          <a  href="14696108056583.html" 
+          title="Next Post: 不要手动缓存长度">不要手动缓存长度 &raquo;</a>
       
       </p>
         </div>

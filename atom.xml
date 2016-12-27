@@ -4,13 +4,151 @@
   <title><![CDATA[雪地]]></title>
   <link href="http://yinzo.github.io/atom.xml" rel="self"/>
   <link href="http://yinzo.github.io/"/>
-  <updated>2016-09-26T19:54:03+08:00</updated>
+  <updated>2016-12-28T00:03:18+08:00</updated>
   <id>http://yinzo.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[在 Linode 上编译 hybla 模块]]></title>
+    <link href="http://yinzo.github.io/14828521678770.html"/>
+    <updated>2016-12-27T23:22:47+08:00</updated>
+    <id>http://yinzo.github.io/14828521678770.html</id>
+    <content type="html"><![CDATA[
+<p>考试复习期间，不想复习，搞搞其他东西散散心，发现shadowsocks 有关于 TCP Fast Open 的更新，看说明的过程还发现了官方的速度优化指南，尝试优化自己的 ss 速度，然而报错。</p>
+
+<p>执行到这一步时运行出错</p>
+
+<pre><code class="language-sh">sysctl --system
+</code></pre>
+
+<pre><code class="language-sh">...
+sysctl: setting key &quot;net.ipv4.tcp_congestion_control&quot;: No such file or directory
+net.ipv4.tcp_congestion_control = hybla
+* Applying /etc/sysctl.conf ...
+</code></pre>
+
+<span id="more"></span><!-- more -->
+
+<p>Google 一番后发现是缺少 tcp_hybla 模块，需要自己手动编译。引用一下 <a href="https://plus.google.com/+BoluoKING/posts/dLyYhBf3mwp">https://plus.google.com/+BoluoKING/posts/dLyYhBf3mwp</a> 的科普</p>
+
+<blockquote>
+<p>中美之间的线路质量不是很好，rtt较长且时常丢包。TCP的设计目的是解决不可靠线路上可靠传输的问题，即为了解决丢包，但丢包却使TCP传输速度大幅下降。HTTP协议在传输层使用的是TCP协议，所以网页下载的速度就取决于TCP单线程下载的速度（因为网页就是单线程下载的）。丢包使得TCP传输速度大幅下降的主要原因是丢包重传机制，控制这一机制的就是TCP拥塞控制算法。<br/>
+Linux内核中提供了若干套TCP拥塞控制算法，这些算法各自适用于不同的环境。</p>
+
+<p>1）reno是最基本的拥塞控制算法，也是TCP协议的实验原型。<br/>
+2）bic适用于rtt较高但丢包极为罕见的情况，比如北美和欧洲之间的线路，这是2.6.8到2.6.18之间的Linux内核的默认算法。<br/>
+3）cubic是修改版的bic，适用环境比bic广泛一点，它是2.6.19之后的linux内核的默认算法。<br/>
+4）hybla适用于高延时、高丢包率的网络，比如卫星链路——同样适用于中美之间的链路。<br/>
+我们需要做的工作就是将TCP拥塞控制算法改为hybla算法，并且优化TCP参数。</p>
+</blockquote>
+
+<p>于是又开始找 hybla 模块的编译指南，参考了这两篇文章，并且修改了一下不太明确的地方，写个修改版的指南吧。</p>
+
+<ul>
+<li><a href="https://moonagic.com/linode-setup-hybla-htcp/">Linode编译hybla htcp模块</a></li>
+<li><a href="http://www.777s.me/linode-hybla-htcp.html">Linode编译hybla htcp拥塞控制算法模块</a></li>
+</ul>
+
+<h2 id="toc_0">编译过程</h2>
+
+<h3 id="toc_1">查看自己 vps 内核版本：</h3>
+
+<pre><code class="language-sh">$ uname -a
+4.8.3-x86_64-linode76
+</code></pre>
+
+<h3 id="toc_2">下载对应版本的内核源码</h3>
+
+<p>在这里下载 <a href="https://www.kernel.org/pub/linux/kernel/">https://www.kernel.org/pub/linux/kernel/</a></p>
+
+<p>我这里是 <code>4.8.3</code>，于是进入 <code>v4.x</code> 目录，向下翻即找到了，复制文件地址，在vps上 <code>wget</code> 下载下来</p>
+
+<pre><code class="language-sh">mkdir kernel  
+cd kernel  
+wget https://www.kernel.org/pub/linux/kernel/v4.x/linux-4.8.3.tar.gz 
+tar xzvf linux-4.8.3.tar.gz
+</code></pre>
+
+<p>注意修改对应的下载地址和文件名</p>
+
+<h3 id="toc_3">安装内核编译和工具</h3>
+
+<pre><code class="language-sh">apt-get install build-essential libncurses5-dev module-init-tools
+</code></pre>
+
+<h3 id="toc_4">配置内核编译文件</h3>
+
+<pre><code class="language-sh">cd linux-4.8.3  
+zcat /proc/config.gz &gt; .config
+</code></pre>
+
+<p>然后用你喜欢的编辑器编辑 <code>.config</code> 文件，查找 <code>CONFIG_TCP_CONG_CUBIC=y</code>，在这一行下面增加一行</p>
+
+<pre><code>CONFIG_TCP_CONG_HYBLA=y
+</code></pre>
+
+<p>然后编译</p>
+
+<pre><code class="language-sh">make
+</code></pre>
+
+<p>编译耗时约15~20分钟</p>
+
+<h3 id="toc_5">准备编译模块</h3>
+
+<pre><code class="language-sh">cd net/ipv4/  
+mv Makefile Makefile.old  
+vi Makefile 
+</code></pre>
+
+<p>以下是 <code>hybla</code> 所用的 Makefile</p>
+
+<pre><code># Makefile for tcp_hybla.ko
+obj-m := tcp_hybla.o  
+KDIR := /tmp/kernel/linux-4.8.3  
+PWD := $(shell pwd)  
+default:  
+    $(MAKE) -C $(KDIR) SUBDIRS=$(PWD) modules
+</code></pre>
+
+<p>注意上面<strong>第三行 <code>KDIR := /root/kernel/linux-3.11.6</code> 要修改成自己解压的目录</strong>，并且最后一行必须以 <strong><code>tab</code></strong> 开头，<strong>不可以用空格，不可以用空格</strong>。不懂Makefile的规则，我在这里踩了坑。</p>
+
+<h3 id="toc_6">开始编译模块</h3>
+
+<p>这里退回到 <code>linux-4.8.3</code> 目录，我是放在 <code>/tmp/kernel</code> 内的，后面目录相关的就不提示了</p>
+
+<pre><code class="language-sh">cd /tmp/kernel/linux-4.8.3
+make modules 
+</code></pre>
+
+<h3 id="toc_7">加载模块</h3>
+
+<pre><code class="language-sh">cd /tmp/kernel/linux-4.8.3/net/ipv4  
+insmod ./tcp_hybla.ko 
+</code></pre>
+
+<p>如果遇到command not found: insmod则需要手动安装</p>
+
+<pre><code class="language-sh">apt-get install module-init-tools  
+</code></pre>
+
+<p>如果编译的时候如果出现如下错误</p>
+
+<pre><code class="language-sh">scripts/extract-cert.c:21:25: fatal error: openssl/bio.h: No such file or directory
+</code></pre>
+
+<p>需要源安装libssl-dev就可以了</p>
+
+<h2 id="toc_8">后记</h2>
+
+<p>至此就装好了hybla 模块，后面继续按照 <a href="https://github.com/shadowsocks/shadowsocks/wiki/Optimizing-Shadowsocks">优化指南</a> 优化去了</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[不要手动缓存长度]]></title>
@@ -2471,47 +2609,6 @@ query.php?user=1+union+select+benchmark(500000,sha1 (0x414141)),1,1,1,1,1,1,1,1,
 <li>tucao内容储存优化，使用cPickle库<br/></li>
 <li>工程模块化重构</li>
 <li>群成员外号表</li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[煎蛋无聊图排行生成器]]></title>
-    <link href="http://yinzo.github.io/14608289652972.html"/>
-    <updated>2016-04-17T01:49:25+08:00</updated>
-    <id>http://yinzo.github.io/14608289652972.html</id>
-    <content type="html"><![CDATA[
-<p>这个生成器实际上挺久之前就做了的，但是一直都是拿来自己用的，所以代码规范和易用性也是比较差的。这次放出来是因为之前煎蛋民众纷纷表示想看历年汇总，于是乎自己用这个生成器+PS做了个排行榜，收到的响应也是蛮好的，虽说字体放得有点小了;_;<br/>
-<img src="http://ww3.sinaimg.cn/large/7d52f1ffjw1eo96odzrf3j20ho0ieta5.jpg" alt="无聊图排行"/><br/>
-最终到今天为止收到了1329个赞XD，也是蛮开心<br/>
-然后，些许提升了下易用性与生成网页的外观就放到了Github上啦</p>
-
-<p><a href="https://github.com/Yinzo/Jandan_pic_ranker" target="_blank">Github点这里</a></p>
-
-<span id="more"></span><!-- more -->
-
-<p>以下是readme</p>
-
-<hr/>
-
-<h2 id="toc_0">依赖库</h2>
-
-<ul>
-<li><code>beautifulsoup4</code></li>
-</ul>
-
-<h2 id="toc_1">食用方法</h2>
-
-<p><code>python jandan_pic_ranker.py</code></p>
-
-<p>之后按照提示输入即可将排行榜页面生成至当前目录</p>
-
-<h2 id="toc_2">特性</h2>
-
-<ul>
-<li>自动存档功能：首次使用会将目标页面保存至本地，下一次统计该页面时将自动调用存档</li>
-<li>多模式可选：无聊图、妹子图、（即将加入nsfw）</li>
 </ul>
 
 ]]></content>

@@ -85,6 +85,8 @@
             <li><a href="Pattern%20Recognition.html">Pattern Recognition</a></li>
         
             <li><a href="Python.html">Python</a></li>
+        
+            <li><a href="OS.html">OS</a></li>
          
 
       </ul>
@@ -106,6 +108,51 @@
 	<div class="large-8 medium-8 columns">
 		<div class="markdown-body home-categories">
 		
+			<div class="article">
+                <a class="clearlink" href="14828521678770.html">
+                
+                  <h1>在 Linode 上编译 hybla 模块</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>考试复习期间，不想复习，搞搞其他东西散散心，发现shadowsocks 有关于 TCP Fast Open 的更新，看说明的过程还发现了官方的速度优化指南，尝试优化自己的 ss 速度，然而报错。</p>
+
+<p>执行到这一步时运行出错</p>
+
+<pre><code class="language-sh">sysctl --system
+</code></pre>
+
+<pre><code class="language-sh">...
+sysctl: setting key &quot;net.ipv4.tcp_congestion_control&quot;: No such file or directory
+net.ipv4.tcp_congestion_control = hybla
+* Applying /etc/sysctl.conf ...
+</code></pre>
+
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14828521678770.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2016/12/27 23:22 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='OS.html'>OS</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
 			<div class="article">
                 <a class="clearlink" href="14696108056583.html">
                 
@@ -502,58 +549,6 @@ test_function(&quot;yeah&quot;)
                 </div>
               </div><!-- article -->
         
-			<div class="article">
-                <a class="clearlink" href="14540640657446.html">
-                
-                  <h1>封装，与协议的分层</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>TODO： 为何要分层</p>
-
-<p>要理解协议的分层，若是了解编程理念中的『封装』，可能更有助于理解分层的意义。</p>
-
-<p>『封装』，狭义上指的是编写程序时，通过把一些重复操作的代码写成一个单独的函数，这就可以叫做一个简单的封装。</p>
-
-<p>而我对于封装的理解，举个例子，当你忙了一天回到家，站在你的家门口，想要打开你家的房门时，你需要做以下事情：</p>
-
-<pre><code class="language-flow">st=&gt;start: 站在家门口
-op1=&gt;operation: 拿出钥匙
-op2=&gt;operation: 找到对应的钥匙
-op3=&gt;operation: 把钥匙插到锁孔中
-op4=&gt;operation: 旋转钥匙
-op5=&gt;operation: 拉开门
-op6=&gt;operation: 拔出钥匙
-end=&gt;end: 开门结束
-
-st-&gt;op1-&gt;op2-&gt;op3-&gt;op4-&gt;op5-&gt;op6-&gt;end
-</code></pre>
-
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14540640657446.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/1/29 18:41 下午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='TCPIP.html'>TCP/IP</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
               
 
 
@@ -614,6 +609,8 @@ st-&gt;op1-&gt;op2-&gt;op3-&gt;op4-&gt;op5-&gt;op6-&gt;end
             <a href="Pattern%20Recognition.html"><strong>Pattern Recognition</strong></a>
         
             <a href="Python.html"><strong>Python</strong></a>
+        
+            <a href="OS.html"><strong>OS</strong></a>
          
         </p>
 
@@ -628,6 +625,12 @@ st-&gt;op1-&gt;op2-&gt;op3-&gt;op4-&gt;op5-&gt;op6-&gt;end
                 <div class="side-content">
                 <ul class="posts-list">
 	      
+		      
+			      <li class="post">
+			        <a href="14828521678770.html">在 Linode 上编译 hybla 模块</a>
+			      </li>
+		     
+		  
 		      
 			      <li class="post">
 			        <a href="14696108056583.html">不要手动缓存长度</a>
@@ -649,12 +652,6 @@ st-&gt;op1-&gt;op2-&gt;op3-&gt;op4-&gt;op5-&gt;op6-&gt;end
 		      
 			      <li class="post">
 			        <a href="14610807170718.html">关于Python的logging模块初始化无效的一个小坑</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="14594228486348.html">Python Decorator的一些细节</a>
 			      </li>
 		     
 		  
