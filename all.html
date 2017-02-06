@@ -87,6 +87,8 @@
             <li><a href="Python.html">Python</a></li>
         
             <li><a href="OS.html">OS</a></li>
+        
+            <li><a href="Deep%20Learning.html">Deep Learning</a></li>
          
 
       </ul>
@@ -108,6 +110,115 @@
 	<div class="large-8 medium-8 columns">
 		<div class="markdown-body home-categories">
 		
+			<div class="article">
+                <a class="clearlink" href="14863637393852.html">
+                
+                  <h1>低素质弹幕分类器的CNN实现</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2 id="toc_0">整体架构</h2>
+
+<p>对于一条弹幕，首先进行分词，然后通过 word2vec 转换为词向量，再填充至固定长度，作为卷积神经网络的输入。</p>
+
+<p>卷积神经网络的结构如下：</p>
+
+<pre><code class="language-python">model = Sequential()
+model.add(Convolution1D(100, 4, border_mode=&#39;valid&#39;, input_shape=(100, word_model.vector_size)))
+model.add(Activation(&#39;relu&#39;))
+model.add(Convolution1D(100, 4, border_mode=&#39;valid&#39;, input_shape=(100, word_model.vector_size)))
+model.add(Activation(&#39;relu&#39;))
+model.add(Flatten()) 
+model.add(Dense(100, activation=&#39;relu&#39;))
+model.add(Dense(2, activation=&#39;softmax&#39;))
+model.compile(loss=&#39;categorical_crossentropy&#39;,
+              optimizer=&#39;adam&#39;,
+              metrics=[&#39;accuracy&#39;]
+             )
+</code></pre>
+
+<p>最终输出为2位的 categorical result，直接使用第一项，即骂人弹幕的概率作为输出。</p>
+
+<p>然后通过代理，在弹幕服务器与播放器之间插入一层，实现弹幕的分类与屏蔽。最终实现了有效的骂人弹幕自动屏蔽，但是误伤的情况依然存在。</p>
+
+<h2 id="toc_1">搭建过程</h2>
+
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14863637393852.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2017/2/6 14:48 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Deep%20Learning.html'>Deep Learning</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="14863637259966.html">
+                
+                  <h1>低素质弹幕分类器 CNN 训练笔记</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>一开始使用这个结构，迭代10次。</p>
+
+<pre><code class="language-python">model = Sequential()
+model.add(Convolution1D(100, 4, border_mode=&#39;valid&#39;, input_shape=(100, word_model.vector_size)))
+model.add(Activation(&#39;relu&#39;))
+model.add(Convolution1D(5, 4, border_mode=&#39;valid&#39;))
+model.add(Activation(&#39;relu&#39;))
+model.add(Flatten()) 
+model.add(Dense(32, activation=&#39;relu&#39;))
+model.add(Dense(2, activation=&#39;softmax&#39;))
+model.compile(loss=&#39;categorical_crossentropy&#39;,
+              optimizer=&#39;adam&#39;,
+              metrics=[&#39;accuracy&#39;]
+             )
+</code></pre>
+
+<p>完成训练后，乍一看准确率很高，结果 print 出来看一下，低素质弹幕完全没有被过滤，完全是将分类全部丢给 positive 达到的高准确率 (0.98) 的确是 meaningless classification<br/>
+并且这个结果在loss里看得很清楚，loss一直是处于15+的</p>
+
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14863637259966.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2017/2/6 14:48 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Deep%20Learning.html'>Deep Learning</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
 			<div class="article">
                 <a class="clearlink" href="14828521678770.html">
                 
@@ -156,7 +267,7 @@ net.ipv4.tcp_congestion_control = hybla
 			<div class="article">
                 <a class="clearlink" href="14696108056583.html">
                 
-                  <h1>不要手动缓存长度</h1>
+                  <h1>无需手动缓存长度</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
@@ -469,86 +580,6 @@ test_function(&quot;yeah&quot;)
                 </div>
               </div><!-- article -->
         
-			<div class="article">
-                <a class="clearlink" href="14569378376035.html">
-                
-                  <h1>Notes for Neural Network</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<h2 id="toc_0">Notes:</h2>
-
-<ul>
-<li><p>If we set the initial \(\Theta\) be the same, the units in next layer with the same \(x_i\) will get the same result, then all units in the same layer will get the same output. At last, the cost function will also get same cost, so we will update the \(\Theta\) with same step.</p></li>
-<li><p>seems \(\delta^{(l)}_{i}\) means the cost of \(i_{th}\) unit in the \(l_{th}\) layer</p></li>
-</ul>
-
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14569378376035.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/3/3 0:57 上午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Pattern%20Recognition.html'>Pattern Recognition</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="14545761055440.html">
-                
-                  <h1>Note for "Thesis - Behavior of Machine Learning Algorithms in Adversarial Environments.pdf"(1)</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<h2 id="toc_0">1.1 Motivation and Methodology</h2>
-
-<h4 id="toc_1">Learning approach is well-suited to the scenario when:</h4>
-
-<ol>
-<li>The process is too complex to designed for human operator</li>
-<li>Requirement of dynamical development</li>
-</ol>
-
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14545761055440.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/2/4 16:55 下午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Adversary%20Learning.html'>Adversary Learning</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
               
 
 
@@ -612,6 +643,8 @@ test_function(&quot;yeah&quot;)
         
             <a href="OS.html"><strong>OS</strong></a>
         
+            <a href="Deep%20Learning.html"><strong>Deep Learning</strong></a>
+        
         </p>
 
 
@@ -627,31 +660,31 @@ test_function(&quot;yeah&quot;)
 	      
 		      
 			      <li class="post">
+			        <a href="14863637393852.html">低素质弹幕分类器的CNN实现</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="14863637259966.html">低素质弹幕分类器 CNN 训练笔记</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="14828521678770.html">在 Linode 上编译 hybla 模块</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="14696108056583.html">不要手动缓存长度</a>
+			        <a href="14696108056583.html">无需手动缓存长度</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
 			        <a href="14685108901937.html">使用 Python 装饰器来将普通函数加入任务队列</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="14662517738182.html">Python 爬取中文页面时解码 UnicodeDecodeError 报错的解决</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="14610807170718.html">关于Python的logging模块初始化无效的一个小坑</a>
 			      </li>
 		     
 		  
