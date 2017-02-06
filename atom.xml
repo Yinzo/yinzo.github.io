@@ -4,7 +4,7 @@
   <title><![CDATA[雪地]]></title>
   <link href="http://yinzo.github.io/atom.xml" rel="self"/>
   <link href="http://yinzo.github.io/"/>
-  <updated>2016-12-28T18:14:54+08:00</updated>
+  <updated>2017-02-06T14:49:39+08:00</updated>
   <id>http://yinzo.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -104,6 +104,8 @@ if __name__ == &#39;__main__&#39;:
 </ol>
 
 <p>开始构建卷积神经网络，我选用的框架是使用 TensorFlow 后端的 keras。最终经过调试，得到这样一个结构</p>
+
+<p><a href="https://yinzo.github.io/14863637259966.html">具体的训练过程可以看这里</a></p>
 
 <pre><code class="language-python">model = Sequential()
 model.add(Convolution1D(100, 4, border_mode=&#39;valid&#39;, input_shape=(100, word_model.vector_size)))

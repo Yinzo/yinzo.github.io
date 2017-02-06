@@ -218,6 +218,8 @@ if __name__ == &#39;__main__&#39;:
 
 <p>开始构建卷积神经网络，我选用的框架是使用 TensorFlow 后端的 keras。最终经过调试，得到这样一个结构</p>
 
+<p><a href="https://yinzo.github.io/14863637259966.html">具体的训练过程可以看这里</a></p>
+
 <pre><code class="language-python">model = Sequential()
 model.add(Convolution1D(100, 4, border_mode=&#39;valid&#39;, input_shape=(100, word_model.vector_size)))
 model.add(Activation(&#39;relu&#39;))
