@@ -111,6 +111,67 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
+                <a class="clearlink" href="14883590547961.html">
+                
+                  <h1>原始模型优化笔记</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>对于原始弹幕分类CNN模型进行优化。</p>
+
+<h2 id="toc_0">修改 word2vec model 的 vector size</h2>
+
+<ul>
+<li>400:
+Nice at epoch 38, validation acc 96.56%</li>
+<li>200:
+Nice at epoch 37, validation acc 95.22%</li>
+<li>100:
+Nice at epoch 34, validation acc 94.78%
+单轮训练时间与50维相近，测试样例测试耗时 0.92secs</li>
+<li>50:
+Nice at epoch 40, validation acc 94.39%
+单轮训练时间在7秒左右，测试样例(av 8365806)测试耗时 0.7secs</li>
+</ul>
+
+<h2 id="toc_1">尝试加入dropout</h2>
+
+<p>在两个 conv 层之间和两个 fc 层之间各加入了一个 \(p=0.5\) 的 dropout</p>
+
+<p>40 epoch 时只有 89.1 acc， 和预想的一样，会导致 达到最佳效果的 epoch 数上升。</p>
+
+<p>用了 dropout 后一个很明显的变化是，原本训练过程中通常是train acc 高于 validation acc，现在通常是 validation acc 高于 train acc，训练后期才基本持平或反超</p>
+
+<p>vector在 epoch 90 左右 达到了96.50%上下的 acc，最终在epoch 300 以上能达到 97.10% 左右的 acc</p>
+
+<p><img src="media/14879250453025/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-02-24%2022.15.27.png" alt="屏幕快照 2017-02-24 22.15.27"/></p>
+
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14883590547961.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2017/3/1 17:4 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Deep%20Learning.html'>Deep Learning</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
                 <a class="clearlink" href="14863637393852.html">
                 
                   <h1>低素质弹幕分类器的CNN实现</h1>
@@ -531,55 +592,6 @@ test_function(&quot;yeah&quot;)
                 </div>
               </div><!-- article -->
         
-			<div class="article">
-                <a class="clearlink" href="14570954925763.html">
-                
-                  <h1>Ideas for Neural Network</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<ul>
-<li>Use genetic algorithm to evolve the parameters in Neural Network, to make a self-develop algorithm.
-
-<ul>
-<li>automatically find and make training set from search engine</li>
-<li>the paremeters include:
-
-<ul>
-<li>learning rate</li>
-<li>iteration times</li>
-<li>regularization term \(\lambda\)</li>
-<li>activation function</li>
-<li>number of hidden layers(units)</li>
-</ul></li>
-</ul></li>
-</ul>
-
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14570954925763.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/3/4 20:44 下午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Pattern%20Recognition.html'>Pattern Recognition</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
               
 
 
@@ -660,6 +672,12 @@ test_function(&quot;yeah&quot;)
 	      
 		      
 			      <li class="post">
+			        <a href="14883590547961.html">原始模型优化笔记</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="14863637393852.html">低素质弹幕分类器的CNN实现</a>
 			      </li>
 		     
@@ -679,12 +697,6 @@ test_function(&quot;yeah&quot;)
 		      
 			      <li class="post">
 			        <a href="14696108056583.html">无需手动缓存长度</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="14685108901937.html">使用 Python 装饰器来将普通函数加入任务队列</a>
 			      </li>
 		     
 		  

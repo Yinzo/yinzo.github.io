@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  关于Python的logging模块初始化无效的一个小坑 - 雪地
+  原始模型优化笔记 - 雪地
   
   </title>
   
@@ -111,14 +111,14 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>关于Python的logging模块初始化无效的一个小坑</h1>
+          <h1>原始模型优化笔记</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2016/4/19 23:45 下午</span>
+          <span class="date">2017/3/1 17:4 下午</span>
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='Python.html'>Python</a></span>
+              <span class="posted-in"><a href='Deep%20Learning.html'>Deep Learning</a></span>
            
          
           <span class="comments">
@@ -131,74 +131,114 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>众所周知，logging模块是一个非常方便好用的日志输出模块。但是最近的使用发现了一个小坑，记录一下，避免再次踩坑。</p>
+      <p>对于原始弹幕分类CNN模型进行优化。</p>
 
-<p>一般使用logging模块都会对其进行初始化，使用以下代码：</p>
+<h2 id="toc_0">修改 word2vec model 的 vector size</h2>
 
-<pre><code>    log_format = &#39;[%(levelname)s] %(asctime)s  %(filename)s line %(lineno)d: %(message)s&#39;
-    date_fmt = &#39;%a, %d %b %Y %H:%M:%S&#39;
-    logging.basicConfig(
-        format=log_format,
-        datefmt=date_fmt,
-        level=log_level,
-    )
-</code></pre>
+<ul>
+<li>400:
+Nice at epoch 38, validation acc 96.56%</li>
+<li>200:
+Nice at epoch 37, validation acc 95.22%</li>
+<li>100:
+Nice at epoch 34, validation acc 94.78%
+单轮训练时间与50维相近，测试样例测试耗时 0.92secs</li>
+<li>50:
+Nice at epoch 40, validation acc 94.39%
+单轮训练时间在7秒左右，测试样例(av 8365806)测试耗时 0.7secs</li>
+</ul>
+
+<h2 id="toc_1">尝试加入dropout</h2>
+
+<p>在两个 conv 层之间和两个 fc 层之间各加入了一个 \(p=0.5\) 的 dropout</p>
+
+<p>40 epoch 时只有 89.1 acc， 和预想的一样，会导致 达到最佳效果的 epoch 数上升。</p>
+
+<p>用了 dropout 后一个很明显的变化是，原本训练过程中通常是train acc 高于 validation acc，现在通常是 validation acc 高于 train acc，训练后期才基本持平或反超</p>
+
+<p>vector在 epoch 90 左右 达到了96.50%上下的 acc，最终在epoch 300 以上能达到 97.10% 左右的 acc</p>
+
+<p><img src="media/14879250453025/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-02-24%2022.15.27.png" alt="屏幕快照 2017-02-24 22.15.27"/></p>
 
 <span id="more"></span><!-- more -->
 
-<p>或者，只是简单使用，可以不初始化，直接<code>logging.info(&quot;blablabla&quot;)</code></p>
+<p>人工检查实际识别效果，仍有少量漏网。果然几个百分点的区别，人简单扫视还是很难看出区别的，而且还要排除安慰剂效应。</p>
 
-<p>但是，如果当你先直接不初始化logging设置，直接输出之后，你再尝试初始化，你的设置将不会不会生效。尝试以下代码</p>
+<p>实验证明 dropout 确实有效防止了过拟合，并且提高了一定的分类准确度。</p>
 
-<pre><code># -*- coding: utf-8 -*-
-import logging
+<p>接着将几个 word2vec 长度的模型训练图都画出来对比：</p>
 
-def init_logging(log_level=logging.INFO):
-    log_format = &#39;[%(levelname)s] %(asctime)s  %(filename)s line %(lineno)d: %(message)s&#39;
-    date_fmt = &#39;%a, %d %b %Y %H:%M:%S&#39;
-    logging.basicConfig(
-        format=log_format,
-        datefmt=date_fmt,
-        level=log_level,
-    )
+<p><img src="media/14879250453025/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-03-01%2016.57.28.png" alt="屏幕快照 2017-03-01 16.57.28"/></p>
 
+<p>可以从左下角的 tooltip 看到，从上至下分别是词向量长度为 400、200、100、50、25 的模型，在相同迭代次数下的准确度排序。由于选取的是上述模型都仍有收敛空间的迭代数，所以这个排名一定程度上可以代表模型训练所需的迭代次数排序。</p>
 
-if __name__ == &#39;__main__&#39;:
-    logging.critical(&quot;critical&quot;)
-    logging.warning(&quot;warning&quot;)
-    logging.info(&quot;info&quot;)
-    logging.debug(&quot;debug&quot;)
+<p>由此可以得出结论，词向量维数越多，模型收敛所需的迭代次数越少，但是最终收敛的效果没有变化，这可能是目前训练样本较少的原因。</p>
 
-    init_logging(logging.DEBUG)
-    print &quot;\n&quot;
-    print &quot;initial finished.&quot;
-    print &quot;\n&quot;
+<p><img src="media/14879250453025/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-03-01%2017.01.36.png" alt="屏幕快照 2017-03-01 17.01.36"/></p>
 
-    logging.critical(&quot;critical&quot;)
-    logging.warning(&quot;warning&quot;)
-    logging.info(&quot;info&quot;)
-    logging.debug(&quot;debug&quot;)
-</code></pre>
+<p>切换到训练时间为横轴的图来看，收敛速度实际上是100维最快，这倒是出乎意外，原本以为会是低维模型最快，结果发现，100维由于单次迭代提升更大，虽然迭代速度稍慢但是总体收敛最快。我还特地检查了100维的data graph，确定的确是在用100维的词向量来训练的。</p>
 
-<p>输出：</p>
+<h3 id="toc_2">关于卷积层是否应该加入 dropout 的问题</h3>
 
-<pre><code>CRITICAL:root:critical
-WARNING:root:warning
+<p>这个问题我找到了 <a href="https://www.reddit.com/r/MachineLearning/comments/42nnpe/why_do_i_never_see_dropout_applied_in/">Reddit 的这个讨论串</a></p>
 
+<h4 id="toc_3">里面提到了以下这些说法：</h4>
 
-initial finished.
+<ul>
+<li>卷积层的参数数量没有全连接层那么多，所以不那么需要 regularizaion</li>
+<li>卷积层 filter map 的梯度是对于整个样本进行平均化的<sup id="fnref1"><a href="#fn1" rel="footnote">1</a></sup>，这样会使得卷积核原本存在相关性的参数，在样本的不同位置使用了不同的 dropout mask，导致 dropout 无效。当然，你可以想办法使卷积核的 dropout mask 在同一层中固定，但是这又会导致 regularizaion 过强。</li>
+<li>Srivastava/Hinton 在 dropout 的论文中也有提到：在卷积层加入 dropout 的效果等于没有 \((3.02\% \rightarrow 2.55\%)\)，因为卷积层的参数太少了，不存在过拟合的问题，所以 dropout 几乎没有效果。但是 dropout 在较低的层仍是有用的，它的效果相当于产生一点噪声，使得后面层数较高的全连接层避免过拟合。</li>
+<li><p>在卷积层使用 dropout 也不是绝对没有的，以下几篇论文中就有用到：</p>
 
+<ul>
+<li><a href="http://arxiv.org/pdf/1511.07289v3.pdf">http://arxiv.org/pdf/1511.07289v3.pdf</a></li>
+<li><a href="http://torch.ch/blog/2015/07/30/cifar.html">http://torch.ch/blog/2015/07/30/cifar.html</a></li>
+<li><a href="http://danielnouri.org/notes/2014/12/17/using-convolutional-neural-nets-to-detect-facial-keypoints-tutorial/">http://danielnouri.org/notes/2014/12/17/using-convolutional-neural-nets-to-detect-facial-keypoints-tutorial/</a></li>
+</ul>
 
-CRITICAL:root:critical
-WARNING:root:warning
-</code></pre>
+<p>但是他们都有卷积层的 dropout 『keep_prob 较大』的特点。</p></li>
+</ul>
 
-<p>输出中，因为logging默认等级为warning，所以成功输出critical和warning<br/>
-但当初始化之后，其输出格式原本应该改变，并且输出等级应该变为DEBUG，但是从输出可以看到，和初始化前的输出没有任何区别，说明初始化没有生效。这一问题在官方文档中有简单提及</p>
+<h4 id="toc_4">以下是测试的结果：</h4>
 
+<p>先测试了卷积层不使用 dropout 的效果<br/>
+<img src="media/14879250453025/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-02-27%2013.11.43.png" alt="屏幕快照 2017-02-27 13.11.43"/></p>
+
+<p>绿线是没有 卷积层dropout 的 acc， 紫线是卷积层 p=0.5 dropout 的 acc，两者都有一个 p=0.5 的全连接 dropout。由此可得卷积层的 dropout 还是有效果的，首先防止过拟合的程度要更高，其次对于准确度的提升也是有的 \((\uparrow2.3\%)\)</p>
+
+<p><img src="media/14879250453025/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-03-01%2015.45.56.png" alt="屏幕快照 2017-03-01 15.45.56"/></p>
+
+<p>卷积层 p=0.6 和 p=0.4 dropout 的测试，相比 p=0.5 的模型，收敛速度、收敛精度都没有明显的区别。</p>
+
+<h2 id="toc_5">尝试加入 max_pooling</h2>
+
+<p>先在卷积层和全连接层之间加入一个大小为2的 <code>max_pooling1d</code><br/>
+<img src="media/14879250453025/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-02-26%2016.54.23.png" alt="屏幕快照 2017-02-26 16.54.23"/></p>
+
+<p>可以看到，这个 max_pool 对于最终收敛精度没有影响，在前期略微加快了收敛，但是中期减慢了收敛。</p>
+
+<p>尝试移动该 pooling 层到两个卷积层之间。</p>
+
+<p><img src="media/14879250453025/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-02-28%2013.42.28.png" alt="屏幕快照 2017-02-28 13.42.28"/></p>
+
+<p>上图为多次测试的结果。收敛速度和收敛准确率没有较为明显的提高或降低 \((96.623\% \rightarrow 96.694\%)\)，只有训练速度有略微的提高。</p>
+
+<p>值得一提的是，加入了 max-pool 的模型在高迭代次数的时候，标准差在逐渐增大。我认为这是因为 max-pool 一定程度上降低了训练样本的精度，相当于训练样本变少了，于是乎少量增加了整个模型在高迭代次数过拟合的风险。这里我选择使用84次迭代的模型，也就是图中横坐标约为 1k 的位置。相对来说过拟合的程度应该是非常小的。</p>
+
+<p><img src="media/14879250453025/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-02-26%2018.49.29.png" alt="屏幕快照 2017-02-26 18.49.29"/></p>
+
+<div class="footnotes">
+<hr/>
+<ol>
+
+<li id="fn1">
 <blockquote>
-<p>The call to basicConfig() should come before any calls to debug(), info() etc. As it’s intended as a one-off simple configuration facility, only the first call will actually do anything: subsequent calls are effectively no-ops.</p>
+<p>the gradients are averaged over the spatial extent of the feature maps&nbsp;<a href="#fnref1" rev="footnote">&#8617;</a></p>
 </blockquote>
+</li>
+
+</ol>
+</div>
 
       </div>
 
@@ -206,16 +246,13 @@ WARNING:root:warning
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14662517738182.html" 
-          title="Previous Post: Python 爬取中文页面时解码 UnicodeDecodeError 报错的解决">&laquo; Python 爬取中文页面时解码 UnicodeDecodeError 报错的解决</a>
-      
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="14594228486348.html" 
-          title="Next Post: Python Decorator的一些细节">Python Decorator的一些细节 &raquo;</a>
+          <a  href="14863637393852.html" 
+          title="Next Post: 低素质弹幕分类器的CNN实现">低素质弹幕分类器的CNN实现 &raquo;</a>
       
       </p>
         </div>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  关于Python的logging模块初始化无效的一个小坑 - 雪地
+  雪地
   
   </title>
   
@@ -102,159 +102,74 @@
        
 
  <script type="text/javascript">
-  $(function(){
-    $('#menu_item_index').addClass('is_active');
-  });
+	$(function(){
+		$('#menu_item_index').addClass('is_active');
+	});
 </script>
 <div class="row">
-  <div class="large-8 medium-8 columns">
-      <div class="markdown-body article-wrap">
-       <div class="article">
-          
-          <h1>关于Python的logging模块初始化无效的一个小坑</h1>
-     
-        <div class="read-more clearfix">
-          <span class="date">2016/4/19 23:45 下午</span>
+	<div class="large-8 medium-8 columns">
+		<div class="markdown-body home-categories">
+		
+			<div class="article">
+                <a class="clearlink" href="14608290917664.html">
+                
+                  <h1>解决OSX升级10.10后无法开启MAMP Apache服务</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<ul>
+<li>退出MAMP</li>
+<li>在终端执行以下命令(重命名envvars为_envvars)</li>
+</ul>
 
-          <span>posted in&nbsp;</span> 
-          
-              <span class="posted-in"><a href='Python.html'>Python</a></span>
-           
-         
-          <span class="comments">
-            
+<pre class=black>
+cd /Applications/MAMP/Library/bin
+mv envvars _envvars
+</pre>
 
-            
-          </span>
+<p>再次打开MAMP即可开启Apache.</p>
 
-        </div>
-      </div><!-- article -->
+<p><a href = http://www.jianshu.com/p/ebcbdc5388c5>原文</a></p>
 
-      <div class="article-content">
-      <p>众所周知，logging模块是一个非常方便好用的日志输出模块。但是最近的使用发现了一个小坑，记录一下，避免再次踩坑。</p>
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2014/12/14 21:26 下午</span>
+                    
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
 
-<p>一般使用logging模块都会对其进行初始化，使用以下代码：</p>
-
-<pre><code>    log_format = &#39;[%(levelname)s] %(asctime)s  %(filename)s line %(lineno)d: %(message)s&#39;
-    date_fmt = &#39;%a, %d %b %Y %H:%M:%S&#39;
-    logging.basicConfig(
-        format=log_format,
-        datefmt=date_fmt,
-        level=log_level,
-    )
-</code></pre>
-
-<span id="more"></span><!-- more -->
-
-<p>或者，只是简单使用，可以不初始化，直接<code>logging.info(&quot;blablabla&quot;)</code></p>
-
-<p>但是，如果当你先直接不初始化logging设置，直接输出之后，你再尝试初始化，你的设置将不会不会生效。尝试以下代码</p>
-
-<pre><code># -*- coding: utf-8 -*-
-import logging
-
-def init_logging(log_level=logging.INFO):
-    log_format = &#39;[%(levelname)s] %(asctime)s  %(filename)s line %(lineno)d: %(message)s&#39;
-    date_fmt = &#39;%a, %d %b %Y %H:%M:%S&#39;
-    logging.basicConfig(
-        format=log_format,
-        datefmt=date_fmt,
-        level=log_level,
-    )
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+              
 
 
-if __name__ == &#39;__main__&#39;:
-    logging.critical(&quot;critical&quot;)
-    logging.warning(&quot;warning&quot;)
-    logging.info(&quot;info&quot;)
-    logging.debug(&quot;debug&quot;)
-
-    init_logging(logging.DEBUG)
-    print &quot;\n&quot;
-    print &quot;initial finished.&quot;
-    print &quot;\n&quot;
-
-    logging.critical(&quot;critical&quot;)
-    logging.warning(&quot;warning&quot;)
-    logging.info(&quot;info&quot;)
-    logging.debug(&quot;debug&quot;)
-</code></pre>
-
-<p>输出：</p>
-
-<pre><code>CRITICAL:root:critical
-WARNING:root:warning
-
-
-initial finished.
-
-
-CRITICAL:root:critical
-WARNING:root:warning
-</code></pre>
-
-<p>输出中，因为logging默认等级为warning，所以成功输出critical和warning<br/>
-但当初始化之后，其输出格式原本应该改变，并且输出等级应该变为DEBUG，但是从输出可以看到，和初始化前的输出没有任何区别，说明初始化没有生效。这一问题在官方文档中有简单提及</p>
-
-<blockquote>
-<p>The call to basicConfig() should come before any calls to debug(), info() etc. As it’s intended as a one-off simple configuration facility, only the first call will actually do anything: subsequent calls are effectively no-ops.</p>
-</blockquote>
-
-      </div>
-
-      <div class="row">
-        <div class="large-6 columns">
-        <p class="text-left" style="padding:15px 0px;">
-      
-          <a href="14662517738182.html" 
-          title="Previous Post: Python 爬取中文页面时解码 UnicodeDecodeError 报错的解决">&laquo; Python 爬取中文页面时解码 UnicodeDecodeError 报错的解决</a>
-      
-        </p>
-        </div>
-        <div class="large-6 columns">
-      <p class="text-right" style="padding:15px 0px;">
-      
-          <a  href="14594228486348.html" 
-          title="Next Post: Python Decorator的一些细节">Python Decorator的一些细节 &raquo;</a>
-      
-      </p>
-        </div>
-      </div>
-      <div class="comments-wrap">
-        <div class="share-comments">
-          <div id="disqus_thread"></div>
-<script>
-/**
-* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-
-s.src = '//yinzo.disqus.com/embed.js';
-
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
-          
-
-          
-        </div>
-      </div>
-    </div><!-- article-wrap -->
-  </div><!-- large 8 -->
-
-
-
+			<div class="row">
+			  <div class="large-6 columns">
+			  <p class="text-left" style="padding-top:25px;">
+			   <a href="all_2.html">&laquo; Prev Page</a>  
+			  </p>
+			  </div>
+			  <div class="large-6 columns">
+			<p class="text-right" style="padding-top:25px;">
+			
+			</p>
+			  </div>
+			</div>
+		</div>
+	</div><!-- large 8 -->
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">
