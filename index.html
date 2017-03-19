@@ -398,52 +398,6 @@ net.ipv4.tcp_congestion_control = hybla
               </div><!-- article -->
         
 			<div class="article">
-                <a class="clearlink" href="14662517738182.html">
-                
-                  <h1>Python 爬取中文页面时解码 UnicodeDecodeError 报错的解决</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>这个问题从我刚开始学 Python 就遇到了，结果到现在写爬虫爬中文网页时遇到这个问题依然还是得去百度一番。不过这一次，这个问题终于能够完美的解决了</p>
-
-<p>这个问题是这样的。</p>
-
-<p>网页的HTML中charset指定的是GB2312字符集，但是当我爬取下来之后，尝试解码后转到utf-8进行保存:</p>
-
-<pre><code class="language-python">content = rsp.text.decode(&#39;gb2312&#39;).encode(&#39;utf8&#39;)
-</code></pre>
-
-<p>却遇到了以下报错</p>
-
-<pre><code class="language-shell">UnicodeDecodeError: &#39;gb2312&#39; codec can&#39;t decode bytes in position 97-98: illegal multibyte sequence
-</code></pre>
-
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14662517738182.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/6/18 20:9 下午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Python.html'>Python</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
                 <a class="clearlink" href="14610807170718.html">
                 
                   <h1>关于Python的logging模块初始化无效的一个小坑</h1>
@@ -580,6 +534,55 @@ test_function(&quot;yeah&quot;)
                     <span>posted in&nbsp;</span> 
           				  
           					    <span class="posted-in"><a href='Security%20Info.html'>Security Info</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="14570954925763.html">
+                
+                  <h1>Ideas for Neural Network</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<ul>
+<li>Use genetic algorithm to evolve the parameters in Neural Network, to make a self-develop algorithm.
+
+<ul>
+<li>automatically find and make training set from search engine</li>
+<li>the paremeters include:
+
+<ul>
+<li>learning rate</li>
+<li>iteration times</li>
+<li>regularization term \(\lambda\)</li>
+<li>activation function</li>
+<li>number of hidden layers(units)</li>
+</ul></li>
+</ul></li>
+</ul>
+
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14570954925763.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2016/3/4 20:44 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Pattern%20Recognition.html'>Pattern Recognition</a></span>
           				   
                   </div>
                   <div class="more-right right">
