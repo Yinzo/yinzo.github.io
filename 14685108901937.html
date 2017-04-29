@@ -457,7 +457,7 @@ s.setAttribute('data-timestamp', +new Date());
  <div class="page-bottom clearfix">
   <div class="row">
    <p class="copyright">Copyright &copy; 2016
-Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp;
 Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.
 Modified by <a target="_blank" href="http://yinz.xyz">Yinzo</a>.</p>
   </div>
@@ -467,8 +467,8 @@ Modified by <a target="_blank" href="http://yinz.xyz">Yinzo</a>.</p>
       </div>
     </div>
 
-  
-    
+
+
 
     <script src="asset/js/foundation.min.js"></script>
     <script>
@@ -484,13 +484,16 @@ Modified by <a target="_blank" href="http://yinz.xyz">Yinzo</a>.</p>
       $(window).load(function(){
           fixSidebarHeight();
       });
-     
+
     </script>
 
     <script src="asset/chart/all-min.js"></script><script type="text/javascript">$(function(){    var mwebii=0;    var mwebChartEleId = 'mweb-chart-ele-';    $('pre>code').each(function(){        mwebii++;        var eleiid = mwebChartEleId+mwebii;        if($(this).hasClass('language-sequence')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"></div>').insertAfter(ele);            ele.hide();            var diagram = Diagram.parse($(this).text());            diagram.drawSVG(eleiid,{theme: 'simple'});        }else if($(this).hasClass('language-flow')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"></div>').insertAfter(ele);            ele.hide();            var diagram = flowchart.parse($(this).text());            diagram.drawSVG(eleiid);        }    });});</script>
 <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
 
   <script src="asset/js/instantclick.min.js" data-no-instant></script>
+  <script data-no-instant>InstantClick.on('change', function() {
+      MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    });</script>
   <script data-no-instant>InstantClick.init();</script>
   </body>
 </html>
