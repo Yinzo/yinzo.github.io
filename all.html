@@ -89,6 +89,8 @@
             <li><a href="OS.html">OS</a></li>
         
             <li><a href="Deep%20Learning.html">Deep Learning</a></li>
+        
+            <li><a href="Machine%20Learning.html">Machine Learning</a></li>
          
 
       </ul>
@@ -110,6 +112,50 @@
 	<div class="large-8 medium-8 columns">
 		<div class="markdown-body home-categories">
 		
+			<div class="article">
+                <a class="clearlink" href="14947523529684.html">
+                
+                  <h1>CS229 学习笔记 Part 1</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>此笔记为我的 CS229 的学习笔记之一，由 Andrew Ng 的 CS229 Lecture notes 和 课堂录像整理而来。用于记录所学到的内容。记录顺序重新编排过，并非是课程原本的教学顺序，并且省略了课程中的一些推导过程，所以适合学习后整理备忘使用，不适合用于同步辅助学习。</p>
+
+<h2 id="toc_0">广义线性模型 GLM (Generalized Linear Models)</h2>
+
+<p>广义线性模型是所学到的 Linear Regression 以及 Logistic Regression 的推广形式（更准确的说，这两种模型都属于 GLM 的特殊情况）。它有三个关键假设(Assumptions)构成:</p>
+
+<ol>
+<li>\(y \mid x;\theta\sim ExponentialFamily(\eta)\) ：对于固定的参数 \(\theta\) 以及给定 \(x\)， \(y\) 的分布服从某一指数分布族（如高斯分布、伯努利分布、Softmax分布）</li>
+<li>对于给定的 \(x\) ，目标是预测 \(T(y)\) 的值。换一种说法就是，我们定义假设函数 \(h(x) = E[y\mid x]\)</li>
+<li>natural parameter \(\eta\) 和 输入 \(x\) 是线性相关的， \(\eta = \theta^ \mathrm{ T } x\) （其中，当输入 \(x\) 和 \(\eta\) 是向量的时候， \(\eta_i = \theta_i^ \mathrm{T}x\)）</li>
+</ol>
+
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14947523529684.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2017/5/14 16:59 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Machine%20Learning.html'>Machine Learning</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
 			<div class="article">
                 <a class="clearlink" href="14883590547961.html">
                 
@@ -546,55 +592,6 @@ test_function(&quot;yeah&quot;)
                 </div>
               </div><!-- article -->
         
-			<div class="article">
-                <a class="clearlink" href="14570954925763.html">
-                
-                  <h1>Ideas for Neural Network</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<ul>
-<li>Use genetic algorithm to evolve the parameters in Neural Network, to make a self-develop algorithm.
-
-<ul>
-<li>automatically find and make training set from search engine</li>
-<li>the paremeters include:
-
-<ul>
-<li>learning rate</li>
-<li>iteration times</li>
-<li>regularization term \(\lambda\)</li>
-<li>activation function</li>
-<li>number of hidden layers(units)</li>
-</ul></li>
-</ul></li>
-</ul>
-
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14570954925763.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/3/4 20:44 下午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Pattern%20Recognition.html'>Pattern Recognition</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
               
 
 
@@ -660,6 +657,8 @@ test_function(&quot;yeah&quot;)
         
             <a href="Deep%20Learning.html"><strong>Deep Learning</strong></a>
         
+            <a href="Machine%20Learning.html"><strong>Machine Learning</strong></a>
+        
         </p>
 
 
@@ -673,6 +672,12 @@ test_function(&quot;yeah&quot;)
                 <div class="side-content">
                 <ul class="posts-list">
 	      
+		      
+			      <li class="post">
+			        <a href="14947523529684.html">CS229 学习笔记 Part 1</a>
+			      </li>
+		     
+		  
 		      
 			      <li class="post">
 			        <a href="14883590547961.html">原始模型优化笔记</a>
@@ -694,12 +699,6 @@ test_function(&quot;yeah&quot;)
 		      
 			      <li class="post">
 			        <a href="14828521678770.html">在 Linode 上编译 hybla 模块</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="14696108056583.html">无需手动缓存长度</a>
 			      </li>
 		     
 		  

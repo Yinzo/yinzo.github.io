@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  Ideas for Neural Network - 雪地
+  CS229 学习笔记 Part 1 - 雪地
   
   </title>
   
@@ -113,14 +113,14 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>Ideas for Neural Network</h1>
+          <h1>CS229 学习笔记 Part 1</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2016/3/4 20:44 下午</span>
+          <span class="date">2017/5/14 16:59 下午</span>
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='Pattern%20Recognition.html'>Pattern Recognition</a></span>
+              <span class="posted-in"><a href='Machine%20Learning.html'>Machine Learning</a></span>
            
          
           <span class="comments">
@@ -133,28 +133,129 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <ul>
-<li>Use genetic algorithm to evolve the parameters in Neural Network, to make a self-develop algorithm.
+      <p>此笔记为我的 CS229 的学习笔记之一，由 Andrew Ng 的 CS229 Lecture notes 和 课堂录像整理而来。用于记录所学到的内容。记录顺序重新编排过，并非是课程原本的教学顺序，并且省略了课程中的一些推导过程，所以适合学习后整理备忘使用，不适合用于同步辅助学习。</p>
 
-<ul>
-<li>automatically find and make training set from search engine</li>
-<li>the paremeters include:
+<h2 id="toc_0">广义线性模型 GLM (Generalized Linear Models)</h2>
 
-<ul>
-<li>learning rate</li>
-<li>iteration times</li>
-<li>regularization term \(\lambda\)</li>
-<li>activation function</li>
-<li>number of hidden layers(units)</li>
-</ul></li>
-</ul></li>
-</ul>
+<p>广义线性模型是所学到的 Linear Regression 以及 Logistic Regression 的推广形式（更准确的说，这两种模型都属于 GLM 的特殊情况）。它有三个关键假设(Assumptions)构成:</p>
+
+<ol>
+<li>\(y \mid x;\theta\sim ExponentialFamily(\eta)\) ：对于固定的参数 \(\theta\) 以及给定 \(x\)， \(y\) 的分布服从某一指数分布族（如高斯分布、伯努利分布、Softmax分布）</li>
+<li>对于给定的 \(x\) ，目标是预测 \(T(y)\) 的值。换一种说法就是，我们定义假设函数 \(h(x) = E[y\mid x]\)</li>
+<li>natural parameter \(\eta\) 和 输入 \(x\) 是线性相关的， \(\eta = \theta^ \mathrm{ T } x\) （其中，当输入 \(x\) 和 \(\eta\) 是向量的时候， \(\eta_i = \theta_i^ \mathrm{T}x\)）</li>
+</ol>
 
 <span id="more"></span><!-- more -->
 
+<p>以上三个假设，一般只有第一个需要我们决定所使用的分布，其他两个假设都是直接定义。关键的地方来了，通过选择不同的<em>指数分布族</em>分布，我们能够得到不同的模型：</p>
+
 <ul>
-<li>About MCS, maybe we can train a model for fusion method to do the judge.</li>
+<li>高斯分布，则得到 Linear Regression</li>
+<li>伯努利分布，则得到 Logistic Regression</li>
+<li>Softmax 分布，得到 Softmax Regression</li>
 </ul>
+
+<p>其中，Lenear Regression 为回归模型 (regression)， Logistic Regression 和 Softmax Regression 都是分类模型 (classification)。</p>
+
+<p>则我猜测，是否根据所假设的分布是离散分布还是连续分布，分别能够得到分类模型和回归模型呢？有待后续的学习验证。</p>
+
+<h3 id="toc_1">具体步骤</h3>
+
+<ol>
+<li>假设 \(y\) 服从的分布，并将所假设的分布化为标准的指数分布族标准形式：\[ p(y;\eta) = b(y)\exp(\eta^\mathrm{T}T(y)-a(\eta))\]</li>
+<li>使用 \(\eta\) 表示出 \(E[y\mid x;\theta]\)，则我们得到了使用 \(\eta\) 表示的假设函数 \(h_\theta(\eta)\)</li>
+<li>根据假设3，\(\eta = \theta^ \mathrm{ T } x\)，直接代入假设函数，得到 \(h_\theta(x)\)</li>
+</ol>
+
+<p>之后：</p>
+
+<ol>
+<li>通过得到的假设函数，我们能够定义出代价函数 (Cost function) 或 似然函数 (likelihood) </li>
+<li>通过优化方法如梯度下降、牛顿法，以最小化代价函数或者最大化似然函数，得到最优的 \(\theta\) 值。</li>
+</ol>
+
+<h2 id="toc_2">优化方法</h2>
+
+<h3 id="toc_3">梯度下降法</h3>
+
+<p>包括以下三种子类：</p>
+
+<ul>
+<li>Batch Gradient Descent </li>
+<li>Mini-batch Gradient Descent</li>
+<li>Stochastic Gradient Descent</li>
+</ul>
+
+<p>三种方法的主要区别在于，每一步优化所使用的样本数量大小：</p>
+
+<ul>
+<li>Batch 使用<strong>全部</strong>样本计算平均梯度后才进行一步更新；</li>
+<li>Mini-batch 使用<strong>一小部分</strong>样本计算平均梯度就进行一步更新；</li>
+<li>Stochastic 使用<strong>一个</strong>样本，计算梯度，进行更新</li>
+</ul>
+
+<h3 id="toc_4">牛顿法</h3>
+
+<p>牛顿法用于寻找函数零点位置的优化方法，使用函数的导数（梯度）来计算参数的变化量，从而更新参数</p>
+
+<p>由于我们需要寻找函数的极大值（极小值），则我们可以通过牛顿法寻找原函数的一阶导数的零点，将优化问题转化为寻找零点问题，以此来寻找原函数的极大值（极小值）。</p>
+
+<p>牛顿法在二维的参数更新公式为：</p>
+
+<p>\[\theta := \theta - \Delta\]</p>
+
+<p>\[\Delta = \frac{f^\prime(\theta)}{f^{\prime\prime}(\theta)}\]</p>
+
+<p>多维时，参数更新公式变为： </p>
+
+<p>\[\theta := \theta - H^{-1}\nabla_\theta \ell(\theta)\]</p>
+
+<h2 id="toc_5">Linear Regression</h2>
+
+<p>简单的模型介绍就不说了，只记录这门课程给我额外学习到的一些知识点。</p>
+
+<p>首先是 Linear Regression 使用的是最小平方误差法 LMS 来进行函数优化并寻找最优 \(\theta\) 值的。在我第一次学习到这个方法的时候，仅仅是觉得这个误差函数很有道理，感觉能说得过去，并没有理解其背后的理论基础。</p>
+
+<p>Andrew Ng 使用概率学上的解释，告诉了我，为什么使用最小平方误差法。</p>
+
+<p>我们使用假设函数 \(h(x) = \theta^\mathrm{T}x^{(i)}\) 来作为给定输入 \(x\) 时，对 \(y\) 的预测，则我们可以得到这样一个等式</p>
+
+<p>\[y^{(i)} = \theta^\mathrm{T}x^{(i)} + \epsilon^{(i)}\]</p>
+
+<p>\(\epsilon^{(i)}\) 是误差项，包括了未被找到的特征或随机噪声。此时，我们假设：</p>
+
+<ol>
+<li>误差都是独立同分布的</li>
+<li>误差项符合高斯分布</li>
+</ol>
+
+<p>则有\(\epsilon^{(i)}\sim \cal{N}(0,\sigma^2) \)，即 \(y^{(i)} - \theta^\mathrm{T}x^{(i)}\sim \cal{N}(0,\sigma^2) \)</p>
+
+<p>省略一部分推导，我们能够得到对数似然函数 </p>
+
+<p>\[\ell (\theta) = m\log \frac{1}{\sqrt{2\pi}\sigma} - \frac{1}{\sigma^2}\cdot\frac{1}{2}\sum_{i=1}^{m} (y^{(i)} - \theta^\mathrm{T}x^{(i)})^2\]</p>
+
+<p>则当我们最大化对数似然函数时，即最小化 </p>
+
+<p>\[\frac{1}{2}\sum_{i=1}^{m}(y^{(i)} - \theta^\mathrm{T}x^{(i)})^2\] </p>
+
+<p>即最小化平方误差。</p>
+
+<p>最终我们得到结论：当我们对数据的分布进行以上假设时，最大化对数似然函数相当于最小化平方误差。</p>
+
+<h3 id="toc_6">Locally weighted linear regression</h3>
+
+<p>这是一种 Linear Regression 的特殊形式，它在误差函数中增加了一项权重，变为\(\sum_i w^{(i)}(y^{(i)} - \theta^\mathrm{T}x^{(i)})^2\)</p>
+
+<p>其中 \(w^{(i)}\) 就是非负权重，对于需要重点拟合的区域 \(w^{(i)}\) 会比较大。\(w^{(i)}\) 并不需要满足和为1的约束，因为他不是概率分布，只是单纯的惩罚项。</p>
+
+<p>通常来说，对于权重 \(w^{(i)}\) 的选择，我们使用以下函数</p>
+
+<p>\[w^{(i)} = \exp(-\frac{(x^{(i)} - x)^2}{2\tau^2})\]</p>
+
+<p>需要注意的是，这个函数和高斯分布没有关系，仅仅是常规的钟形函数而已。参数 \(\tau\) 影响了当远离所求点 \(x\) 时权值下降的速度。</p>
+
+<p>则对于权重较大的区域，所求得的曲线拟合程度较高。这一方法在预测的时候，通常将待预测区域的权重提高，然后重新拟合曲线。所以每一次预测都需要重新拟合曲线，使得它在训练样本较大时效率比较低。</p>
 
       </div>
 
@@ -162,16 +263,13 @@
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14590503922928.html" 
-          title="Previous Post: 通过EMET来禁用EMET——EMET的禁用与绕过思路讲解">&laquo; 通过EMET来禁用EMET——EMET的禁用与绕过思路讲解</a>
-      
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="14569378376035.html" 
-          title="Next Post: Notes for Neural Network">Notes for Neural Network &raquo;</a>
+          <a  href="14883590547961.html" 
+          title="Next Post: 原始模型优化笔记">原始模型优化笔记 &raquo;</a>
       
       </p>
         </div>

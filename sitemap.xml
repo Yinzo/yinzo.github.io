@@ -2,7 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
   <loc>http://yinzo.github.io/</loc>
-  <lastmod>2017-04-29T20:48:35+08:00</lastmod>
+  <lastmod>2017-05-14T17:00:16+08:00</lastmod>
+</url>
+
+<url>
+  <loc>http://yinzo.github.io/14947523529684.html</loc>
+  <lastmod>2017-05-14T16:59:12+08:00</lastmod>
 </url>
 
 <url>
@@ -183,6 +188,10 @@
 
 <url>
   <loc>http://yinzo.github.io/Deep%20Learning.html</loc>
+</url>
+
+<url>
+  <loc>http://yinzo.github.io/Machine%20Learning.html</loc>
 </url>
 
 

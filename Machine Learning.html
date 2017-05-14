@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  Ideas for Neural Network - 雪地
+  Machine Learning - 雪地
   
   </title>
   
@@ -104,113 +104,75 @@
        
 
  <script type="text/javascript">
-  $(function(){
-    $('#menu_item_index').addClass('is_active');
-  });
+	$(function(){
+		$('#menu_item_index').addClass('is_active');
+	});
 </script>
 <div class="row">
-  <div class="large-8 medium-8 columns">
-      <div class="markdown-body article-wrap">
-       <div class="article">
-          
-          <h1>Ideas for Neural Network</h1>
-     
-        <div class="read-more clearfix">
-          <span class="date">2016/3/4 20:44 下午</span>
+	<div class="large-8 medium-8 columns">
+		<div class="markdown-body home-categories">
+		
+			<div class="article">
+                <a class="clearlink" href="14947523529684.html">
+                
+                  <h1>CS229 学习笔记 Part 1</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>此笔记为我的 CS229 的学习笔记之一，由 Andrew Ng 的 CS229 Lecture notes 和 课堂录像整理而来。用于记录所学到的内容。记录顺序重新编排过，并非是课程原本的教学顺序，并且省略了课程中的一些推导过程，所以适合学习后整理备忘使用，不适合用于同步辅助学习。</p>
 
-          <span>posted in&nbsp;</span> 
-          
-              <span class="posted-in"><a href='Pattern%20Recognition.html'>Pattern Recognition</a></span>
-           
-         
-          <span class="comments">
-            
+<h2 id="toc_0">广义线性模型 GLM (Generalized Linear Models)</h2>
 
-            
-          </span>
+<p>广义线性模型是所学到的 Linear Regression 以及 Logistic Regression 的推广形式（更准确的说，这两种模型都属于 GLM 的特殊情况）。它有三个关键假设(Assumptions)构成:</p>
 
-        </div>
-      </div><!-- article -->
-
-      <div class="article-content">
-      <ul>
-<li>Use genetic algorithm to evolve the parameters in Neural Network, to make a self-develop algorithm.
-
-<ul>
-<li>automatically find and make training set from search engine</li>
-<li>the paremeters include:
-
-<ul>
-<li>learning rate</li>
-<li>iteration times</li>
-<li>regularization term \(\lambda\)</li>
-<li>activation function</li>
-<li>number of hidden layers(units)</li>
-</ul></li>
-</ul></li>
-</ul>
-
-<span id="more"></span><!-- more -->
-
-<ul>
-<li>About MCS, maybe we can train a model for fusion method to do the judge.</li>
-</ul>
-
-      </div>
-
-      <div class="row">
-        <div class="large-6 columns">
-        <p class="text-left" style="padding:15px 0px;">
-      
-          <a href="14590503922928.html" 
-          title="Previous Post: 通过EMET来禁用EMET——EMET的禁用与绕过思路讲解">&laquo; 通过EMET来禁用EMET——EMET的禁用与绕过思路讲解</a>
-      
-        </p>
-        </div>
-        <div class="large-6 columns">
-      <p class="text-right" style="padding:15px 0px;">
-      
-          <a  href="14569378376035.html" 
-          title="Next Post: Notes for Neural Network">Notes for Neural Network &raquo;</a>
-      
-      </p>
-        </div>
-      </div>
-      <div class="comments-wrap">
-        <div class="share-comments">
-          <div id="disqus_thread"></div>
-<script>
-/**
-* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-
-s.src = '//yinzo.disqus.com/embed.js';
-
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
-          
-
-          
-        </div>
-      </div>
-    </div><!-- article-wrap -->
-  </div><!-- large 8 -->
+<ol>
+<li>\(y \mid x;\theta\sim ExponentialFamily(\eta)\) ：对于固定的参数 \(\theta\) 以及给定 \(x\)， \(y\) 的分布服从某一指数分布族（如高斯分布、伯努利分布、Softmax分布）</li>
+<li>对于给定的 \(x\) ，目标是预测 \(T(y)\) 的值。换一种说法就是，我们定义假设函数 \(h(x) = E[y\mid x]\)</li>
+<li>natural parameter \(\eta\) 和 输入 \(x\) 是线性相关的， \(\eta = \theta^ \mathrm{ T } x\) （其中，当输入 \(x\) 和 \(\eta\) 是向量的时候， \(\eta_i = \theta_i^ \mathrm{T}x\)）</li>
+</ol>
 
 
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14947523529684.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2017/5/14 16:59 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Machine%20Learning.html'>Machine Learning</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
 
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+              
+
+
+			<div class="row">
+			  <div class="large-6 columns">
+			  <p class="text-left" style="padding-top:25px;">
+			   
+			  </p>
+			  </div>
+			  <div class="large-6 columns">
+			<p class="text-right" style="padding-top:25px;">
+			
+			</p>
+			  </div>
+			</div>
+		</div>
+	</div><!-- large 8 -->
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">

