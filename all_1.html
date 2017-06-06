@@ -113,6 +113,49 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
+                <a class="clearlink" href="14590503922928.html">
+                
+                  <h1>通过EMET来禁用EMET——EMET的禁用与绕过思路讲解</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>原文链接：<a href="https://www.fireeye.com/blog/threat-research/2016/02/using_emet_to_disabl.html">https://www.fireeye.com/blog/threat-research/2016/02/using_emet_to_disabl.html</a><br/>
+注：本文并未由任何媒体进行翻译发布。搜索引擎中搜到的国内媒体仅为标题翻译进行推送。</p>
+
+<p>微软的Enhanced Mitigation Experience Toolkit (EMET)是一项提高程序安全性的项目。它通过动态链接库(DLL)来运行在『受保护』的程序中，并且做一些修改来使得破解更加困难。</p>
+
+<p>我们已经见过很多次EMET在过去的研究或者攻击中被绕过了[2, 3, 4, 5, 6, 7, 8]。通常来说，微软都是通过修改或者增加一些安全设计来搞定现有的绕过问题。 EMET的设计目的是使得破解行为的成本升高，而不是一个『傻瓜式的防破解方案』[1]。所以，只要拥有在进程空间中读写的能力，理论上我们就能搞定所有的安全设计[2]。</p>
+
+<p>如果一个攻击者能够毫不费力地绕过EMET，那这就完全打破了EMET提高破解成本的最初目的。我们在新技术那段展示了一种禁用EMET的技术。微软在EMET5.5中打了个补丁来解决这个问题。</p>
+
+<p>讨论完这个新技术之后，我们来说说之前提到的用来绕过或搞掉EMET的那个技术。如果你想了解关于EMET是怎么实现保护程序的，请参考附录。</p>
+
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14590503922928.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2016/3/27 11:46 上午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Security%20Info.html'>Security Info</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
                 <a class="clearlink" href="14570954925763.html">
                 
                   <h1>Ideas for Neural Network</h1>
@@ -503,58 +546,6 @@ com_A-&gt;com_B-&gt;com_C
                 </div>
               </div><!-- article -->
         
-			<div class="article">
-                <a class="clearlink" href="14608288742293.html">
-                
-                  <h1>解决Python的pytesseract库执行时报错</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>使用pytesseract库识别验证码时遇到以下报错</p>
-
-<pre><code>AttributeError: &#39;NoneType&#39; object has no attribute &#39;bands&#39;
-</code></pre>
-
-<p>修改PIL库<code>site-packages/PIL/Image.py</code>1496行</p>
-
-<pre><code>def split(self):
-    “Split image into bands”
-
-    if self.im.bands == 1:
-</code></pre>
-
-<p>为</p>
-
-<pre><code>def split(self):
-    “Split image into bands”
-    self.load()
-    if self.im.bands == 1:
-</code></pre>
-
-<p>即可。</p>
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                  
-                    <span class="date">2015/8/23 1:42 上午</span>
-                    
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
               
 
 
@@ -637,6 +628,12 @@ com_A-&gt;com_B-&gt;com_C
 	      
 		      
 			      <li class="post">
+			        <a href="14967660338811.html">CS229 学习笔记 Part2</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="14947523529684.html">CS229 学习笔记 Part 1</a>
 			      </li>
 		     
@@ -656,12 +653,6 @@ com_A-&gt;com_B-&gt;com_C
 		      
 			      <li class="post">
 			        <a href="14863637259966.html">低素质弹幕分类器 CNN 训练笔记</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="14828521678770.html">在 Linode 上编译 hybla 模块</a>
 			      </li>
 		     
 		  
