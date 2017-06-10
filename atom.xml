@@ -4,7 +4,7 @@
   <title><![CDATA[雪地]]></title>
   <link href="http://yinzo.github.io/atom.xml" rel="self"/>
   <link href="http://yinzo.github.io/"/>
-  <updated>2017-06-11T02:03:30+08:00</updated>
+  <updated>2017-06-11T02:07:25+08:00</updated>
   <id>http://yinzo.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -394,7 +394,7 @@ s.t. &amp;&amp;0\leq \alpha_i \leq C,\ \ i=1,\cdots,m \\ <br/>
 <p>并且根据公式(18) ，我们发现能够将原优化目标写成以下形式的二次函数<br/>
 \[a\alpha_2^2 + b\alpha_2+c\]</p>
 
-<p>则我们先计算得出 \(\alpha_2\) 的最优值，再根据上图的值域限制进行一个修建 (clip)<br/>
+<p>则我们先计算得出 \(\alpha_2\) 的最优值，再根据上图的值域限制进行一个修剪 (clip)<br/>
 <img src="media/14968173531750/14970845058858.jpg" alt=""/><br/>
 以此得到符合限制条件的新 \(\alpha_2\) 值。</p>
 
