@@ -113,6 +113,67 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
+                <a class="clearlink" href="14594228486348.html">
+                
+                  <h1>Python Decorator的一些细节</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>装饰器函数并不是在被修饰函数调用的时候才执行，而是修饰语句所在的代码块被执行的时候执行。</p>
+
+<p>而且当一个文件（模块）被import的时候，文件内的<strong>所有</strong>装饰器就会被激活执行。因为装饰器语句相当于文件中的普通语句，而非函数声明或者类声明的一部分。</p>
+
+<p>用以下代码方便理解：</p>
+
+<pre><code># sample.py
+
+def decorator_function(func):
+    print &quot;executing the decorator.&quot;
+
+    def wrapper(*args, **kwargs):
+        print &quot;decorated function is executing.&quot;
+        return func(*args, **kwargs)
+
+    return wrapper
+
+
+print &quot;this python file is executing.&quot;
+
+
+@decorator_function
+def test_function(sth):
+    print &quot;blablabla&quot;+sth
+
+test_function(&quot;yeah&quot;)
+</code></pre>
+
+<p>而当我们对一个类里面的普通函数使用修饰符进行修饰的时候，然后我们正常调用这一函数（通过实例化的对象调用），会报错提示这一函数变成了unbound method，缺少了类中函数默认的首参数self。这一问题是由于经过装饰器修饰的函数，实际上是被传递到了装饰器函数中，在这个装饰器函数中被独立调用的，而非被其原先所在的类对象调用。因此在这个装饰器函数中，没有其原来所在的类来对它进行调用，导致提示unbound method.</p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2016/3/31 19:14 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Python.html'>Python</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
                 <a class="clearlink" href="14590503922928.html">
                 
                   <h1>通过EMET来禁用EMET——EMET的禁用与绕过思路讲解</h1>
@@ -512,40 +573,6 @@ com_A-&gt;com_B-&gt;com_C
                 </div>
               </div><!-- article -->
         
-			<div class="article">
-                <a class="clearlink" href="14608288508524.html">
-                
-                  <h1>Oracle注入速查表</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p><small>本文由Yinzo翻译，转载请保留署名。原文地址：<a href="http://pentestmonkey.net/cheat-sheet/sql-injection/oracle-sql-injection-cheat-sheet">http://pentestmonkey.net/cheat-sheet/sql-injection/oracle-sql-injection-cheat-sheet</a></small></p>
-
-<p>注：下面的一部分查询只能由admin执行，我会在查询的末尾以&quot;<strong><code>-priv</code></strong>&ldquo;标注。</p>
-
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14608288508524.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2015/8/28 17:30 下午</span>
-                    
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
               
 
 
@@ -628,13 +655,19 @@ com_A-&gt;com_B-&gt;com_C
 	      
 		      
 			      <li class="post">
-			        <a href="14967660338811.html">CS229 学习笔记 Part2</a>
+			        <a href="14968173531750.html">CS229 学习笔记 Part3</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="14947523529684.html">CS229 学习笔记 Part 1</a>
+			        <a href="14965964854250.html">CS229 学习笔记 Part2</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="14946020792948.html">CS229 学习笔记 Part 1</a>
 			      </li>
 		     
 		  
@@ -647,12 +680,6 @@ com_A-&gt;com_B-&gt;com_C
 		      
 			      <li class="post">
 			        <a href="14863637393852.html">低素质弹幕分类器的CNN实现</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="14863637259966.html">低素质弹幕分类器 CNN 训练笔记</a>
 			      </li>
 		     
 		  

