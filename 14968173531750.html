@@ -196,6 +196,8 @@
 <li>我们的分类器输出结果会直接是 1 或 -1，不像 Logistic 回归那样先输出 \(y\) 是某一类的概率。</li>
 </ul>
 
+<span id="more"></span><!-- more -->
+
 <h3 id="toc_1">函数间隔和几何间隔 (Functional and geometric margin)</h3>
 
 <p>函数间隔 \(\hat{\gamma}\) 的定义如下<br/>
@@ -271,12 +273,12 @@ s.t. &amp;&amp;g_i(w) \leq 0, \ \ i=1,\cdots,k\nonumber \\<br/>
 
 <p>\[\theta_{\mathcal{P}}(w) = \max_{\alpha,\beta:\alpha_i \geq 0} \mathcal{L}(w,\alpha,\beta)\]</p>
 
-<p>我们发现，当 \(h_i(w)\) 等于零的时候，即 \(w\) 的取值符合原函数约束时，拉格朗日函数等于原函数；当\(w\) 的取值不符合原函数约束时，即 \(h_i(w)\) 不等于零的时候，总能通过使 \(\beta_i\) 等于正无穷或负无穷，使得 \(\theta_{\mathcal{P}}(w)\) 等于正无穷。<br/>
-<img src="media/14968173531750/14968569191696.jpg" alt=""/><br/>
-\[\theta_{\mathcal{P}}(w) = \left\{ <br/>
+<p>我们发现，当 \(h_i(w)\) 等于零的时候，即 \(w\) 的取值符合原函数约束时，拉格朗日函数等于原函数；当\(w\) 的取值不符合原函数约束时，即 \(h_i(w)\) 不等于零的时候，总能通过使 \(\beta_i\) 等于正无穷或负无穷，使得 \(\theta_{\mathcal{P}}(w)\) 等于正无穷。</p>
+
+<p>\[\theta_{\mathcal{P}}(w) = \left\{ <br/>
 \begin{array}{ll}<br/>
-f(w)  &amp; \\<br/>
- \\<br/>
+f(w)   &amp;若 w 满足原问题约束 \\<br/>
+\infty &amp;其他 \\<br/>
 \end{array}<br/>
 \right.\]</p>
 
