@@ -4,7 +4,7 @@
   <title><![CDATA[雪地]]></title>
   <link href="http://yinzo.github.io/atom.xml" rel="self"/>
   <link href="http://yinzo.github.io/"/>
-  <updated>2017-06-11T02:01:37+08:00</updated>
+  <updated>2017-06-11T02:03:30+08:00</updated>
   <id>http://yinzo.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -96,17 +96,17 @@
 
 <p>注意图中的点 A，我们需要求 A 到分类边界的距离 \(\gamma^{(i)}\)，就是我们现在需要求的值。</p>
 
-<p>因为 A 代表着 \(x^{(i)}\)， 所以我们可以得到点 B 的公式为 \(x^{(i)} - \gamma^{(i)} \cdot w/||w||\)，并且点 B 在分类边界上，我们有 \(w^Tx+b=0\)，因此</p>
+<p>因为 A 代表着 \(x^{(i)}\)， 所以我们可以得到点 B 的公式为 \(x^{(i)} - \gamma^{(i)} \cdot w/\|w\|\)，并且点 B 在分类边界上，我们有 \(w^Tx+b=0\)，因此</p>
 
-<p>\[w^T\left(x^{(i)}-\gamma^{(i)}\frac{w}{||w||}\right)+b=0\]</p>
+<p>\[w^T\left(x^{(i)}-\gamma^{(i)}\frac{w}{\|w\|}\right)+b=0\]</p>
 
-<p>\[\gamma^{(i)} = \frac{w^Tx^{(i)}+b}{||w||} = \left(\frac{w}{||w||}\right)^Tx^{(i)}+\frac{b}{||w||}\]</p>
+<p>\[\gamma^{(i)} = \frac{w^Tx^{(i)}+b}{\|w\|} = \left(\frac{w}{\|w\|}\right)^Tx^{(i)}+\frac{b}{\|w\|}\]</p>
 
 <p>再把函数的正负性考虑进去，最终我们得到</p>
 
-<p>\[\gamma^{(i)} = y^{(i)}\left(\left(\frac{w}{||w||}\right)^Tx^{(i)}+\frac{b}{||w||}\right)\]</p>
+<p>\[\gamma^{(i)} = y^{(i)}\left(\left(\frac{w}{\|w\|}\right)^Tx^{(i)}+\frac{b}{\|w\|}\right)\]</p>
 
-<p>注意如果 \(||w|| = 1\)，则函数间隔等于几何间隔——这给了我们一个联系起这两种间隔的思路。并且，几何间隔并不受参数的等比缩放影响，这个特性在后面的推导中很有用。比如说我们在拟合 w 和 b 的时候，我们需要对他进行一个缩放以满足 \(||w|| = 1\) 这个约束，那么我们并不需要担心几何间隔会因此改变。</p>
+<p>注意如果 \(\|w\| = 1\)，则函数间隔等于几何间隔——这给了我们一个联系起这两种间隔的思路。并且，几何间隔并不受参数的等比缩放影响，这个特性在后面的推导中很有用。比如说我们在拟合 w 和 b 的时候，我们需要对他进行一个缩放以满足 \(\|w\| = 1\) 这个约束，那么我们并不需要担心几何间隔会因此改变。</p>
 
 <p>最后，对于一组大小为 m 的训练集，我们同样定义</p>
 
@@ -119,21 +119,21 @@
 <p>\[\begin{eqnarray}<br/>
 \max_{\gamma,w,b}&amp;&amp;\gamma \nonumber \\<br/>
 s.t. &amp; &amp;y^{(i)}(w^Tx^{(i)}+b)\geq \gamma,i=1,\cdots,m \nonumber \\<br/>
-&amp;&amp;||w||=1 \nonumber \\<br/>
+&amp;&amp;\|w\|=1 \nonumber \\<br/>
 \end{eqnarray}\]</p>
 
-<p>我们限制了 \(||w||=1\)，所以几何间隔和函数间隔此时是相等的。因此，解决这个优化问题，我们能够求出对于这个训练集最大的几何间隔。但是，&quot;\(||w||=1\)&ldquo; 这个限制不怎么友好（non-convex），我们无法套用现成的优化求解算法来解决它，所以我们尝试把它变形一下</p>
+<p>我们限制了 \(\|w\|=1\)，所以几何间隔和函数间隔此时是相等的。因此，解决这个优化问题，我们能够求出对于这个训练集最大的几何间隔。但是，&quot;\(\|w\|=1\)&ldquo; 这个限制不怎么友好（non-convex），我们无法套用现成的优化求解算法来解决它，所以我们尝试把它变形一下</p>
 
-<p>\[\begin{eqnarray}\max_{\hat{\gamma},w,b} &amp;&amp;\frac{\hat{\gamma}}{||w||} \nonumber \\<br/>
+<p>\[\begin{eqnarray}\max_{\hat{\gamma},w,b} &amp;&amp;\frac{\hat{\gamma}}{\|w\|} \nonumber \\<br/>
 s.t. &amp;&amp; y^{(i)}(w^Tx^{(i)}+b)\geq \hat{\gamma},\ \ i=1,\cdots,m \nonumber \\<br/>
 \end{eqnarray}\]</p>
 
-<p>现在我们尝试最大化 \(\hat{\gamma}/||w||\)，这个优化问题和上面的那个是等价的，并且我们成功抛弃掉了那个不友好的限制条件。但是，现在变成我们的目标函数不怎么友好了 (non-convex)。</p>
+<p>现在我们尝试最大化 \(\hat{\gamma}/\|w\|\)，这个优化问题和上面的那个是等价的，并且我们成功抛弃掉了那个不友好的限制条件。但是，现在变成我们的目标函数不怎么友好了 (non-convex)。</p>
 
-<p>让我们继续尝试变形。回想起我们能够随意等比例缩放 \(w,b\)，这非常关键。我们限制\(\hat{\gamma}=1\)，则我们的优化目标可以变为最大化 \(\hat{\gamma}/||w|| = 1/||w||\)，也就相当于最小化 \(||w||^2\)</p>
+<p>让我们继续尝试变形。回想起我们能够随意等比例缩放 \(w,b\)，这非常关键。我们限制\(\hat{\gamma}=1\)，则我们的优化目标可以变为最大化 \(\hat{\gamma}/\|w\| = 1/\|w\|\)，也就相当于最小化 \(\|w\|^2\)</p>
 
 <p>\[\begin{eqnarray}<br/>
-\min_{\gamma,w,b} &amp;&amp;\frac{1}{2}||w||^2 \nonumber \\<br/>
+\min_{\gamma,w,b} &amp;&amp;\frac{1}{2}\|w\|^2 \nonumber \\<br/>
 s.t. &amp;&amp; y^{(i)}(w^Tx^{(i)}+b)\geq 1,\ \ i=1,\cdots,m \nonumber \\<br/>
 \end{eqnarray}\]</p>
 
@@ -208,7 +208,7 @@ f(w)   &amp;若 w 满足原问题约束 \\<br/>
 
 <p>现在，我们尝试使用拉格朗日方法来解决我们的最优间隔分类器优化问题</p>
 
-<p>\[\min_{\gamma,w,b} \frac{1}{2} ||w||^2\]<br/>
+<p>\[\min_{\gamma,w,b} \frac{1}{2} \|w\|^2\]<br/>
 \[s.t.\ \ y^{(i)}（w^Tx^{(i)} +b)\geq 1,\ i=1,\cdots,m\]</p>
 
 <p>我们将约束条件化为以下形式</p>
@@ -219,7 +219,7 @@ f(w)   &amp;若 w 满足原问题约束 \\<br/>
 
 <p>我们求出原优化问题的拉格朗日函数</p>
 
-<p>\[ \begin{equation} \mathcal{L}(w,b,\alpha) = \frac{1}{2}||w||^2-\sum^m_{i=1}\alpha_i[y^{(i)}(w^Tx^{(i)}+b)-1]  \end{equation} \]</p>
+<p>\[ \begin{equation} \mathcal{L}(w,b,\alpha) = \frac{1}{2}\|w\|^2-\sum^m_{i=1}\alpha_i[y^{(i)}(w^Tx^{(i)}+b)-1]  \end{equation} \]</p>
 
 <p>我们求解对偶问题，首先使用 \(w,b\) 为参数，求解拉格朗日函数的最小值。则我们求函数分别对于 \(w,b\) 的偏导数并使其等于零</p>
 
@@ -323,7 +323,7 @@ x_3 x_3<br/>
 <p>为了解决这个问题，我们加入了一个 \(l1\) 正则项：</p>
 
 <p>\[\begin{eqnarray}<br/>
-\min_{\gamma,w,b} &amp;&amp;\frac{1}{2}||w|| ^2+C\sum^m_{i=1}\xi_i \nonumber \\<br/>
+\min_{\gamma,w,b} &amp;&amp;\frac{1}{2}\|w\| ^2+C\sum^m_{i=1}\xi_i \nonumber \\<br/>
 s.t. &amp;&amp; y^{(i)}(w^Tx^{(i)}+b)\geq1-\xi_i,i=1,\cdots,m \nonumber \\<br/>
 &amp;&amp; \xi_i\geq0,\ i=1,\cdots,m \nonumber \\<br/>
 \end{eqnarray}\]</p>
@@ -332,7 +332,7 @@ s.t. &amp;&amp; y^{(i)}(w^Tx^{(i)}+b)\geq1-\xi_i,i=1,\cdots,m \nonumber \\<br/>
 
 <ol>
 <li>使所有样本的函数间隔大于1</li>
-<li>最小化 \(||w||^2\)</li>
+<li>最小化 \(\|w\|^2\)</li>
 </ol>
 
 <p>\(C\) 越大，则优化目标越偏向目标1，即最原始的，强迫所有样本必须分类正确的模型。</p>
