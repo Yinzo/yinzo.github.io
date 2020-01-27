@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="cn-zh">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta itemprop="name" content="通过EMET来禁用EMET——EMET的禁用与绕过思路讲解">
+<meta itemprop="description" content="通过EMET来禁用EMET——EMET的禁用与绕过思路讲解 微软的Enhanced Mitigation Experience Toolkit (EMET)是一项提高程序安全性的项目。它通过动态链接库(DLL)来运行在『受保护』的程序中，并且做一些修改来使得破解更加困难。
+我们已经见过很多次EMET在过去的研究或者攻击中被绕过了[2, 3, 4, 5, 6, 7, 8]。通常来说，微软都是通过修改或者增加一些安全设计来搞定现有的绕过问题。 EMET的设计目的是使得破解行为的成本升高，而不是一个『傻瓜式的防破解方案』[1]。所以，只要拥有在进程空间中读写的能力，理论上我们就能搞定所有的安全设计[2]。
+如果一个攻击者能够毫不费力地绕过EMET，那这就完全打破了EMET提高破解成本的最初目的。我们在新技术那段展示了一种禁用EMET的技术。微软在EMET5.5中打了个补丁来解决这个问题。
+讨论完这个新技术之后，我们来说说之前提到的用来绕过或搞掉EMET的那个技术。如果你想了解关于EMET是怎么实现保护程序的，请参考附录。
+EMET会根据系统的架构，来选择注入emet.dll还是emet64.dll到每一个被保护的进程中，以此在Windows API（比如kernel32.dll, ntdll.dll或者kernelbase.dll里面的函数）hook上。这些hook使得EMET能够分析所有通过关键API调用的代码，并判断他们是否合法。如果代码被认为是合法的，EMET的hook会跳回请求的API处，否则会触发一个exception。
+但是，EMET里面存在着这样一段代码用来卸载EMET。这段代码整个禁用EMET的保护，并且把受保护的程序还原为无保护的初始状态。任何人都能简单地定位这段代码，并调用它，就能够完全禁用EMET的保护。在EMET.dll v5.2.0.1中这个函数位于0x65813中，跳到这段代码上并调用它就能弄掉EMET的hooks。
+这一特性之所以存在，是因为emet.dll里面的用于完全退出进程的代码，为了方便，而在DllMain里面留了个入口。
+DllMain的函数原型：
+BOOL WINAPI DllMain( _In_ HINSTANCE hinstDLL, _In_ DWORD fdwReason, _In_ LPVOID lpvReserved );  需要注意的是，第一个参数传递是DLL的地址，第二个是PE loader用来指明DLL是否被加载。如果fdwReason是1，说明DLL已经被加载或者初始化。如果是0（DLL_PROCESS_DETACH），emet.dll会初始化卸载的代码，并去除它的hook和exception处理句柄，轻而易举地停止了EMET的检查。不过这并不会把EMET从内存中移除，它只是确保了所有的保护都被禁用了。
+这种特性可能存在与所有基于探测的产品之中，也就是那些依赖hook的并以此保证产品不被破坏，一定存在一个卸载所有保护的方法。EMET的DllMain能够通过一个Return Oriented Programming (ROP)程序来找到，并带着正确的参数跳到DllMain的对应位置，禁用保护。这个我们下一节来详细说。
+BOOL WINAPI DllMain (GetModuleHandleW(&quot;EMET.dll&quot;) ,DLL_PROCESS_DETACH , NULL);  GetModuleHandleW函数没有被EMET hook上，因为EMET认为它不是关键Windows API。我们使用这个函数来搞到emet.dll的地址。因为PE header位于基地址上，我们必须通过它找到DllMain的地址来传递所需的参数。
+在EMET.dll v5.2.0.1中，在emet.dll的0xF2958上有一个全局变量。EMET通过这个变量作为一个structure数组指针，指向被绕过的API（detoured APIs），每一个结构体的大小为0x18 bytes，如下所示：
+struct Detoured_API { BOOL isActive; // isActive field shows the hooking status, Active: 0x1 PVOID DetouredAPIConfig; // pointer to Detoured_API_Config structure PVOID nextDetouredAPI; // pointer to the next Detoured_API structure DWORD valueX; DWORD valueY; DWORD valueZ; };  最后三个变量和这篇文章没有关系。DetouredAPIConfig保存着一个指针指向另一个结构体Detoured_API_Config，大小是0x18 bytes.">
+<meta itemprop="datePublished" content="2016-03-27T11:46:00&#43;08:00" />
+<meta itemprop="dateModified" content="2016-03-27T11:46:00&#43;08:00" />
+<meta itemprop="wordCount" content="650">
+
+
+
+<meta itemprop="keywords" content="untagged," /><meta property="og:title" content="通过EMET来禁用EMET——EMET的禁用与绕过思路讲解" />
+<meta property="og:description" content="通过EMET来禁用EMET——EMET的禁用与绕过思路讲解 微软的Enhanced Mitigation Experience Toolkit (EMET)是一项提高程序安全性的项目。它通过动态链接库(DLL)来运行在『受保护』的程序中，并且做一些修改来使得破解更加困难。
+我们已经见过很多次EMET在过去的研究或者攻击中被绕过了[2, 3, 4, 5, 6, 7, 8]。通常来说，微软都是通过修改或者增加一些安全设计来搞定现有的绕过问题。 EMET的设计目的是使得破解行为的成本升高，而不是一个『傻瓜式的防破解方案』[1]。所以，只要拥有在进程空间中读写的能力，理论上我们就能搞定所有的安全设计[2]。
+如果一个攻击者能够毫不费力地绕过EMET，那这就完全打破了EMET提高破解成本的最初目的。我们在新技术那段展示了一种禁用EMET的技术。微软在EMET5.5中打了个补丁来解决这个问题。
+讨论完这个新技术之后，我们来说说之前提到的用来绕过或搞掉EMET的那个技术。如果你想了解关于EMET是怎么实现保护程序的，请参考附录。
+EMET会根据系统的架构，来选择注入emet.dll还是emet64.dll到每一个被保护的进程中，以此在Windows API（比如kernel32.dll, ntdll.dll或者kernelbase.dll里面的函数）hook上。这些hook使得EMET能够分析所有通过关键API调用的代码，并判断他们是否合法。如果代码被认为是合法的，EMET的hook会跳回请求的API处，否则会触发一个exception。
+但是，EMET里面存在着这样一段代码用来卸载EMET。这段代码整个禁用EMET的保护，并且把受保护的程序还原为无保护的初始状态。任何人都能简单地定位这段代码，并调用它，就能够完全禁用EMET的保护。在EMET.dll v5.2.0.1中这个函数位于0x65813中，跳到这段代码上并调用它就能弄掉EMET的hooks。
+这一特性之所以存在，是因为emet.dll里面的用于完全退出进程的代码，为了方便，而在DllMain里面留了个入口。
+DllMain的函数原型：
+BOOL WINAPI DllMain( _In_ HINSTANCE hinstDLL, _In_ DWORD fdwReason, _In_ LPVOID lpvReserved );  需要注意的是，第一个参数传递是DLL的地址，第二个是PE loader用来指明DLL是否被加载。如果fdwReason是1，说明DLL已经被加载或者初始化。如果是0（DLL_PROCESS_DETACH），emet.dll会初始化卸载的代码，并去除它的hook和exception处理句柄，轻而易举地停止了EMET的检查。不过这并不会把EMET从内存中移除，它只是确保了所有的保护都被禁用了。
+这种特性可能存在与所有基于探测的产品之中，也就是那些依赖hook的并以此保证产品不被破坏，一定存在一个卸载所有保护的方法。EMET的DllMain能够通过一个Return Oriented Programming (ROP)程序来找到，并带着正确的参数跳到DllMain的对应位置，禁用保护。这个我们下一节来详细说。
+BOOL WINAPI DllMain (GetModuleHandleW(&quot;EMET.dll&quot;) ,DLL_PROCESS_DETACH , NULL);  GetModuleHandleW函数没有被EMET hook上，因为EMET认为它不是关键Windows API。我们使用这个函数来搞到emet.dll的地址。因为PE header位于基地址上，我们必须通过它找到DllMain的地址来传递所需的参数。
+在EMET.dll v5.2.0.1中，在emet.dll的0xF2958上有一个全局变量。EMET通过这个变量作为一个structure数组指针，指向被绕过的API（detoured APIs），每一个结构体的大小为0x18 bytes，如下所示：
+struct Detoured_API { BOOL isActive; // isActive field shows the hooking status, Active: 0x1 PVOID DetouredAPIConfig; // pointer to Detoured_API_Config structure PVOID nextDetouredAPI; // pointer to the next Detoured_API structure DWORD valueX; DWORD valueY; DWORD valueZ; };  最后三个变量和这篇文章没有关系。DetouredAPIConfig保存着一个指针指向另一个结构体Detoured_API_Config，大小是0x18 bytes." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://yinzo.github.io/posts/%E9%80%9A%E8%BF%87emet%E6%9D%A5%E7%A6%81%E7%94%A8emetemet%E7%9A%84%E7%A6%81%E7%94%A8%E4%B8%8E%E7%BB%95%E8%BF%87%E6%80%9D%E8%B7%AF%E8%AE%B2%E8%A7%A3/" />
+<meta property="article:published_time" content="2016-03-27T11:46:00+08:00" />
+<meta property="article:modified_time" content="2016-03-27T11:46:00+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="通过EMET来禁用EMET——EMET的禁用与绕过思路讲解"/>
+<meta name="twitter:description" content="通过EMET来禁用EMET——EMET的禁用与绕过思路讲解 微软的Enhanced Mitigation Experience Toolkit (EMET)是一项提高程序安全性的项目。它通过动态链接库(DLL)来运行在『受保护』的程序中，并且做一些修改来使得破解更加困难。
+我们已经见过很多次EMET在过去的研究或者攻击中被绕过了[2, 3, 4, 5, 6, 7, 8]。通常来说，微软都是通过修改或者增加一些安全设计来搞定现有的绕过问题。 EMET的设计目的是使得破解行为的成本升高，而不是一个『傻瓜式的防破解方案』[1]。所以，只要拥有在进程空间中读写的能力，理论上我们就能搞定所有的安全设计[2]。
+如果一个攻击者能够毫不费力地绕过EMET，那这就完全打破了EMET提高破解成本的最初目的。我们在新技术那段展示了一种禁用EMET的技术。微软在EMET5.5中打了个补丁来解决这个问题。
+讨论完这个新技术之后，我们来说说之前提到的用来绕过或搞掉EMET的那个技术。如果你想了解关于EMET是怎么实现保护程序的，请参考附录。
+EMET会根据系统的架构，来选择注入emet.dll还是emet64.dll到每一个被保护的进程中，以此在Windows API（比如kernel32.dll, ntdll.dll或者kernelbase.dll里面的函数）hook上。这些hook使得EMET能够分析所有通过关键API调用的代码，并判断他们是否合法。如果代码被认为是合法的，EMET的hook会跳回请求的API处，否则会触发一个exception。
+但是，EMET里面存在着这样一段代码用来卸载EMET。这段代码整个禁用EMET的保护，并且把受保护的程序还原为无保护的初始状态。任何人都能简单地定位这段代码，并调用它，就能够完全禁用EMET的保护。在EMET.dll v5.2.0.1中这个函数位于0x65813中，跳到这段代码上并调用它就能弄掉EMET的hooks。
+这一特性之所以存在，是因为emet.dll里面的用于完全退出进程的代码，为了方便，而在DllMain里面留了个入口。
+DllMain的函数原型：
+BOOL WINAPI DllMain( _In_ HINSTANCE hinstDLL, _In_ DWORD fdwReason, _In_ LPVOID lpvReserved );  需要注意的是，第一个参数传递是DLL的地址，第二个是PE loader用来指明DLL是否被加载。如果fdwReason是1，说明DLL已经被加载或者初始化。如果是0（DLL_PROCESS_DETACH），emet.dll会初始化卸载的代码，并去除它的hook和exception处理句柄，轻而易举地停止了EMET的检查。不过这并不会把EMET从内存中移除，它只是确保了所有的保护都被禁用了。
+这种特性可能存在与所有基于探测的产品之中，也就是那些依赖hook的并以此保证产品不被破坏，一定存在一个卸载所有保护的方法。EMET的DllMain能够通过一个Return Oriented Programming (ROP)程序来找到，并带着正确的参数跳到DllMain的对应位置，禁用保护。这个我们下一节来详细说。
+BOOL WINAPI DllMain (GetModuleHandleW(&quot;EMET.dll&quot;) ,DLL_PROCESS_DETACH , NULL);  GetModuleHandleW函数没有被EMET hook上，因为EMET认为它不是关键Windows API。我们使用这个函数来搞到emet.dll的地址。因为PE header位于基地址上，我们必须通过它找到DllMain的地址来传递所需的参数。
+在EMET.dll v5.2.0.1中，在emet.dll的0xF2958上有一个全局变量。EMET通过这个变量作为一个structure数组指针，指向被绕过的API（detoured APIs），每一个结构体的大小为0x18 bytes，如下所示：
+struct Detoured_API { BOOL isActive; // isActive field shows the hooking status, Active: 0x1 PVOID DetouredAPIConfig; // pointer to Detoured_API_Config structure PVOID nextDetouredAPI; // pointer to the next Detoured_API structure DWORD valueX; DWORD valueY; DWORD valueZ; };  最后三个变量和这篇文章没有关系。DetouredAPIConfig保存着一个指针指向另一个结构体Detoured_API_Config，大小是0x18 bytes."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>通过EMET来禁用EMET——EMET的禁用与绕过思路讲解</title>
+	<link rel="stylesheet" href="https://yinzo.github.io/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://yinzo.github.io/">雪地</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://yinzo.github.io/posts/">Posts</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="menu-btn" class="hdr-btn" title=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://yinzo.github.io/posts/">Posts</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Mar 27, 2016</span></div>
+				<h1>通过EMET来禁用EMET——EMET的禁用与绕过思路讲解</h1>
+			</header>
+			<div class="content">
+				<h1 id="通过emet来禁用emetemet的禁用与绕过思路讲解">通过EMET来禁用EMET——EMET的禁用与绕过思路讲解<a href="#通过emet来禁用emetemet的禁用与绕过思路讲解" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
+<!-- raw HTML omitted -->
+<p>微软的Enhanced Mitigation Experience Toolkit (EMET)是一项提高程序安全性的项目。它通过动态链接库(DLL)来运行在『受保护』的程序中，并且做一些修改来使得破解更加困难。</p>
+<p>我们已经见过很多次EMET在过去的研究或者攻击中被绕过了[2, 3, 4, 5, 6, 7, 8]。通常来说，微软都是通过修改或者增加一些安全设计来搞定现有的绕过问题。 EMET的设计目的是使得破解行为的成本升高，而不是一个『傻瓜式的防破解方案』[1]。所以，只要拥有在进程空间中读写的能力，理论上我们就能搞定所有的安全设计[2]。</p>
+<p>如果一个攻击者能够毫不费力地绕过EMET，那这就完全打破了EMET提高破解成本的最初目的。我们在新技术那段展示了一种禁用EMET的技术。微软在EMET5.5中打了个补丁来解决这个问题。</p>
+<p>讨论完这个新技术之后，我们来说说之前提到的用来绕过或搞掉EMET的那个技术。如果你想了解关于EMET是怎么实现保护程序的，请参考附录。</p>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p>EMET会根据系统的架构，来选择注入emet.dll还是emet64.dll到每一个被保护的进程中，以此在Windows API（比如kernel32.dll, ntdll.dll或者kernelbase.dll里面的函数）hook上。这些hook使得EMET能够分析所有通过关键API调用的代码，并判断他们是否合法。如果代码被认为是合法的，EMET的hook会跳回请求的API处，否则会触发一个exception。</p>
+<p>但是，EMET里面存在着这样一段代码用来卸载EMET。这段代码整个禁用EMET的保护，并且把受保护的程序还原为无保护的初始状态。任何人都能简单地定位这段代码，并调用它，就能够完全禁用EMET的保护。在EMET.dll v5.2.0.1中这个函数位于0x65813中，跳到这段代码上并调用它就能弄掉EMET的hooks。</p>
+<p>这一特性之所以存在，是因为emet.dll里面的用于完全退出进程的代码，为了方便，而在DllMain里面留了个入口。</p>
+<p>DllMain的函数原型：</p>
+<pre><code>BOOL WINAPI DllMain(
+  _In_ HINSTANCE    hinstDLL,
+  _In_ DWORD        fdwReason,
+  _In_ LPVOID       lpvReserved
+);
+</code></pre>
+<p>需要注意的是，第一个参数传递是DLL的地址，第二个是PE loader用来指明DLL是否被加载。如果fdwReason是1，说明DLL已经被加载或者初始化。如果是0（DLL_PROCESS_DETACH），emet.dll会初始化卸载的代码，并去除它的hook和exception处理句柄，轻而易举地停止了EMET的检查。不过这并不会把EMET从内存中移除，它只是确保了所有的保护都被禁用了。</p>
+<p>这种特性可能存在与所有基于探测的产品之中，也就是那些依赖hook的并以此保证产品不被破坏，一定存在一个卸载所有保护的方法。EMET的DllMain能够通过一个Return Oriented Programming (ROP)程序来找到，并带着正确的参数跳到DllMain的对应位置，禁用保护。这个我们下一节来详细说。</p>
+<pre><code>BOOL WINAPI DllMain (GetModuleHandleW(&quot;EMET.dll&quot;) ,DLL_PROCESS_DETACH , NULL);
+</code></pre>
+<p>GetModuleHandleW函数没有被EMET hook上，因为EMET认为它不是关键Windows API。我们使用这个函数来搞到emet.dll的地址。因为PE header位于基地址上，我们必须通过它找到DllMain的地址来传递所需的参数。</p>
+<!-- raw HTML omitted -->
+<p>在EMET.dll v5.2.0.1中，在emet.dll的0xF2958上有一个全局变量。EMET通过这个变量作为一个structure数组指针，指向被绕过的API（detoured APIs），每一个结构体的大小为0x18 bytes，如下所示：</p>
+<pre><code>struct Detoured_API {
+    BOOL isActive;              // isActive field shows the hooking status, Active: 0x1
+    PVOID DetouredAPIConfig;    // pointer to Detoured_API_Config structure
+    PVOID nextDetouredAPI;      // pointer to the next Detoured_API structure
+    DWORD valueX;
+    DWORD valueY;
+    DWORD valueZ;
+};
+</code></pre>
+<p>最后三个变量和这篇文章没有关系。DetouredAPIConfig保存着一个指针指向另一个结构体Detoured_API_Config，大小是0x18 bytes.</p>
+<pre><code>struct Detoured_API_Config {
+    PVOID DetouredWindowsAPI;     // pointer to the detoured Windows API
+    PVOID EMETDetouringFunction;    // pointer to where EMET protection implemented
+    PVOID DetouredFunctionPrologue;   // pointer to the Windows API prologue
+    DWORD valueX;
+    DWORD valueY;
+    DWORD valueZ;
+}
+</code></pre>
+<p>注意，EMETDetouringFunction和DetouredFunctionPrologue之间总是相隔0x26 bytes，是EMET用于准备函数（检查代码的函数）所需的参数的空间。然后就会调用这一函数来进行检查。同样是在这0x26 bytes里面，EMET保存了一些meta数据，比如说detoured函数头部的大小。Detoured_API_Config 结构里面的第三个变量是DetouredFunctionPrologue。跳到这一地址将调用所有没有hook的Windows API，因为它会跳回并在执行完函数头部之后，执行剩余的所有Windows API。</p>
+<p>用于去除所有EMET的hook的函数位于0x2798，如图1所示。</p>
+<p><img src="http://ww4.sinaimg.cn/large/7d52f1ffjw1f2erytp63hj20r20g8tdp.jpg" alt="Figure1"><br>
+图1： 位于0x27298上用于去除EMET hook的函数</p>
+<p>为了卸载hook，位于0x27298的函数把所有Detoured_API结构都循环一次，并把对应的Detoured_API_Config结构里面的DetouredFunctionPrologue置零。然后，调用Patch_Functions（位于0x27B99的函数），给所有detoured Windows API做一些小修改。函数使用了memcpy函数(如图2)来把API函数头部代码片段复制到被绕过函数中，用于把它恢复成被绕过之前的状态。</p>
+<p><img src="http://ww2.sinaimg.cn/large/7d52f1ffjw1f2erza8hyqj20i208cn0p.jpg" alt="Figure2"><br>
+图2：删除绕过的代码<br>
+循环完所有被绕过的API并被memcpy修改之后，你可以看到所有Windows API的绕过都消失了，如图3、图4，分别是执行前后。</p>
+<p><img src="http://ww3.sinaimg.cn/large/7d52f1ffjw1f2erzqpz4vj20js056jsa.jpg" alt="Figure3"><br>
+图3：调用DllMain之前</p>
+<p><img src="http://ww2.sinaimg.cn/large/7d52f1ffjw1f2es0idbffj20je04r0tf.jpg" alt="Figure4"><br>
+图4：调用DllMain之后</p>
+<p>然后EMET继续禁用EAF和EAF+的保护。在位于0x609D0的函数中，EMET置零并重新初始化CONTEXT结构，并且操作debug注册器（如图5）但是，在函数的尾部， EMET调用NtSetContextThread，使得debug注册器被置零，并由此禁用了EAF和EAF+的保护。</p>
+<p><img src="http://ww2.sinaimg.cn/large/7d52f1ffjw1f2es0u7g5xj20f206n3zw.jpg" alt="Figure5"><br>
+图5：EAF和EAF+的禁用代码</p>
+<p>最后，在位于0x60FBF的函数的末尾，EMET调用了位于0x60810的RemoveVectoredExceptionHandler函数，移除了AddVectoredExceptionHandler函数里的定义的exception句柄。</p>
+<!-- raw HTML omitted -->
+<p>通过一个以前已经被打好补丁的漏洞，CVE-2012-1876，我们基于现有的漏洞做了个ROP小程序，并在EMET的保护启用时执行它。当我们的ROP小程序带着参数(EMET.dll地址, 0, 0)调用EMET.dll里面的DllMain函数，我们执行之后，所有的Windows API上的HOOK都和EAF和EAF+的保护一起消失了。</p>
+<pre><code>XCHG EAX,ESP # RETN // Stack Pivot &amp;amp; Rop Starts
+
+POP EAX # RETN // Pop GetModuleHandle PTR from IAT
+
+&amp;lt;GetModuleHandleW&amp;gt;// mshtml.dll base + offset in IAT
+
+JMP [EAX]// Jump into GetModuleHandleW pointer
+
+POP EBX # RETN // return address when EIP = GetModuleHandleW
+
+EMET_STRING_PTR// Argument 1 for GetModuleHandleW i.e. EMET.dll string
+
+//After GetModuleHandle returns esp is here while (EIP = POP EBX # RETN)
+
+0x0000003c// 0x3c goes into EBX
+
+ADD EBX,EAX # RETN // EAX = EMET.dll address &amp;amp; EBX = 0x3c offset for IMAGE_DOS_HEADER::e_lfanew
+
+XOR EBP,EBP # RETN // clear out EBP
+
+ADD EBP,EAX # RETN // ADD EAX into Nulled EBP
+
+ADD EAX,[EBX] # RETN // [EBX] = poi(EMET_DLL_BASE+0x3c) =&amp;gt; EAX = offset for PE header
+
+POP EBX # RETN // pop 0x28 in EBX
+
+0x00000028
+
+ADD EBX,EAX # RETN // add 0x28 with PE header offset from base address (RVA of OEP)
+
+XOR EAX,EAX # RETN // NULL EAX
+
+ADD EAX,EBP # RETN // ADD previously copied EMET_DLL_BASE to NULLed EAX
+
+ADD EAX,[EBX] # RETN // ADD EMET_DLL_BASE with OEP RVA =&amp;gt; EAX = VA of OEP
+
+XCHG EAX,ECX # RETN // copying EAX into ECX
+
+XOR EAX,EAX # RETN // NULL EAX
+
+ADD EAX,EBP # RETN // copy EMET_DLL_BASE into eax
+
+XCHG EAX,ESI # RETN // copy EMET_DLL_BASE into EAX
+
+// ESI contains EMET_DLL_BASE &amp;amp; ECX contains OEP address
+
+PUSH ESI # CALL ECX # RETN // call OEP of EMET.dll with EMET_DLL_BASE on top of stack as PARAM1
+
+0x0 // PARAM2 fdwReason == DLL_PROCESS_DETACH | 0
+
+0x0// PARAM3 Reserved
+
+// When Call ECX returns to RETN instruction stack top is as following
+
+// and All hooks are gone Since EMET.dll just received a DETACH signal
+</code></pre>
+<!-- raw HTML omitted -->
+<p>之前用于绕过EMET的技术都基于设计和实现上的失误，可能是因为一些模块和API不太安全。我们会描述一些绕过的技巧。</p>
+<p>因为LoadLibrary是一个关键API，如果被『返回(return)』命令或者『跳出(jump)』命令调用，EMET4.1会抛出一个exception，但是Jared DeMott向我们展示了，通过『调用(call)』命令来调用LoadLibrary API，而不是『跳出(jump)』或『返回(return)』命令，绕过了EMET LoadLibrary的保护[2]。</p>
+<p>LoadLibrary API一直被监视着，防止被用于调用UNC路径（比如说一些恶意dll）。Aaron Portnoy展示了我们能够通过MoveFile API（EMET4.0没有监视这个API）来绕过它，并下载一个能够被LoadLibrary API加载的DLL文件[3]。</p>
+<p>EMET4.1的调用检查保护(Caller check protection)，是通过检查关键Windows API是否被通过调用、返回、跳出命令来调用，以防止ROP程序的执行。其中，后两种命令被广泛运用与ROP程序。DeMott展示了一个通过执行一个合法的关键API调用，来绕过调用检查保护的方法[2]。DeMott没有直接通过返回或者跳出命令来调用VirtualAlloc API（这会导致EMET抛出exception），而是在一个已被加载的模块中，使用调用命令来调用。并且，通过返回调用命令所在的地址，我们成功调用了关键Windows API而没被EMET干扰。</p>
+<p>关键Windows API都位于kernel32.dll, ntdll.dll和 kernelbase.dll中。EMET3.5把前两个模块中的函数挂上hook，但是没有处理kernelbase.dll。Shahriyar Jalayeri利用这一事实来执行位于kernelbase模块中的VirtualProtect API，来使得内存可写可执行[4]。但是，在EMET4.0发布以后，函数保护应用到了几乎最低等级的关键Windows API上面。</p>
+<p>Jalayeri还通过使用 <!-- raw HTML omitted -->KUSER<!-- raw HTML omitted -->SHARED_DATA结构(它的地址固定在0x7ffe0000上)来绕过EMET。位于0x300地址上的是一个SystemCallStub指针，指向一个执行系统级命令的函数KiFastSystemCall。由此，他能够通过指明EAX注册器里的地址（比如0x0D7指向ZwProtectVirtualMemory），来调用任何系统级调用。而且Jalayeri能够通过返回指令来修改函数头部，使其失效，导致EMET完全无效。</p>
+<p>EAF通过debug注册器，在输出函数（比如kernel32.dll里的函数）的入口布下断点。这些断点，能够通过使用import access table的shellcode来绕过，而不是export acccess table，因为这个保护只能用于export acccess table。</p>
+<!-- raw HTML omitted -->
+<p>不像通过绕开保护的绕过技术，禁用EMET是完全关闭它的保护。比如说EAF（和一部分的EAF+）能够通过清除硬件断点（比如置零debug注册器）。Piotr Bania通过使用文档中没有写出来的的Windows API——NtSetContextThread和NtContinue来实现这一目的。但是因为EMET把NtSetContextThread hook上了，我们应该先把EMET的保护关闭，才能使用NtSetContextThread来干活。</p>
+<p>Offensive Security发现EMET4.1的大部分保护行为，都会先去检查一个保存在位于emet.dll的0x0007E220位置上的一个外部全局变量；如果那个变量的值是0，那么保护函数就不会对调用代码做手脚[6]。说明这个全局变量是一个全局开关，用于打开/关闭EMET的保护，并且如果把这个变量放在了一个能够写入的位置，攻击者就能够构造一个ROP程序来把这个变量轻松地置零。</p>
+<p>经过分析，我们发现EMET v2.1也在0xC410上含有相同的全局开关，由此，我们怀疑EMET从最早的版本开始就含有这一固定地址的全局开关了。这个问题直到EMET5.0的发布才修复。</p>
+<p>Offensive Security还发现，EMET5.0把这个全局变量放到了大型结构（比如CONFIG_STRUCT）里的堆里面，大小是0x560 bytes [7]。但是，思路还是一样的，因为还是存在一个位于固定地址0x0AA84C的指针指向CONFIG_STRUCT。作为保护，EMET使用EncodePointer来把指针的值编码了一下，并且每次EMET执行保护的时要检查这个值，就会调用DecodePointer函数来解码它以获得CONFIG_STRUCT的地址。把地址CONFIG_STRUCT+0x558 置零，能够关掉EMET的大部分保护。同时，通过位于CONFIG_STRUCT+0x518的指针，调用没被hook的函数NtSetContextThread，就能关掉EAF和EAF+。</p>
+<p>在EMET5.1里面，Offensive Security发现位于0xF2A30的全局变量里面，保存了编码过的指针值，指向一些结构(比如EMETd)[8]。这个EMETd里面有一个指针域，指向CONFIG_STRUCT结构，也就是那个在CONFIG_STRUCT+0x558里保存了全局开关那个，以此作为一层额外的保护层，保护编码过的指针。EMET5.1使用cpuid命令来把返回的结果和编码过的指针值进行异或。想要解码CONFIG_STRUCT，他们使用了emet.dll里位于0x67372的代码，把EMETd解码出来，然后返回解码了的CONFIG_STRUCT的指针。因为那些全局开关（比如CONFIG_STRUCT+0x558）都储存在只读内存页中，Offensive Security找到了一个方法，通过EMET里面没被hook的指针来修改里面的值。他们用了一个没hook的指针指向位于CONFIG_STRUCT+0x1b8的ntdll!NtProtectVirtualMemory函数，来把它标记为可写内存页，所以他们能够把位于CONFIG_STRUCT+0x558的全局开关置零。想要禁用EAF和EAF+，他们用了一个指向NtSetContextThread的没hook指针，然后剩下的就和禁用EMET5.0一样了。</p>
+<!-- raw HTML omitted -->
+<p>这个新技术使用EMET来禁用EMET保护，非常的可靠并且相比之前的绕过或禁用技巧更加容易利用。这整个技术都能包含到一个简单粗暴的ROP链中。你只需要弄出一个加载GetModuleHandleW的DLL（比如mshtml.dll）的地址，而不需要进程空间里面的完整可读能力。因为emet.dll里面的DllMain函数被导出了，所以绕过已经不需要对应版本来设置地址，它适用于所有版本的EMET（4.1, 5.1, 5.2, 5.2.0.1）。</p>
+<p>在EMET的_里面_，通过可用的内部代码来禁用EMET，给了我们一直全新的攻击思路。定位DllMain并且调用它来关掉EMET的保护，相比一个一个地绕过保护，然后偷偷改掉其中的参数来说，简直轻松加愉快。</p>
+<p>鸣谢：Michael Sikorski, Dan Caselden, Corbin Souffrant, Genwei Jiang, and Matthew Graeber</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>EMET经过了许多年的迭代，以下对它的功能作一些简短的描述：</p>
+<!-- raw HTML omitted -->
+<p>Structured Exception Handling Overwrite Protection (SEHOP)：提供对抗重写异常处理句柄的保护。<br>
+Dynamic Data Execution Prevention (DEP)：加强了DEP，使得一些数据类如堆和栈都不能执行。<br>
+NULL page allocation：修复间接引用空指针导致的漏洞<br>
+Heap spray allocation: 防止Heap spray攻击。</p>
+<!-- raw HTML omitted -->
+<p>Mandatory Address Space Layout Randomization (ASLR)：加强了模块地址的随机化，即使是以前没有使用ASLR进行编译的模块。</p>
+<p>Export Address Table Access Filtering (EAF)：普通的shellcode在已加载的模块导出的函数中迭代，来解析关键Windows API。这些通常由kernel32.dll, ntdll.dll和kernelbase.dll导出。EMET使用保存在debug注册器（比如DR0）的硬件断点来停止那些尝试读取这些模块的导出表的动作，并且让EMET验证它是否合法。</p>
+<!-- raw HTML omitted -->
+<p>从ROPGuard中导入了用于对抗ROP的策略。<br>
+导入库时的检查：防止从UNC路径中导入DLL。<br>
+ROP 策略 - 内存保护检查：保护关键Windows API，类似VirtualProtect，会使得栈被标记为可执行。<br>
+ROP 策略 - 调用检查：防止关键Windows API被通过返回或跳出命令执行；<br>
+ROP 策略 - Stack Pivot：检测是否被进行Stack Pivot攻击。<br>
+ROP 策略 - 模拟执行流：通过手动操作栈注册器来模拟执行，以此检查它是否在没有使用调用命令的情况下调用了Windows API。这被认为是EMET在探测ROP程序。<br>
+仔细设计ASLR：在已加载的模块地址上增加了随机的8位熵。</p>
+<!-- raw HTML omitted -->
+<p>Deep Hooks:当这个特性开启，EMET会把所有等级的Windows API都hook上。</p>
+<p>抗绕过：因为EMET在已经hook的Windows API函数头部放了一个跳出命令，攻击者能够构造一个ROP，能够返回跳出命令之后的代码上。这项保护尝试阻止这一绕过。</p>
+<p>禁用函数：默认禁止调用ntdll!LdrHotpatchRoutine函数来防止DEP/ASLR被绕过。也可以添加其他函数。</p>
+<p>认证信任：在认证链信任检测步骤，提供更多的检查和验证。一般这只支持IE。</p>
+<!-- raw HTML omitted -->
+<p>加入Attack Surface Reduction (ASR)：允许添加配置列表来进制特定的应用不允许加载某些模块。</p>
+<p>EAF+：类似EAF，它能保护关键模块导出表如kernel32.dll, ntdll.dll和kernelbase.dll。它同时也能探测栈指针是否指向栈外部的某处，或者frame和栈的指针是否一致。</p>
+<!-- raw HTML omitted -->
+<p>[1] “Inside EMET 4.0” by Elias Bachaalany, <a href="http://recon.cx/2013/slides/Recon2013-Elias%20Bachaalany-Inside%20EMET%204.pdf">http://recon.cx/2013/slides/Recon2013-Elias%20Bachaalany-Inside%20EMET%204.pdf</a><br>
+[2] “Bypassing EMET 4.1” by Jared DeMott, <a href="http://labs.bromium.com/2014/02/24/bypassing-emet-4-1/">http://labs.bromium.com/2014/02/24/bypassing-emet-4-1/</a><br>
+[3] “Bypassing All of The Things” by Aaron Portnoy, <a href="https://www.exodusintel.com/files/Aaron_Portnoy-Bypassing_All_Of_The_Things.pdf">https://www.exodusintel.com/files/Aaron_Portnoy-Bypassing_All_Of_The_Things.pdf</a><br>
+[4] “Bypassing EMET 3.5’s ROP Mitigations” by Shahriyar Jalayeri, <a href="https://github.com/shjalayeri/emet_bypass">https://github.com/shjalayeri/emet_bypass</a><br>
+[5] “Bypassing EMET Export Address Table Access Filtering feature” by Piotr Bania, <a href="http://piotrbania.com/all/articles/anti_emet_eaf.txt">http://piotrbania.com/all/articles/anti_emet_eaf.txt</a><br>
+[6] “Disarming Enhanced Mitigation Experience Toolkit (EMET)” by Offensive-Security, <a href="https://www.offensive-security.com/vulndev/disarming-enhanced-mitigation-experience-toolkit-emet/">https://www.offensive-security.com/vulndev/disarming-enhanced-mitigation-experience-toolkit-emet/</a><br>
+[7] “Disarming EMET v5.0” by Offensive-Security, <a href="https://www.offensive-security.com/vulndev/disarming-emet-v5-0/">https://www.offensive-security.com/vulndev/disarming-emet-v5-0/</a><br>
+[8] “Disarming and Bypassing EMET 5.1” by Offensive-Security, <a href="https://www.offensive-security.com/vulndev/disarming-and-bypassing-emet-5-1/">https://www.offensive-security.com/vulndev/disarming-and-bypassing-emet-5-1/</a></p>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://yinzo.github.io/tags/untagged">untagged</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2016-03-27 11:46 &#43;0800</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="next-post" href="https://yinzo.github.io/posts/python-decorator%E7%9A%84%E4%B8%80%E4%BA%9B%E7%BB%86%E8%8A%82/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;</span><br><span>Python Decorator的一些细节</span>
+			</a>
+			<a class="prev-post" href="https://yinzo.github.io/posts/ideas-for-neural-network/">
+				<span class="post-nav-label">&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>Ideas for Neural Network</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<p id="https://yinzo.github.io/" class="leancloud_visitors" data-flag-title="雪地">
+    <span class="post-meta-item-text">阅读量 </span>
+    <span class="leancloud-visitors-count">-</span>
+</p>
+<div id="vcomments" sty ></div>
+<style>
+.v .vbtn {
+    background: transparent !important;
+    border: 2px solid #c6cddb !important;
+    color: #c6cddb !important;
+}
+
+.v .vinfo .vcount .vnum {
+    color: #c6cddb !important;
+}
+
+.v .vinfo .col {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vh .vmeta .vat {
+    color: #c6cddb !important;
+}
+
+.v p, .v strong {
+    color: #c6cddb !important;
+}
+
+.v code {
+    font-weight: bold !important;
+    font-size: 0.8rem !important;
+}
+
+.v pre {
+    font-size: 1rem !important;
+    font-weight: bold !important;
+    background: #2c3e50 !important;
+}
+
+.v li {
+    color: #c6cddb !important;
+    margin-left: .5rem !important;
+}
+
+.v a {
+    color: #1abc9c !important;
+}
+
+.v .vwrap .vheader .vinput {
+    border-bottom: 1px dashed #c6cddb !important;
+}
+
+.v .vwrap {
+    border: 2px solid #c6cddb !important;
+}
+
+.v .vinput {
+    color: #c6cddb !important;
+}
+
+.v .veditor {
+    color: #c6cddb !important;
+}
+
+.v .vwrap .vedit .vctrl span {
+    color: #c6cddb !important;
+}
+
+.v .vwrap .vcontrol .col svg {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vhead .vsys {
+    background: transparent !important;
+    border: 1px solid #c6cddb!important;
+    padding: 0 .4rem 0 .4rem !important;
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vquote {
+    border-left: 0px !important;
+}
+
+.v .vlist .vcard .vh {
+    border-bottom: 0px !important;
+}
+
+.v .power {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vh .vtime {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vcontent {
+    color: #c6cddb !important;
+}
+
+::-moz-placeholder { color: #ccc; }
+::-webkit-input-placeholder { color:#ccc; }
+:-ms-input-placeholder { color:#ccc; }
+</style>
+<script>    
+    new Valine({
+        el:'#vcomments',
+        appId: 'wNSjixVlMTvSPXjMubNsdiy5-9Nh9j0Va',
+        appKey: 'ygUBd8larhetzhyeV3sLpQ5q',
+        visitor: true
+    })
+</script></div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2020 <a href="https://yinzo.github.io/">Yinzo</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://yinzo.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://yinzo.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="cn-zh">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta itemprop="name" content="在 Linode 上编译 hybla 模块">
+<meta itemprop="description" content="在 Linode 上编译 hybla 模块 执行到这一步时运行出错
+Google 一番后发现是缺少 tcp_hybla 模块，需要自己手动编译。引用一下 https://plus.google.com/&#43;BoluoKING/posts/dLyYhBf3mwp 的科普
+ 中美之间的线路质量不是很好，rtt较长且时常丢包。TCP的设计目的是解决不可靠线路上可靠传输的问题，即为了解决丢包，但丢包却使TCP传输速度大幅下降。HTTP协议在传输层使用的是TCP协议，所以网页下载的速度就取决于TCP单线程下载的速度（因为网页就是单线程下载的）。丢包使得TCP传输速度大幅下降的主要原因是丢包重传机制，控制这一机制的就是TCP拥塞控制算法。
+Linux内核中提供了若干套TCP拥塞控制算法，这些算法各自适用于不同的环境。
+1）reno是最基本的拥塞控制算法，也是TCP协议的实验原型。
+2）bic适用于rtt较高但丢包极为罕见的情况，比如北美和欧洲之间的线路，这是2.6.8到2.6.18之间的Linux内核的默认算法。
+3）cubic是修改版的bic，适用环境比bic广泛一点，它是2.6.19之后的linux内核的默认算法。
+4）hybla适用于高延时、高丢包率的网络，比如卫星链路——同样适用于中美之间的链路。
+我们需要做的工作就是将TCP拥塞控制算法改为hybla算法，并且优化TCP参数。
+ 于是又开始找 hybla 模块的编译指南，参考了这两篇文章，并且修改了一下不太明确的地方，写个修改版的指南吧。
+ Linode编译hybla htcp模块 Linode编译hybla htcp拥塞控制算法模块  在这里下载 https://www.kernel.org/pub/linux/kernel/
+我这里是 4.8.3，于是进入 v4.x 目录，向下翻即找到了，复制文件地址，在vps上 wget 下载下来
+注意修改对应的下载地址和文件名
+然后用你喜欢的编辑器编辑 .config 文件，查找 CONFIG_TCP_CONG_CUBIC=y，在这一行下面增加一行
+CONFIG_TCP_CONG_HYBLA=y  然后编译
+编译耗时约15~20分钟
+以下是 hybla 所用的 Makefile
+# Makefile for tcp_hybla.ko obj-m := tcp_hybla.o KDIR := /tmp/kernel/linux-4.8.3 PWD := $(shell pwd) default: $(MAKE) -C $(KDIR) SUBDIRS=$(PWD) modules  注意上面__第三行 KDIR := /root/kernel/linux-3.">
+<meta itemprop="datePublished" content="2016-12-27T23:22:00&#43;08:00" />
+<meta itemprop="dateModified" content="2016-12-27T23:22:00&#43;08:00" />
+<meta itemprop="wordCount" content="88">
+
+
+
+<meta itemprop="keywords" content="untagged," /><meta property="og:title" content="在 Linode 上编译 hybla 模块" />
+<meta property="og:description" content="在 Linode 上编译 hybla 模块 执行到这一步时运行出错
+Google 一番后发现是缺少 tcp_hybla 模块，需要自己手动编译。引用一下 https://plus.google.com/&#43;BoluoKING/posts/dLyYhBf3mwp 的科普
+ 中美之间的线路质量不是很好，rtt较长且时常丢包。TCP的设计目的是解决不可靠线路上可靠传输的问题，即为了解决丢包，但丢包却使TCP传输速度大幅下降。HTTP协议在传输层使用的是TCP协议，所以网页下载的速度就取决于TCP单线程下载的速度（因为网页就是单线程下载的）。丢包使得TCP传输速度大幅下降的主要原因是丢包重传机制，控制这一机制的就是TCP拥塞控制算法。
+Linux内核中提供了若干套TCP拥塞控制算法，这些算法各自适用于不同的环境。
+1）reno是最基本的拥塞控制算法，也是TCP协议的实验原型。
+2）bic适用于rtt较高但丢包极为罕见的情况，比如北美和欧洲之间的线路，这是2.6.8到2.6.18之间的Linux内核的默认算法。
+3）cubic是修改版的bic，适用环境比bic广泛一点，它是2.6.19之后的linux内核的默认算法。
+4）hybla适用于高延时、高丢包率的网络，比如卫星链路——同样适用于中美之间的链路。
+我们需要做的工作就是将TCP拥塞控制算法改为hybla算法，并且优化TCP参数。
+ 于是又开始找 hybla 模块的编译指南，参考了这两篇文章，并且修改了一下不太明确的地方，写个修改版的指南吧。
+ Linode编译hybla htcp模块 Linode编译hybla htcp拥塞控制算法模块  在这里下载 https://www.kernel.org/pub/linux/kernel/
+我这里是 4.8.3，于是进入 v4.x 目录，向下翻即找到了，复制文件地址，在vps上 wget 下载下来
+注意修改对应的下载地址和文件名
+然后用你喜欢的编辑器编辑 .config 文件，查找 CONFIG_TCP_CONG_CUBIC=y，在这一行下面增加一行
+CONFIG_TCP_CONG_HYBLA=y  然后编译
+编译耗时约15~20分钟
+以下是 hybla 所用的 Makefile
+# Makefile for tcp_hybla.ko obj-m := tcp_hybla.o KDIR := /tmp/kernel/linux-4.8.3 PWD := $(shell pwd) default: $(MAKE) -C $(KDIR) SUBDIRS=$(PWD) modules  注意上面__第三行 KDIR := /root/kernel/linux-3." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://yinzo.github.io/posts/%E5%9C%A8-linode-%E4%B8%8A%E7%BC%96%E8%AF%91-hybla-%E6%A8%A1%E5%9D%97/" />
+<meta property="article:published_time" content="2016-12-27T23:22:00+08:00" />
+<meta property="article:modified_time" content="2016-12-27T23:22:00+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="在 Linode 上编译 hybla 模块"/>
+<meta name="twitter:description" content="在 Linode 上编译 hybla 模块 执行到这一步时运行出错
+Google 一番后发现是缺少 tcp_hybla 模块，需要自己手动编译。引用一下 https://plus.google.com/&#43;BoluoKING/posts/dLyYhBf3mwp 的科普
+ 中美之间的线路质量不是很好，rtt较长且时常丢包。TCP的设计目的是解决不可靠线路上可靠传输的问题，即为了解决丢包，但丢包却使TCP传输速度大幅下降。HTTP协议在传输层使用的是TCP协议，所以网页下载的速度就取决于TCP单线程下载的速度（因为网页就是单线程下载的）。丢包使得TCP传输速度大幅下降的主要原因是丢包重传机制，控制这一机制的就是TCP拥塞控制算法。
+Linux内核中提供了若干套TCP拥塞控制算法，这些算法各自适用于不同的环境。
+1）reno是最基本的拥塞控制算法，也是TCP协议的实验原型。
+2）bic适用于rtt较高但丢包极为罕见的情况，比如北美和欧洲之间的线路，这是2.6.8到2.6.18之间的Linux内核的默认算法。
+3）cubic是修改版的bic，适用环境比bic广泛一点，它是2.6.19之后的linux内核的默认算法。
+4）hybla适用于高延时、高丢包率的网络，比如卫星链路——同样适用于中美之间的链路。
+我们需要做的工作就是将TCP拥塞控制算法改为hybla算法，并且优化TCP参数。
+ 于是又开始找 hybla 模块的编译指南，参考了这两篇文章，并且修改了一下不太明确的地方，写个修改版的指南吧。
+ Linode编译hybla htcp模块 Linode编译hybla htcp拥塞控制算法模块  在这里下载 https://www.kernel.org/pub/linux/kernel/
+我这里是 4.8.3，于是进入 v4.x 目录，向下翻即找到了，复制文件地址，在vps上 wget 下载下来
+注意修改对应的下载地址和文件名
+然后用你喜欢的编辑器编辑 .config 文件，查找 CONFIG_TCP_CONG_CUBIC=y，在这一行下面增加一行
+CONFIG_TCP_CONG_HYBLA=y  然后编译
+编译耗时约15~20分钟
+以下是 hybla 所用的 Makefile
+# Makefile for tcp_hybla.ko obj-m := tcp_hybla.o KDIR := /tmp/kernel/linux-4.8.3 PWD := $(shell pwd) default: $(MAKE) -C $(KDIR) SUBDIRS=$(PWD) modules  注意上面__第三行 KDIR := /root/kernel/linux-3."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>在 Linode 上编译 hybla 模块</title>
+	<link rel="stylesheet" href="https://yinzo.github.io/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://yinzo.github.io/">雪地</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://yinzo.github.io/posts/">Posts</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="menu-btn" class="hdr-btn" title=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://yinzo.github.io/posts/">Posts</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Dec 27, 2016</span></div>
+				<h1>在 Linode 上编译 hybla 模块</h1>
+			</header>
+			<div class="content">
+				<h1 id="在-linode-上编译-hybla-模块">在 Linode 上编译 hybla 模块<a href="#在-linode-上编译-hybla-模块" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
+<!-- raw HTML omitted -->
+<p>执行到这一步时运行出错</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p>Google 一番后发现是缺少 tcp_hybla 模块，需要自己手动编译。引用一下 <a href="https://plus.google.com/+BoluoKING/posts/dLyYhBf3mwp">https://plus.google.com/+BoluoKING/posts/dLyYhBf3mwp</a> 的科普</p>
+<blockquote>
+<p>中美之间的线路质量不是很好，rtt较长且时常丢包。TCP的设计目的是解决不可靠线路上可靠传输的问题，即为了解决丢包，但丢包却使TCP传输速度大幅下降。HTTP协议在传输层使用的是TCP协议，所以网页下载的速度就取决于TCP单线程下载的速度（因为网页就是单线程下载的）。丢包使得TCP传输速度大幅下降的主要原因是丢包重传机制，控制这一机制的就是TCP拥塞控制算法。<br>
+Linux内核中提供了若干套TCP拥塞控制算法，这些算法各自适用于不同的环境。</p>
+<p>1）reno是最基本的拥塞控制算法，也是TCP协议的实验原型。<br>
+2）bic适用于rtt较高但丢包极为罕见的情况，比如北美和欧洲之间的线路，这是2.6.8到2.6.18之间的Linux内核的默认算法。<br>
+3）cubic是修改版的bic，适用环境比bic广泛一点，它是2.6.19之后的linux内核的默认算法。<br>
+4）hybla适用于高延时、高丢包率的网络，比如卫星链路——同样适用于中美之间的链路。<br>
+我们需要做的工作就是将TCP拥塞控制算法改为hybla算法，并且优化TCP参数。</p>
+</blockquote>
+<p>于是又开始找 hybla 模块的编译指南，参考了这两篇文章，并且修改了一下不太明确的地方，写个修改版的指南吧。</p>
+<ul>
+<li><a href="https://moonagic.com/linode-setup-hybla-htcp/">Linode编译hybla htcp模块</a></li>
+<li><a href="http://www.777s.me/linode-hybla-htcp.html">Linode编译hybla htcp拥塞控制算法模块</a></li>
+</ul>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>在这里下载 <a href="https://www.kernel.org/pub/linux/kernel/">https://www.kernel.org/pub/linux/kernel/</a></p>
+<p>我这里是 <code>4.8.3</code>，于是进入 <code>v4.x</code> 目录，向下翻即找到了，复制文件地址，在vps上 <code>wget</code> 下载下来</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>注意修改对应的下载地址和文件名</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>然后用你喜欢的编辑器编辑 <code>.config</code> 文件，查找 <code>CONFIG_TCP_CONG_CUBIC=y</code>，在这一行下面增加一行</p>
+<pre><code>CONFIG_TCP_CONG_HYBLA=y
+</code></pre>
+<p>然后编译</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>编译耗时约15~20分钟</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>以下是 <code>hybla</code> 所用的 Makefile</p>
+<pre><code># Makefile for tcp_hybla.ko
+obj-m := tcp_hybla.o  
+KDIR := /tmp/kernel/linux-4.8.3  
+PWD := $(shell pwd)  
+default:  
+    $(MAKE) -C $(KDIR) SUBDIRS=$(PWD) modules
+</code></pre>
+<p>注意上面__第三行 <code>KDIR := /root/kernel/linux-3.11.6</code> 要修改成自己解压的目录__，并且最后一行必须以 __<code>tab</code>__ 开头，__不可以用空格，不可以用空格__。不懂Makefile的规则，我在这里踩了坑。</p>
+<!-- raw HTML omitted -->
+<p>这里退回到 <code>linux-4.8.3</code> 目录，我是放在 <code>/tmp/kernel</code> 内的，后面目录相关的就不提示了</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>如果遇到command not found: insmod则需要手动安装</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>如果编译的时候如果出现如下错误</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>需要源安装libssl-dev就可以了</p>
+<!-- raw HTML omitted -->
+<p>至此就装好了hybla 模块，后面继续按照 <a href="https://github.com/shadowsocks/shadowsocks/wiki/Optimizing-Shadowsocks">优化指南</a> 优化去了</p>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://yinzo.github.io/tags/untagged">untagged</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2016-12-27 23:22 &#43;0800</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="next-post" href="https://yinzo.github.io/posts/%E4%BD%8E%E7%B4%A0%E8%B4%A8%E5%BC%B9%E5%B9%95%E5%88%86%E7%B1%BB%E5%99%A8%E7%9A%84cnn%E5%AE%9E%E7%8E%B0/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;</span><br><span>低素质弹幕分类器的CNN实现</span>
+			</a>
+			<a class="prev-post" href="https://yinzo.github.io/posts/%E6%97%A0%E9%9C%80%E6%89%8B%E5%8A%A8%E7%BC%93%E5%AD%98%E9%95%BF%E5%BA%A6/">
+				<span class="post-nav-label">&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>无需手动缓存长度</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<p id="https://yinzo.github.io/" class="leancloud_visitors" data-flag-title="雪地">
+    <span class="post-meta-item-text">阅读量 </span>
+    <span class="leancloud-visitors-count">-</span>
+</p>
+<div id="vcomments" sty ></div>
+<style>
+.v .vbtn {
+    background: transparent !important;
+    border: 2px solid #c6cddb !important;
+    color: #c6cddb !important;
+}
+
+.v .vinfo .vcount .vnum {
+    color: #c6cddb !important;
+}
+
+.v .vinfo .col {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vh .vmeta .vat {
+    color: #c6cddb !important;
+}
+
+.v p, .v strong {
+    color: #c6cddb !important;
+}
+
+.v code {
+    font-weight: bold !important;
+    font-size: 0.8rem !important;
+}
+
+.v pre {
+    font-size: 1rem !important;
+    font-weight: bold !important;
+    background: #2c3e50 !important;
+}
+
+.v li {
+    color: #c6cddb !important;
+    margin-left: .5rem !important;
+}
+
+.v a {
+    color: #1abc9c !important;
+}
+
+.v .vwrap .vheader .vinput {
+    border-bottom: 1px dashed #c6cddb !important;
+}
+
+.v .vwrap {
+    border: 2px solid #c6cddb !important;
+}
+
+.v .vinput {
+    color: #c6cddb !important;
+}
+
+.v .veditor {
+    color: #c6cddb !important;
+}
+
+.v .vwrap .vedit .vctrl span {
+    color: #c6cddb !important;
+}
+
+.v .vwrap .vcontrol .col svg {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vhead .vsys {
+    background: transparent !important;
+    border: 1px solid #c6cddb!important;
+    padding: 0 .4rem 0 .4rem !important;
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vquote {
+    border-left: 0px !important;
+}
+
+.v .vlist .vcard .vh {
+    border-bottom: 0px !important;
+}
+
+.v .power {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vh .vtime {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vcontent {
+    color: #c6cddb !important;
+}
+
+::-moz-placeholder { color: #ccc; }
+::-webkit-input-placeholder { color:#ccc; }
+:-ms-input-placeholder { color:#ccc; }
+</style>
+<script>    
+    new Valine({
+        el:'#vcomments',
+        appId: 'wNSjixVlMTvSPXjMubNsdiy5-9Nh9j0Va',
+        appKey: 'ygUBd8larhetzhyeV3sLpQ5q',
+        visitor: true
+    })
+</script></div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2020 <a href="https://yinzo.github.io/">Yinzo</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://yinzo.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://yinzo.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

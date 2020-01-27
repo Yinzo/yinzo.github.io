@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="cn-zh">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta itemprop="name" content="低素质弹幕分类器 CNN 训练笔记">
+<meta itemprop="description" content="低素质弹幕分类器 CNN 训练笔记 完成训练后，乍一看准确率很高，结果 print 出来看一下，低素质弹幕完全没有被过滤，完全是将分类全部丢给 positive 达到的高准确率 (0.98) 的确是 meaningless classification
+并且这个结果在loss里看得很清楚，loss一直是处于15&#43;的
+尝试增加第二个卷积层的节点数，然而训练并没有明显变好
+然后加大了FC层的隐节点，瞬间loss开始猛降，最后降到了0.3左右，print 出来一看，的确效果不错，但是有一部分语句较短的低素质的弹幕没有被识别出来。
+然后由于感觉最后一次迭代没有收敛到极致，尝试加大迭代次数看看这个模型的极限如何。
+设置迭代100次后。
+Epoch 100/100 2999/2999 [==============================] - 9s - loss: 3.7457e-04 - acc: 1.0000  虽然 acc 和 loss 都到了令人发指的地步，但是发现训练集和测试集忘记shuffle了。。
+但是还是看了一眼测试结果，骂人弹幕的识别率为意料之中的0，因为全都被判定为普通弹幕了。shuffle之后重新训练看看吧，先迭代10次，看看效果，然后再测试100次的过拟合程度
+10次的结果是准确率在92.45左右，人工检测的结果还可以，检测出了一部分，但是不够理想，调整的迭代20次看看。
+Epoch 20/20 2999/2999 [==============================] - 9s - loss: 0.0689 - acc: 0.9810 Correct: 1918 Incorrect: 83 Accuracy: 95.852  人工检测结果有所提升，但是仍然不够理想，提高到50次看看
+Epoch 50/50 2999/2999 [==============================] - 9s - loss: 6.4179e-04 - acc: 1.0000 Correct: 1963 Incorrect: 38 Accuracy: 98.">
+<meta itemprop="datePublished" content="2017-02-06T14:48:00&#43;08:00" />
+<meta itemprop="dateModified" content="2017-02-06T14:48:00&#43;08:00" />
+<meta itemprop="wordCount" content="2223">
+
+
+
+<meta itemprop="keywords" content="untagged," /><meta property="og:title" content="低素质弹幕分类器 CNN 训练笔记" />
+<meta property="og:description" content="低素质弹幕分类器 CNN 训练笔记 完成训练后，乍一看准确率很高，结果 print 出来看一下，低素质弹幕完全没有被过滤，完全是将分类全部丢给 positive 达到的高准确率 (0.98) 的确是 meaningless classification
+并且这个结果在loss里看得很清楚，loss一直是处于15&#43;的
+尝试增加第二个卷积层的节点数，然而训练并没有明显变好
+然后加大了FC层的隐节点，瞬间loss开始猛降，最后降到了0.3左右，print 出来一看，的确效果不错，但是有一部分语句较短的低素质的弹幕没有被识别出来。
+然后由于感觉最后一次迭代没有收敛到极致，尝试加大迭代次数看看这个模型的极限如何。
+设置迭代100次后。
+Epoch 100/100 2999/2999 [==============================] - 9s - loss: 3.7457e-04 - acc: 1.0000  虽然 acc 和 loss 都到了令人发指的地步，但是发现训练集和测试集忘记shuffle了。。
+但是还是看了一眼测试结果，骂人弹幕的识别率为意料之中的0，因为全都被判定为普通弹幕了。shuffle之后重新训练看看吧，先迭代10次，看看效果，然后再测试100次的过拟合程度
+10次的结果是准确率在92.45左右，人工检测的结果还可以，检测出了一部分，但是不够理想，调整的迭代20次看看。
+Epoch 20/20 2999/2999 [==============================] - 9s - loss: 0.0689 - acc: 0.9810 Correct: 1918 Incorrect: 83 Accuracy: 95.852  人工检测结果有所提升，但是仍然不够理想，提高到50次看看
+Epoch 50/50 2999/2999 [==============================] - 9s - loss: 6.4179e-04 - acc: 1.0000 Correct: 1963 Incorrect: 38 Accuracy: 98." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://yinzo.github.io/posts/%E4%BD%8E%E7%B4%A0%E8%B4%A8%E5%BC%B9%E5%B9%95%E5%88%86%E7%B1%BB%E5%99%A8-cnn-%E8%AE%AD%E7%BB%83%E7%AC%94%E8%AE%B0/" />
+<meta property="article:published_time" content="2017-02-06T14:48:00+08:00" />
+<meta property="article:modified_time" content="2017-02-06T14:48:00+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="低素质弹幕分类器 CNN 训练笔记"/>
+<meta name="twitter:description" content="低素质弹幕分类器 CNN 训练笔记 完成训练后，乍一看准确率很高，结果 print 出来看一下，低素质弹幕完全没有被过滤，完全是将分类全部丢给 positive 达到的高准确率 (0.98) 的确是 meaningless classification
+并且这个结果在loss里看得很清楚，loss一直是处于15&#43;的
+尝试增加第二个卷积层的节点数，然而训练并没有明显变好
+然后加大了FC层的隐节点，瞬间loss开始猛降，最后降到了0.3左右，print 出来一看，的确效果不错，但是有一部分语句较短的低素质的弹幕没有被识别出来。
+然后由于感觉最后一次迭代没有收敛到极致，尝试加大迭代次数看看这个模型的极限如何。
+设置迭代100次后。
+Epoch 100/100 2999/2999 [==============================] - 9s - loss: 3.7457e-04 - acc: 1.0000  虽然 acc 和 loss 都到了令人发指的地步，但是发现训练集和测试集忘记shuffle了。。
+但是还是看了一眼测试结果，骂人弹幕的识别率为意料之中的0，因为全都被判定为普通弹幕了。shuffle之后重新训练看看吧，先迭代10次，看看效果，然后再测试100次的过拟合程度
+10次的结果是准确率在92.45左右，人工检测的结果还可以，检测出了一部分，但是不够理想，调整的迭代20次看看。
+Epoch 20/20 2999/2999 [==============================] - 9s - loss: 0.0689 - acc: 0.9810 Correct: 1918 Incorrect: 83 Accuracy: 95.852  人工检测结果有所提升，但是仍然不够理想，提高到50次看看
+Epoch 50/50 2999/2999 [==============================] - 9s - loss: 6.4179e-04 - acc: 1.0000 Correct: 1963 Incorrect: 38 Accuracy: 98."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>低素质弹幕分类器 CNN 训练笔记</title>
+	<link rel="stylesheet" href="https://yinzo.github.io/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://yinzo.github.io/">雪地</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://yinzo.github.io/posts/">Posts</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="menu-btn" class="hdr-btn" title=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://yinzo.github.io/posts/">Posts</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Feb 6, 2017</span></div>
+				<h1>低素质弹幕分类器 CNN 训练笔记</h1>
+			</header>
+			<div class="content">
+				<h1 id="低素质弹幕分类器-cnn-训练笔记">低素质弹幕分类器 CNN 训练笔记<a href="#低素质弹幕分类器-cnn-训练笔记" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>完成训练后，乍一看准确率很高，结果 print 出来看一下，低素质弹幕完全没有被过滤，完全是将分类全部丢给 positive 达到的高准确率 (0.98) 的确是 meaningless classification<br>
+并且这个结果在loss里看得很清楚，loss一直是处于15+的</p>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p>尝试增加第二个卷积层的节点数，然而训练并没有明显变好</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>然后加大了FC层的隐节点，瞬间loss开始猛降，最后降到了0.3左右，print 出来一看，的确效果不错，但是有一部分语句较短的低素质的弹幕没有被识别出来。</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>然后由于感觉最后一次迭代没有收敛到极致，尝试加大迭代次数看看这个模型的极限如何。</p>
+<p>设置迭代100次后。</p>
+<pre><code>Epoch 100/100
+2999/2999 [==============================] - 9s - loss: 3.7457e-04 - acc: 1.0000
+</code></pre>
+<p>虽然 acc 和 loss 都到了令人发指的地步，但是发现训练集和测试集忘记shuffle了。。<br>
+但是还是看了一眼测试结果，骂人弹幕的识别率为意料之中的0，因为全都被判定为普通弹幕了。shuffle之后重新训练看看吧，先迭代10次，看看效果，然后再测试100次的过拟合程度</p>
+<p>10次的结果是准确率在92.45左右，人工检测的结果还可以，检测出了一部分，但是不够理想，调整的迭代20次看看。</p>
+<pre><code>Epoch 20/20
+2999/2999 [==============================] - 9s - loss: 0.0689 - acc: 0.9810
+
+Correct: 1918
+Incorrect: 83
+Accuracy: 95.852
+</code></pre>
+<p>人工检测结果有所提升，但是仍然不够理想，提高到50次看看</p>
+<pre><code>Epoch 50/50
+2999/2999 [==============================] - 9s - loss: 6.4179e-04 - acc: 1.0000
+
+Correct: 1963
+Incorrect: 38
+Accuracy: 98.101
+</code></pre>
+<p>虽然训练数据很好看，但是检查弹幕的识别情况，发现已经过拟合。基本把所有低素质弹幕识别成普通弹幕。</p>
+<pre><code>Negative damku accuracy: 7.692
+True negative: 2
+False negative: 24
+</code></pre>
+<p>重新回到10次迭代，尝试画出roc曲线</p>
+<pre><code>Epoch 10/10
+2999/2999 [==============================] - 9s - loss: 0.7608 - acc: 0.8943
+
+Correct: 1886
+Incorrect: 115
+Overall accuracy: 94.253
+Negative damku accuracy: 30.769
+True negative: 8
+False negative: 18
+</code></pre>
+<p>然后是20次迭代</p>
+<pre><code>Epoch 20/20
+2999/2999 [==============================] - 10s - loss: 0.1805 - acc: 0.9710
+
+Correct: 1908
+Incorrect: 93
+Overall accuracy: 95.352
+Negative damku accuracy: 19.231
+True negative: 5
+False negative: 21
+</code></pre>
+<p>15次迭代</p>
+<pre><code>Epoch 15/15
+2999/2999 [==============================] - 9s - loss: 0.3569 - acc: 0.9650
+
+Correct: 1782
+Incorrect: 219
+Overall accuracy: 89.055
+Negative damku accuracy: 46.154
+True negative: 12
+False negative: 14
+
+Epoch 17/17
+2999/2999 [==============================] - 9s - loss: 0.3631 - acc: 0.9847
+
+Correct: 1893
+Incorrect: 108
+Overall accuracy: 94.603
+Negative damku accuracy: 26.923
+True negative: 7
+False negative: 19
+
+2999/2999 [==============================] - 10s - loss: 0.2556 - acc: 0.9760
+
+Correct: 1816
+Incorrect: 185
+Overall accuracy: 90.755
+Negative damku accuracy: 30.769
+True negative: 8
+False negative: 18
+</code></pre>
+<p>突然想到训练数据其实不需要遵从概率分布，直接使用上次贝叶斯分类器的弹幕数据即可（上次训练贝叶斯分类器的时候没注意训练样本的概率分布问题，这是个错误）。导入新样本后进行迭代测试</p>
+<pre><code>Epoch 1/1
+5405/5405 [==============================] - 19s - loss: 0.6693 - acc: 0.6699     
+Train epoch: 1
+Correct: 2912
+Incorrect: 692
+Overall accuracy: 80.799
+Negative damku accuracy: 81.522
+True negative: 1328
+False negative: 301
+==========
+Epoch 1/1
+5405/5405 [==============================] - 19s - loss: 0.4421 - acc: 0.8344     
+Train epoch: 2
+Correct: 3133
+Incorrect: 471
+Overall accuracy: 86.931
+Negative damku accuracy: 82.627
+True negative: 1346
+False negative: 283
+==========
+Epoch 1/1
+5405/5405 [==============================] - 19s - loss: 0.2734 - acc: 0.9075     
+Train epoch: 3
+Correct: 3294
+Incorrect: 310
+Overall accuracy: 91.398
+Negative damku accuracy: 86.618
+True negative: 1411
+False negative: 218
+==========
+Epoch 1/1
+5405/5405 [==============================] - 20s - loss: 0.1724 - acc: 0.9404     
+Train epoch: 4
+Correct: 3365
+Incorrect: 239
+Overall accuracy: 93.368
+Negative damku accuracy: 90.117
+True negative: 1468
+False negative: 161
+==========
+Epoch 1/1
+5405/5405 [==============================] - 22s - loss: 0.1117 - acc: 0.9641     
+Train epoch: 5
+Correct: 3390
+Incorrect: 214
+Overall accuracy: 94.062
+Negative damku accuracy: 92.879
+True negative: 1513
+False negative: 116
+==========
+Epoch 1/1
+5405/5405 [==============================] - 18s - loss: 0.0770 - acc: 0.9771     
+Train epoch: 6
+Correct: 3416
+Incorrect: 188
+Overall accuracy: 94.784
+Negative damku accuracy: 94.598
+True negative: 1541
+False negative: 88
+==========
+Epoch 1/1
+5405/5405 [==============================] - 18s - loss: 0.0505 - acc: 0.9858     
+Train epoch: 7
+Correct: 3403
+Incorrect: 201
+Overall accuracy: 94.423
+Negative damku accuracy: 91.590
+True negative: 1492
+False negative: 137
+==========
+Epoch 1/1
+5405/5405 [==============================] - 18s - loss: 0.0414 - acc: 0.9900     
+Train epoch: 8
+Correct: 3426
+Incorrect: 178
+Overall accuracy: 95.061
+Negative damku accuracy: 94.905
+True negative: 1546
+False negative: 83
+==========
+Epoch 1/1
+5405/5405 [==============================] - 18s - loss: 0.0365 - acc: 0.9902     
+Train epoch: 9
+Correct: 3417
+Incorrect: 187
+Overall accuracy: 94.811
+Negative damku accuracy: 92.756
+True negative: 1511
+False negative: 118
+==========
+Epoch 1/1
+5405/5405 [==============================] - 18s - loss: 0.0231 - acc: 0.9943     
+Train epoch: 10
+Correct: 3415
+Incorrect: 189
+Overall accuracy: 94.756
+Negative damku accuracy: 92.449
+True negative: 1506
+False negative: 123
+==========
+Epoch 1/1
+5405/5405 [==============================] - 18s - loss: 0.0320 - acc: 0.9906     
+Train epoch: 11
+Correct: 3396
+Incorrect: 208
+Overall accuracy: 94.229
+Negative damku accuracy: 94.905
+True negative: 1546
+False negative: 83
+==========
+Epoch 1/1
+5405/5405 [==============================] - 18s - loss: 0.0158 - acc: 0.9959     
+Train epoch: 12
+Correct: 3416
+Incorrect: 188
+Overall accuracy: 94.784
+Negative damku accuracy: 93.738
+True negative: 1527
+False negative: 102
+==========
+Epoch 1/1
+5405/5405 [==============================] - 18s - loss: 0.0093 - acc: 0.9983     
+Train epoch: 13
+Correct: 3415
+Incorrect: 189
+Overall accuracy: 94.756
+Negative damku accuracy: 95.212
+True negative: 1551
+False negative: 78
+==========
+Epoch 1/1
+5405/5405 [==============================] - 18s - loss: 0.0048 - acc: 0.9991     
+Train epoch: 14
+Correct: 3421
+Incorrect: 183
+Overall accuracy: 94.922
+Negative damku accuracy: 94.843
+True negative: 1545
+False negative: 84
+==========
+Epoch 1/1
+5405/5405 [==============================] - 18s - loss: 0.0052 - acc: 0.9989     
+Train epoch: 15
+Correct: 3421
+Incorrect: 183
+Overall accuracy: 94.922
+Negative damku accuracy: 93.923
+True negative: 1530
+False negative: 99
+==========
+Epoch 1/1
+5405/5405 [==============================] - 20s - loss: 0.0024 - acc: 0.9998         
+Train epoch: 16
+Correct: 3413
+Incorrect: 191
+Overall accuracy: 94.700
+Negative damku accuracy: 94.291
+True negative: 1536
+False negative: 93
+==========
+Epoch 1/1
+5405/5405 [==============================] - 18s - loss: 0.0028 - acc: 0.9998     
+Train epoch: 17
+Correct: 3418
+Incorrect: 186
+Overall accuracy: 94.839
+Negative damku accuracy: 93.186
+True negative: 1518
+False negative: 111
+==========
+Epoch 1/1
+5405/5405 [==============================] - 21s - loss: 0.0024 - acc: 0.9996         
+Train epoch: 18
+Correct: 3415
+Incorrect: 189
+Overall accuracy: 94.756
+Negative damku accuracy: 94.352
+True negative: 1537
+False negative: 92
+==========
+Epoch 1/1
+5405/5405 [==============================] - 19s - loss: 0.0013 - acc: 0.9996         
+Train epoch: 19
+Correct: 3425
+Incorrect: 179
+Overall accuracy: 95.033
+Negative damku accuracy: 94.475
+True negative: 1539
+False negative: 90
+==========
+Epoch 1/1
+5405/5405 [==============================] - 18s - loss: 9.6297e-04 - acc: 0.9998     
+Train epoch: 20
+Correct: 3417
+Incorrect: 187
+Overall accuracy: 94.811
+Negative damku accuracy: 93.493
+True negative: 1523
+False negative: 106
+==========
+</code></pre>
+<p>想起来一开始 word2vec model 是用的娱乐区弹幕训练的，不完全符合环境。导出游戏区的弹幕重新训练看。</p>
+<pre><code>Epoch 1/1
+5405/5405 [==============================] - 17s - loss: 0.5780 - acc: 0.7441     
+Train epoch: 1
+Correct: 3140
+Incorrect: 464
+Overall accuracy: 87.125
+Negative damku accuracy: 89.134
+True negative: 1452
+False negative: 177
+==========
+Epoch 1/1
+5405/5405 [==============================] - 17s - loss: 0.2168 - acc: 0.9258     
+Train epoch: 2
+Correct: 3444
+Incorrect: 160
+Overall accuracy: 95.560
+Negative damku accuracy: 93.738
+True negative: 1527
+False negative: 102
+==========
+Epoch 1/1
+5405/5405 [==============================] - 18s - loss: 0.0978 - acc: 0.9697     
+Train epoch: 3
+Correct: 3459
+Incorrect: 145
+Overall accuracy: 95.977
+Negative damku accuracy: 95.887
+True negative: 1562
+False negative: 67
+==========
+Epoch 1/1
+5405/5405 [==============================] - 22s - loss: 0.0606 - acc: 0.9824     
+Train epoch: 4
+Correct: 3426
+Incorrect: 178
+Overall accuracy: 95.061
+Negative damku accuracy: 96.746
+True negative: 1576
+False negative: 53
+==========
+Epoch 1/1
+5405/5405 [==============================] - 23s - loss: 0.1076 - acc: 0.9678     
+Train epoch: 5
+Correct: 3468
+Incorrect: 136
+Overall accuracy: 96.226
+Negative damku accuracy: 94.537
+True negative: 1540
+False negative: 89
+==========
+Epoch 1/1
+5405/5405 [==============================] - 20s - loss: 0.0476 - acc: 0.9856     
+Train epoch: 6
+Correct: 3465
+Incorrect: 139
+Overall accuracy: 96.143
+Negative damku accuracy: 95.028
+True negative: 1548
+False negative: 81
+==========
+Epoch 1/1
+5405/5405 [==============================] - 19s - loss: 0.0285 - acc: 0.9911     
+Train epoch: 7
+Correct: 3472
+Incorrect: 132
+Overall accuracy: 96.337
+Negative damku accuracy: 95.150
+True negative: 1550
+False negative: 79
+==========
+Epoch 1/1
+5405/5405 [==============================] - 18s - loss: 0.0192 - acc: 0.9943     
+Train epoch: 8
+Correct: 3473
+Incorrect: 131
+Overall accuracy: 96.365
+Negative damku accuracy: 96.010
+True negative: 1564
+False negative: 65
+==========
+Epoch 1/1
+5405/5405 [==============================] - 18s - loss: 0.0128 - acc: 0.9956     
+Train epoch: 9
+Correct: 3472
+Incorrect: 132
+Overall accuracy: 96.337
+Negative damku accuracy: 95.580
+True negative: 1557
+False negative: 72
+==========
+Epoch 1/1
+5405/5405 [==============================] - 17s - loss: 0.0079 - acc: 0.9972     
+Train epoch: 10
+Correct: 3474
+Incorrect: 130
+Overall accuracy: 96.393
+Negative damku accuracy: 95.580
+True negative: 1557
+False negative: 72
+==========
+Epoch 1/1
+5405/5405 [==============================] - 20s - loss: 0.0060 - acc: 0.9981     
+Train epoch: 11
+Correct: 3476
+Incorrect: 128
+Overall accuracy: 96.448
+Negative damku accuracy: 95.396
+True negative: 1554
+False negative: 75
+==========
+Epoch 1/1
+5405/5405 [==============================] - 27s - loss: 0.0045 - acc: 0.9989     
+Train epoch: 12
+Correct: 3478
+Incorrect: 126
+Overall accuracy: 96.504
+Negative damku accuracy: 95.089
+True negative: 1549
+False negative: 80
+==========
+Epoch 1/1
+5405/5405 [==============================] - 22s - loss: 0.0031 - acc: 0.9994     
+Train epoch: 13
+Correct: 3476
+Incorrect: 128
+Overall accuracy: 96.448
+Negative damku accuracy: 95.150
+True negative: 1550
+False negative: 79
+==========
+Epoch 1/1
+5405/5405 [==============================] - 19s - loss: 0.0024 - acc: 0.9994         
+Train epoch: 14
+Correct: 3479
+Incorrect: 125
+Overall accuracy: 96.532
+Negative damku accuracy: 95.089
+True negative: 1549
+False negative: 80
+==========
+Epoch 1/1
+5405/5405 [==============================] - 19s - loss: 0.0020 - acc: 0.9994         
+Train epoch: 15
+Correct: 3476
+Incorrect: 128
+Overall accuracy: 96.448
+Negative damku accuracy: 94.966
+True negative: 1547
+False negative: 82
+==========
+Epoch 1/1
+5405/5405 [==============================] - 22s - loss: 0.0018 - acc: 0.9994         
+Train epoch: 16
+Correct: 3474
+Incorrect: 130
+Overall accuracy: 96.393
+Negative damku accuracy: 95.150
+True negative: 1550
+False negative: 79
+==========
+Epoch 1/1
+5405/5405 [==============================] - 19s - loss: 0.0016 - acc: 0.9994         
+Train epoch: 17
+Correct: 3475
+Incorrect: 129
+Overall accuracy: 96.421
+Negative damku accuracy: 95.457
+True negative: 1555
+False negative: 74
+==========
+Epoch 1/1
+5405/5405 [==============================] - 21s - loss: 0.0014 - acc: 0.9994         
+Train epoch: 18
+Correct: 3474
+Incorrect: 130
+Overall accuracy: 96.393
+Negative damku accuracy: 95.150
+True negative: 1550
+False negative: 79
+==========
+Epoch 1/1
+5405/5405 [==============================] - 24s - loss: 0.0013 - acc: 0.9996     
+Train epoch: 19
+Correct: 3474
+Incorrect: 130
+Overall accuracy: 96.393
+Negative damku accuracy: 95.089
+True negative: 1549
+False negative: 80
+==========
+Epoch 1/1
+5405/5405 [==============================] - 21s - loss: 0.0037 - acc: 0.9991         
+Train epoch: 20
+Correct: 3469
+Incorrect: 135
+Overall accuracy: 96.254
+Negative damku accuracy: 96.624
+True negative: 1574
+False negative: 55
+==========
+</code></pre>
+<p>效果提升明显</p>
+<p>尝试把训练 ratio 提高到 0.8</p>
+<pre><code>Epoch 1/1
+7206/7206 [==============================] - 24s - loss: 0.5097 - acc: 0.7778     
+Train epoch: 1
+Correct: 1673
+Incorrect: 130
+Overall accuracy: 92.790
+Negative damku accuracy: 91.779
+True negative: 748
+False negative: 67
+==========
+Epoch 1/1
+7206/7206 [==============================] - 23s - loss: 0.1654 - acc: 0.9455     
+Train epoch: 2
+Correct: 1745
+Incorrect: 58
+Overall accuracy: 96.783
+Negative damku accuracy: 95.092
+True negative: 775
+False negative: 40
+==========
+Epoch 1/1
+7206/7206 [==============================] - 24s - loss: 0.0891 - acc: 0.9732     
+Train epoch: 3
+Correct: 1750
+Incorrect: 53
+Overall accuracy: 97.060
+Negative damku accuracy: 97.055
+True negative: 791
+False negative: 24
+==========
+Epoch 1/1
+7206/7206 [==============================] - 23s - loss: 0.0570 - acc: 0.9829     
+Train epoch: 4
+Correct: 1739
+Incorrect: 64
+Overall accuracy: 96.450
+Negative damku accuracy: 96.933
+True negative: 790
+False negative: 25
+==========
+Epoch 1/1
+7206/7206 [==============================] - 22s - loss: 0.0394 - acc: 0.9878     
+Train epoch: 5
+Correct: 1754
+Incorrect: 49
+Overall accuracy: 97.282
+Negative damku accuracy: 96.074
+True negative: 783
+False negative: 32
+==========
+Epoch 1/1
+7206/7206 [==============================] - 22s - loss: 0.0471 - acc: 0.9872     
+Train epoch: 6
+Correct: 1747
+Incorrect: 56
+Overall accuracy: 96.894
+Negative damku accuracy: 95.706
+True negative: 780
+False negative: 35
+==========
+Epoch 1/1
+7206/7206 [==============================] - 22s - loss: 0.0266 - acc: 0.9926     
+Train epoch: 7
+Correct: 1735
+Incorrect: 68
+Overall accuracy: 96.229
+Negative damku accuracy: 95.706
+True negative: 780
+False negative: 35
+==========
+Epoch 1/1
+7206/7206 [==============================] - 26s - loss: 0.0235 - acc: 0.9921     
+Train epoch: 8
+Correct: 1742
+Incorrect: 61
+Overall accuracy: 96.617
+Negative damku accuracy: 95.706
+True negative: 780
+False negative: 35
+==========
+Epoch 1/1
+7206/7206 [==============================] - 22s - loss: 0.0211 - acc: 0.9928     
+Train epoch: 9
+Correct: 1753
+Incorrect: 50
+Overall accuracy: 97.227
+Negative damku accuracy: 96.074
+True negative: 783
+False negative: 32
+==========
+Epoch 1/1
+7206/7206 [==============================] - 22s - loss: 0.0207 - acc: 0.9929     
+Train epoch: 10
+Correct: 1750
+Incorrect: 53
+Overall accuracy: 97.060
+Negative damku accuracy: 95.951
+True negative: 782
+False negative: 33
+==========
+Epoch 1/1
+7206/7206 [==============================] - 22s - loss: 0.0282 - acc: 0.9913     
+Train epoch: 11
+Correct: 1743
+Incorrect: 60
+Overall accuracy: 96.672
+Negative damku accuracy: 96.442
+True negative: 786
+False negative: 29
+==========
+Epoch 1/1
+7206/7206 [==============================] - 22s - loss: 0.0174 - acc: 0.9947     
+Train epoch: 12
+Correct: 1737
+Incorrect: 66
+Overall accuracy: 96.339
+Negative damku accuracy: 96.564
+True negative: 787
+False negative: 28
+==========
+Epoch 1/1
+7206/7206 [==============================] - 22s - loss: 0.0135 - acc: 0.9965     
+Train epoch: 13
+Correct: 1741
+Incorrect: 62
+Overall accuracy: 96.561
+Negative damku accuracy: 96.933
+True negative: 790
+False negative: 25
+==========
+Epoch 1/1
+7206/7206 [==============================] - 22s - loss: 0.0106 - acc: 0.9965     
+Train epoch: 14
+Correct: 1743
+Incorrect: 60
+Overall accuracy: 96.672
+Negative damku accuracy: 96.687
+True negative: 788
+False negative: 27
+==========
+Epoch 1/1
+7206/7206 [==============================] - 22s - loss: 0.0068 - acc: 0.9975     
+Train epoch: 15
+Correct: 1751
+Incorrect: 52
+Overall accuracy: 97.116
+Negative damku accuracy: 95.460
+True negative: 778
+False negative: 37
+==========
+Epoch 1/1
+7206/7206 [==============================] - 22s - loss: 0.0053 - acc: 0.9982     
+Train epoch: 16
+Correct: 1748
+Incorrect: 55
+Overall accuracy: 96.950
+Negative damku accuracy: 96.564
+True negative: 787
+False negative: 28
+==========
+Epoch 1/1
+7206/7206 [==============================] - 23s - loss: 0.0051 - acc: 0.9986     
+Train epoch: 17
+Correct: 1751
+Incorrect: 52
+Overall accuracy: 97.116
+Negative damku accuracy: 95.460
+True negative: 778
+False negative: 37
+==========
+Epoch 1/1
+7206/7206 [==============================] - 24s - loss: 0.0038 - acc: 0.9989     
+Train epoch: 18
+Correct: 1749
+Incorrect: 54
+Overall accuracy: 97.005
+Negative damku accuracy: 96.319
+True negative: 785
+False negative: 30
+==========
+Epoch 1/1
+7206/7206 [==============================] - 22s - loss: 0.0036 - acc: 0.9990     
+Train epoch: 19
+Correct: 1747
+Incorrect: 56
+Overall accuracy: 96.894
+Negative damku accuracy: 95.583
+True negative: 779
+False negative: 36
+==========
+Epoch 1/1
+7206/7206 [==============================] - 23s - loss: 0.0035 - acc: 0.9989         
+Train epoch: 20
+Correct: 1746
+Incorrect: 57
+Overall accuracy: 96.839
+Negative damku accuracy: 95.215
+True negative: 776
+False negative: 39
+==========
+</code></pre>
+<p>测试效果提升了约1~2个百分点。</p>
+<p>暂时没有想到能够优化的方面了，选用第3次迭代的模型作为最终模型</p>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://yinzo.github.io/tags/untagged">untagged</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2017-02-06 14:48 &#43;0800</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="next-post" href="https://yinzo.github.io/posts/%E5%8E%9F%E5%A7%8B%E6%A8%A1%E5%9E%8B%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;</span><br><span>原始模型优化笔记</span>
+			</a>
+			<a class="prev-post" href="https://yinzo.github.io/posts/%E4%BD%8E%E7%B4%A0%E8%B4%A8%E5%BC%B9%E5%B9%95%E5%88%86%E7%B1%BB%E5%99%A8%E7%9A%84cnn%E5%AE%9E%E7%8E%B0/">
+				<span class="post-nav-label">&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>低素质弹幕分类器的CNN实现</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<p id="https://yinzo.github.io/" class="leancloud_visitors" data-flag-title="雪地">
+    <span class="post-meta-item-text">阅读量 </span>
+    <span class="leancloud-visitors-count">-</span>
+</p>
+<div id="vcomments" sty ></div>
+<style>
+.v .vbtn {
+    background: transparent !important;
+    border: 2px solid #c6cddb !important;
+    color: #c6cddb !important;
+}
+
+.v .vinfo .vcount .vnum {
+    color: #c6cddb !important;
+}
+
+.v .vinfo .col {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vh .vmeta .vat {
+    color: #c6cddb !important;
+}
+
+.v p, .v strong {
+    color: #c6cddb !important;
+}
+
+.v code {
+    font-weight: bold !important;
+    font-size: 0.8rem !important;
+}
+
+.v pre {
+    font-size: 1rem !important;
+    font-weight: bold !important;
+    background: #2c3e50 !important;
+}
+
+.v li {
+    color: #c6cddb !important;
+    margin-left: .5rem !important;
+}
+
+.v a {
+    color: #1abc9c !important;
+}
+
+.v .vwrap .vheader .vinput {
+    border-bottom: 1px dashed #c6cddb !important;
+}
+
+.v .vwrap {
+    border: 2px solid #c6cddb !important;
+}
+
+.v .vinput {
+    color: #c6cddb !important;
+}
+
+.v .veditor {
+    color: #c6cddb !important;
+}
+
+.v .vwrap .vedit .vctrl span {
+    color: #c6cddb !important;
+}
+
+.v .vwrap .vcontrol .col svg {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vhead .vsys {
+    background: transparent !important;
+    border: 1px solid #c6cddb!important;
+    padding: 0 .4rem 0 .4rem !important;
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vquote {
+    border-left: 0px !important;
+}
+
+.v .vlist .vcard .vh {
+    border-bottom: 0px !important;
+}
+
+.v .power {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vh .vtime {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vcontent {
+    color: #c6cddb !important;
+}
+
+::-moz-placeholder { color: #ccc; }
+::-webkit-input-placeholder { color:#ccc; }
+:-ms-input-placeholder { color:#ccc; }
+</style>
+<script>    
+    new Valine({
+        el:'#vcomments',
+        appId: 'wNSjixVlMTvSPXjMubNsdiy5-9Nh9j0Va',
+        appKey: 'ygUBd8larhetzhyeV3sLpQ5q',
+        visitor: true
+    })
+</script></div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2020 <a href="https://yinzo.github.io/">Yinzo</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://yinzo.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://yinzo.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

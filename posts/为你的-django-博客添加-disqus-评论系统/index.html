@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="cn-zh">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta itemprop="name" content="为你的 Django 博客添加 Disqus 评论系统">
+<meta itemprop="description" content="为你的 Django 博客添加 Disqus 评论系统  安装 Disqus ,依官方推荐，使用pip自动安装~
+若是没有 pip 也不用着急，去官方下载一份二进制包，然后解压，进入目录安装
+ 修改 setting.py ,在 INSTALLED_APPS 中添加 disqus 项并在文件末尾添加两项参数。其中一项就是刚才复制的KEY啦。
+ 通过Django Shell 执行以下命令。恩里面的domain和name改成你自己的就好啦。
+我自己在这一步遇到了一个错误，执行Site.objects.all()的时候报错，提示
+这是由于没有安装django.sites模块造成的。
+只需要在 INSTALLED_APPS 中添加这一模块然后 syncdb就好了。
+ 修改模板文件，在指定位置添加 Disqus
+其中第一项必选，加载 disqus ，第二至第四项可选。
+后三项分别是
+ 显示评论 显示评论数 显示最近评论。  其中显示评论数是通过JS修改含data-disqus-identifier=“{{ object.id }}&ldquo;属性的标签来显示的。所以记得加上哦。以上，就是 Disqus 的安装啦">
+<meta itemprop="datePublished" content="2014-12-15T15:59:00&#43;08:00" />
+<meta itemprop="dateModified" content="2014-12-15T15:59:00&#43;08:00" />
+<meta itemprop="wordCount" content="41">
+
+
+
+<meta itemprop="keywords" content="untagged," /><meta property="og:title" content="为你的 Django 博客添加 Disqus 评论系统" />
+<meta property="og:description" content="为你的 Django 博客添加 Disqus 评论系统  安装 Disqus ,依官方推荐，使用pip自动安装~
+若是没有 pip 也不用着急，去官方下载一份二进制包，然后解压，进入目录安装
+ 修改 setting.py ,在 INSTALLED_APPS 中添加 disqus 项并在文件末尾添加两项参数。其中一项就是刚才复制的KEY啦。
+ 通过Django Shell 执行以下命令。恩里面的domain和name改成你自己的就好啦。
+我自己在这一步遇到了一个错误，执行Site.objects.all()的时候报错，提示
+这是由于没有安装django.sites模块造成的。
+只需要在 INSTALLED_APPS 中添加这一模块然后 syncdb就好了。
+ 修改模板文件，在指定位置添加 Disqus
+其中第一项必选，加载 disqus ，第二至第四项可选。
+后三项分别是
+ 显示评论 显示评论数 显示最近评论。  其中显示评论数是通过JS修改含data-disqus-identifier=“{{ object.id }}&ldquo;属性的标签来显示的。所以记得加上哦。以上，就是 Disqus 的安装啦" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://yinzo.github.io/posts/%E4%B8%BA%E4%BD%A0%E7%9A%84-django-%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0-disqus-%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/" />
+<meta property="article:published_time" content="2014-12-15T15:59:00+08:00" />
+<meta property="article:modified_time" content="2014-12-15T15:59:00+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="为你的 Django 博客添加 Disqus 评论系统"/>
+<meta name="twitter:description" content="为你的 Django 博客添加 Disqus 评论系统  安装 Disqus ,依官方推荐，使用pip自动安装~
+若是没有 pip 也不用着急，去官方下载一份二进制包，然后解压，进入目录安装
+ 修改 setting.py ,在 INSTALLED_APPS 中添加 disqus 项并在文件末尾添加两项参数。其中一项就是刚才复制的KEY啦。
+ 通过Django Shell 执行以下命令。恩里面的domain和name改成你自己的就好啦。
+我自己在这一步遇到了一个错误，执行Site.objects.all()的时候报错，提示
+这是由于没有安装django.sites模块造成的。
+只需要在 INSTALLED_APPS 中添加这一模块然后 syncdb就好了。
+ 修改模板文件，在指定位置添加 Disqus
+其中第一项必选，加载 disqus ，第二至第四项可选。
+后三项分别是
+ 显示评论 显示评论数 显示最近评论。  其中显示评论数是通过JS修改含data-disqus-identifier=“{{ object.id }}&ldquo;属性的标签来显示的。所以记得加上哦。以上，就是 Disqus 的安装啦"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>为你的 Django 博客添加 Disqus 评论系统</title>
+	<link rel="stylesheet" href="https://yinzo.github.io/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://yinzo.github.io/">雪地</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://yinzo.github.io/posts/">Posts</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="menu-btn" class="hdr-btn" title=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://yinzo.github.io/posts/">Posts</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Dec 15, 2014</span></div>
+				<h1>为你的 Django 博客添加 Disqus 评论系统</h1>
+			</header>
+			<div class="content">
+				<h1 id="为你的-django-博客添加-disqus-评论系统">为你的 Django 博客添加 Disqus 评论系统<a href="#为你的-django-博客添加-disqus-评论系统" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<hr>
+<p>安装 Disqus ,依官方推荐，使用pip自动安装~</p>
+<!-- raw HTML omitted -->
+<p>若是没有 pip 也不用着急，去<a href="http://pypi.python.org/pypi/django-disqus/">官方下载一份二进制包</a>，然后解压，进入目录安装</p>
+<!-- raw HTML omitted -->
+<hr>
+<p>修改 setting.py ,在 INSTALLED_APPS 中添加 disqus 项并在文件末尾添加两项参数。其中一项就是刚才复制的KEY啦。</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<hr>
+<p>通过Django Shell 执行以下命令。恩里面的domain和name改成你自己的就好啦。</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>我自己在这一步遇到了一个错误，执行<code>Site.objects.all()</code>的时候报错，提示</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>这是由于没有安装django.sites模块造成的。</p>
+<p>只需要在 INSTALLED_APPS 中添加这一模块然后 syncdb就好了。</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<hr>
+<p>修改模板文件，在指定位置添加 Disqus</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>其中第一项必选，加载 disqus ，第二至第四项可选。</p>
+<p>后三项分别是</p>
+<ol>
+<li>显示评论</li>
+<li>显示评论数</li>
+<li>显示最近评论。</li>
+</ol>
+<p>其中显示评论数是通过JS修改含data-disqus-identifier=“{{ object.id }}&ldquo;属性的<!-- raw HTML omitted -->标签来显示的。所以记得加上哦。<!-- raw HTML omitted --></p>
+<p>以上，就是 Disqus 的安装啦</p>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://yinzo.github.io/tags/untagged">untagged</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2014-12-15 15:59 &#43;0800</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="next-post" href="https://yinzo.github.io/posts/%E9%80%9A%E8%BF%87-css-%E4%BF%AE%E6%94%B9-webkit-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%BB%9A%E5%8A%A8%E6%9D%A1%E6%A0%B7%E5%BC%8F/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;</span><br><span>通过 CSS 修改 webkit 浏览器滚动条样式</span>
+			</a>
+			<a class="prev-post" href="https://yinzo.github.io/posts/django%E8%87%AA%E5%AE%9A%E4%B9%89-markdown-%E8%BF%87%E6%BB%A4%E5%99%A8/">
+				<span class="post-nav-label">&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>Django自定义 Markdown 过滤器</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<p id="https://yinzo.github.io/" class="leancloud_visitors" data-flag-title="雪地">
+    <span class="post-meta-item-text">阅读量 </span>
+    <span class="leancloud-visitors-count">-</span>
+</p>
+<div id="vcomments" sty ></div>
+<style>
+.v .vbtn {
+    background: transparent !important;
+    border: 2px solid #c6cddb !important;
+    color: #c6cddb !important;
+}
+
+.v .vinfo .vcount .vnum {
+    color: #c6cddb !important;
+}
+
+.v .vinfo .col {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vh .vmeta .vat {
+    color: #c6cddb !important;
+}
+
+.v p, .v strong {
+    color: #c6cddb !important;
+}
+
+.v code {
+    font-weight: bold !important;
+    font-size: 0.8rem !important;
+}
+
+.v pre {
+    font-size: 1rem !important;
+    font-weight: bold !important;
+    background: #2c3e50 !important;
+}
+
+.v li {
+    color: #c6cddb !important;
+    margin-left: .5rem !important;
+}
+
+.v a {
+    color: #1abc9c !important;
+}
+
+.v .vwrap .vheader .vinput {
+    border-bottom: 1px dashed #c6cddb !important;
+}
+
+.v .vwrap {
+    border: 2px solid #c6cddb !important;
+}
+
+.v .vinput {
+    color: #c6cddb !important;
+}
+
+.v .veditor {
+    color: #c6cddb !important;
+}
+
+.v .vwrap .vedit .vctrl span {
+    color: #c6cddb !important;
+}
+
+.v .vwrap .vcontrol .col svg {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vhead .vsys {
+    background: transparent !important;
+    border: 1px solid #c6cddb!important;
+    padding: 0 .4rem 0 .4rem !important;
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vquote {
+    border-left: 0px !important;
+}
+
+.v .vlist .vcard .vh {
+    border-bottom: 0px !important;
+}
+
+.v .power {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vh .vtime {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vcontent {
+    color: #c6cddb !important;
+}
+
+::-moz-placeholder { color: #ccc; }
+::-webkit-input-placeholder { color:#ccc; }
+:-ms-input-placeholder { color:#ccc; }
+</style>
+<script>    
+    new Valine({
+        el:'#vcomments',
+        appId: 'wNSjixVlMTvSPXjMubNsdiy5-9Nh9j0Va',
+        appKey: 'ygUBd8larhetzhyeV3sLpQ5q',
+        visitor: true
+    })
+</script></div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2020 <a href="https://yinzo.github.io/">Yinzo</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://yinzo.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://yinzo.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

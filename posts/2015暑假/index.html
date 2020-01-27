@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="cn-zh">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta itemprop="name" content="2015暑假">
+<meta itemprop="description" content="2015暑假 正式开始学习技术以来的第二个暑假了，上一个暑假的效率之高，可能没有什么机遇的话挺难超越的了。
+先放一张这次暑假一开始的计划图以及其完成度。
+接下来一一说明
+ 暑假开始，第一个进行的是SmartQQBot的重构。这时已经回到了家中，主要都是在家里的42寸上完成的，效率不算太高，一个星期3K行左右的Python，主要时间花费在程序模块化逻辑的思考，以及优化二次开发流程上。 接下来，开始花了两天的零散时间整理归纳了自己当前（当时）的技能树，里面漏掉了后端部分中的NodeJS枝，不过也不算很熟练，只是基本入门写了个小东西的水平，也就不追加到博文里了。 深入学习Python。这一部分有少量在重构SmartQQBot的时候就开始了，主要使用廖雪峰的Python2.7教程以及Python Documentation，之所以没有标记为完成是因为没有固定的标准，在我看来Python值得我深入的地方还有很多，所以我选择标记为未完成。 预习下学期内容。这个部分其实算是坑掉了，因为到后期时间不多、精力不够（懒）的原因，只看完了《啊哈！算法》并用Python实现了部分算法就没有深入下去了。 深入学习SQL注入。主要使用Drops的大量注入相关文章，配合DVWA手工注入练习。基本了解了SQL注入的一些原理。（盲注还没来得及下手测试）期间在查阅资料的过程中顺手翻译了两篇文章，发到了Drops捞了一笔。标注为未完成的理由同Python。 Cookie-Pot这个项目被我意外的坑掉了。因为在深入了Python和注入之后，发现自己对于前端的内容是越来越不感兴趣了。这样看来我未来的方向里已经排除掉了前端，顶多作为个人爱好再发展发展了。 之后剩余了2周左右的时间，基本都在慢慢看《数学之美》。原本以为两周能看完的，但是里面NLP的部分完全理解需要的概率论知识我都不太记得了，而且课本没带回家，所以进度非常慢，算法理解度也不甚理想。  除了以上计划中的内容，我还进行了以下活动
+ 暑假刚开始还没回家的两个星期。在学校接了一（两）单前端外包，大概也是因此对前端失去了部分兴趣。 帮一个师兄的项目写了个简易的前端，算是第一次与他人合作进行配合开发。以前都是自己规划自己写后端自己写前端，没有太多与人合作开发的经历。（这个仍在进行）  大概就是以上所写的内容了，可能有所遗漏，之后想起来再补充。
+啊对了，回学校之后还修证了一下博客的样式;D，新样式简洁多了
+总的来说效率算中上，完成度为80%。新的学期也有新的目标，希望能够尽快成长为能够实现自己脑中所有构思的人。
+2015.09.02">
+<meta itemprop="datePublished" content="2015-09-02T22:03:00&#43;08:00" />
+<meta itemprop="dateModified" content="2015-09-02T22:03:00&#43;08:00" />
+<meta itemprop="wordCount" content="19">
+
+
+
+<meta itemprop="keywords" content="untagged," /><meta property="og:title" content="2015暑假" />
+<meta property="og:description" content="2015暑假 正式开始学习技术以来的第二个暑假了，上一个暑假的效率之高，可能没有什么机遇的话挺难超越的了。
+先放一张这次暑假一开始的计划图以及其完成度。
+接下来一一说明
+ 暑假开始，第一个进行的是SmartQQBot的重构。这时已经回到了家中，主要都是在家里的42寸上完成的，效率不算太高，一个星期3K行左右的Python，主要时间花费在程序模块化逻辑的思考，以及优化二次开发流程上。 接下来，开始花了两天的零散时间整理归纳了自己当前（当时）的技能树，里面漏掉了后端部分中的NodeJS枝，不过也不算很熟练，只是基本入门写了个小东西的水平，也就不追加到博文里了。 深入学习Python。这一部分有少量在重构SmartQQBot的时候就开始了，主要使用廖雪峰的Python2.7教程以及Python Documentation，之所以没有标记为完成是因为没有固定的标准，在我看来Python值得我深入的地方还有很多，所以我选择标记为未完成。 预习下学期内容。这个部分其实算是坑掉了，因为到后期时间不多、精力不够（懒）的原因，只看完了《啊哈！算法》并用Python实现了部分算法就没有深入下去了。 深入学习SQL注入。主要使用Drops的大量注入相关文章，配合DVWA手工注入练习。基本了解了SQL注入的一些原理。（盲注还没来得及下手测试）期间在查阅资料的过程中顺手翻译了两篇文章，发到了Drops捞了一笔。标注为未完成的理由同Python。 Cookie-Pot这个项目被我意外的坑掉了。因为在深入了Python和注入之后，发现自己对于前端的内容是越来越不感兴趣了。这样看来我未来的方向里已经排除掉了前端，顶多作为个人爱好再发展发展了。 之后剩余了2周左右的时间，基本都在慢慢看《数学之美》。原本以为两周能看完的，但是里面NLP的部分完全理解需要的概率论知识我都不太记得了，而且课本没带回家，所以进度非常慢，算法理解度也不甚理想。  除了以上计划中的内容，我还进行了以下活动
+ 暑假刚开始还没回家的两个星期。在学校接了一（两）单前端外包，大概也是因此对前端失去了部分兴趣。 帮一个师兄的项目写了个简易的前端，算是第一次与他人合作进行配合开发。以前都是自己规划自己写后端自己写前端，没有太多与人合作开发的经历。（这个仍在进行）  大概就是以上所写的内容了，可能有所遗漏，之后想起来再补充。
+啊对了，回学校之后还修证了一下博客的样式;D，新样式简洁多了
+总的来说效率算中上，完成度为80%。新的学期也有新的目标，希望能够尽快成长为能够实现自己脑中所有构思的人。
+2015.09.02" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://yinzo.github.io/posts/2015%E6%9A%91%E5%81%87/" />
+<meta property="article:published_time" content="2015-09-02T22:03:00+08:00" />
+<meta property="article:modified_time" content="2015-09-02T22:03:00+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="2015暑假"/>
+<meta name="twitter:description" content="2015暑假 正式开始学习技术以来的第二个暑假了，上一个暑假的效率之高，可能没有什么机遇的话挺难超越的了。
+先放一张这次暑假一开始的计划图以及其完成度。
+接下来一一说明
+ 暑假开始，第一个进行的是SmartQQBot的重构。这时已经回到了家中，主要都是在家里的42寸上完成的，效率不算太高，一个星期3K行左右的Python，主要时间花费在程序模块化逻辑的思考，以及优化二次开发流程上。 接下来，开始花了两天的零散时间整理归纳了自己当前（当时）的技能树，里面漏掉了后端部分中的NodeJS枝，不过也不算很熟练，只是基本入门写了个小东西的水平，也就不追加到博文里了。 深入学习Python。这一部分有少量在重构SmartQQBot的时候就开始了，主要使用廖雪峰的Python2.7教程以及Python Documentation，之所以没有标记为完成是因为没有固定的标准，在我看来Python值得我深入的地方还有很多，所以我选择标记为未完成。 预习下学期内容。这个部分其实算是坑掉了，因为到后期时间不多、精力不够（懒）的原因，只看完了《啊哈！算法》并用Python实现了部分算法就没有深入下去了。 深入学习SQL注入。主要使用Drops的大量注入相关文章，配合DVWA手工注入练习。基本了解了SQL注入的一些原理。（盲注还没来得及下手测试）期间在查阅资料的过程中顺手翻译了两篇文章，发到了Drops捞了一笔。标注为未完成的理由同Python。 Cookie-Pot这个项目被我意外的坑掉了。因为在深入了Python和注入之后，发现自己对于前端的内容是越来越不感兴趣了。这样看来我未来的方向里已经排除掉了前端，顶多作为个人爱好再发展发展了。 之后剩余了2周左右的时间，基本都在慢慢看《数学之美》。原本以为两周能看完的，但是里面NLP的部分完全理解需要的概率论知识我都不太记得了，而且课本没带回家，所以进度非常慢，算法理解度也不甚理想。  除了以上计划中的内容，我还进行了以下活动
+ 暑假刚开始还没回家的两个星期。在学校接了一（两）单前端外包，大概也是因此对前端失去了部分兴趣。 帮一个师兄的项目写了个简易的前端，算是第一次与他人合作进行配合开发。以前都是自己规划自己写后端自己写前端，没有太多与人合作开发的经历。（这个仍在进行）  大概就是以上所写的内容了，可能有所遗漏，之后想起来再补充。
+啊对了，回学校之后还修证了一下博客的样式;D，新样式简洁多了
+总的来说效率算中上，完成度为80%。新的学期也有新的目标，希望能够尽快成长为能够实现自己脑中所有构思的人。
+2015.09.02"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>2015暑假</title>
+	<link rel="stylesheet" href="https://yinzo.github.io/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://yinzo.github.io/">雪地</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://yinzo.github.io/posts/">Posts</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="menu-btn" class="hdr-btn" title=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://yinzo.github.io/posts/">Posts</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Sep 2, 2015</span></div>
+				<h1>2015暑假</h1>
+			</header>
+			<div class="content">
+				<h1 id="2015暑假">2015暑假<a href="#2015暑假" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
+<!-- raw HTML omitted -->
+<p>正式开始学习技术以来的第二个暑假了，上一个暑假的效率之高，可能没有什么机遇的话挺难超越的了。</p>
+<p>先放一张这次暑假一开始的计划图以及其完成度。<br>
+<img src="http://ww4.sinaimg.cn/large/7d52f1ffgw1evo7tmpg20j20m507i3zp.jpg" alt="暑假计划"></p>
+<p>接下来一一说明</p>
+<ol>
+<li>暑假开始，第一个进行的是SmartQQBot的重构。这时已经回到了家中，主要都是在家里的42寸上完成的，效率不算太高，一个星期3K行左右的Python，主要时间花费在程序模块化逻辑的思考，以及优化二次开发流程上。</li>
+<li>接下来，开始花了两天的零散时间整理归纳了自己当前（当时）的技能树，里面漏掉了后端部分中的NodeJS枝，不过也不算很熟练，只是基本入门写了个小东西的水平，也就不追加到博文里了。</li>
+<li>深入学习Python。这一部分有少量在重构SmartQQBot的时候就开始了，主要使用<a href="http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000">廖雪峰的Python2.7教程</a>以及<a href="https://docs.python.org/2/">Python Documentation</a>，之所以没有标记为完成是因为没有固定的标准，在我看来Python值得我深入的地方还有很多，所以我选择标记为未完成。</li>
+<li>预习下学期内容。这个部分其实算是坑掉了，因为到后期时间不多、精力不够（懒）的原因，只看完了《啊哈！算法》并用Python实现了部分算法就没有深入下去了。</li>
+<li>深入学习SQL注入。主要使用Drops的大量注入相关文章，配合DVWA手工注入练习。基本了解了SQL注入的一些原理。（盲注还没来得及下手测试）期间在查阅资料的过程中顺手翻译了两篇文章，发到了Drops捞了一笔。标注为未完成的理由同Python。</li>
+<li>Cookie-Pot这个项目被我意外的坑掉了。因为在深入了Python和注入之后，发现自己对于前端的内容是越来越不感兴趣了。这样看来我未来的方向里已经排除掉了前端，顶多作为个人爱好再发展发展了。</li>
+<li>之后剩余了2周左右的时间，基本都在慢慢看《数学之美》。原本以为两周能看完的，但是里面NLP的部分完全理解需要的概率论知识我都不太记得了，而且课本没带回家，所以进度非常慢，算法理解度也不甚理想。</li>
+</ol>
+<p>除了以上计划中的内容，我还进行了以下活动</p>
+<ol>
+<li>暑假刚开始还没回家的两个星期。在学校接了一（两）单前端外包，大概也是因此对前端失去了部分兴趣。</li>
+<li>帮一个师兄的项目写了个简易的前端，算是第一次与他人合作进行配合开发。以前都是自己规划自己写后端自己写前端，没有太多与人合作开发的经历。（这个仍在进行）</li>
+</ol>
+<p>大概就是以上所写的内容了，可能有所遗漏，之后想起来再补充。</p>
+<p>啊对了，回学校之后还修证了一下博客的样式;D，新样式简洁多了</p>
+<p>总的来说效率算中上，完成度为80%。新的学期也有新的目标，希望能够尽快成长为能够实现自己脑中所有构思的人。</p>
+<p><img src="http://ww4.sinaimg.cn/mw690/7d52f1ffgw1evo7to77eaj21kw16o10g.jpg" alt="环境"></p>
+<p>2015.09.02</p>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://yinzo.github.io/tags/untagged">untagged</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2015-09-02 22:03 &#43;0800</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="next-post" href="https://yinzo.github.io/posts/notes-for-icmlc2009-fabioroli.pdf/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;</span><br><span>Notes for &lt;ICMLC2009-FabioRoli.pdf&gt;</span>
+			</a>
+			<a class="prev-post" href="https://yinzo.github.io/posts/oracle%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E8%A1%A8/">
+				<span class="post-nav-label">&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>Oracle注入速查表</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<p id="https://yinzo.github.io/" class="leancloud_visitors" data-flag-title="雪地">
+    <span class="post-meta-item-text">阅读量 </span>
+    <span class="leancloud-visitors-count">-</span>
+</p>
+<div id="vcomments" sty ></div>
+<style>
+.v .vbtn {
+    background: transparent !important;
+    border: 2px solid #c6cddb !important;
+    color: #c6cddb !important;
+}
+
+.v .vinfo .vcount .vnum {
+    color: #c6cddb !important;
+}
+
+.v .vinfo .col {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vh .vmeta .vat {
+    color: #c6cddb !important;
+}
+
+.v p, .v strong {
+    color: #c6cddb !important;
+}
+
+.v code {
+    font-weight: bold !important;
+    font-size: 0.8rem !important;
+}
+
+.v pre {
+    font-size: 1rem !important;
+    font-weight: bold !important;
+    background: #2c3e50 !important;
+}
+
+.v li {
+    color: #c6cddb !important;
+    margin-left: .5rem !important;
+}
+
+.v a {
+    color: #1abc9c !important;
+}
+
+.v .vwrap .vheader .vinput {
+    border-bottom: 1px dashed #c6cddb !important;
+}
+
+.v .vwrap {
+    border: 2px solid #c6cddb !important;
+}
+
+.v .vinput {
+    color: #c6cddb !important;
+}
+
+.v .veditor {
+    color: #c6cddb !important;
+}
+
+.v .vwrap .vedit .vctrl span {
+    color: #c6cddb !important;
+}
+
+.v .vwrap .vcontrol .col svg {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vhead .vsys {
+    background: transparent !important;
+    border: 1px solid #c6cddb!important;
+    padding: 0 .4rem 0 .4rem !important;
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vquote {
+    border-left: 0px !important;
+}
+
+.v .vlist .vcard .vh {
+    border-bottom: 0px !important;
+}
+
+.v .power {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vh .vtime {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vcontent {
+    color: #c6cddb !important;
+}
+
+::-moz-placeholder { color: #ccc; }
+::-webkit-input-placeholder { color:#ccc; }
+:-ms-input-placeholder { color:#ccc; }
+</style>
+<script>    
+    new Valine({
+        el:'#vcomments',
+        appId: 'wNSjixVlMTvSPXjMubNsdiy5-9Nh9j0Va',
+        appKey: 'ygUBd8larhetzhyeV3sLpQ5q',
+        visitor: true
+    })
+</script></div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2020 <a href="https://yinzo.github.io/">Yinzo</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://yinzo.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://yinzo.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

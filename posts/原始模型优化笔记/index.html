@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="cn-zh">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta itemprop="name" content="原始模型优化笔记">
+<meta itemprop="description" content="原始模型优化笔记  400:Nice at epoch 38, validation acc 96.56% 200:Nice at epoch 37, validation acc 95.22% 100:Nice at epoch 34, validation acc 94.78%单轮训练时间与50维相近，测试样例测试耗时 0.92secs 50:Nice at epoch 40, validation acc 94.39%单轮训练时间在7秒左右，测试样例(av 8365806)测试耗时 0.7secs  在两个 conv 层之间和两个 fc 层之间各加入了一个 \(p=0.5\) 的 dropout
+40 epoch 时只有 89.1 acc， 和预想的一样，会导致 达到最佳效果的 epoch 数上升。
+用了 dropout 后一个很明显的变化是，原本训练过程中通常是train acc 高于 validation acc，现在通常是 validation acc 高于 train acc，训练后期才基本持平或反超
+vector在 epoch 90 左右 达到了96.50%上下的 acc，最终在epoch 300 以上能达到 97.">
+<meta itemprop="datePublished" content="2017-03-01T17:04:00&#43;08:00" />
+<meta itemprop="dateModified" content="2017-03-01T17:04:00&#43;08:00" />
+<meta itemprop="wordCount" content="173">
+
+
+
+<meta itemprop="keywords" content="untagged," /><meta property="og:title" content="原始模型优化笔记" />
+<meta property="og:description" content="原始模型优化笔记  400:Nice at epoch 38, validation acc 96.56% 200:Nice at epoch 37, validation acc 95.22% 100:Nice at epoch 34, validation acc 94.78%单轮训练时间与50维相近，测试样例测试耗时 0.92secs 50:Nice at epoch 40, validation acc 94.39%单轮训练时间在7秒左右，测试样例(av 8365806)测试耗时 0.7secs  在两个 conv 层之间和两个 fc 层之间各加入了一个 \(p=0.5\) 的 dropout
+40 epoch 时只有 89.1 acc， 和预想的一样，会导致 达到最佳效果的 epoch 数上升。
+用了 dropout 后一个很明显的变化是，原本训练过程中通常是train acc 高于 validation acc，现在通常是 validation acc 高于 train acc，训练后期才基本持平或反超
+vector在 epoch 90 左右 达到了96.50%上下的 acc，最终在epoch 300 以上能达到 97." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://yinzo.github.io/posts/%E5%8E%9F%E5%A7%8B%E6%A8%A1%E5%9E%8B%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0/" />
+<meta property="article:published_time" content="2017-03-01T17:04:00+08:00" />
+<meta property="article:modified_time" content="2017-03-01T17:04:00+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="原始模型优化笔记"/>
+<meta name="twitter:description" content="原始模型优化笔记  400:Nice at epoch 38, validation acc 96.56% 200:Nice at epoch 37, validation acc 95.22% 100:Nice at epoch 34, validation acc 94.78%单轮训练时间与50维相近，测试样例测试耗时 0.92secs 50:Nice at epoch 40, validation acc 94.39%单轮训练时间在7秒左右，测试样例(av 8365806)测试耗时 0.7secs  在两个 conv 层之间和两个 fc 层之间各加入了一个 \(p=0.5\) 的 dropout
+40 epoch 时只有 89.1 acc， 和预想的一样，会导致 达到最佳效果的 epoch 数上升。
+用了 dropout 后一个很明显的变化是，原本训练过程中通常是train acc 高于 validation acc，现在通常是 validation acc 高于 train acc，训练后期才基本持平或反超
+vector在 epoch 90 左右 达到了96.50%上下的 acc，最终在epoch 300 以上能达到 97."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>原始模型优化笔记</title>
+	<link rel="stylesheet" href="https://yinzo.github.io/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://yinzo.github.io/">雪地</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://yinzo.github.io/posts/">Posts</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="menu-btn" class="hdr-btn" title=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://yinzo.github.io/posts/">Posts</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Mar 1, 2017</span></div>
+				<h1>原始模型优化笔记</h1>
+			</header>
+			<div class="content">
+				<h1 id="原始模型优化笔记">原始模型优化笔记<a href="#原始模型优化笔记" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<ul>
+<li>400:Nice at epoch 38, validation acc 96.56%</li>
+<li>200:Nice at epoch 37, validation acc 95.22%</li>
+<li>100:Nice at epoch 34, validation acc 94.78%单轮训练时间与50维相近，测试样例测试耗时 0.92secs</li>
+<li>50:Nice at epoch 40, validation acc 94.39%单轮训练时间在7秒左右，测试样例(av 8365806)测试耗时 0.7secs</li>
+</ul>
+<!-- raw HTML omitted -->
+<p>在两个 conv 层之间和两个 fc 层之间各加入了一个 \(p=0.5\) 的 dropout</p>
+<p>40 epoch 时只有 89.1 acc， 和预想的一样，会导致 达到最佳效果的 epoch 数上升。</p>
+<p>用了 dropout 后一个很明显的变化是，原本训练过程中通常是train acc 高于 validation acc，现在通常是 validation acc 高于 train acc，训练后期才基本持平或反超</p>
+<p>vector在 epoch 90 左右 达到了96.50%上下的 acc，最终在epoch 300 以上能达到 97.10% 左右的 acc</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gbbg45n7rij30uo0e8jt3.jpg" alt="屏幕快照 2017-02-24 22.15.27"></p>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p>人工检查实际识别效果，仍有少量漏网。果然几个百分点的区别，人简单扫视还是很难看出区别的，而且还要排除安慰剂效应。</p>
+<p>实验证明 dropout 确实有效防止了过拟合，并且提高了一定的分类准确度。</p>
+<p>接着将几个 word2vec 长度的模型训练图都画出来对比：</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gbbg0icvf2j30uo0e8jt3.jpg" alt="屏幕快照 2017-03-01 16.57.28"></p>
+<p>可以从左下角的 tooltip 看到，从上至下分别是词向量长度为 400、200、100、50、25 的模型，在相同迭代次数下的准确度排序。由于选取的是上述模型都仍有收敛空间的迭代数，所以这个排名一定程度上可以代表模型训练所需的迭代次数排序。</p>
+<p>由此可以得出结论，词向量维数越多，模型收敛所需的迭代次数越少，但是最终收敛的效果没有变化，这可能是目前训练样本较少的原因。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gbbfx7ss94j30rl0hydje.jpg" alt="屏幕快照 2017-03-01 17.01.36"></p>
+<p>切换到训练时间为横轴的图来看，收敛速度实际上是100维最快，这倒是出乎意外，原本以为会是低维模型最快，结果发现，100维由于单次迭代提升更大，虽然迭代速度稍慢但是总体收敛最快。我还特地检查了100维的data graph，确定的确是在用100维的词向量来训练的。</p>
+<!-- raw HTML omitted -->
+<p>这个问题我找到了 <a href="https://www.reddit.com/r/MachineLearning/comments/42nnpe/why_do_i_never_see_dropout_applied_in/">Reddit 的这个讨论串</a></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>卷积层的参数数量没有全连接层那么多，所以不那么需要 regularizaion</p>
+</li>
+<li>
+<p>卷积层 filter map 的梯度是对于整个样本进行平均化的<!-- raw HTML omitted --><!-- raw HTML omitted -->1<!-- raw HTML omitted --><!-- raw HTML omitted -->，这样会使得卷积核原本存在相关性的参数，在样本的不同位置使用了不同的 dropout mask，导致 dropout 无效。当然，你可以想办法使卷积核的 dropout mask 在同一层中固定，但是这又会导致 regularizaion 过强。</p>
+</li>
+<li>
+<p>Srivastava/Hinton 在 dropout 的论文中也有提到：在卷积层加入 dropout 的效果等于没有 \((3.02\% \rightarrow 2.55\%)\)，因为卷积层的参数太少了，不存在过拟合的问题，所以 dropout 几乎没有效果。但是 dropout 在较低的层仍是有用的，它的效果相当于产生一点噪声，使得后面层数较高的全连接层避免过拟合。</p>
+</li>
+<li>
+<p>在卷积层使用 dropout 也不是绝对没有的，以下几篇论文中就有用到：</p>
+<ul>
+<li><a href="http://arxiv.org/pdf/1511.07289v3.pdf">http://arxiv.org/pdf/1511.07289v3.pdf</a></li>
+<li><a href="http://torch.ch/blog/2015/07/30/cifar.html">http://torch.ch/blog/2015/07/30/cifar.html</a></li>
+<li><a href="http://danielnouri.org/notes/2014/12/17/using-convolutional-neural-nets-to-detect-facial-keypoints-tutorial/">http://danielnouri.org/notes/2014/12/17/using-convolutional-neural-nets-to-detect-facial-keypoints-tutorial/</a></li>
+</ul>
+<p>但是他们都有卷积层的 dropout 『keep_prob 较大』的特点。</p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<p>先测试了卷积层不使用 dropout 的效果<br>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gbbg46ayvyj30us0cv0u8.jpg" alt="屏幕快照 2017-02-27 13.11.43"></p>
+<p>绿线是没有 卷积层dropout 的 acc， 紫线是卷积层 p=0.5 dropout 的 acc，两者都有一个 p=0.5 的全连接 dropout。由此可得卷积层的 dropout 还是有效果的，首先防止过拟合的程度要更高，其次对于准确度的提升也是有的 \((\uparrow2.3\%)\)</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gbbfzmxsw3j315k0ji78w.jpg" alt="屏幕快照 2017-03-01 15.45.56"></p>
+<p>卷积层 p=0.6 和 p=0.4 dropout 的测试，相比 p=0.5 的模型，收敛速度、收敛精度都没有明显的区别。</p>
+<!-- raw HTML omitted -->
+<p>先在卷积层和全连接层之间加入一个大小为2的 <code>max_pooling1d</code><br>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gbbg4607imj30uo0e8jt3.jpg" alt="屏幕快照 2017-02-26 16.54.23"></p>
+<p>可以看到，这个 max_pool 对于最终收敛精度没有影响，在前期略微加快了收敛，但是中期减慢了收敛。</p>
+<p>尝试移动该 pooling 层到两个卷积层之间。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gbbfx33fvnj30uv0ju77z.jpg" alt="屏幕快照 2017-02-28 13.42.28"></p>
+<p>上图为多次测试的结果。收敛速度和收敛准确率没有较为明显的提高或降低 \((96.623\% \rightarrow 96.694\%)\)，只有训练速度有略微的提高。</p>
+<p>值得一提的是，加入了 max-pool 的模型在高迭代次数的时候，标准差在逐渐增大。我认为这是因为 max-pool 一定程度上降低了训练样本的精度，相当于训练样本变少了，于是乎少量增加了整个模型在高迭代次数过拟合的风险。这里我选择使用84次迭代的模型，也就是图中横坐标约为 1k 的位置。相对来说过拟合的程度应该是非常小的。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gbbg40j5zyj30us0cv0u8.jpg" alt="屏幕快照 2017-02-26 18.49.29"></p>
+<!-- raw HTML omitted -->
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://yinzo.github.io/tags/untagged">untagged</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2017-03-01 17:04 &#43;0800</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="next-post" href="https://yinzo.github.io/posts/cs229-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-part-1/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;</span><br><span>CS229 学习笔记 Part 1</span>
+			</a>
+			<a class="prev-post" href="https://yinzo.github.io/posts/%E4%BD%8E%E7%B4%A0%E8%B4%A8%E5%BC%B9%E5%B9%95%E5%88%86%E7%B1%BB%E5%99%A8-cnn-%E8%AE%AD%E7%BB%83%E7%AC%94%E8%AE%B0/">
+				<span class="post-nav-label">&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>低素质弹幕分类器 CNN 训练笔记</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<p id="https://yinzo.github.io/" class="leancloud_visitors" data-flag-title="雪地">
+    <span class="post-meta-item-text">阅读量 </span>
+    <span class="leancloud-visitors-count">-</span>
+</p>
+<div id="vcomments" sty ></div>
+<style>
+.v .vbtn {
+    background: transparent !important;
+    border: 2px solid #c6cddb !important;
+    color: #c6cddb !important;
+}
+
+.v .vinfo .vcount .vnum {
+    color: #c6cddb !important;
+}
+
+.v .vinfo .col {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vh .vmeta .vat {
+    color: #c6cddb !important;
+}
+
+.v p, .v strong {
+    color: #c6cddb !important;
+}
+
+.v code {
+    font-weight: bold !important;
+    font-size: 0.8rem !important;
+}
+
+.v pre {
+    font-size: 1rem !important;
+    font-weight: bold !important;
+    background: #2c3e50 !important;
+}
+
+.v li {
+    color: #c6cddb !important;
+    margin-left: .5rem !important;
+}
+
+.v a {
+    color: #1abc9c !important;
+}
+
+.v .vwrap .vheader .vinput {
+    border-bottom: 1px dashed #c6cddb !important;
+}
+
+.v .vwrap {
+    border: 2px solid #c6cddb !important;
+}
+
+.v .vinput {
+    color: #c6cddb !important;
+}
+
+.v .veditor {
+    color: #c6cddb !important;
+}
+
+.v .vwrap .vedit .vctrl span {
+    color: #c6cddb !important;
+}
+
+.v .vwrap .vcontrol .col svg {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vhead .vsys {
+    background: transparent !important;
+    border: 1px solid #c6cddb!important;
+    padding: 0 .4rem 0 .4rem !important;
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vquote {
+    border-left: 0px !important;
+}
+
+.v .vlist .vcard .vh {
+    border-bottom: 0px !important;
+}
+
+.v .power {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vh .vtime {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vcontent {
+    color: #c6cddb !important;
+}
+
+::-moz-placeholder { color: #ccc; }
+::-webkit-input-placeholder { color:#ccc; }
+:-ms-input-placeholder { color:#ccc; }
+</style>
+<script>    
+    new Valine({
+        el:'#vcomments',
+        appId: 'wNSjixVlMTvSPXjMubNsdiy5-9Nh9j0Va',
+        appKey: 'ygUBd8larhetzhyeV3sLpQ5q',
+        visitor: true
+    })
+</script></div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2020 <a href="https://yinzo.github.io/">Yinzo</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://yinzo.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://yinzo.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="cn-zh">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta itemprop="name" content="Note for &lt;Thesis - Behavior of Machine Learning Algorithms in Adversarial Environments.pdf&gt;(1)">
+<meta itemprop="description" content="Note for &ldquo;Thesis - Behavior of Machine Learning Algorithms in Adversarial Environments.pdf&rdquo;(1)  The process is too complex to designed for human operator Requirement of dynamical development   Alter his approach based on knowledge of the learner’s shortcomings Mislead it by cleverly crafting data to corrupt Deceive the learning process   An attacker can exploit the nature of a machine learning system to mis-train it and cause it to fail   What techniques can a patient adversary use to mis-train or evade a learning system?">
+<meta itemprop="datePublished" content="2016-02-04T16:55:00&#43;08:00" />
+<meta itemprop="dateModified" content="2016-02-04T16:55:00&#43;08:00" />
+<meta itemprop="wordCount" content="466">
+
+
+
+<meta itemprop="keywords" content="untagged," /><meta property="og:title" content="Note for &lt;Thesis - Behavior of Machine Learning Algorithms in Adversarial Environments.pdf&gt;(1)" />
+<meta property="og:description" content="Note for &ldquo;Thesis - Behavior of Machine Learning Algorithms in Adversarial Environments.pdf&rdquo;(1)  The process is too complex to designed for human operator Requirement of dynamical development   Alter his approach based on knowledge of the learner’s shortcomings Mislead it by cleverly crafting data to corrupt Deceive the learning process   An attacker can exploit the nature of a machine learning system to mis-train it and cause it to fail   What techniques can a patient adversary use to mis-train or evade a learning system?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://yinzo.github.io/posts/note-for-thesis-behavior-of-machine-learning-algorithms-in-adversarial-environments.pdf1/" />
+<meta property="article:published_time" content="2016-02-04T16:55:00+08:00" />
+<meta property="article:modified_time" content="2016-02-04T16:55:00+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Note for &lt;Thesis - Behavior of Machine Learning Algorithms in Adversarial Environments.pdf&gt;(1)"/>
+<meta name="twitter:description" content="Note for &ldquo;Thesis - Behavior of Machine Learning Algorithms in Adversarial Environments.pdf&rdquo;(1)  The process is too complex to designed for human operator Requirement of dynamical development   Alter his approach based on knowledge of the learner’s shortcomings Mislead it by cleverly crafting data to corrupt Deceive the learning process   An attacker can exploit the nature of a machine learning system to mis-train it and cause it to fail   What techniques can a patient adversary use to mis-train or evade a learning system?"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>Note for &lt;Thesis - Behavior of Machine Learning Algorithms in Adversarial Environments.pdf&gt;(1)</title>
+	<link rel="stylesheet" href="https://yinzo.github.io/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://yinzo.github.io/">雪地</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://yinzo.github.io/posts/">Posts</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="menu-btn" class="hdr-btn" title=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://yinzo.github.io/posts/">Posts</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Feb 4, 2016</span></div>
+				<h1>Note for &lt;Thesis - Behavior of Machine Learning Algorithms in Adversarial Environments.pdf&gt;(1)</h1>
+			</header>
+			<div class="content">
+				<h1 id="note-for-thesis---behavior-of-machine-learning-algorithms-in-adversarial-environmentspdf1">Note for &ldquo;Thesis - Behavior of Machine Learning Algorithms in Adversarial Environments.pdf&rdquo;(1)<a href="#note-for-thesis---behavior-of-machine-learning-algorithms-in-adversarial-environmentspdf1" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<ol>
+<li>The process is too complex to designed for human operator</li>
+<li>Requirement of dynamical development</li>
+</ol>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>Alter his approach based on knowledge of the learner’s shortcomings</li>
+<li>Mislead it by cleverly crafting data to corrupt</li>
+<li>Deceive the learning process</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>An attacker can exploit the nature of a machine learning system to mis-train it and cause it to fail</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>What techniques can a patient adversary use to mis-train or evade a learning system?</li>
+<li>How can system designers assess the vulnerability of their system to vigilantly incorporate trustworthy learning methods?</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>The constraints placed on the adversary</li>
+<li>The job the algorithm is tasked with performing</li>
+</ul>
+<p>This raises two fundamental questions:</p>
+<ul>
+<li>How can we evaluate a learner’s performance in adversarial environment?</li>
+<li>How to design or select a learner which can be satisfied for its performance in particular environment?</li>
+</ul>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<ol>
+<li>use information about the email distribution to construct clever attack spam messages</li>
+<li>will cause the spam filter to misclassify the user’s desired messages as spam.</li>
+<li>to cause the filter to become so unreliable</li>
+</ol>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<ul>
+<li>Better resistance within the poisoned environment</li>
+<li>But Less effective on non-poisoned environment</li>
+</ul>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<ul>
+<li>obfuscating words indicative of spam to human-recognizable misspellings; e.g., “Viagra” to“V1@gra” or “Cialis” to “Gia|is”</li>
+<li>using clever HTML to make the content difficult to parse</li>
+<li>adding words or text from other sources unrelated to the spam</li>
+<li>embedding images that contains the spam message.</li>
+</ul>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<ul>
+<li>Proactively Analysis</li>
+<li>Kerckhoffs’ Principle</li>
+<li>Conservative Design</li>
+<li>Threat Modeling</li>
+</ul>
+<!-- raw HTML omitted -->
+<p>Proactively find the vulnerabilities of learning system before the it is deployed or widely used.</p>
+<!-- raw HTML omitted -->
+<p>Do not let a system’s security rely on secrets. If the secrets are exposed, the system is immediately compromised.</p>
+<p>So apply this principle into machine learning, we should assume the adversary is aware of the learning algorithm and can obtain some data used to train the model.</p>
+<!-- raw HTML omitted -->
+<p>When access the security of a system, we should avoid to put limit on adversary’s behavior. We should assume that the adversary has the broadest possible powers.</p>
+<p>Conversely, though the adversary too powerfully may lead to an inappropriate assessment on the system.</p>
+<!-- raw HTML omitted -->
+<p>A completely secure system is infeasible. So author qualified the systems with <em>degree of security</em> -—the level of security expected against an adversary based on a <em>threat model</em> with a certain set of:</p>
+<ul>
+<li>objectives</li>
+<li>capabilities</li>
+<li>incentives</li>
+</ul>
+<!-- raw HTML omitted -->
+<ol>
+<li>Quantifies the security setting and objectives of that system, to develop criteria to measure success and quantify the level of security offered.</li>
+<li>Formalizing the risks and objectives, to identify potential limitations of the system and potential attacks.</li>
+<li>Identifies potential adversarial goals, resources and limitations.</li>
+</ol>
+<!-- raw HTML omitted -->
+<ol>
+<li>Determining classed of attacks on the system.</li>
+<li>Evaluating the resilience of the system against those attacks</li>
+<li>Strengthening the system against those classes of attacks.</li>
+</ol>
+<!-- raw HTML omitted -->
+<p>Some experience of author when developing this thesis, seems irrelevant to the mainstream.</p>
+<!-- raw HTML omitted -->
+<p>As the title, no useful informations.</p>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://yinzo.github.io/tags/untagged">untagged</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2016-02-04 16:55 &#43;0800</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="next-post" href="https://yinzo.github.io/posts/notes-for-neural-network/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;</span><br><span>Notes for Neural Network</span>
+			</a>
+			<a class="prev-post" href="https://yinzo.github.io/posts/%E5%B0%81%E8%A3%85%E4%B8%8E%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%88%86%E5%B1%82/">
+				<span class="post-nav-label">&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>封装，与协议的分层</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<p id="https://yinzo.github.io/" class="leancloud_visitors" data-flag-title="雪地">
+    <span class="post-meta-item-text">阅读量 </span>
+    <span class="leancloud-visitors-count">-</span>
+</p>
+<div id="vcomments" sty ></div>
+<style>
+.v .vbtn {
+    background: transparent !important;
+    border: 2px solid #c6cddb !important;
+    color: #c6cddb !important;
+}
+
+.v .vinfo .vcount .vnum {
+    color: #c6cddb !important;
+}
+
+.v .vinfo .col {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vh .vmeta .vat {
+    color: #c6cddb !important;
+}
+
+.v p, .v strong {
+    color: #c6cddb !important;
+}
+
+.v code {
+    font-weight: bold !important;
+    font-size: 0.8rem !important;
+}
+
+.v pre {
+    font-size: 1rem !important;
+    font-weight: bold !important;
+    background: #2c3e50 !important;
+}
+
+.v li {
+    color: #c6cddb !important;
+    margin-left: .5rem !important;
+}
+
+.v a {
+    color: #1abc9c !important;
+}
+
+.v .vwrap .vheader .vinput {
+    border-bottom: 1px dashed #c6cddb !important;
+}
+
+.v .vwrap {
+    border: 2px solid #c6cddb !important;
+}
+
+.v .vinput {
+    color: #c6cddb !important;
+}
+
+.v .veditor {
+    color: #c6cddb !important;
+}
+
+.v .vwrap .vedit .vctrl span {
+    color: #c6cddb !important;
+}
+
+.v .vwrap .vcontrol .col svg {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vhead .vsys {
+    background: transparent !important;
+    border: 1px solid #c6cddb!important;
+    padding: 0 .4rem 0 .4rem !important;
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vquote {
+    border-left: 0px !important;
+}
+
+.v .vlist .vcard .vh {
+    border-bottom: 0px !important;
+}
+
+.v .power {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vh .vtime {
+    color: #c6cddb !important;
+}
+
+.v .vlist .vcard .vcontent {
+    color: #c6cddb !important;
+}
+
+::-moz-placeholder { color: #ccc; }
+::-webkit-input-placeholder { color:#ccc; }
+:-ms-input-placeholder { color:#ccc; }
+</style>
+<script>    
+    new Valine({
+        el:'#vcomments',
+        appId: 'wNSjixVlMTvSPXjMubNsdiy5-9Nh9j0Va',
+        appKey: 'ygUBd8larhetzhyeV3sLpQ5q',
+        visitor: true
+    })
+</script></div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2020 <a href="https://yinzo.github.io/">Yinzo</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://yinzo.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://yinzo.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>
