@@ -7,18 +7,22 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 <meta itemprop="name" content="Airflow 折腾实录">
 <meta itemprop="description" content="因为未知原因，corntab 无法在我群晖 docker 内的 ubuntu 上正常运行。懒得 debug 了，正好打算熟悉一下部门即将开始使用的 airflow ，部署一个用来替代 crontab。
-安装 讲道理，airflow 真的是现代软件吗，看上去只需要 pip install，结果安装完执行 airflow initdb居然提示我 UnicodeDecodeError，真是服了。简单帮他debug了下，/usr/local/lib/python2.7/dist-packages/airflow/configuration.py 的607行 conf.read 增加 encoding 参数，指定 utf8。问题解决，下一个报错。
+安装 安装完执行 airflow initdb提示 UnicodeDecodeError。简单 debug 了下，/usr/local/lib/python2.7/dist-packages/airflow/configuration.py 的607行 conf.read 增加 encoding 参数，指定 utf8。问题解决
+后记：后来思考了下，问题的原因估计是 docker 内 ubuntu 的默认 locale 为 POSIX，导致了这个问题。建议直接修改成正常的 locale 比如 en-US.UTF8，应该就不会出现这个报错了。
+下一个报错。
 google 了一下，看起来是 werkzeug 的版本不对，pip install werkzeug==0.15.4 解决问题，成功执行airflow initdb。
 正常启动 webserver 和 scheduler，没什么可说的，可以选择用 nohup 后台启动或者你开两个终端分别启动，这俩东西默认都是保持前台的，真不现代。">
 <meta itemprop="datePublished" content="2020-01-16T22:15:00&#43;08:00" />
 <meta itemprop="dateModified" content="2020-01-16T22:15:00&#43;08:00" />
-<meta itemprop="wordCount" content="39">
+<meta itemprop="wordCount" content="50">
 
 
 
 <meta itemprop="keywords" content="" /><meta property="og:title" content="Airflow 折腾实录" />
 <meta property="og:description" content="因为未知原因，corntab 无法在我群晖 docker 内的 ubuntu 上正常运行。懒得 debug 了，正好打算熟悉一下部门即将开始使用的 airflow ，部署一个用来替代 crontab。
-安装 讲道理，airflow 真的是现代软件吗，看上去只需要 pip install，结果安装完执行 airflow initdb居然提示我 UnicodeDecodeError，真是服了。简单帮他debug了下，/usr/local/lib/python2.7/dist-packages/airflow/configuration.py 的607行 conf.read 增加 encoding 参数，指定 utf8。问题解决，下一个报错。
+安装 安装完执行 airflow initdb提示 UnicodeDecodeError。简单 debug 了下，/usr/local/lib/python2.7/dist-packages/airflow/configuration.py 的607行 conf.read 增加 encoding 参数，指定 utf8。问题解决
+后记：后来思考了下，问题的原因估计是 docker 内 ubuntu 的默认 locale 为 POSIX，导致了这个问题。建议直接修改成正常的 locale 比如 en-US.UTF8，应该就不会出现这个报错了。
+下一个报错。
 google 了一下，看起来是 werkzeug 的版本不对，pip install werkzeug==0.15.4 解决问题，成功执行airflow initdb。
 正常启动 webserver 和 scheduler，没什么可说的，可以选择用 nohup 后台启动或者你开两个终端分别启动，这俩东西默认都是保持前台的，真不现代。" />
 <meta property="og:type" content="article" />
@@ -28,7 +32,9 @@ google 了一下，看起来是 werkzeug 的版本不对，pip install werkzeug=
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Airflow 折腾实录"/>
 <meta name="twitter:description" content="因为未知原因，corntab 无法在我群晖 docker 内的 ubuntu 上正常运行。懒得 debug 了，正好打算熟悉一下部门即将开始使用的 airflow ，部署一个用来替代 crontab。
-安装 讲道理，airflow 真的是现代软件吗，看上去只需要 pip install，结果安装完执行 airflow initdb居然提示我 UnicodeDecodeError，真是服了。简单帮他debug了下，/usr/local/lib/python2.7/dist-packages/airflow/configuration.py 的607行 conf.read 增加 encoding 参数，指定 utf8。问题解决，下一个报错。
+安装 安装完执行 airflow initdb提示 UnicodeDecodeError。简单 debug 了下，/usr/local/lib/python2.7/dist-packages/airflow/configuration.py 的607行 conf.read 增加 encoding 参数，指定 utf8。问题解决
+后记：后来思考了下，问题的原因估计是 docker 内 ubuntu 的默认 locale 为 POSIX，导致了这个问题。建议直接修改成正常的 locale 比如 en-US.UTF8，应该就不会出现这个报错了。
+下一个报错。
 google 了一下，看起来是 werkzeug 的版本不对，pip install werkzeug==0.15.4 解决问题，成功执行airflow initdb。
 正常启动 webserver 和 scheduler，没什么可说的，可以选择用 nohup 后台启动或者你开两个终端分别启动，这俩东西默认都是保持前台的，真不现代。"/>
 
@@ -79,9 +85,11 @@ google 了一下，看起来是 werkzeug 的版本不对，pip install werkzeug=
 			<div class="content">
 				<p>因为未知原因，corntab 无法在我群晖 docker 内的 ubuntu 上正常运行。懒得 debug 了，正好打算熟悉一下部门即将开始使用的 airflow ，部署一个用来替代 crontab。</p>
 <h2 id="安装">安装<a href="#安装" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-<p>讲道理，airflow 真的是现代软件吗，看上去只需要 pip install，结果安装完执行 <code>airflow initdb</code>居然提示我 UnicodeDecodeError，真是服了。<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gbb8xm9lmuj30ut0dd42h.jpg" alt="1579183227586"></p>
-<p>简单帮他debug了下，<code>/usr/local/lib/python2.7/dist-packages/airflow/configuration.py</code> 的607行 <code>conf.read</code> 增加 <code>encoding </code>参数，指定 <code>utf8</code>。<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gbb8xndguwj30q40hc0vm.jpg" alt="1579183993464"></p>
-<p>问题解决，下一个报错。</p>
+<p>安装完执行 <code>airflow initdb</code>提示 UnicodeDecodeError。<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gbb8xm9lmuj30ut0dd42h.jpg" alt="1579183227586"></p>
+<p>简单 debug 了下，<code>/usr/local/lib/python2.7/dist-packages/airflow/configuration.py</code> 的607行 <code>conf.read</code> 增加 <code>encoding </code>参数，指定 <code>utf8</code>。<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gbb8xndguwj30q40hc0vm.jpg" alt="1579183993464"></p>
+<p>问题解决</p>
+<p>后记：后来思考了下，问题的原因估计是 docker 内 ubuntu 的默认 locale 为 POSIX，导致了这个问题。<strong>建议直接修改成正常的 locale 比如 en-US.UTF8</strong>，应该就不会出现这个报错了。</p>
+<p>下一个报错。</p>
 <p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gbb8xlefmvj30u50cqtcb.jpg" alt="1579183367728"></p>
 <p>google 了一下，看起来是 werkzeug 的版本不对，<code>pip install werkzeug==0.15.4</code> 解决问题，成功执行<code>airflow initdb</code>。</p>
 <p>正常启动 webserver 和 scheduler，没什么可说的，可以选择用 nohup 后台启动或者你开两个终端分别启动，这俩东西默认都是保持前台的，真不现代。</p>
