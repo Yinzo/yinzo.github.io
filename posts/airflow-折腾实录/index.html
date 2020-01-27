@@ -1,42 +1,27 @@
 <!DOCTYPE html>
-<html lang="cn-zh">
+<html lang="zh-CN">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 <meta itemprop="name" content="Airflow 折腾实录">
-<meta itemprop="description" content="因为未知原因，corntab 无法在我群晖 docker 内的 ubuntu 上正常运行。懒得 debug 了，正好打算熟悉一下部门即将开始使用的 airflow ，部署一个用来替代 crontab。
-安装 安装完执行 airflow initdb提示 UnicodeDecodeError。简单 debug 了下，/usr/local/lib/python2.7/dist-packages/airflow/configuration.py 的607行 conf.read 增加 encoding 参数，指定 utf8。问题解决
-后记：后来思考了下，问题的原因估计是 docker 内 ubuntu 的默认 locale 为 POSIX，导致了这个问题。建议直接修改成正常的 locale 比如 en-US.UTF8，应该就不会出现这个报错了。
-下一个报错。
-google 了一下，看起来是 werkzeug 的版本不对，pip install werkzeug==0.15.4 解决问题，成功执行airflow initdb。
-正常启动 webserver 和 scheduler，没什么可说的，可以选择用 nohup 后台启动或者你开两个终端分别启动，这俩东西默认都是保持前台的，真不现代。">
+<meta itemprop="description" content="因为未知原因，corntab 无法在我群晖 docker 内的 ubuntu 上正常运行。懒得 debug 了，正好打算熟悉一下部门即将开始使用的 airflow ，部署一个用来替代 crontab。">
 <meta itemprop="datePublished" content="2020-01-16T22:15:00&#43;08:00" />
 <meta itemprop="dateModified" content="2020-01-16T22:15:00&#43;08:00" />
-<meta itemprop="wordCount" content="50">
+<meta itemprop="wordCount" content="389">
 
 
 
 <meta itemprop="keywords" content="" /><meta property="og:title" content="Airflow 折腾实录" />
-<meta property="og:description" content="因为未知原因，corntab 无法在我群晖 docker 内的 ubuntu 上正常运行。懒得 debug 了，正好打算熟悉一下部门即将开始使用的 airflow ，部署一个用来替代 crontab。
-安装 安装完执行 airflow initdb提示 UnicodeDecodeError。简单 debug 了下，/usr/local/lib/python2.7/dist-packages/airflow/configuration.py 的607行 conf.read 增加 encoding 参数，指定 utf8。问题解决
-后记：后来思考了下，问题的原因估计是 docker 内 ubuntu 的默认 locale 为 POSIX，导致了这个问题。建议直接修改成正常的 locale 比如 en-US.UTF8，应该就不会出现这个报错了。
-下一个报错。
-google 了一下，看起来是 werkzeug 的版本不对，pip install werkzeug==0.15.4 解决问题，成功执行airflow initdb。
-正常启动 webserver 和 scheduler，没什么可说的，可以选择用 nohup 后台启动或者你开两个终端分别启动，这俩东西默认都是保持前台的，真不现代。" />
+<meta property="og:description" content="因为未知原因，corntab 无法在我群晖 docker 内的 ubuntu 上正常运行。懒得 debug 了，正好打算熟悉一下部门即将开始使用的 airflow ，部署一个用来替代 crontab。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://yinzo.github.io/posts/airflow-%E6%8A%98%E8%85%BE%E5%AE%9E%E5%BD%95/" />
 <meta property="article:published_time" content="2020-01-16T22:15:00+08:00" />
 <meta property="article:modified_time" content="2020-01-16T22:15:00+08:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Airflow 折腾实录"/>
-<meta name="twitter:description" content="因为未知原因，corntab 无法在我群晖 docker 内的 ubuntu 上正常运行。懒得 debug 了，正好打算熟悉一下部门即将开始使用的 airflow ，部署一个用来替代 crontab。
-安装 安装完执行 airflow initdb提示 UnicodeDecodeError。简单 debug 了下，/usr/local/lib/python2.7/dist-packages/airflow/configuration.py 的607行 conf.read 增加 encoding 参数，指定 utf8。问题解决
-后记：后来思考了下，问题的原因估计是 docker 内 ubuntu 的默认 locale 为 POSIX，导致了这个问题。建议直接修改成正常的 locale 比如 en-US.UTF8，应该就不会出现这个报错了。
-下一个报错。
-google 了一下，看起来是 werkzeug 的版本不对，pip install werkzeug==0.15.4 解决问题，成功执行airflow initdb。
-正常启动 webserver 和 scheduler，没什么可说的，可以选择用 nohup 后台启动或者你开两个终端分别启动，这俩东西默认都是保持前台的，真不现代。"/>
+<meta name="twitter:description" content="因为未知原因，corntab 无法在我群晖 docker 内的 ubuntu 上正常运行。懒得 debug 了，正好打算熟悉一下部门即将开始使用的 airflow ，部署一个用来替代 crontab。"/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -65,7 +50,7 @@ google 了一下，看起来是 werkzeug 的版本不对，pip install werkzeug=
 				</nav>
 			</div>
 			<div class="hdr-right hdr-icons">
-				<button id="menu-btn" class="hdr-btn" title=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+				<button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
 			</div>
 		</div>
 	</header>
@@ -97,13 +82,13 @@ google 了一下，看起来是 werkzeug 的版本不对，pip install werkzeug=
 			</div>
 			<hr class="post-end">
 			<footer class="post-info">
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>389 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-01-16 22:15 &#43;0800</p>
 			</footer>
 		</article>
 		<div class="post-nav thin">
 			<a class="prev-post" href="https://yinzo.github.io/posts/%E5%9C%A8%E7%BE%A4%E6%99%96-ds218&#43;-%E7%9A%84-docker-%E7%8E%AF%E5%A2%83%E4%B8%8A%E8%BF%90%E8%A1%8C-elk/">
-				<span class="post-nav-label">&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>在群晖 DS218&#43; 的 Docker 环境上运行 ELK</span>
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>在群晖 DS218&#43; 的 Docker 环境上运行 ELK</span>
 			</a>
 		</div>
 		<div id="comments" class="thin">
@@ -227,7 +212,15 @@ google 了一下，看起来是 werkzeug 的版本不对，pip install werkzeug=
 			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://yinzo.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
 		</p>
 	</footer>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+		  tex2jax: {
+			inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+			processEscapes: true
+		  }
+		});
+	  </script>
 
 
 	<script src="https://yinzo.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>

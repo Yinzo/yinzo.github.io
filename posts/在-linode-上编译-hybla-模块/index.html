@@ -1,78 +1,27 @@
 <!DOCTYPE html>
-<html lang="cn-zh">
+<html lang="zh-CN">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 <meta itemprop="name" content="在 Linode 上编译 hybla 模块">
-<meta itemprop="description" content="在 Linode 上编译 hybla 模块 执行到这一步时运行出错
-Google 一番后发现是缺少 tcp_hybla 模块，需要自己手动编译。引用一下 https://plus.google.com/&#43;BoluoKING/posts/dLyYhBf3mwp 的科普
- 中美之间的线路质量不是很好，rtt较长且时常丢包。TCP的设计目的是解决不可靠线路上可靠传输的问题，即为了解决丢包，但丢包却使TCP传输速度大幅下降。HTTP协议在传输层使用的是TCP协议，所以网页下载的速度就取决于TCP单线程下载的速度（因为网页就是单线程下载的）。丢包使得TCP传输速度大幅下降的主要原因是丢包重传机制，控制这一机制的就是TCP拥塞控制算法。
-Linux内核中提供了若干套TCP拥塞控制算法，这些算法各自适用于不同的环境。
-1）reno是最基本的拥塞控制算法，也是TCP协议的实验原型。
-2）bic适用于rtt较高但丢包极为罕见的情况，比如北美和欧洲之间的线路，这是2.6.8到2.6.18之间的Linux内核的默认算法。
-3）cubic是修改版的bic，适用环境比bic广泛一点，它是2.6.19之后的linux内核的默认算法。
-4）hybla适用于高延时、高丢包率的网络，比如卫星链路——同样适用于中美之间的链路。
-我们需要做的工作就是将TCP拥塞控制算法改为hybla算法，并且优化TCP参数。
- 于是又开始找 hybla 模块的编译指南，参考了这两篇文章，并且修改了一下不太明确的地方，写个修改版的指南吧。
- Linode编译hybla htcp模块 Linode编译hybla htcp拥塞控制算法模块  在这里下载 https://www.kernel.org/pub/linux/kernel/
-我这里是 4.8.3，于是进入 v4.x 目录，向下翻即找到了，复制文件地址，在vps上 wget 下载下来
-注意修改对应的下载地址和文件名
-然后用你喜欢的编辑器编辑 .config 文件，查找 CONFIG_TCP_CONG_CUBIC=y，在这一行下面增加一行
-CONFIG_TCP_CONG_HYBLA=y  然后编译
-编译耗时约15~20分钟
-以下是 hybla 所用的 Makefile
-# Makefile for tcp_hybla.ko obj-m := tcp_hybla.o KDIR := /tmp/kernel/linux-4.8.3 PWD := $(shell pwd) default: $(MAKE) -C $(KDIR) SUBDIRS=$(PWD) modules  注意上面__第三行 KDIR := /root/kernel/linux-3.">
+<meta itemprop="description" content="在 Linode 上编译 hybla 模块 执行到这一步时运行出错 Google 一番后发现是缺少 tcp_hybla 模块，需要自己手动编译。引用一下 https://plus.google.com/&#43;BoluoKING/posts/dLyYhBf3mwp 的科普 中美之间的线路质量不是很好，rtt较长且时">
 <meta itemprop="datePublished" content="2016-12-27T23:22:00&#43;08:00" />
 <meta itemprop="dateModified" content="2016-12-27T23:22:00&#43;08:00" />
-<meta itemprop="wordCount" content="88">
+<meta itemprop="wordCount" content="953">
 
 
 
 <meta itemprop="keywords" content="untagged," /><meta property="og:title" content="在 Linode 上编译 hybla 模块" />
-<meta property="og:description" content="在 Linode 上编译 hybla 模块 执行到这一步时运行出错
-Google 一番后发现是缺少 tcp_hybla 模块，需要自己手动编译。引用一下 https://plus.google.com/&#43;BoluoKING/posts/dLyYhBf3mwp 的科普
- 中美之间的线路质量不是很好，rtt较长且时常丢包。TCP的设计目的是解决不可靠线路上可靠传输的问题，即为了解决丢包，但丢包却使TCP传输速度大幅下降。HTTP协议在传输层使用的是TCP协议，所以网页下载的速度就取决于TCP单线程下载的速度（因为网页就是单线程下载的）。丢包使得TCP传输速度大幅下降的主要原因是丢包重传机制，控制这一机制的就是TCP拥塞控制算法。
-Linux内核中提供了若干套TCP拥塞控制算法，这些算法各自适用于不同的环境。
-1）reno是最基本的拥塞控制算法，也是TCP协议的实验原型。
-2）bic适用于rtt较高但丢包极为罕见的情况，比如北美和欧洲之间的线路，这是2.6.8到2.6.18之间的Linux内核的默认算法。
-3）cubic是修改版的bic，适用环境比bic广泛一点，它是2.6.19之后的linux内核的默认算法。
-4）hybla适用于高延时、高丢包率的网络，比如卫星链路——同样适用于中美之间的链路。
-我们需要做的工作就是将TCP拥塞控制算法改为hybla算法，并且优化TCP参数。
- 于是又开始找 hybla 模块的编译指南，参考了这两篇文章，并且修改了一下不太明确的地方，写个修改版的指南吧。
- Linode编译hybla htcp模块 Linode编译hybla htcp拥塞控制算法模块  在这里下载 https://www.kernel.org/pub/linux/kernel/
-我这里是 4.8.3，于是进入 v4.x 目录，向下翻即找到了，复制文件地址，在vps上 wget 下载下来
-注意修改对应的下载地址和文件名
-然后用你喜欢的编辑器编辑 .config 文件，查找 CONFIG_TCP_CONG_CUBIC=y，在这一行下面增加一行
-CONFIG_TCP_CONG_HYBLA=y  然后编译
-编译耗时约15~20分钟
-以下是 hybla 所用的 Makefile
-# Makefile for tcp_hybla.ko obj-m := tcp_hybla.o KDIR := /tmp/kernel/linux-4.8.3 PWD := $(shell pwd) default: $(MAKE) -C $(KDIR) SUBDIRS=$(PWD) modules  注意上面__第三行 KDIR := /root/kernel/linux-3." />
+<meta property="og:description" content="在 Linode 上编译 hybla 模块 执行到这一步时运行出错 Google 一番后发现是缺少 tcp_hybla 模块，需要自己手动编译。引用一下 https://plus.google.com/&#43;BoluoKING/posts/dLyYhBf3mwp 的科普 中美之间的线路质量不是很好，rtt较长且时" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://yinzo.github.io/posts/%E5%9C%A8-linode-%E4%B8%8A%E7%BC%96%E8%AF%91-hybla-%E6%A8%A1%E5%9D%97/" />
 <meta property="article:published_time" content="2016-12-27T23:22:00+08:00" />
 <meta property="article:modified_time" content="2016-12-27T23:22:00+08:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="在 Linode 上编译 hybla 模块"/>
-<meta name="twitter:description" content="在 Linode 上编译 hybla 模块 执行到这一步时运行出错
-Google 一番后发现是缺少 tcp_hybla 模块，需要自己手动编译。引用一下 https://plus.google.com/&#43;BoluoKING/posts/dLyYhBf3mwp 的科普
- 中美之间的线路质量不是很好，rtt较长且时常丢包。TCP的设计目的是解决不可靠线路上可靠传输的问题，即为了解决丢包，但丢包却使TCP传输速度大幅下降。HTTP协议在传输层使用的是TCP协议，所以网页下载的速度就取决于TCP单线程下载的速度（因为网页就是单线程下载的）。丢包使得TCP传输速度大幅下降的主要原因是丢包重传机制，控制这一机制的就是TCP拥塞控制算法。
-Linux内核中提供了若干套TCP拥塞控制算法，这些算法各自适用于不同的环境。
-1）reno是最基本的拥塞控制算法，也是TCP协议的实验原型。
-2）bic适用于rtt较高但丢包极为罕见的情况，比如北美和欧洲之间的线路，这是2.6.8到2.6.18之间的Linux内核的默认算法。
-3）cubic是修改版的bic，适用环境比bic广泛一点，它是2.6.19之后的linux内核的默认算法。
-4）hybla适用于高延时、高丢包率的网络，比如卫星链路——同样适用于中美之间的链路。
-我们需要做的工作就是将TCP拥塞控制算法改为hybla算法，并且优化TCP参数。
- 于是又开始找 hybla 模块的编译指南，参考了这两篇文章，并且修改了一下不太明确的地方，写个修改版的指南吧。
- Linode编译hybla htcp模块 Linode编译hybla htcp拥塞控制算法模块  在这里下载 https://www.kernel.org/pub/linux/kernel/
-我这里是 4.8.3，于是进入 v4.x 目录，向下翻即找到了，复制文件地址，在vps上 wget 下载下来
-注意修改对应的下载地址和文件名
-然后用你喜欢的编辑器编辑 .config 文件，查找 CONFIG_TCP_CONG_CUBIC=y，在这一行下面增加一行
-CONFIG_TCP_CONG_HYBLA=y  然后编译
-编译耗时约15~20分钟
-以下是 hybla 所用的 Makefile
-# Makefile for tcp_hybla.ko obj-m := tcp_hybla.o KDIR := /tmp/kernel/linux-4.8.3 PWD := $(shell pwd) default: $(MAKE) -C $(KDIR) SUBDIRS=$(PWD) modules  注意上面__第三行 KDIR := /root/kernel/linux-3."/>
+<meta name="twitter:description" content="在 Linode 上编译 hybla 模块 执行到这一步时运行出错 Google 一番后发现是缺少 tcp_hybla 模块，需要自己手动编译。引用一下 https://plus.google.com/&#43;BoluoKING/posts/dLyYhBf3mwp 的科普 中美之间的线路质量不是很好，rtt较长且时"/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -101,7 +50,7 @@ CONFIG_TCP_CONG_HYBLA=y  然后编译
 				</nav>
 			</div>
 			<div class="hdr-right hdr-icons">
-				<button id="menu-btn" class="hdr-btn" title=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+				<button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
 			</div>
 		</div>
 	</header>
@@ -200,16 +149,16 @@ default:
 				<p>
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://yinzo.github.io/tags/untagged">untagged</a></span>
 				</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>953 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2016-12-27 23:22 &#43;0800</p>
 			</footer>
 		</article>
 		<div class="post-nav thin">
 			<a class="next-post" href="https://yinzo.github.io/posts/%E4%BD%8E%E7%B4%A0%E8%B4%A8%E5%BC%B9%E5%B9%95%E5%88%86%E7%B1%BB%E5%99%A8%E7%9A%84cnn%E5%AE%9E%E7%8E%B0/">
-				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;</span><br><span>低素质弹幕分类器的CNN实现</span>
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;Newer</span><br><span>低素质弹幕分类器的CNN实现</span>
 			</a>
 			<a class="prev-post" href="https://yinzo.github.io/posts/%E6%97%A0%E9%9C%80%E6%89%8B%E5%8A%A8%E7%BC%93%E5%AD%98%E9%95%BF%E5%BA%A6/">
-				<span class="post-nav-label">&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>无需手动缓存长度</span>
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>无需手动缓存长度</span>
 			</a>
 		</div>
 		<div id="comments" class="thin">
@@ -333,7 +282,15 @@ default:
 			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://yinzo.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
 		</p>
 	</footer>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+		  tex2jax: {
+			inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+			processEscapes: true
+		  }
+		});
+	  </script>
 
 
 	<script src="https://yinzo.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>

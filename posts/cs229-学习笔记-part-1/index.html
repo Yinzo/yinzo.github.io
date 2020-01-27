@@ -1,36 +1,27 @@
 <!DOCTYPE html>
-<html lang="cn-zh">
+<html lang="zh-CN">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 <meta itemprop="name" content="CS229 学习笔记 Part 1">
-<meta itemprop="description" content="此笔记为我的 CS229 的学习笔记之一，由 Andrew Ng 的 CS229 Lecture notes 和 课堂录像整理而来。用于记录所学到的内容。记录顺序重新编排过，并非是课程原本的教学顺序，并且省略了课程中的一些推导过程，所以适合学习后整理备忘使用，不适合用于同步辅助学习。
-广义线性模型是所学到的 Linear Regression 以及 Logistic Regression 的推广形式（更准确的说，这两种模型都属于 GLM 的特殊情况）。它有三个关键假设(Assumptions)构成:
- $y \mid x;\theta\sim ExponentialFamily(\eta)$ ：对于固定的参数 $\theta$ 以及给定 $x$， $y$ 的分布服从某一指数分布族（如高斯分布、伯努利分布、Softmax分布） 对于给定的 $x$ ，目标是预测 $T(y)$ 的值。换一种说法就是，我们定义假设函数 $h(x) = E[y\mid x]$ natural parameter $\eta$ 和 输入 $x$ 是线性相关的， $\eta = \theta^ \mathrm{ T } x$ （其中，当输入 $x$ 和 $\eta$ 是向量的时候， $\eta_i = \theta_i^ \mathrm{T}x$）  以上三个假设，一般只有第一个需要我们决定所使用的分布，其他两个假设都是直接定义。关键的地方来了，通过选择不同的_指数分布族_分布，我们能够得到不同的模型：
- 高斯分布，则得到 Linear Regression 伯努利分布，则得到 Logistic Regression Softmax 分布，得到 Softmax Regression  其中，Lenear Regression 为回归模型 (regression)， Logistic Regression 和 Softmax Regression 都是分类模型 (classification)。">
+<meta itemprop="description" content="此笔记为我的 CS229 的学习笔记之一，由 Andrew Ng 的 CS229 Lecture notes 和 课堂录像整理而来。用于记录所学到的内容。记录顺序重新编排过，并非是课程原本的教学顺序，并且省略">
 <meta itemprop="datePublished" content="2017-05-12T23:14:00&#43;08:00" />
 <meta itemprop="dateModified" content="2017-05-12T23:14:00&#43;08:00" />
-<meta itemprop="wordCount" content="234">
+<meta itemprop="wordCount" content="1677">
 
 
 
 <meta itemprop="keywords" content="Machine Learning," /><meta property="og:title" content="CS229 学习笔记 Part 1" />
-<meta property="og:description" content="此笔记为我的 CS229 的学习笔记之一，由 Andrew Ng 的 CS229 Lecture notes 和 课堂录像整理而来。用于记录所学到的内容。记录顺序重新编排过，并非是课程原本的教学顺序，并且省略了课程中的一些推导过程，所以适合学习后整理备忘使用，不适合用于同步辅助学习。
-广义线性模型是所学到的 Linear Regression 以及 Logistic Regression 的推广形式（更准确的说，这两种模型都属于 GLM 的特殊情况）。它有三个关键假设(Assumptions)构成:
- $y \mid x;\theta\sim ExponentialFamily(\eta)$ ：对于固定的参数 $\theta$ 以及给定 $x$， $y$ 的分布服从某一指数分布族（如高斯分布、伯努利分布、Softmax分布） 对于给定的 $x$ ，目标是预测 $T(y)$ 的值。换一种说法就是，我们定义假设函数 $h(x) = E[y\mid x]$ natural parameter $\eta$ 和 输入 $x$ 是线性相关的， $\eta = \theta^ \mathrm{ T } x$ （其中，当输入 $x$ 和 $\eta$ 是向量的时候， $\eta_i = \theta_i^ \mathrm{T}x$）  以上三个假设，一般只有第一个需要我们决定所使用的分布，其他两个假设都是直接定义。关键的地方来了，通过选择不同的_指数分布族_分布，我们能够得到不同的模型：
- 高斯分布，则得到 Linear Regression 伯努利分布，则得到 Logistic Regression Softmax 分布，得到 Softmax Regression  其中，Lenear Regression 为回归模型 (regression)， Logistic Regression 和 Softmax Regression 都是分类模型 (classification)。" />
+<meta property="og:description" content="此笔记为我的 CS229 的学习笔记之一，由 Andrew Ng 的 CS229 Lecture notes 和 课堂录像整理而来。用于记录所学到的内容。记录顺序重新编排过，并非是课程原本的教学顺序，并且省略" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://yinzo.github.io/posts/cs229-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-part-1/" />
 <meta property="article:published_time" content="2017-05-12T23:14:00+08:00" />
 <meta property="article:modified_time" content="2017-05-12T23:14:00+08:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="CS229 学习笔记 Part 1"/>
-<meta name="twitter:description" content="此笔记为我的 CS229 的学习笔记之一，由 Andrew Ng 的 CS229 Lecture notes 和 课堂录像整理而来。用于记录所学到的内容。记录顺序重新编排过，并非是课程原本的教学顺序，并且省略了课程中的一些推导过程，所以适合学习后整理备忘使用，不适合用于同步辅助学习。
-广义线性模型是所学到的 Linear Regression 以及 Logistic Regression 的推广形式（更准确的说，这两种模型都属于 GLM 的特殊情况）。它有三个关键假设(Assumptions)构成:
- $y \mid x;\theta\sim ExponentialFamily(\eta)$ ：对于固定的参数 $\theta$ 以及给定 $x$， $y$ 的分布服从某一指数分布族（如高斯分布、伯努利分布、Softmax分布） 对于给定的 $x$ ，目标是预测 $T(y)$ 的值。换一种说法就是，我们定义假设函数 $h(x) = E[y\mid x]$ natural parameter $\eta$ 和 输入 $x$ 是线性相关的， $\eta = \theta^ \mathrm{ T } x$ （其中，当输入 $x$ 和 $\eta$ 是向量的时候， $\eta_i = \theta_i^ \mathrm{T}x$）  以上三个假设，一般只有第一个需要我们决定所使用的分布，其他两个假设都是直接定义。关键的地方来了，通过选择不同的_指数分布族_分布，我们能够得到不同的模型：
- 高斯分布，则得到 Linear Regression 伯努利分布，则得到 Logistic Regression Softmax 分布，得到 Softmax Regression  其中，Lenear Regression 为回归模型 (regression)， Logistic Regression 和 Softmax Regression 都是分类模型 (classification)。"/>
+<meta name="twitter:description" content="此笔记为我的 CS229 的学习笔记之一，由 Andrew Ng 的 CS229 Lecture notes 和 课堂录像整理而来。用于记录所学到的内容。记录顺序重新编排过，并非是课程原本的教学顺序，并且省略"/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -59,7 +50,7 @@
 				</nav>
 			</div>
 			<div class="hdr-right hdr-icons">
-				<button id="toc-btn" class="hdr-btn desktop-only-ib" title=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg></button><button id="menu-btn" class="hdr-btn" title=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+				<button id="toc-btn" class="hdr-btn desktop-only-ib" title="Table of Contents"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg></button><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
 			</div>
 		</div>
 	</header>
@@ -81,7 +72,7 @@
 <!-- raw HTML omitted -->
 <p>广义线性模型是所学到的 Linear Regression 以及 Logistic Regression 的推广形式（更准确的说，这两种模型都属于 GLM 的特殊情况）。它有三个关键假设(Assumptions)构成:</p>
 <ol>
-<li>$y \mid x;\theta\sim ExponentialFamily(\eta)$ ：对于固定的参数 $\theta$ 以及给定 $x$， $y$ 的分布服从某一指数分布族（如高斯分布、伯努利分布、Softmax分布）</li>
+<li>$ y \mid x;\theta\sim ExponentialFamily(\eta) $ ：对于固定的参数 $\theta$ 以及给定 $x$， $y$ 的分布服从某一指数分布族（如高斯分布、伯努利分布、Softmax分布）</li>
 <li>对于给定的 $x$ ，目标是预测 $T(y)$ 的值。换一种说法就是，我们定义假设函数 $h(x) = E[y\mid x]$</li>
 <li>natural parameter $\eta$ 和 输入 $x$ 是线性相关的， $\eta = \theta^ \mathrm{ T } x$ （其中，当输入 $x$ 和 $\eta$ 是向量的时候， $\eta_i = \theta_i^ \mathrm{T}x$）</li>
 </ol>
@@ -158,20 +149,20 @@ $$\Delta = \frac{f^\prime(\theta)}{f^{\prime\prime}(\theta)}$$</p>
 				<p>
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://yinzo.github.io/tags/machine-learning">Machine Learning</a></span>
 				</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1677 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2017-05-12 23:14 &#43;0800</p>
 			</footer>
 		</article>
 		<aside id="toc">
-			<div class="toc-title"></div>
+			<div class="toc-title">Table of Contents</div>
 			<nav id="TableOfContents"></nav>
 		</aside>
 		<div class="post-nav thin">
 			<a class="next-post" href="https://yinzo.github.io/posts/cs229-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-part-2/">
-				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;</span><br><span>CS229 学习笔记 Part 2</span>
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;Newer</span><br><span>CS229 学习笔记 Part 2</span>
 			</a>
 			<a class="prev-post" href="https://yinzo.github.io/posts/%E5%8E%9F%E5%A7%8B%E6%A8%A1%E5%9E%8B%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0/">
-				<span class="post-nav-label">&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>原始模型优化笔记</span>
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>原始模型优化笔记</span>
 			</a>
 		</div>
 		<div id="comments" class="thin">
@@ -295,7 +286,15 @@ $$\Delta = \frac{f^\prime(\theta)}{f^{\prime\prime}(\theta)}$$</p>
 			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://yinzo.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
 		</p>
 	</footer>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+		  tex2jax: {
+			inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+			processEscapes: true
+		  }
+		});
+	  </script>
 
 
 	<script src="https://yinzo.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
