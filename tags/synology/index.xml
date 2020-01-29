@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Synology on 雪地</title>
+    <link>https://yinzo.github.io/tags/synology/</link>
+    <description>Recent content in Synology on 雪地</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 29 Jan 2020 14:52:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://yinzo.github.io/tags/synology/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>群晖虚拟机挂载群晖smb目录</title>
+      <link>https://yinzo.github.io/posts/%E7%BE%A4%E6%99%96%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%8C%82%E8%BD%BD%E7%BE%A4%E6%99%96smb%E7%9B%AE%E5%BD%95/</link>
+      <pubDate>Wed, 29 Jan 2020 14:52:00 +0800</pubDate>
+      
+      <guid>https://yinzo.github.io/posts/%E7%BE%A4%E6%99%96%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%8C%82%E8%BD%BD%E7%BE%A4%E6%99%96smb%E7%9B%AE%E5%BD%95/</guid>
+      <description>为了方便在 Windows 上写 Linux 代码，尝试了 WSL，但是又希望关机之后工作区能继续保持，甚至程序继续运行，因此在群晖上运行了一个 Debian 10 的虚拟机（不是Dock</description>
+    </item>
+    
+  </channel>
+</rss>

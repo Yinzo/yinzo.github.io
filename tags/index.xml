@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on 雪地</title>
@@ -21,7 +21,16 @@
     </item>
     
     <item>
-      <title>untagged</title>
+      <title>Synology</title>
+      <link>https://yinzo.github.io/tags/synology/</link>
+      <pubDate>Wed, 29 Jan 2020 14:52:00 +0800</pubDate>
+      
+      <guid>https://yinzo.github.io/tags/synology/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Untagged</title>
       <link>https://yinzo.github.io/tags/untagged/</link>
       <pubDate>Wed, 01 Mar 2017 17:04:00 +0800</pubDate>
       

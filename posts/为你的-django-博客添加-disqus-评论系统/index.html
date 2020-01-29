@@ -5,23 +5,27 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
 <meta itemprop="name" content="为你的 Django 博客添加 Disqus 评论系统">
-<meta itemprop="description" content="为你的 Django 博客添加 Disqus 评论系统 安装 Disqus ,依官方推荐，使用pip自动安装~ 若是没有 pip 也不用着急，去官方下载一份二进制包，然后解压，进入目录安装 修改 setting.py">
+<meta itemprop="description" content="为你的 Django 博客添加 Disqus 评论系统 2014/12/15 15:59 下午 首先，先去 Disqus 官网注册个账号啦.注册完账号之后去首页末尾 →API→Application，找到 DISQUS_API_KEY 一项，复制一">
+
+
 <meta itemprop="datePublished" content="2014-12-15T15:59:00&#43;08:00" />
 <meta itemprop="dateModified" content="2014-12-15T15:59:00&#43;08:00" />
-<meta itemprop="wordCount" content="378">
+<meta itemprop="wordCount" content="551">
 
 
 
-<meta itemprop="keywords" content="untagged," /><meta property="og:title" content="为你的 Django 博客添加 Disqus 评论系统" />
-<meta property="og:description" content="为你的 Django 博客添加 Disqus 评论系统 安装 Disqus ,依官方推荐，使用pip自动安装~ 若是没有 pip 也不用着急，去官方下载一份二进制包，然后解压，进入目录安装 修改 setting.py" />
+<meta itemprop="keywords" content="untagged," />
+<meta property="og:title" content="为你的 Django 博客添加 Disqus 评论系统" />
+<meta property="og:description" content="为你的 Django 博客添加 Disqus 评论系统 2014/12/15 15:59 下午 首先，先去 Disqus 官网注册个账号啦.注册完账号之后去首页末尾 →API→Application，找到 DISQUS_API_KEY 一项，复制一" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://yinzo.github.io/posts/%E4%B8%BA%E4%BD%A0%E7%9A%84-django-%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0-disqus-%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/" />
-<meta property="article:published_time" content="2014-12-15T15:59:00+08:00" />
-<meta property="article:modified_time" content="2014-12-15T15:59:00+08:00" />
+<meta property="article:published_time" content="2014-12-15T15:59:00&#43;08:00"/>
+<meta property="article:modified_time" content="2014-12-15T15:59:00&#43;08:00"/>
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="为你的 Django 博客添加 Disqus 评论系统"/>
-<meta name="twitter:description" content="为你的 Django 博客添加 Disqus 评论系统 安装 Disqus ,依官方推荐，使用pip自动安装~ 若是没有 pip 也不用着急，去官方下载一份二进制包，然后解压，进入目录安装 修改 setting.py"/>
+<meta name="twitter:description" content="为你的 Django 博客添加 Disqus 评论系统 2014/12/15 15:59 下午 首先，先去 Disqus 官网注册个账号啦.注册完账号之后去首页末尾 →API→Application，找到 DISQUS_API_KEY 一项，复制一"/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -31,7 +35,7 @@
 	<link rel="shortcut icon" href="/favicon.ico">
 
 	<title>为你的 Django 博客添加 Disqus 评论系统</title>
-	<link rel="stylesheet" href="https://yinzo.github.io/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://yinzo.github.io/css/style.min.20e6e5df1f989a2a36ed7cbce604b2672cfea0e8acef9930825ffb5f85914012.css" integrity="sha256-IObl3x+Ymio27Xy85gSyZyz+oOis75kwgl/7X4WRQBI=" crossorigin="anonymous">
 	
 </head>
 
@@ -68,42 +72,108 @@
 				<h1>为你的 Django 博客添加 Disqus 评论系统</h1>
 			</header>
 			<div class="content">
-				<h1 id="为你的-django-博客添加-disqus-评论系统">为你的 Django 博客添加 Disqus 评论系统<a href="#为你的-django-博客添加-disqus-评论系统" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-<!-- raw HTML omitted -->
-<p><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
-<hr>
+				
+
+<h1 id="为你的-django-博客添加-disqus-评论系统">为你的 Django 博客添加 Disqus 评论系统<a href="#为你的-django-博客添加-disqus-评论系统" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
+
+<p><div class="read-more clearfix">
+<span class="date">2014/12/15 15:59 下午</span>
+<span class="comments">
+</span>
+</div>
+首先，先去 <a href="https://disqus.com/"> Disqus 官网</a>注册个账号啦.注册完账号之后去首页末尾<br />
+→API→Application，找到 DISQUS_API_KEY 一项，复制一下KEY，等下会用到。</p>
+
+<p><span id="more"></span><!-- more --></p>
+
+<hr />
+
 <p>安装 Disqus ,依官方推荐，使用pip自动安装~</p>
-<!-- raw HTML omitted -->
+
+<pre class="black">sudo pip install django-disqus</pre>
+
 <p>若是没有 pip 也不用着急，去<a href="http://pypi.python.org/pypi/django-disqus/">官方下载一份二进制包</a>，然后解压，进入目录安装</p>
-<!-- raw HTML omitted -->
-<hr>
+
+<pre class="black">python install setup.py</pre>
+
+<hr />
+
 <p>修改 setting.py ,在 INSTALLED_APPS 中添加 disqus 项并在文件末尾添加两项参数。其中一项就是刚才复制的KEY啦。</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<hr>
+
+<pre>
+INSTALLED_APPS = (
+     ...
+     'disqus',
+ )
+
+ DISQUS_API_KEY = 'FOOBARFOOBARFOOBARFOOBARFOOBARF'
+ DISQUS_WEBSITE_SHORTNAME = 'foobar'
+</pre>
+
+<hr />
+
 <p>通过Django Shell 执行以下命令。恩里面的domain和name改成你自己的就好啦。</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+
+<pre class="black">
+$ python manage.py shell
+Python 2.7.3 (default, Mar 18 2014, 05:13:23) 
+[GCC 4.6.3] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+&gt;&gt;&gt; from django.contrib.sites.models import Site
+&gt;&gt;&gt; Site.objects.all()
+[&lt;Site: example.org&gt;]
+&gt;&gt;&gt; s = Site.objects.all()[0]
+&gt;&gt;&gt; s.domain = 'foobar.com'
+&gt;&gt;&gt; s.name = 'foobar.com'
+&gt;&gt;&gt; s.save()
+&gt;&gt;&gt; Site.objects.all()
+[&lt;Site: foobar.com&gt;]
+</pre>
+
 <p>我自己在这一步遇到了一个错误，执行<code>Site.objects.all()</code>的时候报错，提示</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+
+<pre class="black"><br/>
+ProgrammingError: (1146, "Table 'Blog.django_site' doesn't exist")<br/>
+</pre>
+
 <p>这是由于没有安装django.sites模块造成的。</p>
+
 <p>只需要在 INSTALLED_APPS 中添加这一模块然后 syncdb就好了。</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<hr>
+
+<pre><br/>
+INSTALLED_APPS = (<br/>
+     ...<br/>
+     'django.contrib.sites'<br/>
+     'disqus',<br/>
+ )<br/>
+</pre>
+
+<pre class="black">python manage.py syncdb</pre>
+
+<hr />
+
 <p>修改模板文件，在指定位置添加 Disqus</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+
+<pre>
+{% load disqus_tags %}
+{% disqus_show_comments %}
+{% disqus_num_replies %}
+{% disqus_recent_comments shortname num_items excerpt_length hide_avatars avatar_size %}
+</pre>
+
 <p>其中第一项必选，加载 disqus ，第二至第四项可选。</p>
+
 <p>后三项分别是</p>
+
 <ol>
 <li>显示评论</li>
 <li>显示评论数</li>
 <li>显示最近评论。</li>
 </ol>
-<p>其中显示评论数是通过JS修改含data-disqus-identifier=“{{ object.id }}&ldquo;属性的<!-- raw HTML omitted -->标签来显示的。所以记得加上哦。<!-- raw HTML omitted --></p>
+
+<p>其中显示评论数是通过JS修改含data-disqus-identifier=“{{ object.id }}&ldquo;属性的<a>标签来显示的。所以记得加上哦。</a></p>
+
 <p>以上，就是 Disqus 的安装啦</p>
 
 			</div>
@@ -112,7 +182,7 @@
 				<p>
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://yinzo.github.io/tags/untagged">untagged</a></span>
 				</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>378 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>551 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2014-12-15 15:59 &#43;0800</p>
 			</footer>
 		</article>
@@ -256,7 +326,7 @@
 	  </script>
 
 
-	<script src="https://yinzo.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	<script src="https://yinzo.github.io/js/bundle.min.490e43e5af6db5906f28afa49a4e16bf9f626b758e3fca92f146b870eb94bb37.js" integrity="sha256-SQ5D5a9ttZBvKK+kmk4Wv59ia3WOP8qS8Ua4cOuUuzc=" crossorigin="anonymous"></script>
 	
 
 </body>

@@ -5,23 +5,27 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
 <meta itemprop="name" content="Notes for Neural Network">
-<meta itemprop="description" content="Notes for Neural Network If we set the initial \\(\\Theta\\) be the same, the units in next layer with the same \\(x\_i\\) will get the same result, then all units in the same layer will get the same output. At last, the cost function will also get same cost, so we will update the \\(\\Theta\\) with same step. seems \\(\\delta^{(l)}\_{i}\\) means the cost of \\(i\_{th}\\) unit in the \\(l\_{th}\\) layer">
+<meta itemprop="description" content="Notes for Neural Network 2016/3/3 0:57 上午 posted in&nbsp; Pattern Recognition Notes: If we set the initial \(\Theta\) be the same, the units in next layer with the same \(x_i\) will get the same result, then all units in the same layer will get the same output. At last, the cost function will also get same cost, so we will update the \(\Theta\) with same step. seems \(\delta^{(l)}_{i}\) means">
+
+
 <meta itemprop="datePublished" content="2016-03-03T00:57:00&#43;08:00" />
 <meta itemprop="dateModified" content="2016-03-03T00:57:00&#43;08:00" />
-<meta itemprop="wordCount" content="421">
+<meta itemprop="wordCount" content="444">
 
 
 
-<meta itemprop="keywords" content="untagged," /><meta property="og:title" content="Notes for Neural Network" />
-<meta property="og:description" content="Notes for Neural Network If we set the initial \\(\\Theta\\) be the same, the units in next layer with the same \\(x\_i\\) will get the same result, then all units in the same layer will get the same output. At last, the cost function will also get same cost, so we will update the \\(\\Theta\\) with same step. seems \\(\\delta^{(l)}\_{i}\\) means the cost of \\(i\_{th}\\) unit in the \\(l\_{th}\\) layer" />
+<meta itemprop="keywords" content="untagged," />
+<meta property="og:title" content="Notes for Neural Network" />
+<meta property="og:description" content="Notes for Neural Network 2016/3/3 0:57 上午 posted in&nbsp; Pattern Recognition Notes: If we set the initial \(\Theta\) be the same, the units in next layer with the same \(x_i\) will get the same result, then all units in the same layer will get the same output. At last, the cost function will also get same cost, so we will update the \(\Theta\) with same step. seems \(\delta^{(l)}_{i}\) means" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://yinzo.github.io/posts/notes-for-neural-network/" />
-<meta property="article:published_time" content="2016-03-03T00:57:00+08:00" />
-<meta property="article:modified_time" content="2016-03-03T00:57:00+08:00" />
+<meta property="article:published_time" content="2016-03-03T00:57:00&#43;08:00"/>
+<meta property="article:modified_time" content="2016-03-03T00:57:00&#43;08:00"/>
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Notes for Neural Network"/>
-<meta name="twitter:description" content="Notes for Neural Network If we set the initial \\(\\Theta\\) be the same, the units in next layer with the same \\(x\_i\\) will get the same result, then all units in the same layer will get the same output. At last, the cost function will also get same cost, so we will update the \\(\\Theta\\) with same step. seems \\(\\delta^{(l)}\_{i}\\) means the cost of \\(i\_{th}\\) unit in the \\(l\_{th}\\) layer"/>
+<meta name="twitter:description" content="Notes for Neural Network 2016/3/3 0:57 上午 posted in&nbsp; Pattern Recognition Notes: If we set the initial \(\Theta\) be the same, the units in next layer with the same \(x_i\) will get the same result, then all units in the same layer will get the same output. At last, the cost function will also get same cost, so we will update the \(\Theta\) with same step. seems \(\delta^{(l)}_{i}\) means"/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -31,7 +35,7 @@
 	<link rel="shortcut icon" href="/favicon.ico">
 
 	<title>Notes for Neural Network</title>
-	<link rel="stylesheet" href="https://yinzo.github.io/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://yinzo.github.io/css/style.min.20e6e5df1f989a2a36ed7cbce604b2672cfea0e8acef9930825ffb5f85914012.css" integrity="sha256-IObl3x+Ymio27Xy85gSyZyz+oOis75kwgl/7X4WRQBI=" crossorigin="anonymous">
 	
 </head>
 
@@ -68,81 +72,102 @@
 				<h1>Notes for Neural Network</h1>
 			</header>
 			<div class="content">
-				<h1 id="notes-for-neural-network">Notes for Neural Network<a href="#notes-for-neural-network" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-<!-- raw HTML omitted -->
+				
+
+<h1 id="notes-for-neural-network">Notes for Neural Network<a href="#notes-for-neural-network" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
+
+<p><div class="read-more clearfix">
+<span class="date">2016/3/3 0:57 上午</span>
+<span>posted in&nbsp;</span>
+<span class="posted-in"><a href="Pattern%20Recognition.html">Pattern Recognition</a></span>
+<span class="comments">
+</span>
+</div>
+<h2 id="toc_0">Notes:<a href="#toc_0" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2></p>
+
 <ul>
-<li></li>
+<li><p>If we set the initial \(\Theta\) be the same, the units in next layer with the same \(x_i\) will get the same result, then all units in the same layer will get the same output. At last, the cost function will also get same cost, so we will update the \(\Theta\) with same step.</p></li>
+
+<li><p>seems \(\delta^{(l)}_{i}\) means the cost of \(i_{th}\) unit in the \(l_{th}\) layer</p></li>
 </ul>
-<pre><code>If we set the initial \\(\\Theta\\) be the same, the units in next layer with the same \\(x\_i\\) will get the same result, then all units in the same layer will get the same output. At last, the cost function will also get same cost, so we will update the \\(\\Theta\\) with same step.
-</code></pre>
+
+<p><span id="more"></span><!-- more --></p>
+
+<h2 id="toc_1">Question about MLP:<a href="#toc_1" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+
 <ul>
-<li></li>
-</ul>
-<pre><code>seems \\(\\delta^{(l)}\_{i}\\) means the cost of \\(i\_{th}\\) unit in the \\(l\_{th}\\) layer
-</code></pre>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
-<!-- raw HTML omitted -->
+<li>How to decide the iteration times</li>
+
+<li><p>How to initialize the weight \(w_i\)</p>
+
 <ul>
-<li>
-<p>How to decide the iteration times</p>
-</li>
-<li>
-<p>How to initialize the weight \(w_i\)</p>
+<li>solved. random initialized. But still didn’t fully understand the formula。
+<br />
+<br />
+<br /></li>
+</ul></li>
+
+<li><p>How to choose the learning rate \(\alpha\)</p></li>
+
+<li><p>How to choose the activation function</p>
+
 <ul>
-<li>solved. random initialized. But still didn’t fully understand the formula。</li>
-</ul>
-</li>
-<li>
-<p>How to choose the learning rate \(\alpha\)</p>
-</li>
-<li>
-<p>How to choose the activation function</p>
+<li>what’s the different between sigmoid and other functions.
+<br />
+<br />
+<br /></li>
+</ul></li>
+
+<li><p>How to decision the number of hidden layers and the number of the units in hidden layers</p>
+
 <ul>
-<li>what’s the different between sigmoid and other functions.</li>
+<li>simply explained. Mostly take 3 layers, and the hidden layers usually take a fixed number of units.
+<br />
+<br />
+<br /></li>
+</ul></li>
+
+<li><p>What the \(\Delta^{(i)}\) does in the \(\Theta^{(i)}\) updating.</p></li>
+
+<li><p>What Back Propagation algorithm does in the training process? It is only used to calculate the partial derivatives of Cost Function that used to update the \(\Theta\)?</p></li>
+
+<li><p>Why every article about NN mentions that Perceptron can finish logical operations? Is there some theory about with logical operation we can simulate the human brain or sth?</p></li>
 </ul>
-</li>
-<li>
-<p>How to decision the number of hidden layers and the number of the units in hidden layers</p>
-<ul>
-<li>simply explained. Mostly take 3 layers, and the hidden layers usually take a fixed number of units.</li>
-</ul>
-</li>
-<li>
-<p>What the \(\Delta^{(i)}\) does in the \(\Theta^{(i)}\) updating.</p>
-</li>
-<li>
-<p>What Back Propagation algorithm does in the training process? It is only used to calculate the partial derivatives of Cost Function that used to update the \(\Theta\)?</p>
-</li>
-<li>
-<p>Why every article about NN mentions that Perceptron can finish logical operations? Is there some theory about with logical operation we can simulate the human brain or sth?</p>
-</li>
-</ul>
-<!-- raw HTML omitted -->
+
+<h2 id="toc_2">My understanding about the process of building a MLP(Multiple Layer Perceptron)<a href="#toc_2" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+
 <p>We can simply divide this into 2 part:</p>
+
 <ol>
-<li>
-<p>Train the \(\Theta\) for the MLP.</p>
-</li>
-<li>
-<p>Use the trained \(\Theta\) to predict the input’s classification.</p>
-</li>
-<li>
-<p>The second part is much more easier, let’s first assume that we already have a set of trained \(\Theta\) , and we are now trying to use these \(\Theta\) to predict a testing samples.</p>
+<li>Train the \(\Theta\) for the MLP.</li>
+
+<li><p>Use the trained \(\Theta\) to predict the input’s classification.</p></li>
+
+<li><p>The second part is much more easier, let’s first assume that we already have a set of trained \(\Theta\) , and we are now trying to use these \(\Theta\) to predict a testing samples.</p>
+
 <p><strong>The thing you need to do is just:</strong></p>
+
 <ol>
 <li>Multiply the input \(X\) with each layer’s \(\Theta\)</li>
-<li>Do some small fixed in it (adding bias, choose the most possible option e.t.c.)</li>
+<li>Do some small fixed in it (adding bias, choose the most possible option e.t.c.)
+<br />
+<br />
+<br />
+<br /></li>
 </ol>
-<p><strong>And you can get the prediction! What an easy job!</strong></p>
-</li>
-<li>
-<p>Then, we are now facing the training part</p>
+
+<p><strong>And you can get the prediction! What an easy job!</strong></p></li>
+
+<li><p>Then, we are now facing the training part</p>
+
 <ol>
 <li>First randomly initialized the \(\Theta\). (Why we don’t simply use 1 or 0? Read this!)</li>
 <li>Build a function that we can calculate the difference between our prediction and the fact. We call it Cost Function, and use it to evaluate our prediction.</li>
-<li>Then, take that Cost Function as a measurement, we use a searching algorithm (i.e. Gradient Descents), to find out the best \(\Theta\) which could minimized the Cost.</li>
-</ol>
-</li>
+<li>Then, take that Cost Function as a measurement, we use a searching algorithm (i.e. Gradient Descents), to find out the best \(\Theta\) which could minimized the Cost.
+<br />
+<br />
+<br /></li>
+</ol></li>
 </ol>
 
 			</div>
@@ -151,7 +176,7 @@
 				<p>
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://yinzo.github.io/tags/untagged">untagged</a></span>
 				</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>421 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>444 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2016-03-03 00:57 &#43;0800</p>
 			</footer>
 		</article>
@@ -159,7 +184,7 @@
 			<a class="next-post" href="https://yinzo.github.io/posts/ideas-for-neural-network/">
 				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;Newer</span><br><span>Ideas for Neural Network</span>
 			</a>
-			<a class="prev-post" href="https://yinzo.github.io/posts/note-for-thesis-behavior-of-machine-learning-algorithms-in-adversarial-environments.pdf1/">
+			<a class="prev-post" href="https://yinzo.github.io/posts/nt9xyv~m/">
 				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>Note for &lt;Thesis - Behavior of Machine Learning Algorithms in Adversarial Environments.pdf&gt;(1)</span>
 			</a>
 		</div>
@@ -295,7 +320,7 @@
 	  </script>
 
 
-	<script src="https://yinzo.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	<script src="https://yinzo.github.io/js/bundle.min.490e43e5af6db5906f28afa49a4e16bf9f626b758e3fca92f146b870eb94bb37.js" integrity="sha256-SQ5D5a9ttZBvKK+kmk4Wv59ia3WOP8qS8Ua4cOuUuzc=" crossorigin="anonymous"></script>
 	
 
 </body>

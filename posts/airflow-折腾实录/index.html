@@ -5,20 +5,24 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
 <meta itemprop="name" content="Airflow 折腾实录">
 <meta itemprop="description" content="因为未知原因，corntab 无法在我群晖 docker 内的 ubuntu 上正常运行。懒得 debug 了，正好打算熟悉一下部门即将开始使用的 airflow ，部署一个用来替代 crontab。">
+
+
 <meta itemprop="datePublished" content="2020-01-16T22:15:00&#43;08:00" />
 <meta itemprop="dateModified" content="2020-01-16T22:15:00&#43;08:00" />
-<meta itemprop="wordCount" content="389">
+<meta itemprop="wordCount" content="396">
 
 
 
-<meta itemprop="keywords" content="" /><meta property="og:title" content="Airflow 折腾实录" />
+<meta itemprop="keywords" content="" />
+<meta property="og:title" content="Airflow 折腾实录" />
 <meta property="og:description" content="因为未知原因，corntab 无法在我群晖 docker 内的 ubuntu 上正常运行。懒得 debug 了，正好打算熟悉一下部门即将开始使用的 airflow ，部署一个用来替代 crontab。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://yinzo.github.io/posts/airflow-%E6%8A%98%E8%85%BE%E5%AE%9E%E5%BD%95/" />
-<meta property="article:published_time" content="2020-01-16T22:15:00+08:00" />
-<meta property="article:modified_time" content="2020-01-16T22:15:00+08:00" />
+<meta property="article:published_time" content="2020-01-16T22:15:00&#43;08:00"/>
+<meta property="article:modified_time" content="2020-01-16T22:15:00&#43;08:00"/>
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Airflow 折腾实录"/>
 <meta name="twitter:description" content="因为未知原因，corntab 无法在我群晖 docker 内的 ubuntu 上正常运行。懒得 debug 了，正好打算熟悉一下部门即将开始使用的 airflow ，部署一个用来替代 crontab。"/>
@@ -31,7 +35,7 @@
 	<link rel="shortcut icon" href="/favicon.ico">
 
 	<title>Airflow 折腾实录</title>
-	<link rel="stylesheet" href="https://yinzo.github.io/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://yinzo.github.io/css/style.min.20e6e5df1f989a2a36ed7cbce604b2672cfea0e8acef9930825ffb5f85914012.css" integrity="sha256-IObl3x+Ymio27Xy85gSyZyz+oOis75kwgl/7X4WRQBI=" crossorigin="anonymous">
 	
 </head>
 
@@ -68,25 +72,39 @@
 				<h1>Airflow 折腾实录</h1>
 			</header>
 			<div class="content">
-				<p>因为未知原因，corntab 无法在我群晖 docker 内的 ubuntu 上正常运行。懒得 debug 了，正好打算熟悉一下部门即将开始使用的 airflow ，部署一个用来替代 crontab。</p>
+				
+
+<p>因为未知原因，corntab 无法在我群晖 docker 内的 ubuntu 上正常运行。懒得 debug 了，正好打算熟悉一下部门即将开始使用的 airflow ，部署一个用来替代 crontab。</p>
+
 <h2 id="安装">安装<a href="#安装" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-<p>安装完执行 <code>airflow initdb</code>提示 UnicodeDecodeError。<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gbb8xm9lmuj30ut0dd42h.jpg" alt="1579183227586"></p>
-<p>简单 debug 了下，<code>/usr/local/lib/python2.7/dist-packages/airflow/configuration.py</code> 的607行 <code>conf.read</code> 增加 <code>encoding </code>参数，指定 <code>utf8</code>。<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gbb8xndguwj30q40hc0vm.jpg" alt="1579183993464"></p>
+
+<p>安装完执行 <code>airflow initdb</code>提示 UnicodeDecodeError。<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gbb8xm9lmuj30ut0dd42h.jpg" alt="1579183227586" /></p>
+
+<p>简单 debug 了下，<code>/usr/local/lib/python2.7/dist-packages/airflow/configuration.py</code> 的607行 <code>conf.read</code> 增加 <code>encoding</code>参数，指定 <code>utf8</code>。<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gbb8xndguwj30q40hc0vm.jpg" alt="1579183993464" /></p>
+
 <p>问题解决</p>
+
 <p>后记：后来思考了下，问题的原因估计是 docker 内 ubuntu 的默认 locale 为 POSIX，导致了这个问题。<strong>建议直接修改成正常的 locale 比如 en-US.UTF8</strong>，应该就不会出现这个报错了。</p>
+
 <p>下一个报错。</p>
-<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gbb8xlefmvj30u50cqtcb.jpg" alt="1579183367728"></p>
+
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gbb8xlefmvj30u50cqtcb.jpg" alt="1579183367728" /></p>
+
 <p>google 了一下，看起来是 werkzeug 的版本不对，<code>pip install werkzeug==0.15.4</code> 解决问题，成功执行<code>airflow initdb</code>。</p>
+
 <p>正常启动 webserver 和 scheduler，没什么可说的，可以选择用 nohup 后台启动或者你开两个终端分别启动，这俩东西默认都是保持前台的，真不现代。</p>
 
 			</div>
 			<hr class="post-end">
 			<footer class="post-info">
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>389 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>396 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-01-16 22:15 &#43;0800</p>
 			</footer>
 		</article>
 		<div class="post-nav thin">
+			<a class="next-post" href="https://yinzo.github.io/posts/%E7%BE%A4%E6%99%96%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%8C%82%E8%BD%BD%E7%BE%A4%E6%99%96smb%E7%9B%AE%E5%BD%95/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;Newer</span><br><span>群晖虚拟机挂载群晖smb目录</span>
+			</a>
 			<a class="prev-post" href="https://yinzo.github.io/posts/%E5%9C%A8%E7%BE%A4%E6%99%96-ds218&#43;-%E7%9A%84-docker-%E7%8E%AF%E5%A2%83%E4%B8%8A%E8%BF%90%E8%A1%8C-elk/">
 				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>在群晖 DS218&#43; 的 Docker 环境上运行 ELK</span>
 			</a>
@@ -223,7 +241,7 @@
 	  </script>
 
 
-	<script src="https://yinzo.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	<script src="https://yinzo.github.io/js/bundle.min.490e43e5af6db5906f28afa49a4e16bf9f626b758e3fca92f146b870eb94bb37.js" integrity="sha256-SQ5D5a9ttZBvKK+kmk4Wv59ia3WOP8qS8Ua4cOuUuzc=" crossorigin="anonymous"></script>
 	
 
 </body>

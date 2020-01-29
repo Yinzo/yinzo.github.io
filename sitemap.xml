@@ -1,19 +1,14 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://yinzo.github.io/posts/%E7%BE%A4%E6%99%96%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%8C%82%E8%BD%BD%E7%BE%A4%E6%99%96smb%E7%9B%AE%E5%BD%95/</loc>
+    <lastmod>2020-01-29T14:52:00+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://yinzo.github.io/posts/airflow-%E6%8A%98%E8%85%BE%E5%AE%9E%E5%BD%95/</loc>
-    <lastmod>2020-01-16T22:15:00+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yinzo.github.io/posts/</loc>
-    <lastmod>2020-01-16T22:15:00+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yinzo.github.io/</loc>
     <lastmod>2020-01-16T22:15:00+08:00</lastmod>
   </url>
   
@@ -28,16 +23,6 @@
   </url>
   
   <url>
-    <loc>https://yinzo.github.io/tags/machine-learning/</loc>
-    <lastmod>2017-06-07T14:35:00+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yinzo.github.io/tags/</loc>
-    <lastmod>2017-06-07T14:35:00+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://yinzo.github.io/posts/cs229-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-part-2/</loc>
     <lastmod>2017-06-07T00:20:00+08:00</lastmod>
   </url>
@@ -45,11 +30,6 @@
   <url>
     <loc>https://yinzo.github.io/posts/cs229-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-part-1/</loc>
     <lastmod>2017-05-12T23:14:00+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yinzo.github.io/tags/untagged/</loc>
-    <lastmod>2017-03-01T17:04:00+08:00</lastmod>
   </url>
   
   <url>
@@ -113,7 +93,7 @@
   </url>
   
   <url>
-    <loc>https://yinzo.github.io/posts/note-for-thesis-behavior-of-machine-learning-algorithms-in-adversarial-environments.pdf1/</loc>
+    <loc>https://yinzo.github.io/posts/nt9xyv~m/</loc>
     <lastmod>2016-02-04T16:55:00+08:00</lastmod>
   </url>
   
@@ -128,7 +108,7 @@
   </url>
   
   <url>
-    <loc>https://yinzo.github.io/posts/notes-for-icmlc2009-fabioroli.pdf/</loc>
+    <loc>https://yinzo.github.io/posts/n4wl43~y/</loc>
     <lastmod>2016-01-29T14:14:00+08:00</lastmod>
   </url>
   
@@ -200,6 +180,42 @@
   <url>
     <loc>https://yinzo.github.io/posts/%E8%A7%A3%E5%86%B3osx%E5%8D%87%E7%BA%A710.10%E5%90%8E%E6%97%A0%E6%B3%95%E5%BC%80%E5%90%AFmamp-apache%E6%9C%8D%E5%8A%A1/</loc>
     <lastmod>2014-12-14T21:26:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yinzo.github.io/tags/machine-learning/</loc>
+    <lastmod>2017-06-07T14:35:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://yinzo.github.io/posts/</loc>
+    <lastmod>2020-01-29T14:52:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://yinzo.github.io/tags/synology/</loc>
+    <lastmod>2020-01-29T14:52:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://yinzo.github.io/tags/</loc>
+    <lastmod>2017-06-07T14:35:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://yinzo.github.io/tags/untagged/</loc>
+    <lastmod>2017-03-01T17:04:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://yinzo.github.io/</loc>
+    <lastmod>2020-01-29T14:52:00+08:00</lastmod>
+    <priority>0</priority>
   </url>
   
 </urlset>
