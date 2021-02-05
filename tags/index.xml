@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on 雪地</title>
@@ -6,19 +6,10 @@
     <description>Recent content in Tags on 雪地</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 07 Jun 2017 14:35:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 29 Jan 2020 14:52:00 +0800</lastBuildDate>
     
 	<atom:link href="https://yinzo.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Machine Learning</title>
-      <link>https://yinzo.github.io/tags/machine-learning/</link>
-      <pubDate>Wed, 07 Jun 2017 14:35:00 +0800</pubDate>
-      
-      <guid>https://yinzo.github.io/tags/machine-learning/</guid>
-      <description></description>
-    </item>
     
     <item>
       <title>Synology</title>
@@ -30,7 +21,16 @@
     </item>
     
     <item>
-      <title>Untagged</title>
+      <title>Machine Learning</title>
+      <link>https://yinzo.github.io/tags/machine-learning/</link>
+      <pubDate>Wed, 07 Jun 2017 14:35:00 +0800</pubDate>
+      
+      <guid>https://yinzo.github.io/tags/machine-learning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>untagged</title>
       <link>https://yinzo.github.io/tags/untagged/</link>
       <pubDate>Wed, 01 Mar 2017 17:04:00 +0800</pubDate>
       

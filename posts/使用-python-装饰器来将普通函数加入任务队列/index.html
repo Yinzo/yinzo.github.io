@@ -5,27 +5,23 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-
 <meta itemprop="name" content="使用 Python 装饰器来将普通函数加入任务队列">
-<meta itemprop="description" content="使用 Python 装饰器来将普通函数加入任务队列 2016/7/14 23:41 下午 posted in&nbsp; Python 对于操作『函数对象』来说，使用 Python 装饰器是一种非常优雅，非常 Pythonic 的一个方式。而在这篇文章中，对">
-
-
+<meta itemprop="description" content="使用 Python 装饰器来将普通函数加入任务队列 首先，我们先声明了一个 namedtuple ，其中包含以下几个元素： func ：需要加入任务队列的目标函数对象 args 和 kwargs ：目标函数对象的">
 <meta itemprop="datePublished" content="2016-07-14T23:41:00&#43;08:00" />
 <meta itemprop="dateModified" content="2016-07-14T23:41:00&#43;08:00" />
-<meta itemprop="wordCount" content="842">
+<meta itemprop="wordCount" content="509">
 
 
 
-<meta itemprop="keywords" content="untagged," />
-<meta property="og:title" content="使用 Python 装饰器来将普通函数加入任务队列" />
-<meta property="og:description" content="使用 Python 装饰器来将普通函数加入任务队列 2016/7/14 23:41 下午 posted in&nbsp; Python 对于操作『函数对象』来说，使用 Python 装饰器是一种非常优雅，非常 Pythonic 的一个方式。而在这篇文章中，对" />
+<meta itemprop="keywords" content="untagged," /><meta property="og:title" content="使用 Python 装饰器来将普通函数加入任务队列" />
+<meta property="og:description" content="使用 Python 装饰器来将普通函数加入任务队列 首先，我们先声明了一个 namedtuple ，其中包含以下几个元素： func ：需要加入任务队列的目标函数对象 args 和 kwargs ：目标函数对象的" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://yinzo.github.io/posts/%E4%BD%BF%E7%94%A8-python-%E8%A3%85%E9%A5%B0%E5%99%A8%E6%9D%A5%E5%B0%86%E6%99%AE%E9%80%9A%E5%87%BD%E6%95%B0%E5%8A%A0%E5%85%A5%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/" />
-<meta property="article:published_time" content="2016-07-14T23:41:00&#43;08:00"/>
-<meta property="article:modified_time" content="2016-07-14T23:41:00&#43;08:00"/>
+<meta property="article:published_time" content="2016-07-14T23:41:00+08:00" />
+<meta property="article:modified_time" content="2016-07-14T23:41:00+08:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="使用 Python 装饰器来将普通函数加入任务队列"/>
-<meta name="twitter:description" content="使用 Python 装饰器来将普通函数加入任务队列 2016/7/14 23:41 下午 posted in&nbsp; Python 对于操作『函数对象』来说，使用 Python 装饰器是一种非常优雅，非常 Pythonic 的一个方式。而在这篇文章中，对"/>
+<meta name="twitter:description" content="使用 Python 装饰器来将普通函数加入任务队列 首先，我们先声明了一个 namedtuple ，其中包含以下几个元素： func ：需要加入任务队列的目标函数对象 args 和 kwargs ：目标函数对象的"/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -35,7 +31,7 @@
 	<link rel="shortcut icon" href="/favicon.ico">
 
 	<title>使用 Python 装饰器来将普通函数加入任务队列</title>
-	<link rel="stylesheet" href="https://yinzo.github.io/css/style.min.20e6e5df1f989a2a36ed7cbce604b2672cfea0e8acef9930825ffb5f85914012.css" integrity="sha256-IObl3x+Ymio27Xy85gSyZyz+oOis75kwgl/7X4WRQBI=" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://yinzo.github.io/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
 	
 </head>
 
@@ -72,140 +68,31 @@
 				<h1>使用 Python 装饰器来将普通函数加入任务队列</h1>
 			</header>
 			<div class="content">
-				
-
-<h1 id="使用-python-装饰器来将普通函数加入任务队列">使用 Python 装饰器来将普通函数加入任务队列<a href="#使用-python-装饰器来将普通函数加入任务队列" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-
-<p><div class="read-more clearfix">
-<span class="date">2016/7/14 23:41 下午</span>
-<span>posted in&nbsp;</span>
-<span class="posted-in"><a href="Python.html">Python</a></span>
-<span class="comments">
-</span>
-</div>
-对于操作『函数对象』来说，使用 Python 装饰器是一种非常优雅，非常 Pythonic 的一个方式。而在这篇文章中，对于任何一个普通的函数，只需要在函数定义前加一个装饰器调用，即可使得这一函数被调用时自动加入特定的任务队列，成为异步调用，而不会阻塞主线程。</p>
-
-<p><span id="more"></span><!-- more --></p>
-
-<h2 id="toc_0">实现 Producer/Consumer 型任务队列<a href="#toc_0" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
-<pre><code class="language-python"># -*- coding: utf-8 -*-
-
-from Queue import Queue
-from threading import Thread
-from collections import namedtuple
-
-Job = namedtuple('Job', ('func', 'args', 'kwargs', 'result_obj'))
-</code></pre>
-
+				<h1 id="使用-python-装饰器来将普通函数加入任务队列">使用 Python 装饰器来将普通函数加入任务队列<a href="#使用-python-装饰器来将普通函数加入任务队列" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 <p>首先，我们先声明了一个 namedtuple ，其中包含以下几个元素：</p>
-
 <ol>
 <li><code>func</code> ：需要加入任务队列的目标函数对象</li>
 <li><code>args</code> 和 <code>kwargs</code> ：目标函数对象的参数</li>
 <li><code>result_obj</code> ：用于保存目标函数返回值的一个字典， 装饰器函数将目标函数加入任务队列之后，会直接返回一个<code>{'result': None, 'done': False}</code>的字典。等到目标函数异步执行完成之后， Worker 会用返回值替换这一字典的<code>result</code>，并设置<code>done</code>为<code>True</code></li>
 </ol>
-
-<pre><code class="language-python">class Worker(Thread):
-
-    def __init__(self, queue):
-        """
-        :type queue: Queue
-        """
-        super(Worker, self).__init__()
-        self.queue = queue
-        self._stopped = False
-        self._stop_done = False
-
-    def run(self):
-        while True:
-            if self._stopped is True:
-                break
-
-            task = self.queue.get()
-            result = task.func(*task.args, **task.kwargs)
-            task.result_obj['result'] = result
-            task.result_obj['done'] = True
-
-        self._stop_done = True
-
-    def stop(self):
-        self._stopped = True
-        
-</code></pre>
-
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 <p>Worker 和普通的 Consumer 定义基本没有区别，唯一要注意的地方是，记得要用函数返回值，替换掉任务返回值字典的<code>'result'</code>，并修改任务状态，即</p>
-
-<pre><code class="language-python">task.result_obj['result'] = result
-task.result_obj['done'] = True
-</code></pre>
-
-<pre><code class="language-python">        
-class QueueHandler(object):
-
-    def __init__(self, workers=5):
-        self.job_queue = Queue()
-        self.workers = [Worker(self.job_queue) for i in xrange(workers)]
-        for worker in self.workers:
-            worker.setDaemon(True)
-            worker.start()
-
-    def queue_up(self, func):
-
-        def _queue_up(*args, **kwargs):
-            tmp_obj = {'result': None, 'done': False}
-
-            self. job_queue.put(
-                Job(
-                    func = func,
-                    args = args,
-                    kwargs = kwargs,
-                    result_obj=tmp_obj
-                )
-            )
-            return tmp_obj
-        return _queue_up
-
-</code></pre>
-
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 <p>同样是比较标准的 Producer ，其中<code>queue_up</code>函数就是这次的主角了。对于目标函数，先构建一个返回值字典，然后将目标函数和参数加入任务队列，最后返回这一返回值字典。非常简单的结构，但是使用起来非常的方便。</p>
-
-<h2 id="toc_1">实际测试<a href="#toc_1" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
+<!-- raw HTML omitted -->
 <p>这里我构造了一个用来测试的代码</p>
-
-<pre><code class="language-python">import time, random
-
-testQueue = QueueHandler()
-
-class TestClass(object):
-
-    def __init__(self):
-        self.some_value = 10
-        self.some_str = "Empty"
-
-    @testQueue.queue_up
-    def some_operation(self, jobid, some_para, another_para='blablabla'):
-        time.sleep(random.randrange(1,5))
-        self.some_value = some_para
-        self.some_str = another_para
-        print "ID: {} ---Now, value: {}, str: {}\n".format(jobid, self.some_value, self.some_str)
-        return jobid+100000
-
-if __name__ == '__main__':
-    testClass = TestClass()
-    rs = []
-    for i in range(10):
-        rs.append(
-            testClass.some_operation(i, i+1000, another_para='{0}'.format('-'*i))
-        )
-    for i in range(10):
-        time.sleep(1)
-        print rs
-</code></pre>
-
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 <p>读者可以尝试删除掉<code>some_operation</code>函数前面的装饰器，对比有无这个装饰器对程序运行的影响。</p>
-
 <p>可以看到，对于需要测试的<code>some_operation</code>函数，我仅仅是在其定义前加上了一个装饰器的调用，就使得这个函数的执行不会阻塞主线程了。并且对于异步调用函数的返回值，也很好的进行了保留传递。</p>
 
 			</div>
@@ -214,7 +101,7 @@ if __name__ == '__main__':
 				<p>
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://yinzo.github.io/tags/untagged">untagged</a></span>
 				</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>842 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>509 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2016-07-14 23:41 &#43;0800</p>
 			</footer>
 		</article>
@@ -342,7 +229,7 @@ if __name__ == '__main__':
 	</main>
 
 	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
-		<p>&copy; 2020 <a href="https://yinzo.github.io/">Yinzo</a></p>
+		<p>&copy; 2021 <a href="https://yinzo.github.io/">Yinzo</a></p>
 		<p>
 			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://yinzo.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
 		</p>
@@ -358,7 +245,7 @@ if __name__ == '__main__':
 	  </script>
 
 
-	<script src="https://yinzo.github.io/js/bundle.min.490e43e5af6db5906f28afa49a4e16bf9f626b758e3fca92f146b870eb94bb37.js" integrity="sha256-SQ5D5a9ttZBvKK+kmk4Wv59ia3WOP8qS8Ua4cOuUuzc=" crossorigin="anonymous"></script>
+	<script src="https://yinzo.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
 	
 
 </body>

