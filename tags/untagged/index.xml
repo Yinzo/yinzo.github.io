@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Untagged on 雪地</title>
+    <title>untagged on 雪地</title>
     <link>https://yinzo.github.io/tags/untagged/</link>
-    <description>Recent content in Untagged on 雪地</description>
+    <description>Recent content in untagged on 雪地</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Wed, 01 Mar 2017 17:04:00 +0800</lastBuildDate>
@@ -17,7 +17,7 @@
       <pubDate>Wed, 01 Mar 2017 17:04:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/%E5%8E%9F%E5%A7%8B%E6%A8%A1%E5%9E%8B%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0/</guid>
-      <description>原始模型优化笔记 2017/3/1 17:4 下午 posted in&amp;nbsp; Deep Learning 对于原始弹幕分类CNN模型进行优化。 修改 word2vec model 的 vector size * 400:Nice at epoch 38, validation acc 96.56% * 200:Nice at epoch 37, validation acc 95.22% * 100:Nice at epoch 34, validation acc 94.78%</description>
+      <description>原始模型优化笔记 400:Nice at epoch 38, validation acc 96.56% 200:Nice at epoch 37, validation acc 95.22% 100:Nice at epoch 34, validation acc 94.78%单轮训练时间与50维相近，测试样例测试耗时 0.92secs 50:Nice at epoch 40, validation acc 94.39%单轮</description>
     </item>
     
     <item>
@@ -26,7 +26,7 @@
       <pubDate>Mon, 06 Feb 2017 14:48:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/%E4%BD%8E%E7%B4%A0%E8%B4%A8%E5%BC%B9%E5%B9%95%E5%88%86%E7%B1%BB%E5%99%A8-cnn-%E8%AE%AD%E7%BB%83%E7%AC%94%E8%AE%B0/</guid>
-      <description>低素质弹幕分类器 CNN 训练笔记 2017/2/6 14:48 下午 posted in&amp;nbsp; Deep Learning 一开始使用这个结构，迭代10次。 model = Sequential() model.add(Convolution1D(100, 4, border_mode=&#39;valid&#39;, input_shape=(100, word_model.vector_size))) model.add(Activation(&#39;relu&#39;)) model.add(Convolution1D(5, 4, border_mode=&#39;valid&#39;)) model.add(Activation(&#39;relu&#39;)) model.add(Flatten()) model.add(Dense(32, activation=&#39;relu&#39;)) model.add(Dense(2, activation=&#39;softmax&#39;)) model.compile(loss=&#39;categorical_crossentropy&#39;, optimizer=&#39;adam&#39;, metrics=[&#39;accuracy&#39;] ) 完成训练后，乍一看准确</description>
+      <description>低素质弹幕分类器 CNN 训练笔记 完成训练后，乍一看准确率很高，结果 print 出来看一下，低素质弹幕完全没有被过滤，完全是将分类全部丢给 positive 达到的高准确率 (0.98) 的</description>
     </item>
     
     <item>
@@ -35,7 +35,7 @@
       <pubDate>Mon, 06 Feb 2017 14:48:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/%E4%BD%8E%E7%B4%A0%E8%B4%A8%E5%BC%B9%E5%B9%95%E5%88%86%E7%B1%BB%E5%99%A8%E7%9A%84cnn%E5%AE%9E%E7%8E%B0/</guid>
-      <description>低素质弹幕分类器的CNN实现 2017/2/6 14:48 下午 posted in&amp;nbsp; Deep Learning 整体架构 对于一条弹幕，首先进行分词，然后通过 word2vec 转换为词向量，再填充至固定长度，作为卷积神经网络的</description>
+      <description>低素质弹幕分类器的CNN实现 对于一条弹幕，首先进行分词，然后通过 word2vec 转换为词向量，再填充至固定长度，作为卷积神经网络的输入。 卷积神经网络的结构</description>
     </item>
     
     <item>
@@ -44,7 +44,7 @@
       <pubDate>Tue, 27 Dec 2016 23:22:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/%E5%9C%A8-linode-%E4%B8%8A%E7%BC%96%E8%AF%91-hybla-%E6%A8%A1%E5%9D%97/</guid>
-      <description>在 Linode 上编译 hybla 模块 2016/12/27 23:22 下午 posted in&amp;nbsp; OS 考试复习期间，不想复习，搞搞其他东西散散心，发现shadowsocks 有关于 TCP Fast Open 的更新，看说明的过程还发现了</description>
+      <description>在 Linode 上编译 hybla 模块 执行到这一步时运行出错 Google 一番后发现是缺少 tcp_hybla 模块，需要自己手动编译。引用一下 https://plus.google.com/+BoluoKING/posts/dLyYhBf3mwp 的科普 中美之间的线路质量不是很好，rtt较长且时</description>
     </item>
     
     <item>
@@ -53,7 +53,7 @@
       <pubDate>Wed, 27 Jul 2016 17:13:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/%E6%97%A0%E9%9C%80%E6%89%8B%E5%8A%A8%E7%BC%93%E5%AD%98%E9%95%BF%E5%BA%A6/</guid>
-      <description>无需手动缓存长度 2016/7/27 17:13 下午 posted in&amp;nbsp; Python 今天在阅读《机器学习实战》的时候，看到了这样一句描述 其中数据集是一个List。看到这里说到为了提高代码效率，特</description>
+      <description>无需手动缓存长度 其中数据集是一个List。看到这里说到为了提高代码效率，特地开了一个变量来保存其长度。 我回忆起以前调试bug的时候，总是能看</description>
     </item>
     
     <item>
@@ -62,7 +62,7 @@
       <pubDate>Thu, 14 Jul 2016 23:41:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/%E4%BD%BF%E7%94%A8-python-%E8%A3%85%E9%A5%B0%E5%99%A8%E6%9D%A5%E5%B0%86%E6%99%AE%E9%80%9A%E5%87%BD%E6%95%B0%E5%8A%A0%E5%85%A5%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/</guid>
-      <description>使用 Python 装饰器来将普通函数加入任务队列 2016/7/14 23:41 下午 posted in&amp;nbsp; Python 对于操作『函数对象』来说，使用 Python 装饰器是一种非常优雅，非常 Pythonic 的一个方式。而在这篇文章中，对</description>
+      <description>使用 Python 装饰器来将普通函数加入任务队列 首先，我们先声明了一个 namedtuple ，其中包含以下几个元素： func ：需要加入任务队列的目标函数对象 args 和 kwargs ：目标函数对象的</description>
     </item>
     
     <item>
@@ -71,7 +71,7 @@
       <pubDate>Tue, 19 Apr 2016 23:45:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/%E5%85%B3%E4%BA%8Epython%E7%9A%84logging%E6%A8%A1%E5%9D%97%E5%88%9D%E5%A7%8B%E5%8C%96%E6%97%A0%E6%95%88%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E5%9D%91/</guid>
-      <description>关于Python的logging模块初始化无效的一个小坑 2016/4/19 23:45 下午 posted in&amp;nbsp; Python 众所周知，logging模块是一个非常方便好用的日志输出模块。但是最近</description>
+      <description>关于Python的logging模块初始化无效的一个小坑 一般使用logging模块都会对其进行初始化，使用以下代码： log_format = &#39;[%(levelname)s] %(asctime)s %(filename)s line %(lineno)d: %(message)s&#39; date_fmt = &#39;%a, %d</description>
     </item>
     
     <item>
@@ -80,7 +80,7 @@
       <pubDate>Thu, 31 Mar 2016 19:14:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/python-decorator%E7%9A%84%E4%B8%80%E4%BA%9B%E7%BB%86%E8%8A%82/</guid>
-      <description>Python Decorator的一些细节 2016/3/31 19:14 下午 posted in&amp;nbsp; Python 装饰器函数并不是在被修饰函数调用的时候才执行，而是修饰语句所在的代码块被执行的时候执行。 而且当一</description>
+      <description>Python Decorator的一些细节 而且当一个文件（模块）被import的时候，文件内的__所有__装饰器就会被激活执行。因为装饰器语句相当于文件</description>
     </item>
     
     <item>
@@ -89,7 +89,7 @@
       <pubDate>Sun, 27 Mar 2016 11:46:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/%E9%80%9A%E8%BF%87emet%E6%9D%A5%E7%A6%81%E7%94%A8emetemet%E7%9A%84%E7%A6%81%E7%94%A8%E4%B8%8E%E7%BB%95%E8%BF%87%E6%80%9D%E8%B7%AF%E8%AE%B2%E8%A7%A3/</guid>
-      <description>通过EMET来禁用EMET——EMET的禁用与绕过思路讲解 2016/3/27 11:46 上午 posted in&amp;nbsp; Security Info 原文链接：https://www.fireeye.com/blog</description>
+      <description>通过EMET来禁用EMET——EMET的禁用与绕过思路讲解 微软的Enhanced Mitigation Experience Toolkit (EMET)是一项提高程序安全性的项目。它通过动态链接</description>
     </item>
     
     <item>
@@ -98,7 +98,7 @@
       <pubDate>Fri, 04 Mar 2016 20:44:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/ideas-for-neural-network/</guid>
-      <description>Ideas for Neural Network 2016/3/4 20:44 下午 posted in&amp;nbsp; Pattern Recognition * Use genetic algorithm to evolve the parameters in Neural Network, to make a self-develop algorithm. * automatically find and make training set from search engine * the paremeters include: * learning rate * iteration times * regularization term \\(\\lambda\\) * activation function * number of hidden layers(units) About MCS, maybe we can train a model for fusion</description>
+      <description>Ideas for Neural Network * automatically find and make training set from search engine * the paremeters include: * learning rate * iteration times * regularization term \\(\\lambda\\) * activation function * number of hidden layers(units) About MCS, maybe we can train a model for fusion method to do the judge.</description>
     </item>
     
     <item>
@@ -107,16 +107,7 @@
       <pubDate>Thu, 03 Mar 2016 00:57:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/notes-for-neural-network/</guid>
-      <description>Notes for Neural Network 2016/3/3 0:57 上午 posted in&amp;nbsp; Pattern Recognition Notes: If we set the initial \(\Theta\) be the same, the units in next layer with the same \(x_i\) will get the same result, then all units in the same layer will get the same output. At last, the cost function will also get same cost, so we will update the \(\Theta\) with same step. seems \(\delta^{(l)}_{i}\) means</description>
-    </item>
-    
-    <item>
-      <title>Note for &lt;Thesis - Behavior of Machine Learning Algorithms in Adversarial Environments.pdf&gt;(1)</title>
-      <link>https://yinzo.github.io/posts/nt9xyv~m/</link>
-      <pubDate>Thu, 04 Feb 2016 16:55:00 +0800</pubDate>
-      
-      <guid>https://yinzo.github.io/posts/nt9xyv~m/</guid>
-      <description>Note for &amp;ldquo;Thesis - Behavior of Machine Learning Algorithms in Adversarial Environments.pdf&amp;rdquo;(1) 2016/2/4 16:55 下午 posted in&amp;nbsp; Adversary Learning 1.1 Motivation and Methodology Learning approach is well-suited to the scenario when: The process is too complex to designed for human operator Requirement of dynamical development An intelligent adversary can: Alter his approach based on knowledge of the learner’s shortcomings Mislead it</description>
+      <description>Notes for Neural Network If we set the initial \\(\\Theta\\) be the same, the units in next layer with the same \\(x\_i\\) will get the same result, then all units in the same layer will get the same output. At last, the cost function will also get same cost, so we will update the \\(\\Theta\\) with same step. seems \\(\\delta^{(l)}\_{i}\\) means the cost of \\(i\_{th}\\) unit in the \\(l\_{th}\\) layer</description>
     </item>
     
     <item>
@@ -125,7 +116,7 @@
       <pubDate>Fri, 29 Jan 2016 18:41:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/%E5%B0%81%E8%A3%85%E4%B8%8E%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%88%86%E5%B1%82/</guid>
-      <description>封装，与协议的分层 2016/1/29 18:41 下午 posted in&amp;nbsp; TCP/IP TODO： 为何要分层 要理解协议的分层，若是了解编程理念中的『封装』，可能更有助于理解分层的意义。 『封装』，狭</description>
+      <description>封装，与协议的分层 要理解协议的分层，若是了解编程理念中的『封装』，可能更有助于理解分层的意义。 『封装』，狭义上指的是编写程序时，通过把一些重</description>
     </item>
     
     <item>
@@ -134,16 +125,7 @@
       <pubDate>Fri, 29 Jan 2016 18:40:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/</guid>
-      <description>网络协议 2016/1/29 18:40 下午 posted in&amp;nbsp; TCP/IP 连接不同的计算机是非常有必要的，能够大幅度提升工作效率。 比如：一个工作需要经过三个步骤，分别是步骤A/步骤B/步骤C。</description>
-    </item>
-    
-    <item>
-      <title>Notes for &lt;ICMLC2009-FabioRoli.pdf&gt;</title>
-      <link>https://yinzo.github.io/posts/n4wl43~y/</link>
-      <pubDate>Fri, 29 Jan 2016 14:14:00 +0800</pubDate>
-      
-      <guid>https://yinzo.github.io/posts/n4wl43~y/</guid>
-      <description>Notes for &amp;ldquo;ICMLC2009-FabioRoli.pdf&amp;rdquo; 2016/1/29 14:14 下午 posted in&amp;nbsp; Adversary Learning Understanding: 1. What is adversarial classification? Basic concepts and motivations The Classifier which take the adversary actions into account. It can develop according to the adversary actions. Its motivations is that the classical model cannot perform well in adversarial environments. Because the classical model is build and set up base on the random noise, it’s also</description>
+      <description>网络协议 比如：一个工作需要经过三个步骤，分别是步骤A/步骤B/步骤C。三个步骤分别由三台不同的计算机A/B/C执行。 起初，人们使用容量极小的</description>
     </item>
     
     <item>
@@ -152,7 +134,7 @@
       <pubDate>Wed, 02 Sep 2015 22:03:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/2015%E6%9A%91%E5%81%87/</guid>
-      <description>2015暑假 2015/9/2 22:3 下午 正式开始学习技术以来的第二个暑假了，上一个暑假的效率之高，可能没有什么机遇的话挺难超越的了。 先放一张这次暑假一开始的计划</description>
+      <description>2015暑假 正式开始学习技术以来的第二个暑假了，上一个暑假的效率之高，可能没有什么机遇的话挺难超越的了。 先放一张这次暑假一开始的计划图以及其</description>
     </item>
     
     <item>
@@ -161,7 +143,7 @@
       <pubDate>Fri, 28 Aug 2015 17:30:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/oracle%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E8%A1%A8/</guid>
-      <description>Oracle注入速查表 2015/8/28 17:30 下午 本文由Yinzo翻译，转载请保留署名。原文地址：http://pentestmonkey.net/cheat-</description>
+      <description>Oracle注入速查表 注：下面的一部分查询只能由admin执行，我会在查询的末尾以&amp;rdquo;-priv“标注。 探测版本： SELECT banner FROM v$version WHERE banner LIKE ‘</description>
     </item>
     
     <item>
@@ -170,7 +152,7 @@
       <pubDate>Sun, 23 Aug 2015 01:42:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/%E8%A7%A3%E5%86%B3python%E7%9A%84pytesseract%E5%BA%93%E6%89%A7%E8%A1%8C%E6%97%B6%E6%8A%A5%E9%94%99/</guid>
-      <description>解决Python的pytesseract库执行时报错 2015/8/23 1:42 上午 使用pytesseract库识别验证码时遇到以下报错 AttributeError: &#39;NoneType&#39; object has no attribute &#39;bands&#39; 修改PIL库s</description>
+      <description>解决Python的pytesseract库执行时报错 AttributeError: &#39;NoneType&#39; object has no attribute &#39;bands&#39; 修改PIL库site-packages/PIL/Image.py1496行</description>
     </item>
     
     <item>
@@ -179,7 +161,7 @@
       <pubDate>Mon, 10 Aug 2015 17:30:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E8%A1%A8/</guid>
-      <description>SQL注入速查表 2015/8/10 17:30 下午 本文由Yinzo翻译，转载请保留署名。原文地址：http://ferruh.mavituna.com/sql-inj</description>
+      <description>SQL注入速查表 _文档版本：1.4_现在仅支持MySQL、Microsoft SQL Server，以及一部分ORACLE和PostgreSQL。大</description>
     </item>
     
     <item>
@@ -188,7 +170,7 @@
       <pubDate>Sun, 26 Jul 2015 23:55:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/</guid>
-      <description>个人总结 2015/7/26 23:55 下午 只有把自己的技能都列出来的时候才能发现自己是有多么的弱。希望以后能有一份拿得出手的技能树，就放在这张旧的旁边。 记录一下技能树</description>
+      <description>个人总结 记录一下技能树里面的具体内容： 瞎玩Flash VB自学，初二——高一 当时在玩无损，写了个cue文件批量修改与格式化的小软件 C#自学，高</description>
     </item>
     
     <item>
@@ -197,7 +179,7 @@
       <pubDate>Tue, 21 Jul 2015 15:44:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/%E5%9F%BA%E4%BA%8Esmartqq%E7%9A%84python-qq%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%A1%86%E6%9E%B6/</guid>
-      <description>基于SmartQQ的Python QQ机器人框架 2015/7/21 15:44 下午 项目地址：https://github.com/Yinzo/SmartQQBot 这是一</description>
+      <description>基于SmartQQ的Python QQ机器人框架 这是一个原本是自己在看到某一个QQ群中的机器人后，以娱乐的心态写的一个QQ机器人。登陆部分逻辑</description>
     </item>
     
     <item>
@@ -206,7 +188,7 @@
       <pubDate>Wed, 14 Jan 2015 17:41:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/%E7%85%8E%E8%9B%8B%E6%97%A0%E8%81%8A%E5%9B%BE%E6%8E%92%E8%A1%8C%E7%94%9F%E6%88%90%E5%99%A8/</guid>
-      <description>煎蛋无聊图排行生成器 2015/1/14 17:41 下午 这个生成器实际上挺久之前就做了的，但是一直都是拿来自己用的，所以代码规范和易用性也是比较差的。这次放出来是因为之</description>
+      <description>煎蛋无聊图排行生成器 Github点这里以下是readme beautifulsoup4 python jandan_pic_ranker.py 之后按照提示输入即可将排行榜页面生成至当前目录 自动存档功能：首次使用会将目标页</description>
     </item>
     
     <item>
@@ -215,7 +197,7 @@
       <pubDate>Tue, 16 Dec 2014 20:51:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/%E7%BB%99%E4%BD%A0%E7%9A%84-django1.7-%E6%B7%BB%E5%8A%A0-favicon/</guid>
-      <description>给你的 Django1.7 添加 favicon 2014/12/16 20:51 下午 为了给 Blog 加上图标，我翻了好多地方，都是用的旧版Django的方法，在urls.py中加入以下语句，现在已被取代： url(r&#39;^favicon\.ico$&#39;, &#39;django.views.generic.simple.redirect_to&#39;, {&#39;url&#39;:</description>
+      <description>给你的 Django1.7 添加 favicon url(r&#39;^favicon\.ico$&#39;, &#39;django.views.generic.simple.redirect_to&#39;, {&#39;url&#39;: &#39;/static/images/favicon.ico&#39;}), 对于Django1.6以后的版本，django.views.generic.simple这个类已经不存在了，取而代之的</description>
     </item>
     
     <item>
@@ -224,7 +206,7 @@
       <pubDate>Mon, 15 Dec 2014 21:01:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/%E9%80%9A%E8%BF%87-css-%E4%BF%AE%E6%94%B9-webkit-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%BB%9A%E5%8A%A8%E6%9D%A1%E6%A0%B7%E5%BC%8F/</guid>
-      <description>通过 CSS 修改 webkit 浏览器滚动条样式 2014/12/15 21:1 下午 webkit 内核的浏览器关于滚动条，主要有下面7个属性 ::-webkit-scrollbar滚动条整体部分，可以设</description>
+      <description>通过 CSS 修改 webkit 浏览器滚动条样式 ::-webkit-scrollbar 滚动条整体部分，可以设置宽度啥的 ::-webkit-scrollbar-button 滚动条两端的按钮 ::-webkit-scrollbar-track 外层轨道 ::-webkit-scrollbar-track-piece 内层滚动槽 ::-webkit-scrollbar-thumb 滚动的滑块 ::-webkit-scrollbar-corner 边角 ::-webkit-resizer 定义右下角拖动块的</description>
     </item>
     
     <item>
@@ -233,7 +215,7 @@
       <pubDate>Mon, 15 Dec 2014 15:59:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/%E4%B8%BA%E4%BD%A0%E7%9A%84-django-%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0-disqus-%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/</guid>
-      <description>为你的 Django 博客添加 Disqus 评论系统 2014/12/15 15:59 下午 首先，先去 Disqus 官网注册个账号啦.注册完账号之后去首页末尾 →API→Application，找到 DISQUS_API_KEY 一项，复制一</description>
+      <description>为你的 Django 博客添加 Disqus 评论系统 安装 Disqus ,依官方推荐，使用pip自动安装~ 若是没有 pip 也不用着急，去官方下载一份二进制包，然后解压，进入目录安装 修改 setting.py</description>
     </item>
     
     <item>
@@ -242,7 +224,7 @@
       <pubDate>Mon, 15 Dec 2014 14:05:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/django%E8%87%AA%E5%AE%9A%E4%B9%89-markdown-%E8%BF%87%E6%BB%A4%E5%99%A8/</guid>
-      <description>Django自定义 Markdown 过滤器 2014/12/15 14:5 下午 1. 在你 APP 目录下建立tamplatetags文件夹，手动建。文件夹和 APP 的 view.py 处于同一级 2. 手动新建文件 __init__.py ，置空就</description>
+      <description>Django自定义 Markdown 过滤器 附 my_markdown.py 代码 from django import template from markdown import markdown register = template.Library() @register.filter(name=&#39;my_markdown&#39;) def my_markdown(value): return markdown(value)</description>
     </item>
     
     <item>
@@ -251,7 +233,7 @@
       <pubDate>Mon, 15 Dec 2014 00:20:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/django%E5%89%8D%E7%AB%AF%E8%BE%93%E5%85%A5%E4%B8%AD%E6%96%87%E5%90%8Emysql%E5%87%BA%E7%8E%B0%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/</guid>
-      <description>Django前端输入中文后MySQL出现中文乱码 2014/12/15 0:20 上午 Django 在网页插入数据后，在数据库中查看若出现中文乱码，请检查数据库的字符集设置和 Django 字符集</description>
+      <description>Django前端输入中文后MySQL出现中文乱码 注：需完全一致，当初我数据库用的是 gbk , django 用的 utf8 结果依然是乱码，统一成 utf8 后就好了。 附: MySQL 控制台</description>
     </item>
     
     <item>
@@ -260,7 +242,7 @@
       <pubDate>Mon, 15 Dec 2014 00:02:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/django%E7%9A%84%E8%BF%87%E6%BB%A4%E5%99%A8%E4%BB%AC/</guid>
-      <description>Django的过滤器们 2014/12/15 0:2 上午 {{ name | lower }} 小写 {{ my_text|escape|linebreaks }} 串联：先转义文本到HTML，再转换每行到 标签 {{ bio | truncatewords:“30” }} 显</description>
+      <description>Django的过滤器们 {{ my_text|escape|linebreaks }} 串联：先转义文本到HTML，再转换每行到 标签 {{ bio | truncatewords:“30” }} 显示前30个字 {{ 123|</description>
     </item>
     
     <item>
@@ -269,7 +251,7 @@
       <pubDate>Sun, 14 Dec 2014 21:26:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/%E8%A7%A3%E5%86%B3osx%E5%8D%87%E7%BA%A710.10%E5%90%8E%E6%97%A0%E6%B3%95%E5%BC%80%E5%90%AFmamp-apache%E6%9C%8D%E5%8A%A1/</guid>
-      <description>解决OSX升级10.10后无法开启MAMP Apache服务 2014/12/14 21:26 下午 * 退出MAMP * 在终端执行以下命令(重命名envvars为_envvars</description>
+      <description>解决OSX升级10.10后无法开启MAMP Apache服务 再次打开MAMP即可开启Apache. 原文</description>
     </item>
     
   </channel>

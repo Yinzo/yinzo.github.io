@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Machine Learning on 雪地</title>
@@ -17,7 +17,7 @@
       <pubDate>Wed, 07 Jun 2017 14:35:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/cs229-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-part-3/</guid>
-      <description>SVM CS229 对于 SVM 的理论解释是我学习到的最详细也是最好的一份资料了，对比对象有周志华《机器学习》、《机器学习实战》、Coursera 上的 Machine Learning 等。相当</description>
+      <description>CS229 对于 SVM 的理论解释是我学习到的最详细也是最好的一份资料了，对比对象有周志华《机器学习》、《机器学习实战》、Coursera 上的 Machine Learning 等。相当推</description>
     </item>
     
     <item>
@@ -26,7 +26,7 @@
       <pubDate>Wed, 07 Jun 2017 00:20:00 +0800</pubDate>
       
       <guid>https://yinzo.github.io/posts/cs229-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-part-2/</guid>
-      <description>判别式和生成式 对于一个分类任务，判别式和生成式分别代表了两种不同的思路： 判别式 通过直接从输入数据中学习，得到一个『特定输入对应的实际类别』的</description>
+      <description>对于一个分类任务，判别式和生成式分别代表了两种不同的思路： 通过直接从输入数据中学习，得到一个『特定输入对应的实际类别』的概率模型，模型的参数</description>
     </item>
     
     <item>
